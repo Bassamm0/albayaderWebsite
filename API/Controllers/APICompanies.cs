@@ -42,30 +42,30 @@ namespace API.Controllers
 
         [Route("add")]
         [HttpPost]
-        public async Task<Boolean> addCompany([FromBody] JsonElement objData)
+        public async Task<Boolean> addCompany([FromBody] JsonElement Company)
         {
 
             bool result = false;
             try
             {
-                var CountryId = objData.GetProperty("countrid").GetInt16();
-                var Name = objData.GetProperty("name").GetString();
-                var Description = objData.GetProperty("description").GetString();
-                var City = objData.GetProperty("city").GetString();
-                var Street = objData.GetProperty("street").GetString();
-                var StreetNo = objData.GetProperty("streetno").GetString();
-                 var Telephone = objData.GetProperty("telephone").GetString();
-                var Fax = objData.GetProperty("fax").GetString();
-                var Latitude = objData.GetProperty("latitude").GetDecimal();
-                var Longitude = objData.GetProperty("longitude").GetDecimal();
-                var CompanyLogo = objData.GetProperty("companylogo").GetString();
-                var CompanyTypeId = objData.GetProperty("companytypeid").GetInt16();
+                var CountryId = Company.GetProperty("countrid").GetInt16();
+                var Name = Company.GetProperty("name").GetString();
+                //var Description = Company.GetProperty("description").GetString();
+                var City = Company.GetProperty("city").GetString();
+                var Street = Company.GetProperty("street").GetString();
+                var StreetNo = Company.GetProperty("streetno").GetString();
+                var Telephone = Company.GetProperty("telephone").GetString();
+                var Fax = Company.GetProperty("fax").GetString();
+                var Latitude = Company.GetProperty("latitude").GetDecimal();
+                var Longitude = Company.GetProperty("longitude").GetDecimal();
+                var CompanyLogo = Company.GetProperty("companylogo").GetString();
+                var CompanyTypeId = Company.GetProperty("companytypeid").GetInt16();
 
                 ECompanies newCompany = new ECompanies
                 {
                     CountryId = CountryId,
                     Name = Name,
-                    Description = Description,
+                   // Description = Description,
                     City = City,
                     Street = Street,
                     StreetNo = StreetNo,
@@ -98,26 +98,26 @@ namespace API.Controllers
 
         [Route("update")]
         [HttpPost]
-        public async Task<Boolean> updateUser([FromBody] JsonElement objData)
+        public async Task<Boolean> updateUser([FromBody] JsonElement Company)
         {
 
             bool result = false;
 
             try
             {
-                var CompanyId = objData.GetProperty("companyid").GetInt16();
-                var CountryId = objData.GetProperty("countrid").GetInt16();
-                var Name = objData.GetProperty("name").GetString();
-                var Description = objData.GetProperty("description").GetString();
-                var City = objData.GetProperty("city").GetString();
-                var Street = objData.GetProperty("street").GetString();
-                var StreetNo = objData.GetProperty("streetno").GetString();
-                var Telephone = objData.GetProperty("telephone").GetString();
-                var Fax = objData.GetProperty("fax").GetString();
-                var Latitude = objData.GetProperty("latitude").GetDecimal();
-                var Longitude = objData.GetProperty("longitude").GetDecimal();
-                var CompanyLogo = objData.GetProperty("companylogo").GetString();
-                var CompanyTypeId = objData.GetProperty("companytypeid").GetInt16();
+                var CompanyId = Company.GetProperty("companyid").GetInt16();
+                var CountryId = Company.GetProperty("countrid").GetInt16();
+                var Name = Company.GetProperty("name").GetString();
+                var Description = Company.GetProperty("description").GetString();
+                var City = Company.GetProperty("city").GetString();
+                var Street = Company.GetProperty("street").GetString();
+                var StreetNo = Company.GetProperty("streetno").GetString();
+                var Telephone = Company.GetProperty("telephone").GetString();
+                var Fax = Company.GetProperty("fax").GetString();
+                var Latitude = Company.GetProperty("latitude").GetDecimal();
+                var Longitude = Company.GetProperty("longitude").GetDecimal();
+                var CompanyLogo = Company.GetProperty("companylogo").GetString();
+                var CompanyTypeId = Company.GetProperty("companytypeid").GetInt16();
                 ECompanies UpdatedCompany = new ECompanies
                 {
                     CompanyID = CompanyId,
