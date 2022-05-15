@@ -13,16 +13,7 @@
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
 
-<script>
-  $(document).ready(function(){
-    
 
-      $('#loginBtn').click(function(){
-         // alert($('#LoginEmail').val())
-           window.location.href="/ChangePassword";
-      })
-  })
-  </script>
 
 <div class="hold-transition login-page">
 
@@ -36,21 +27,27 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in to Al Bayader Service</p>
 
-      <form  method="post">
-        <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email" id="LoginEmail" name="LoginEmailName" value="@Model.email">
+      <form method="post" id="loginForm">
+           <div class="form-group">
+        <div class="input-group ">
+          
+           <input type="email" name="LoginEmailName" class="form-control" id="LoginEmail" placeholder="Enter email" value="@Model.email">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
             </div>
           </div>
+          </div>
         </div>
-        <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password" id="LoginPassword" name="LoginPasswordName">
+         <div class="form-group">
+        <div class="input-group ">
+              
+           <input type="password" name="LoginPasswordName" class="form-control" id="exampleInputPassword1" placeholder="Password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
             </div>
+          </div>
           </div>
         </div>
         <div class="row">
@@ -64,7 +61,7 @@
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-info btn-block" id="btnGenerateWebName">Sign In</button>
+            <button type="button" class="btn btn-info btn-block" id="lognBtn">Sign In</button>
           </div>
           <!-- /.col -->
         </div>
@@ -78,12 +75,12 @@
 
       </p>
       <p>
-            <a class="nav-link" asp-area="" asp-page="/ChangePassword"><i class="nav-icon fas fa-gear"></i>login test</a>
+            <a class="nav-link" asp-area="" asp-page="/ChangePassword"><i class="nav-icon fas fa-gear"></i>change Password</a>
       </p>
      <p>
- <p>@Model.email</p>
- <p>@Model.password</p>
-  <p>@Model.Message</p>
+@* <p>@Model.email</p>
+ <p>@Model.password</p>*@
+  <span class="errorMessage">@Model.Message</span>
  </p>
     </div>
     <!-- /.login-card-body -->
@@ -92,3 +89,5 @@
 </div>
 <!-- /.login-box -->
 
+
+<script src="js/login.js" ></script>

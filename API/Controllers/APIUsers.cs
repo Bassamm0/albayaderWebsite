@@ -397,6 +397,40 @@ namespace API
             return result;
         }
 
+        [Authorize]
+        [Route("getLoginUser")]
+        [HttpGet]
+        public async Task<UserViewModel> getLoginUserDetails()
+        {
+            
+            var user =  GetCurrentUser();
+            if (user == null)
+            {
+                throw new DomainValidationFundException("No data");
+            }
+
+            UserViewModel currentUser = new UserViewModel
+            {
+               
+                email = user.Email,
+                userId = user.UserId,
+                username = user.Username,
+                //authLevel = user.AuthLevelRefId,
+                firstName = user.FirstName,
+                lastName = user.Lastname,
+                mobile = user.Mobile,
+               // telephone = user.Telephone,
+                role = user.Role,
+                nationality = user.Nationality,
+                countryId = user.CountryId,
+                city = user.City,
+                birthday = user.Birthday.ToString("dd/MM/yyyy"),
+                pictureFileName = user.PictureFileName,
+            };
+
+            return currentUser;
+        }
+
         //required  [Authorize]
         private EUser GetCurrentUser()
         {
@@ -411,7 +445,14 @@ namespace API
                     FirstName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.GivenName)?.Value,
                     Lastname = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Surname)?.Value,
                     Role = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Role)?.Value,
-                    UserId = Convert.ToInt32(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Sid)?.Value)
+                    UserId = Convert.ToInt32(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Sid)?.Value),
+                    Mobile = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.MobilePhone)?.Value,
+                    PositionId = Convert.ToInt32(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Actor)?.Value),
+                    Nationality = Convert.ToInt32(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Country)?.Value),
+                    CountryId = Convert.ToInt32(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Locality)?.Value),
+                    Birthday = Convert.ToDateTime(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.DateOfBirth)?.Value),
+                    PictureFileName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Thumbprint)?.Value,
+                    City = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.StateOrProvince)?.Value,
                 };
 
             }

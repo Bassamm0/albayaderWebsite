@@ -14,7 +14,7 @@ namespace Core_3Tire.Pages
         public string email { get; set; }
         public string password { get; set; }
         public bool Authenticated { get; set; }=false;
-        private string url= "/ChangePassword";
+        private string url= "/Dashboard";
 
         private string loginUrl = "https://localhost:7174/api/Login";
 
@@ -50,6 +50,11 @@ namespace Core_3Tire.Pages
                 if (statusCode == "OK")
                 {
                     Authenticated = true;
+                    HttpContext.Session.SetString("token",token);
+                    HttpContext.Session.SetString("email",email);
+                    HttpContext.Session.SetString("password",password);
+            
+
                     return Redirect(url);
                 }
                 else if(statusCode == "NotFound")
