@@ -16,7 +16,7 @@ namespace Core_3Tire.Pages
         public bool Authenticated { get; set; }=false;
         private string url= "/Dashboard";
 
-        private string loginUrl = "https://localhost:7174/api/Login";
+       
 
         public string token { get; set; }
         public string errorMessage { get; set; }

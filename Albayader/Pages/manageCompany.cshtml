@@ -1,7 +1,7 @@
 ﻿@page
-@model AlbayaderWeb.Pages.manageCompanyModel
+@model Core_3Tire.Pages.ManageCompanyModel
 @{
-
+        ViewData["Title"] = "Company Manage";
     }
 
 
@@ -14,18 +14,12 @@
                 <ol class="breadcrumb float-sm-left">
                   <li class="breadcrumb-item"><a href="Dashboard">Dashboard</a></li>
                   <li class="breadcrumb-item "><a href="Company">Companies</a></li>
-                  <li class="breadcrumb-item active">Add Company  </li>
+                  <li class="breadcrumb-item active" id="currentLable">@Model.pageTitle </li>
                 </ol>
               </div>
-               <div class="col-sm-6">
-              <ol class="breadcrumb float-sm-right">
-                  <button type="button" class="btn btn-default" style="background-color: rgb(250, 245, 245);"><i class="fas fa-plus"></i></button>
-                </ol>
-              </div>
+          
             </div>
             
-             
-     
           </div>
           <!-- /.container-fluid -->
         </section>
@@ -51,25 +45,29 @@
           <!-- /.card-header -->
           <div class="card-body">
             <div class="row">
-                <form id="CompanyForm" method="post" style="width:100%;">
+                <form id="CompanyForm" method="post" style="width:90%;">
                     <div class="col">
                    <div class="form-group">
                     <label for="companyname">Company Name</label>
-                    <input type="text" class="form-control" name="CompanyName" id="CompanyName" placeholder="Enter Company Name" />
+                    <input type="text" class="form-control" name="CompanyName" id="Company" placeholder="Enter Company Name" />
                   </div>
                 
                  <div class="form-group">
                   <label>Country</label>
                   <select name="contry" class="form-control select2" style="width: 100%;">
                     <option selected="selected">United Arab Emirates</option>
-                    <option>Alaska</option>
-                    <option>California</option>
-                    <option>Delaware</option>
-                    <option>Tennessee</option>
-                    <option>Texas</option>
-                    <option>Washington</option>
+                    <option value="1">Alaska</option>
+                    <option value="2">California</option>
+                    <option value="3">Delaware</option>
+                    <option value="4">Tennessee</option>
+                    <option value="5">Texas</option>
+                    <option value="6">Washington</option>
                   </select>
                 </div>
+                <div class="form-group">
+                    <label for="street">City</label>
+                    <input type="text" class="form-control" name="city" id="street" placeholder="Enter Street" />
+                  </div>
                  <div class="form-group">
                     <label for="street">Street</label>
                     <input type="text" class="form-control" name="street" id="street" placeholder="Enter Street" />
@@ -99,17 +97,19 @@
                         <div class="input-group">
                           <div class="custom-file">
                             <input type="file" class="custom-file-input" id="logoFile">
-                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                            <label class="custom-file-label" for="exampleInputFile" id="logoFile">Choose file</label>
                           </div>
                             <div class="input-group-append">
-                            <div class="input-group-text" id="UploadLogobtn">Upload</div>
+                            <div class="btn btn-block btn-info remove" id="UploadLogobtn">Upload</div>
+                             <div class="btn btn-warning remove" id="RemoveLogobtn" >Remove</div>
                           </div>
                         </div>
                       </div>
+                      <span id="uploadError" class="errorMessage" ></span>
                       <progress id="fileProgress" style="display: none"></progress>
                       <span id="lblMessage" style="color: Green"></span>
                      </div>
-                     <input type="hidden" id="uploadedfile" value=""/>
+                     <input type="hidden" id="uploadedfile" name="uploadedfile" value=""/>
                 </form>
                 
          </div>

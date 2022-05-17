@@ -98,7 +98,7 @@ namespace API.Controllers
 
         [Route("update")]
         [HttpPost]
-        public async Task<Boolean> updateUser([FromBody] JsonElement Company)
+        public async Task<Boolean> updateCompany([FromBody] JsonElement Company)
         {
 
             bool result = false;

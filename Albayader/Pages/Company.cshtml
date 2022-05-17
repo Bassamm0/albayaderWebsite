@@ -1,6 +1,7 @@
 ﻿@page
 @model AlbayaderWeb.Pages.CompanyModel
 @{
+     ViewData["Title"] = "Companies";
 }
 <div class="content-wrapper">
 
@@ -10,13 +11,17 @@
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-left">
                   <li class="breadcrumb-item"><a href="Dashboard">Dashboard</a></li>
-                  <li class="breadcrumb-item active">Client Branches </li>
+                  <li class="breadcrumb-item active">Companies </li>
                 </ol>
               </div>
                <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                  <button type="button" class="btn btn-default" style="background-color: rgb(250, 245, 245);"><i class="fas fa-plus"></i></button>
-                </ol>
+                    <form method="post">
+                  <button type="submit" class="btn btn-default" asp-page-handler="AddCompany" style="background-color: rgb(250, 245, 245);"><i class="fas fa-plus"></i></button>
+                  
+                    </form>
+@*                 <a href="ManageCompany" class="btn btn-default" style="background-color: rgb(250, 245, 245);"><i class="fas fa-plus"></i></a>
+*@                </ol>
               </div>
             </div>
             
@@ -31,72 +36,84 @@
         <section class="content">
           <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
-            <div class="row">
+            
                      <!-- ./col -->
             
 
-               <div class="col-lg-3 col-6">
+ 
+                   <form method="post">
+<div class="row">
                 <!-- small box card start -->
-                <div class="small-box" style="text-align: center">
-                  <div class="inner">
-                    <div>
-                      <img
-                        class=""
-                        src="img/carrefoure.png"
-                        style="width: 100px;max-height: 60px;"
-                        alt="User Avatar"
-                      />
-                    </div>
-                    <div>
-                      <h2>Carrefour</h2>
-                      <h3>Mirdif</h3>
-                    </div>
-                  </div>
-                  <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
-                  </div>
-                  <div class="dropdown">
-                    <button
-                      class="small-box-footer dropdown-toggle"
-                      style="border: 0; width: 100%; background-color: transparent;"
-                      type="button"
-                      id="dropdownMenuButton" data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      
-                    </button>
-                    <div class="dropdown-menu"
-                      aria-labelledby="dropdownMenuButton"  style="width: 100%;">
-   
-                             <a class="dropdown-item bg-info" href="#" > <i class="fa-solid fa-hands-holding-circle"></i> Start Preventive</a>
-                           <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
-                             <a class="dropdown-item  bg-info" href="#"><i class="fas fa-wrench"></i> Start Corrective</a>
-                           <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
-                             <a class="dropdown-item bg-info" href="#" ><i class="fas fa-screwdriver-wrench"></i> Start Other</a>
-                             <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
-                             <a class="dropdown-item" href="#" style="color: rgb(124, 123, 123);"><i class="fas fa-chart-pie" ></i> Reports</a>
-                          <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
-                             <a class="dropdown-item" href="#" style="color: rgb(124, 123, 123);"><i class="fas fa-pen"></i> Edit</a>
-                           <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
-                             <a class="dropdown-item" href="#" style="color: rgb(124, 123, 123);"><i class="fas fa-user"></i> Users</a>
-                           
-                       
-                        <div class="dropdown-divider"></div>
+              
 
-                        <a class="dropdown-item text-danger" href="#"><i class="fas fa-trash"></i> Delete</a>
-                    </div>
-                  </div>
-                </div>
-
+                        @if(Model.companayList != null)
+                        {
+                             @foreach (var item in Model.companayList)
+                                {
+                                   <div class="col-12 col-md-6 col-lg-3">
+                                     <div class="small-box" style="text-align: center">
+                                      <div class="inner">
+                                        <div>
+                                          <img
+                                            class=""
+                                            src="img/carrefoure.png"
+                                            style="width: 100px;max-height: 60px;"
+                                            alt="User Avatar"
+                                          />
+                                        </div>
+                                        <div>
+                                          <h2> @Html.DisplayFor(modelItem => item.Name)</h2>
+                                          <h3 style="min-height:50px">@Html.DisplayFor(modelItem => item.Telephone)</h3>
+                                        </div>
+                                      </div>
+                                      <div class="icon">
+                                        <i class="ion ion-pie-graph"></i>
+                                      </div>
+                                      <div class="dropdown">
+                                        <button
+                                          class="small-box-footer dropdown-toggle"
+                                          style="border: 0; width: 100%; background-color: transparent;"
+                                          type="button"
+                                          id="dropdownMenuButton" data-toggle="dropdown"
+                                          aria-haspopup="true"
+                                          aria-expanded="false"
+                                        >
+                                        </button>
+                                        <div class="dropdown-menu"
+                                          aria-labelledby="dropdownMenuButton"  style="width: 100%;">
+                                                 <button class="dropdown-item bg-info" asp-page-handler="DeleteCompany" asp-route-id="@item.CompanyID" > <i class="fa-solid fa-hands-holding-circle"></i> Start Preventive</button>
+                                               <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
+                                                 <button class="dropdown-item  bg-info"><i class="fas fa-wrench"></i> Start Corrective</button>
+                                               <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
+                                                 <button class="dropdown-item bg-info"  ><i class="fas fa-screwdriver-wrench"></i> Start Other</button>
+                                                 <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
+                                                 <button class="dropdown-item"  style="color: rgb(124, 123, 123);"><i class="fas fa-chart-pie" ></i> Reports</button>
+                                              <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
+                                                 <button type="submit" class="dropdown-item" asp-page-handler="EditCompany" asp-route-id="@item.CompanyID" style="color: rgb(124, 123, 123);">
+                                                     <i class="fas fa-pen"></i> Edit</button>
+                                              <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
+                                                 <button class="dropdown-item"  style="color: rgb(124, 123, 123);"><i class="fa-solid fa-landmark"></i> Branchs</button>
+                                              <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
+                                                 <button class="dropdown-item"  style="color: rgb(124, 123, 123);"><i class="fas fa-user"></i> Users</button>
+                                            <div class="dropdown-divider"></div>
+                                            <button class="dropdown-item text-danger" type="submit" class="dropdown-item" asp-page-handler="DeleteCompany" asp-route-id="1" >
+                                                <i class="fas fa-trash"></i> Delete</button>
+                                        </div>
+                                      </div>
+                                    </div>  
+                                  </div>
+                                
+                                }
+                        }
+                         </div>
+                    </form>
                  <!-- card end -->
 
-              </div>
               <!-- ./col -->
 
 
 
-            </div>
+            
 
             <!-- /.row -->
           </div>

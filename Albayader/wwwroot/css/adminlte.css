@@ -53022,3 +53022,7 @@ a.text-muted:hover {
     font-size: 80%;
     color: #dc3545;
 }
+
+.remove{
+    display:none;
+}

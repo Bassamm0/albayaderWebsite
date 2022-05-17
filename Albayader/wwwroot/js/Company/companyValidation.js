@@ -3,10 +3,20 @@
 $(document).ready(function () {
 
 
-    $('#SaveCompany').click(function () {
-
+    $('#SaveCompany').click(function (e) {
+        $('#uploadError').html('')
         if ($("#CompanyForm").valid()) {
-           // $('#loginForm').submit();
+            var _logoFile = $("#logoFile")[0].files[0];
+            if ($("#logoFile")[0].files[0] != null) {
+            
+                $('#uploadError').html('Please upload or remove the selected file before save')
+                e.preventDefault();
+                return;
+            } else {
+
+                $('#CompanyForm').submit();
+            }
+           
         }
     })
 

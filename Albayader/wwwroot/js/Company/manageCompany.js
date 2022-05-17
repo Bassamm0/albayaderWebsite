@@ -1,11 +1,27 @@
 ﻿$(document).ready(function () {
 
+
+
     $(".custom-file-input").on("change", function () {
+       
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        if (fileName != '') {
+            $('#RemoveLogobtn').show();
+            $('#UploadLogobtn').show();
+        } else {
+            $('#RemoveLogobtn').hide();
+            $('#UploadLogobtn').hide();
+        }
+       
     });
     $("body").on("click", "#UploadLogobtn", function () {
-    
+        if ($("#logoFile")[0].files[0] == null) {
+            $('#uploadError').html('Please select a file to upload.')
+            return;
+
+        }
+        
         var formData = new FormData();
      
         formData.append("files", $("#logoFile")[0].files[0]);
@@ -20,6 +36,10 @@
                 $("#fileProgress").hide();
                 $("#lblMessage").html("<b>" + data + "</b> has been uploaded.");
                 $("#uploadedfile").val(data);
+                $('#uploadError').html('')
+                $('#logoFile').val('')
+                $('#RemoveLogobtn').hide();
+                $('#UploadLogobtn').hide();
             },
             xhr: function () {
                 var fileXhr = $.ajaxSettings.xhr();
@@ -38,7 +58,12 @@
             }
         });
     });
-
+    $("body").on("click", "#RemoveLogobtn", function () {
+        $('#logoFile').next('label').html('Select a file');
+        $('#logoFile').val('')
+        $('#RemoveLogobtn').hide();
+        $('#UploadLogobtn').hide();
+    })
 
    // $("body").on("click", "#SaveCompany", function () {
 
