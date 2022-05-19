@@ -27,7 +27,7 @@ namespace API.Controllers
         }
 
         [Route("getCompanyById")]
-        [HttpGet]
+        [HttpPost]
         public async Task<ECompanies> getCompanyById([FromBody] JsonElement objData)
         {
             int _id = objData.GetProperty("id").GetInt16();
@@ -192,6 +192,15 @@ namespace API.Controllers
             }
 
             return result;
+        }
+
+        [Route("getcountries")]
+        [HttpGet]
+        public async Task<List<ECountries>> getCountries()
+        {
+            List<ECountries> countries = await CompanyLogic.getCountries();
+
+            return countries;
         }
 
     }

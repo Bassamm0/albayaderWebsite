@@ -65,80 +65,38 @@
         $('#UploadLogobtn').hide();
     })
 
-   // $("body").on("click", "#SaveCompany", function () {
-
-    //    var CLanguageId = $("#ddLanguage").val();
-    //    var txtCountry = $("#ddCountry").val();
-    //    var ddlIndustryName = $("#ddIndustry").val();
-    //    var CompanyCategoryId = $("#ddCompanyCategory").val();
-    //    var Name = $("#txtCompanyName").val();
-    //    var txtCity = $("#txtCity").val();
-    //    var txtStreet = $("#txtStreet").val();
-    //    var txtStreetNo = $("#txtStreetNo").val();
-    //    var txtTelephone = $("#txtTelephone").val();
-    //    var txtFax = $("#txtFax").val();
-    //    var txtLatitude = $("#txtLatitude").val();
-    //    var txtLongitude = $("#txtLongitude").val();
-    //    var txtAltitude = $("#txtAltitude").val();
-    //    var txtDescription = $("#txtDescription").val();
-    //    var txtAdminEmail = $("#txtAdminEmail").val();
-    //    var sMode = $('#hdCompanySmode').val();
-    //    if (sMode == "U") {
-    //        var companyid = $("#HdCompanyId").val();
-    //    }
-
-    //    $.ajax({
-    //        type: "POST",
-    //        url: "WCFCompanies.svc/InsertCompanies",
-    //        data: '{"COID":"' + txtCountry + '","CID":"' + companyid + '","Name":"' + Name + '","INDID":"' + ddlIndustryName + '","Description":"' + txtDescription + '","City":"' + txtCity + '","Street":"' + txtStreet + '","StreetNo":"' + txtStreetNo + '","Telephone":"' + txtTelephone + '","Fax":"' + txtFax + '","Latitude":"' + txtLatitude + '","Longitude":"' + txtLongitude + '","Altitude":"' + txtAltitude + '","CompanyLogo":"' + filecompanylogo + '","AdminEmail":"' + txtAdminEmail + '","CompanyCategoryId":"' + CompanyCategoryId + '","LanguageId":"' + CLanguageId + '","sMode":"' + sMode + '"}',
-    //        contentType: "application/json", // content type sent to server
-    //        success: ServiceSucceeded,
-    //        error: showerror
-    //    });
-
-    //    function ServiceSucceeded(msg) {
-
-    //        if (msg.d == 'true') {
-    //            if (sMode == "U") {
-    //                var theMessage = 'Company  ' + Name + ' updated  Successfully   ';
-    //                showSuccessMessage(theMessage);
-
-    //            } else {
-    //                var theMessage = 'Company  ' + Name + ' created  Successfully   ';
-    //                showSuccessMessage(theMessage);
-    //            }
-    //            GetAllCompanies();
-    //            $('#managerCloseBtn').click();
-    //            resetForm('CompanyForm');
+    GetCountries( );
+    function GetCountries( ) {
+        $("#ddCountry").html('')
+        $.ajax({
+            url: "https://localhost:7174/api/company/getcountries",
+            type: 'GET',
+            dataType: 'json',
+            async:false,
+            success: function (data, textStatus, xhr) {
+                var arrUpdates = (typeof data) == 'string' ? eval('(' + data + ')') : data;
+                console.log(arrUpdates)
+                 $('#ddCountry').append('<option value="">Select  Country  ...</option>')
+                for (var i = 0; i < arrUpdates.length; i++) {
+                    text = $.trim(arrUpdates[i].name);
+                    val = arrUpdates[i].countryId;
+                    populate(text, val, '#ddCountry');
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                $('#ddCountry').append('<option value=""Data Not Loaded  ...</option>')
+                console.log('Error in Operation');
+            }
+        });
+   
+    }
 
 
-    //            $('#fileCompanyLogoHolder').html('');
-    //            $('#fileCompanyLogoHolder').html(' <input id="fileCompanyLogo" name="fileCompanyLogo" class="file fa-2x fileImage" type="file" multiple="true">')
-    //            $('#fileCompanyLogo').fileinput('refresh',
-    //                {
-    //                    allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'pmb', 'esp'],
-    //                    showUpload: false,
-    //                    showCaption: true,
-    //                    maxFileSize: 4000,
-    //                    browseClass: "btn btn-primary btn-lg",
-    //                    previewFileIcon: "<i class='glyphicon glyphicon-king'></i>"
-    //                });
+    function populate(text, val, controlId) {
+        $(controlId).append('<option value=' + val + '>' + text + '</option>');
 
-    //        } else if (msg.d == 'false') {
-    //            var theEMessage = 'Sorry this action  Couldn\'t be completed please contact <a href="mailto:support@smartcamme.com">our support</a>  ';
-    //            showErrorMessage(theEMessage);
-    //        } else {
-
-    //            showErrorMessage(msg.d);
-    //        }
-
-    //    }
-
-    //    function showerror(msg) {
-
-
-    //    }
-
-    //})
-
+    }
 });
+
+
+

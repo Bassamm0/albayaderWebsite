@@ -1,59 +1,48 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using System.Text;
 using Entity;
 
-namespace Core_3Tire.Pages
-{
-    public class ManageCompanyModel : PageModel
-    {
-        private readonly ILogger<ManageCompanyModel> _logger;
 
-        public company _company=new company();
+namespace AlbayaderWeb.Pages
+{
+    public class ManageCompany : PageModel
+    {
+        public company _company = new company();
 
         public ECompanies? _companay = null;
         public string token { get; set; }
         public string errorMessage { get; set; }
         public string pageTitle { get; set; }
         public string PageActionMode { get; set; }
+        public bool editMode { get; set; } = false;
 
 
-        //public async Task<IActionResult> OnGet()
-        //{
-        //    if (PageActionMode == "Add" || String.IsNullOrEmpty(PageActionMode))
-        //    {
-        //        pageTitle = "Add Company";
-        //    }
-        //    else if (PageActionMode == "Edit")
-        //    {
-        //        pageTitle = "Edit Company";
-        //    }
-        //    else
-        //    {
+        public void OnGet()
+        {
+        }
 
-        //    }
-        //    return null;
-        //}
         public async Task<IActionResult> OnGetSmode(string Smode, int id)
         {
             PageActionMode = Smode;
             if (PageActionMode == "Add" || String.IsNullOrEmpty(PageActionMode))
             {
                 pageTitle = "Add Company";
+                editMode = false;
             }
             else if (PageActionMode == "Edit")
             {
                 pageTitle = "Edit Company";
-                _companay =await getCompanyById(id);
+                _companay = await getCompanyById(id);
+                editMode = true;
 
             }
             return null;
         }
-        public ManageCompanyModel(ILogger<ManageCompanyModel> logger)
-        {
-            _logger = logger;
-        }
+        
         public async Task<IActionResult> OnPost()
         {
 
@@ -94,7 +83,7 @@ namespace Core_3Tire.Pages
 
 
             }
-              
+
 
             return null;
 
@@ -106,8 +95,6 @@ namespace Core_3Tire.Pages
 
         private async Task<string> addCompany(company company)
         {
-
-
 
             var json = JsonConvert.SerializeObject(company);
 
@@ -125,35 +112,33 @@ namespace Core_3Tire.Pages
                     }
                     else
                     {
-
                         errorMessage = response.Content.ReadAsStringAsync().Result;
                         return response.StatusCode.ToString();
                     }
-
-
 
                 }
             }
             return errorMessage;
         }
-       
 
-       
+
+
         // edit company
 
         public async Task<ECompanies> getCompanyById(int id)
         {
 
-           
 
-            var json = JsonConvert.SerializeObject(id);
+            var parameters = new Dictionary<string, int>();
+            parameters["id"] = id;
+            var json = JsonConvert.SerializeObject(parameters);
 
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync("https://localhost:7174/api/company/getCompanyById",data))
+                using (var response = await httpClient.PostAsync("https://localhost:7174/api/company/getCompanyById", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")
@@ -178,24 +163,24 @@ namespace Core_3Tire.Pages
 
             return _companay;
         }
-        public class company
-        {
-            public int companyid { get; set; }
-            public int countrid { get; set; }
-            public string name { get; set; }
-            public string description { get; set; }
-            public string city { get; set; }
-            public string street { get; set; }
-            public string streetno { get; set; }
-            public string telephone { get; set; }
-            public string fax { get; set; }
-            public decimal latitude { get; set; }
-            public decimal longitude { get; set; }
+    }
+    public class company
+    {
+        public int companyid { get; set; }
+        public int countrid { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
+        public string city { get; set; }
+        public string street { get; set; }
+        public string streetno { get; set; }
+        public string telephone { get; set; }
+        public string fax { get; set; }
+        public decimal latitude { get; set; }
+        public decimal longitude { get; set; }
 
 
-            public string companylogo { get; set; }
-            public int companytypeid { get; set; }
+        public string companylogo { get; set; }
+        public int companytypeid { get; set; }
 
-        }
     }
 }

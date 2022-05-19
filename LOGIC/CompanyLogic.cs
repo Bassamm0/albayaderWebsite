@@ -81,5 +81,12 @@ namespace LOGIC
             }
 
         }
+        public async Task<List<ECountries>> getCountries()
+        {
+
+            List<ECountries> countries = dCompanies.getCountries();
+
+            return countries;
+        }
     }
 }

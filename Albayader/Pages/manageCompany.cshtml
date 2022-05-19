@@ -1,13 +1,11 @@
 ﻿@page
-@model Core_3Tire.Pages.ManageCompanyModel
+@model AlbayaderWeb.Pages.ManageCompany
 @{
-        ViewData["Title"] = "Company Manage";
-    }
-
-
+    ViewData["Title"] = "Manage Company";
+}
 <div class="content-wrapper">
 
-    <section class="content-header">
+  <section class="content-header">
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
@@ -25,13 +23,11 @@
         </section>
 
 
+        
  <!-- Main content -->
         <section class="content">
-          
-
           <div class="container-fluid">
-      
-                 <div class="card card-default">
+               <div class="card card-default">
           <div class="card-header">
             <h3 class="card-title">Company form</h3>
 
@@ -46,51 +42,48 @@
           <div class="card-body">
             <div class="row">
                 <form id="CompanyForm" method="post" style="width:90%;">
-                    <div class="col">
+            @if(Model.editMode)
+            {
+                
+                  <div class="col">
                    <div class="form-group">
                     <label for="companyname">Company Name</label>
-                    <input type="text" class="form-control" name="CompanyName" id="Company" placeholder="Enter Company Name" />
+                    <input type="text" class="form-control" name="CompanyName" id="Company" placeholder="Enter Company Name" value="@Model._companay.Name" />
                   </div>
-                
-                 <div class="form-group">
-                  <label>Country</label>
-                  <select name="contry" class="form-control select2" style="width: 100%;">
-                    <option selected="selected">United Arab Emirates</option>
-                    <option value="1">Alaska</option>
-                    <option value="2">California</option>
-                    <option value="3">Delaware</option>
-                    <option value="4">Tennessee</option>
-                    <option value="5">Texas</option>
-                    <option value="6">Washington</option>
-                  </select>
-                </div>
+                   <div class="form-group">
+                    <label>Country</label>
+                    <select name="ddCountry" id="ddCountry" class="form-control select2" style="width: 100%;">
+                 
+    
+                    </select>
+                  </div>
                 <div class="form-group">
                     <label for="street">City</label>
-                    <input type="text" class="form-control" name="city" id="street" placeholder="Enter Street" />
+                    <input type="text" class="form-control" name="city" id="street" placeholder="Enter Street" value="@Model._companay.City"/>
                   </div>
                  <div class="form-group">
                     <label for="street">Street</label>
-                    <input type="text" class="form-control" name="street" id="street" placeholder="Enter Street" />
+                    <input type="text" class="form-control" name="street" id="street" placeholder="Enter Street" value="@Model._companay.Street"/>
                   </div>
                    <div class="form-group">
                     <label for="streetno">Street No.</label>
-                    <input type="text" class="form-control" name="streetno" id="streetno" placeholder="Enter Street No" />
+                    <input type="text" class="form-control" name="streetno" id="streetno" placeholder="Enter Street No" value="@Model._companay.StreetNo"/>
                   </div>
                    <div class="form-group">
                     <label for="tel">Tel</label>
-                    <input type="text" class="form-control" name="tel" id="tel" placeholder="Enter Tell No. 97165618131 " />
+                    <input type="text" class="form-control" name="tel" id="tel" placeholder="Enter Tell No. 97165618131 " value="@Model._companay.Telephone"/>
                   </div>
                    <div class="form-group">
                     <label for="fax">Fax</label>
-                    <input type="text" class="form-control" name="fax" id="fax" placeholder="Enter Fax No. 97165618132" />
+                    <input type="text" class="form-control" name="fax" id="fax" placeholder="Enter Fax No. 97165618132" value="@Model._companay.Fax"/>
                   </div>
                   <div class="form-group">
                     <label for="lat">Latitude</label>
-                    <input type="text" class="form-control" name="latitude" id="latitude" placeholder="Enter Latitude" />
+                    <input type="text" class="form-control" name="latitude" id="latitude" placeholder="Enter Latitude" value="@Model._companay.Latitude"/>
                   </div>
                   <div class="form-group">
                     <label for="long">Longitude</label>
-                    <input type="text" class="form-control" name="longitude" id="longitude" placeholder="Enter Longitude" />
+                    <input type="text" class="form-control" name="longitude" id="longitude" placeholder="Enter Longitude" value="@Model._companay.Longitude"/>
                   </div>
                    <div class="form-group">
                         <label for="logo">Logo</label>
@@ -104,13 +97,94 @@
                              <div class="btn btn-warning remove" id="RemoveLogobtn" >Remove</div>
                           </div>
                         </div>
-                      </div>
+                    </div>
+                    <a href="https://localhost:44370/uploads/@Model._companay.CompanyLogo" >@Model._companay.CompanyLogo</a>
                       <span id="uploadError" class="errorMessage" ></span>
                       <progress id="fileProgress" style="display: none"></progress>
                       <span id="lblMessage" style="color: Green"></span>
                      </div>
                      <input type="hidden" id="uploadedfile" name="uploadedfile" value=""/>
-                </form>
+              
+
+                        }
+                        else
+                        {
+                            
+<div class="col">
+                   <div class="form-group">
+                    <label for="companyname">Company Name</label>
+                    <input type="text" class="form-control" name="CompanyName" id="Company" placeholder="Enter Company Name" value="" />
+                  </div>
+                   <div class="form-group">
+                    <label>Country</label>
+                    <select name="ddCountry" id="ddCountry" class="form-control select2" style="width: 100%;">
+                 
+    
+                    </select>
+                  </div>
+                <div class="form-group">
+                    <label for="street">City</label>
+                    <input type="text" class="form-control" name="city" id="street" placeholder="Enter Street" value=""/>
+                  </div>
+                 <div class="form-group">
+                    <label for="street">Street</label>
+                    <input type="text" class="form-control" name="street" id="street" placeholder="Enter Street" value=""/>
+                  </div>
+                   <div class="form-group">
+                    <label for="streetno">Street No.</label>
+                    <input type="text" class="form-control" name="streetno" id="streetno" placeholder="Enter Street No" value=""/>
+                  </div>
+                   <div class="form-group">
+                    <label for="tel">Tel</label>
+                    <input type="text" class="form-control" name="tel" id="tel" placeholder="Enter Tell No. 97165618131 " value=""/>
+                  </div>
+                   <div class="form-group">
+                    <label for="fax">Fax</label>
+                    <input type="text" class="form-control" name="fax" id="fax" placeholder="Enter Fax No. 97165618132" value=""/>
+                  </div>
+                  <div class="form-group">
+                    <label for="lat">Latitude</label>
+                    <input type="text" class="form-control" name="latitude" id="latitude" placeholder="Enter Latitude" value=""/>
+                  </div>
+                  <div class="form-group">
+                    <label for="long">Longitude</label>
+                    <input type="text" class="form-control" name="longitude" id="longitude" placeholder="Enter Longitude" value=""/>
+                  </div>
+                   <div class="form-group">
+                        <label for="logo">Logo</label>
+                        <div class="input-group">
+                          <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="logoFile">
+                            <label class="custom-file-label" for="exampleInputFile" id="logoFile">Choose file</label>
+                          </div>
+                            <div class="input-group-append">
+                            <div class="btn btn-block btn-info remove" id="UploadLogobtn">Upload</div>
+                             <div class="btn btn-warning remove" id="RemoveLogobtn" >Remove</div>
+                          </div>
+                        </div>
+                    </div>
+                    <a href="" ></a>
+                      <span id="uploadError" class="errorMessage" ></span>
+                      <progress id="fileProgress" style="display: none"></progress>
+                      <span id="lblMessage" style="color: Green"></span>
+                     </div>
+                     <input type="hidden" id="uploadedfile" name="uploadedfile" value=""/>
+
+
+
+
+
+
+                        }
+
+               
+
+                     </form>
+               
+            
+                      
+
+          
                 
          </div>
 
@@ -126,7 +200,7 @@
              </div>
 
            <div style="padding: 20px;">
-            <button type="button" id="SaveCompany" class="btn btn-block btn-info btn-lg" style="width: 200px;">Save</button>
+            <button type="button" id="UpdateCompany" class="btn btn-block btn-info btn-lg" style="width: 200px;">Save</button>
 
              </div>
               <!-- /.col -->
@@ -139,37 +213,52 @@
         <!-- /.card -->
 
 
-        </div>
-
-
-     
+           </div>
         </section>
         <!-- /.content -->
 
-   
         </div>
 
-
-    <!-- jQuery -->
-    <script src="plugins/jquery/jquery.min.js"></script>
-       <!-- Bootstrap 4 -->
-    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <!-- jQuery -->
+            <script src="plugins/jquery/jquery.min.js"></script>
+            <!-- Bootstrap 4 -->
+            <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   
-    <!-- Select2 -->
-<script src="plugins/select2/js/select2.full.min.js"></script>
+            <!-- Select2 -->
+            <script src="plugins/select2/js/select2.full.min.js"></script>
 
-<script src="~/js/company/companyValidation.js"></script>
-<script src="~/js/company/manageCompany.js"></script>
+            <script src="~/js/company/companyValidation.js"></script>
+            <script src="~/js/company/manageCompany.js"></script>
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/tus-js-client@latest/dist/tus.min.js"></script>
-
-<script>
-    $(function () {
-    //Initialize Select2 Elements
-    $('.select2').select2()
-    });
-</script>
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/tus-js-client@latest/dist/tus.min.js"></script>
 
 
-    <script src="plugins/jquery-validation/jquery.validate.min.js"></script>
-<script src="plugins/jquery-validation/additional-methods.min.js"></script>
+
+
+            <script src="plugins/jquery-validation/jquery.validate.min.js"></script>
+            <script src="plugins/jquery-validation/additional-methods.min.js"></script>
+
+            <script>
+            $(function () {
+               $('.select2').select2();
+
+              
+
+            });
+            
+            </script>
+
+                @if (Model.editMode)
+                {
+
+    
+                }
+                else
+                {
+
+  
+                }
+
+
+           
+}

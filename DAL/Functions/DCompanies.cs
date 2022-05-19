@@ -202,5 +202,49 @@ namespace DAL.Functions
 
             return eCompany;
         }
+
+        public List<ECountries> getCountries()
+        {
+            List<ECountries> users = new List<ECountries>();
+
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.Append(" Select * from Countries ");
+                  
+
+                    command.CommandText = sQuery.ToString();
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            ECountries oECountries = new ECountries();
+                            if (dataReader["CountryId"] != DBNull.Value) { oECountries.CountryId = (int)dataReader["CountryId"]; }
+                            if (dataReader["Name"] != DBNull.Value) { oECountries.Name = (string)dataReader["Name"]; }
+                            if (dataReader["sortname"] != DBNull.Value) { oECountries.sortname = (string)dataReader["sortname"]; }
+                        
+
+
+                            users.Add(oECountries);
+                        }
+                    }
+                    dataReader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return users;
+        }
     }
 }

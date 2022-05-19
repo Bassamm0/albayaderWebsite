@@ -24,7 +24,9 @@ namespace API.Controllers
                 {
                     return BadRequest();
                 }
-                string directoryPath = Path.Combine(env.ContentRootPath, "Uploads");
+
+                string directoryPath = Path.Combine(AppContext.BaseDirectory, "/Albayader/Uploads");
+                //string directoryPath = Path.Combine(env.ContentRootPath, "Uploads");
                 foreach (var file in files)
                 {
                  fileName = changeFilename(file.FileName);
