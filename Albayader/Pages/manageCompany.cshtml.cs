@@ -28,7 +28,7 @@ namespace AlbayaderWeb.Pages
         public async Task<IActionResult> OnGetSmode(string Smode, int id)
         {
             PageActionMode = Smode;
-            if (PageActionMode == "Add" || String.IsNullOrEmpty(PageActionMode))
+            if (PageActionMode == "Add")
             {
                 pageTitle = "Add Company";
                 editMode = false;
@@ -47,13 +47,13 @@ namespace AlbayaderWeb.Pages
         {
 
             string statusCode = "";
-
-            if (PageActionMode == "Add" || String.IsNullOrEmpty(PageActionMode))
+            PageActionMode = Request.Form["Smode"];
+            if (PageActionMode == "Add")
             {
                 try
                 {
                     _company.name = Request.Form["CompanyName"];
-                    _company.countrid = Convert.ToInt16(Request.Form["contry"]);
+                    _company.countrid = Convert.ToInt16(Request.Form["ddCountry"]);
                     _company.city = Request.Form["city"];
                     _company.street = Request.Form["street"];
                     _company.streetno = Request.Form["streetno"];
@@ -71,6 +71,10 @@ namespace AlbayaderWeb.Pages
                     _company.companytypeid = 2;
 
                     statusCode = await addCompany(_company);
+                    if (statusCode == "OK")
+                    {
+                        return RedirectToPage("company");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -78,8 +82,40 @@ namespace AlbayaderWeb.Pages
                 }
 
             }
-            if (PageActionMode == "Edit")
+           else if (PageActionMode == "Edit")
             {
+                try
+                {
+                    _company.companyid = Convert.ToInt16(Request.Form["hdCompanyId"]);
+                    _company.name = Request.Form["CompanyName"];
+                    _company.countrid = Convert.ToInt16(Request.Form["ddCountry"]);
+                    _company.city = Request.Form["city"];
+                    _company.street = Request.Form["street"];
+                    _company.streetno = Request.Form["streetno"];
+                    _company.telephone = Request.Form["tel"];
+                    _company.fax = Request.Form["fax"];
+                    if (!String.IsNullOrEmpty(Request.Form["latitude"]))
+                    {
+                        _company.latitude = Convert.ToDecimal(Request.Form["latitude"]);
+                    }
+                    if (!String.IsNullOrEmpty(Request.Form["longitude"]))
+                    {
+                        _company.longitude = Convert.ToDecimal(Request.Form["longitude"]);
+                    }
+                    _company.companylogo = Request.Form["uploadedfile"];
+                    _company.companytypeid = 2;
+
+                    statusCode = await updateCompany(_company);
+                    if(statusCode == "OK")
+                    {
+                        return RedirectToPage("company");
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
 
 
             }
@@ -163,6 +199,37 @@ namespace AlbayaderWeb.Pages
 
             return _companay;
         }
+
+
+
+        private async Task<string> updateCompany(company company)
+        {
+
+            var json = JsonConvert.SerializeObject(company);
+
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.PostAsync("https://localhost:7174/api/company/update", data))
+                {
+                    // string apiResponse = await response.Content.ReadAsStringAsync();
+                    if (response.StatusCode.ToString() == "OK")
+                    {
+                        string responseMssage = response.Content.ReadAsStringAsync().Result;
+                        return response.StatusCode.ToString();
+                    }
+                    else
+                    {
+                        errorMessage = response.Content.ReadAsStringAsync().Result;
+                        return response.StatusCode.ToString();
+                    }
+
+                }
+            }
+            return errorMessage;
+        }
+
     }
     public class company
     {

@@ -28,7 +28,7 @@ namespace DAL.Functions
 
                     StringBuilder sQuery = new StringBuilder();
                     sQuery.Append(" Select * from Companies C ");
-                    sQuery.Append(" where C.EndDate is null order by C.Name");
+                    sQuery.Append(" where C.EndDate is null order by C.CompanyID");
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();

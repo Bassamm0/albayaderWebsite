@@ -3,7 +3,7 @@
 $(document).ready(function () {
 
 
-    $('#SaveCompany').click(function (e) {
+    $('#SaveCompany,#UpdateCompany').click(function (e) {
         $('#uploadError').html('')
         if ($("#CompanyForm").valid()) {
             var _logoFile = $("#logoFile")[0].files[0];

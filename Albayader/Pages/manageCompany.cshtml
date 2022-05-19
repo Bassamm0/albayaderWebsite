@@ -98,19 +98,28 @@
                           </div>
                         </div>
                     </div>
-                    <a href="https://localhost:44370/uploads/@Model._companay.CompanyLogo" >@Model._companay.CompanyLogo</a>
+                    <a href="https://localhost:7174/api/uploads/@Model._companay.CompanyLogo" >@Model._companay.CompanyLogo</a>
                       <span id="uploadError" class="errorMessage" ></span>
                       <progress id="fileProgress" style="display: none"></progress>
                       <span id="lblMessage" style="color: Green"></span>
                      </div>
-                     <input type="hidden" id="uploadedfile" name="uploadedfile" value=""/>
-              
+                     <input type="hidden" id="uploadedfile" name="uploadedfile" value="@Model._companay.CompanyLogo"/>
+                     <input type="hidden" id="hdCompanyId" name="hdCompanyId" value="@Model._companay.CompanyID"/>
+                   
+                   @section Scripts{
+                        <script type="text/javascript">
+                        $(document).ready(function () {
+                        $('.select2').select2();
+                        $("#ddCountry").val(@Model._companay.CountryId).trigger('change');
+                        })
+                         </script>
+                       }
 
                         }
                         else
                         {
                             
-<div class="col">
+                    <div class="col">
                    <div class="form-group">
                     <label for="companyname">Company Name</label>
                     <input type="text" class="form-control" name="CompanyName" id="Company" placeholder="Enter Company Name" value="" />
@@ -164,20 +173,26 @@
                         </div>
                     </div>
                     <a href="" ></a>
+
                       <span id="uploadError" class="errorMessage" ></span>
                       <progress id="fileProgress" style="display: none"></progress>
                       <span id="lblMessage" style="color: Green"></span>
                      </div>
                      <input type="hidden" id="uploadedfile" name="uploadedfile" value=""/>
 
+                      
+                   @section Scripts{
+                        <script type="text/javascript">
+                        $(document).ready(function () {
+                        $('.select2').select2();
+                       
+                        })
+                         </script>
+                       }
 
+                      }
 
-
-
-
-                        }
-
-               
+                 <input type="hidden" id="Smode" name="Smode" value="@Model.PageActionMode"/>
 
                      </form>
                
@@ -195,7 +210,7 @@
             
             <div class="row" style="float: right;"> 
              <div style="padding: 20px;">
-            <button type="button" class="btn btn-block btn-default btn-lg" style="width: 200px;">Cancel</button>
+            <a href='company' class="btn btn-block btn-default btn-lg" style="width: 200px;">Cancel</a>
 
              </div>
 
@@ -238,27 +253,7 @@
             <script src="plugins/jquery-validation/jquery.validate.min.js"></script>
             <script src="plugins/jquery-validation/additional-methods.min.js"></script>
 
-            <script>
-            $(function () {
-               $('.select2').select2();
-
-              
-
-            });
-            
-            </script>
-
-                @if (Model.editMode)
-                {
-
-    
-                }
-                else
-                {
-
-  
-                }
+           
 
 
            
-}
