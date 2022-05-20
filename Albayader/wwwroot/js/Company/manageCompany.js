@@ -96,6 +96,8 @@
         $(controlId).append('<option value=' + val + '>' + text + '</option>');
 
     }
+
+   
 });
 
 
