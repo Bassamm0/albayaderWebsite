@@ -41,7 +41,53 @@ namespace DAL.Functions
                             if (dataReader["BranchID"] != DBNull.Value) { oEBranchs.BranchId = (int)dataReader["BranchID"]; }
                             if (dataReader["BranchName"] != DBNull.Value) { oEBranchs.BranchName = (string)dataReader["BranchName"]; }
                             if (dataReader["CompnayId"] != DBNull.Value) { oEBranchs.CompnayId = (int)dataReader["CompnayId"]; }
-                           
+                            if (dataReader["Latitude"] != DBNull.Value) { oEBranchs.Latitude = (decimal)dataReader["Latitude"]; }
+                            if (dataReader["Longitude"] != DBNull.Value) { oEBranchs.Longitude = (decimal)dataReader["Longitude"]; }
+
+                            users.Add(oEBranchs);
+                        }
+                    }
+                    dataReader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return users;
+        }
+
+
+        public List<EBranchs> getAllCompanyBranchs(int companyid)
+        {
+            List<EBranchs> users = new List<EBranchs>();
+
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.Append(" Select * from Branchs C ");
+                    sQuery.AppendFormat(" where C.CompnayId={0} and C.EndDate is null order by C.BranchName", companyid);
+
+                    command.CommandText = sQuery.ToString();
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            EBranchs oEBranchs = new EBranchs();
+                            if (dataReader["BranchID"] != DBNull.Value) { oEBranchs.BranchId = (int)dataReader["BranchID"]; }
+                            if (dataReader["BranchName"] != DBNull.Value) { oEBranchs.BranchName = (string)dataReader["BranchName"]; }
+                            if (dataReader["CompnayId"] != DBNull.Value) { oEBranchs.CompnayId = (int)dataReader["CompnayId"]; }
+                            if (dataReader["Latitude"] != DBNull.Value) { oEBranchs.Latitude = (decimal)dataReader["Latitude"]; }
+                            if (dataReader["Longitude"] != DBNull.Value) { oEBranchs.Longitude = (decimal)dataReader["Longitude"]; }
 
                             users.Add(oEBranchs);
                         }
@@ -85,6 +131,8 @@ namespace DAL.Functions
                             if (dataReader["BranchId"] != DBNull.Value) { oEBranchs.BranchId = (int)dataReader["BranchId"]; }
                             if (dataReader["BranchName"] != DBNull.Value) { oEBranchs.BranchName = (string)dataReader["BranchName"]; }
                             if (dataReader["CompnayId"] != DBNull.Value) { oEBranchs.CompnayId = (int)dataReader["CompnayId"]; }
+                            if (dataReader["Latitude"] != DBNull.Value) { oEBranchs.Latitude = (decimal)dataReader["Latitude"]; }
+                            if (dataReader["Longitude"] != DBNull.Value) { oEBranchs.Longitude = (decimal)dataReader["Longitude"]; }
 
                         }
                     }
@@ -121,6 +169,8 @@ namespace DAL.Functions
             {
                 context.Branchs.Attach(Branch);
                 context.Entry(Branch).Property(x => x.CompnayId).IsModified = true;
+                context.Entry(Branch).Property(x => x.Latitude).IsModified = true;
+                context.Entry(Branch).Property(x => x.Longitude).IsModified = true;
                 context.Entry(Branch).Property(x => x.BranchName).IsModified = true;
              
                 await context.SaveChangesAsync();

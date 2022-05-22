@@ -20,6 +20,13 @@ namespace LOGIC
 
             return Branchs;
         }
+        public async Task<List<EBranchs>> getAllCompanyBranchs(int companyid)
+        {
+
+            List<EBranchs> Branchs = dBranchs.getAllCompanyBranchs(companyid);
+
+            return Branchs;
+        }
         public async Task<EBranchs> getBranchById(int id)
         {
 

@@ -2,7 +2,8 @@ using Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
-using System.Text.Json;
+using System.Text;
+
 
 namespace AlbayaderWeb.Pages
 {
@@ -73,6 +74,79 @@ namespace AlbayaderWeb.Pages
         }
 
 
+        public async  Task<IActionResult> OnPost()
+        {
+            //delete 
+            int id = Convert.ToInt16(Request.Form["deletedCompanyId"]);
 
+            if(id == 0)
+            {
+                return Page();
+            }
+            string statusCode =await deletCompany(id);
+
+
+
+            return Page();
+
+        }
+
+        public async Task<IActionResult> OnPostDeleteCompany(int id)
+        {
+            //delete 
+           // int companyid = Convert.ToInt16(Request.Form["deletedCompanyId"]);
+
+            if (id == 0)
+            {
+                return Page();
+            }
+           string statusCode = await deletCompany(id);
+
+
+
+            return null;
+
+        }
+
+
+
+        public async Task<string> deletCompany(int id)
+        {
+
+
+            var parameters = new Dictionary<string, int>();
+            parameters["id"] = id;
+            var json = JsonConvert.SerializeObject(parameters);
+
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.PostAsync("https://localhost:7174/api/company/remove", data))
+                {
+                    // string apiResponse = await response.Content.ReadAsStringAsync();
+                    if (response.StatusCode.ToString() == "OK")
+                    {
+                        string responseJson = response.Content.ReadAsStringAsync().Result;
+
+                        //string res = JsonConvert.DeserializeObject<string>(responseJson);
+                        return response.StatusCode.ToString();
+                    }
+                    else
+                    {
+
+                        errorMessage = response.Content.ReadAsStringAsync().Result;
+                        //  return response.StatusCode.ToString();
+                    }
+
+
+
+                }
+            }
+
+
+            return "";
+        }
     }
 }

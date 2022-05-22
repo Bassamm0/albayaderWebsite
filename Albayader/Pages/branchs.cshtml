@@ -1,8 +1,8 @@
 ﻿@page
-@model AlbayaderWeb.Pages.CompanyModel
+@model AlbayaderWeb.Pages.branchsModel
 @{
-     ViewData["Title"] = "Companies";
 }
+
 <div class="content-wrapper">
 
     <section class="content-header">
@@ -17,7 +17,7 @@
                <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <form method="post">
-                  <button type="submit" class="btn btn-default" asp-page-handler="AddCompany" style="background-color: rgb(250, 245, 245);"><i class="fas fa-plus"></i></button>
+                  <button type="submit" class="btn btn-default" asp-page-handler="Addbranch" style="background-color: rgb(250, 245, 245);"><i class="fas fa-plus"></i></button>
                   
                     </form>
               
@@ -46,24 +46,19 @@
                 <!-- small box card start -->
               
 
-                        @if(Model.companayList != null)
+                        @if(Model.branchs != null)
                         {
-                             @foreach (var item in Model.companayList)
+                             @foreach (var item in Model.branchs)
                                 {
-                                   <div class="col-12 col-md-6 col-lg-3 companyHolder" companyid="@item.CompanyID" >
+                                   <div class="col-12 col-md-6 col-lg-3 branchHolder" branchid="@item.BranchId" >
                                      <div class="small-box" style="text-align: center">
                                       <div class="inner">
                                         <div>
-                                          <img
-                                            class=""
-                                            src="https://localhost:7174/api/uploads/@item.CompanyLogo"
-                                            style="width: 100px;max-height: 60px;"
-                                            alt="User Avatar"
-                                          />
+                                          
                                         </div>
                                         <div>
-                                          <h2> @Html.DisplayFor(modelItem => item.Name)</h2>
-                                          <h3 style="min-height:50px">@Html.DisplayFor(modelItem => item.Telephone)</h3>
+                                          <h2> @Html.DisplayFor(modelItem => item.BranchName)</h2>
+                                         
                                         </div>
                                       </div>
                                       <div class="icon">
@@ -81,22 +76,12 @@
                                         </button>
                                         <div class="dropdown-menu"
                                           aria-labelledby="dropdownMenuButton"  style="width: 100%;">
-                                                 <button class="dropdown-item bg-info" asp-page-handler="DeleteCompany" asp-route-id="@item.CompanyID" > <i class="fa-solid fa-hands-holding-circle"></i> Start Preventive</button>
-                                               <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
-                                                 <button class="dropdown-item  bg-info"><i class="fas fa-wrench"></i> Start Corrective</button>
-                                               <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
-                                                 <button class="dropdown-item bg-info"  ><i class="fas fa-screwdriver-wrench"></i> Start Other</button>
-                                                 <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
-                                                 <button class="dropdown-item"  style="color: rgb(124, 123, 123);"><i class="fas fa-chart-pie" ></i> Reports</button>
-                                              <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
-                                                 <button type="submit" class="dropdown-item" asp-page-handler="EditCompany" asp-route-id="@item.CompanyID" style="color: rgb(124, 123, 123);">
+                                                 <button type="submit" class="dropdown-item" asp-page-handler="EditBranch" asp-route-id="@item.BranchId" style="color: rgb(124, 123, 123);">
                                                      <i class="fas fa-pen"></i> Edit</button>
-                                              <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
-                                                 <button class="dropdown-item"  style="color: rgb(124, 123, 123);"><i class="fa-solid fa-landmark"></i> Branchs</button>
-                                              <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
-                                                 <button class="dropdown-item"  style="color: rgb(124, 123, 123);"><i class="fas fa-user"></i> Users</button>
+                                             
+                                             
                                             <div class="dropdown-divider"></div>
-                                            <button class="dropdown-item text-danger deleteBtn" type="button" id="deleteBtn" name="deletBtn" companyid="@item.CompanyID" CompanyName="@item.Name" data-toggle="modal" data-target="#modal-delete">
+                                            <button class="dropdown-item text-danger deleteBtn" type="button" id="deleteBtn" name="deletBtn" branchid="@item.BranchId" branchName="@item.BranchName" data-toggle="modal" data-target="#modal-delete">
                                                 <i class="fas fa-trash"></i> Delete</button>
                                         </div>
                                       </div>
@@ -133,8 +118,8 @@
             </div>
             <div class="modal-body">
               <div id="Deletetext">
-                  Are you sure you want to delete the company
-                  <span style="font-weight:bold;" id=companyToDeleteName>
+                  Are you sure you want to delete the branch
+                  <span style="font-weight:bold;" id=branchToDeleteName>
 
                   </span>
                   <div class="deleteWarning" > Please note that this action can't be rolled back and the deleted data can't be retrived</div>
@@ -143,8 +128,8 @@
             <form method="post" id="deleteForm" enctype="multipart/form-data">
               <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-danger" asp-page-handler="DeleteCompany" asp-route-id="" id="DeleteCompany">Delete</button>
-              <input type="hidden" id="deletedCompanyId" />
+              <button type="button" class="btn btn-danger" asp-page-handler="Deletebranch" asp-route-id="" id="Deletebranch">Delete</button>
+              <input type="hidden" id="deletedbranchId" />
             </div>
             </form>
            
@@ -160,5 +145,4 @@
     <script src="plugins/jquery/jquery.min.js"></script>
        <!-- Bootstrap 4 -->
     <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="js/Company/Company.js"></script>
-
+    <script src="js/branch/branch.js"></script>

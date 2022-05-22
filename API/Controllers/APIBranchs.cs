@@ -20,10 +20,21 @@ namespace API.Controllers
         [HttpGet]
         public async Task<List<EBranchs>> getAllBranchs()
         {
-            List<EBranchs> companayList = new List<EBranchs>();
-            companayList = await BranchLogic.getAllBranchs();
+            List<EBranchs> branchs = new List<EBranchs>();
+            branchs = await BranchLogic.getAllBranchs();
 
-            return companayList;
+            return branchs;
+        }
+
+        [Route("companybranchs")]
+        [HttpGet]
+        public async Task<List<EBranchs>> getAllCompanyBranchs([FromBody] JsonElement objData)
+        {
+            int companyid = objData.GetProperty("companyid").GetInt16();
+            List<EBranchs> branchs = new List<EBranchs>();
+            branchs = await BranchLogic.getAllCompanyBranchs(companyid);
+
+            return branchs;
         }
 
         [Route("getBranchById")]
@@ -42,20 +53,23 @@ namespace API.Controllers
 
         [Route("add")]
         [HttpPost]
-        public async Task<Boolean> addBranch([FromBody] JsonElement objData)
+        public async Task<Boolean> addBranch([FromBody] JsonElement branch)
         {
 
             bool result = false;
             try
             {
-                var BranchName = objData.GetProperty("branchname").GetString();
-                var CompnayId = objData.GetProperty("companyid").GetInt16();
-             
+                var BranchName = branch.GetProperty("branchname").GetString();
+                var CompnayId = branch.GetProperty("companyid").GetInt16();
+                var Latitude = branch.GetProperty("latitude").GetDecimal();
+                var Longitude = branch.GetProperty("longitude").GetDecimal();
 
                 EBranchs newBranch = new EBranchs
                 {
                     BranchName = BranchName,
                     CompnayId = CompnayId,
+                    Latitude = Latitude,
+                    Longitude = Longitude,
                     EndDate = null,
 
 
@@ -79,21 +93,26 @@ namespace API.Controllers
 
         [Route("update")]
         [HttpPost]
-        public async Task<Boolean> updateUser([FromBody] JsonElement objData)
+        public async Task<Boolean> updateBranch([FromBody] JsonElement branch)
         {
 
             bool result = false;
 
             try
             {
-                var BranchId = objData.GetProperty("branchid").GetInt16();
-                var BranchName = objData.GetProperty("branchname").GetString();
-                var CompnayId = objData.GetProperty("companyid").GetInt16();
+                var BranchId = branch.GetProperty("branchid").GetInt16();
+                var BranchName = branch.GetProperty("branchname").GetString();
+                var CompnayId = branch.GetProperty("companyid").GetInt16();
+                var Latitude = branch.GetProperty("latitude").GetDecimal();
+                var Longitude = branch.GetProperty("longitude").GetDecimal();
+
                 EBranchs UpdatedBranch = new EBranchs
                 {
                     BranchId = BranchId,
                     BranchName = BranchName,
                     CompnayId = CompnayId,
+                    Latitude = Latitude,
+                    Longitude = Longitude,
                 };
                 result = await BranchLogic.updateBranch(UpdatedBranch);
             }
