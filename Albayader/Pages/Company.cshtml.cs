@@ -102,8 +102,6 @@ namespace AlbayaderWeb.Pages
             }
            string statusCode = await deletCompany(id);
 
-
-
             return null;
 
         }

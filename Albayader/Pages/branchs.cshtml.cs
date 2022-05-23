@@ -75,7 +75,7 @@ namespace AlbayaderWeb.Pages
         public async Task<IActionResult> OnPost()
         {
             //delete 
-            int id = Convert.ToInt16(Request.Form["deletedBranchId"]);
+            int id = Convert.ToInt16(Request.Form["deletedbranchId"]);
 
             if (id == 0)
             {
@@ -86,6 +86,20 @@ namespace AlbayaderWeb.Pages
 
 
             return Page();
+
+        }
+
+        public async Task<IActionResult> OnPostDeletebranch(int id)
+        {
+          
+
+            if (id == 0)
+            {
+                return Page();
+            }
+            string statusCode = await deletBranch(id);
+
+            return null;
 
         }
         public async Task<string> deletBranch(int id)

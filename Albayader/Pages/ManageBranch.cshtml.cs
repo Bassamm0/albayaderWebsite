@@ -107,11 +107,11 @@ namespace AlbayaderWeb.Pages
                         _Postbranch.latitude = Convert.ToDecimal(Request.Form["longitude"]);
                     }
                     _Postbranch.companyid = Convert.ToInt16(Request.Form["hdCompanyId"]);
-                    string companyNamefield = Request.Form["hdCompanyName"];
+                    string companyNamefield = Request.Form["companyNamefield"];
                     statusCode = await addBranchy(_Postbranch);
                     if (statusCode == "OK")
                     {
-                        return RedirectToPage("branchs?companyid="+ _Postbranch.companyid + "&companyName="+ companyNamefield);
+                        return RedirectToPage("branchs", new { companyid = _Postbranch.companyid, companyname = companyNamefield });
                     }
                 }
                 catch (Exception ex)
@@ -138,26 +138,21 @@ namespace AlbayaderWeb.Pages
 
                     _Postbranch.companyid = Convert.ToInt16(Request.Form["hdCompanyId"]);
 
-                    string companyNamefield = Request.Form["hdCompanyName"];
+                    string companyNamefield = Request.Form["companyNamefield"];
                     statusCode = await updateBranch(_Postbranch);
                     if (statusCode == "OK")
                     {
-                        return RedirectToPage("branchs?companyid=" + _Postbranch.companyid + "&companyName=" + companyNamefield);
-                    }
+                        
+                        return RedirectToPage("branchs", new { companyid = _Postbranch.companyid, companyname= companyNamefield });
+                     }
                 }
                 catch (Exception ex)
                 {
 
                 }
 
-
-
             }
-
-
             return null;
-
-
         }
 
 
