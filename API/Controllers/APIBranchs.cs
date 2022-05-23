@@ -27,7 +27,7 @@ namespace API.Controllers
         }
 
         [Route("companybranchs")]
-        [HttpGet]
+        [HttpPost]
         public async Task<List<EBranchs>> getAllCompanyBranchs([FromBody] JsonElement objData)
         {
             int companyid = objData.GetProperty("companyid").GetInt16();
@@ -38,7 +38,7 @@ namespace API.Controllers
         }
 
         [Route("getBranchById")]
-        [HttpGet]
+        [HttpPost]
         public async Task<EBranchs> getBranchById([FromBody] JsonElement objData)
         {
             int _id = objData.GetProperty("id").GetInt16();
