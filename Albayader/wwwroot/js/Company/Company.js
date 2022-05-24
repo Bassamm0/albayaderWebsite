@@ -49,24 +49,48 @@
     })
 
 
-    //function deletItem() {
-    //    const uri = 'Company?handler=DeleteCompany&id=' + $("#deletedCompanyId").val();
+    $('body').on('click', '#ViewCompany', function (){
+        companyId = $(this).attr('companyId')
+       
+        getCompanyById(companyId);
+    })
 
-    //    fetch(uri, {
-    //        method: 'POST',
-    //        headers: {
-    //            'Accept': 'application/json',
-    //            'Content-Type': 'application/json',
-    //            RequestVerificationToken:
-    //             $('input:hidden[name="__RequestVerificationToken"]').val()
-    //        },
-    //        body: JSON.stringify($("#deletedCompanyId").val())
-    //    })
-    //        .then(response => response.json())
-    //        .then(() => {
-    //            alert('')
-    //        })
-    //        .catch(error => console.error('Unable to add item.', error));
-    //}
+    function getCompanyById(companyId) {
+        let html = '';
+        const uri = "https://localhost:7174/api/company/getCompanyById";
+
+        fetch(uri, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json; charset=utf-8',
+                RequestVerificationToken:
+                 $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            body: JSON.stringify({ 'id':parseInt(companyId)})
+        })
+            .then(response => response.json())
+            .then((data) => {
+               // trigger model
+                console.log(data)
+               
+                html = ` <li class="list-group-item"><span class='ViewDetailsTit'><img class="logoView" 
+
+                        src="uploads/${data.companyLogo}" /></li>`
+                 + ` <li class="list-group-item"><span class='ViewDetailsTit'>Name:</span> ${data.name}</li>`
+                 + ` <li class="list-group-item"><span class='ViewDetailsTit'>Country:</span> ${data.countryName}</li>`
+                     + ` <li class="list-group-item"><span class='ViewDetailsTit'>Tel:</span> ${data.telephone}</li>`
+                     + ` <li class="list-group-item"><span class='ViewDetailsTit'>Fax:</span> ${data.fax}</li>`
+                 + ` <li class="list-group-item"><span class='ViewDetailsTit'>City:</span> ${data.city}</li>`
+          
+                     + ` <li class="list-group-item"><span class='ViewDetailsTit'>Street:</span> ${data.street}</li>`
+                     + ` <li class="list-group-item"><span class='ViewDetailsTit'>Street No.:</span> ${data.streetNo}</li>`
+                     + ` <li class="list-group-item"><span class='ViewDetailsTit'>Latitude:</span> ${data.latitude}</li>`
+                     + ` <li class="list-group-item"><span class='ViewDetailsTit'>Longitude:</span> ${data.longitude}</li>`
+               
+                $('#CompanyDetails').html(html)
+            })
+            .catch(error => console.error('Unable to add item.', error));
+    }
 
 })

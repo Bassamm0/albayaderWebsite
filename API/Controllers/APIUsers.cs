@@ -54,7 +54,7 @@ namespace API
                         nationality = user.Nationality,
                         countryId=user.CountryId,
                         city=user.City,
-                        birthday=user.Birthday.ToString("dd/MM/yyyy"),
+                        birthday=user.Birthday,
                         pictureFileName=user.PictureFileName,
 
 
@@ -68,8 +68,95 @@ namespace API
             return userList;
         }
 
-        [Route("getUserById")]
+        [Route("getCompanyUsers")]
+        [HttpPost]
+        public async Task<List<UserViewModel>> getCompanyUsers([FromBody] JsonElement objData)
+        {
+
+            List<UserViewModel> userList = new List<UserViewModel>();
+            int companyid = objData.GetProperty("companyid").GetInt16();
+            var users = await userLogic.getCompanyUsers(companyid);
+            if (users.Count > 0)
+            {
+
+                foreach (var user in users)
+                {
+                    UserViewModel currentUser = new UserViewModel
+                    {
+                        title = user.Title,
+                        email = user.Email,
+                        userId = user.UserId,
+                        username = user.Username,
+                        authLevel = user.AuthLevelRefId,
+                        firstName = user.FirstName,
+                        lastName = user.Lastname,
+                        mobile = user.Mobile,
+                        telephone = user.Telephone,
+                        role = user.Role,
+                        nationality = user.Nationality,
+                        countryId = user.CountryId,
+                        city = user.City,
+                        birthday = user.Birthday,
+                       // birthday = user.Birthday.ToString("dd/MM/yyyy"),
+                        pictureFileName = user.PictureFileName,
+                        companyname = user.CompanyName,
+                        branchname = user.BranchName,
+
+                    };
+
+                    userList.Add(currentUser);
+                }
+
+            }
+            return userList;
+        }
+        [Route("getBranchUsers")]
         [HttpGet]
+        public async Task<List<UserViewModel>> getBranchUsers([FromBody] JsonElement objData)
+        {
+
+            List<UserViewModel> userList = new List<UserViewModel>();
+            int branchId = objData.GetProperty("branchId").GetInt16();
+            var users = await userLogic.getBranchUsers(branchId);
+            if (users.Count > 0)
+            {
+
+                foreach (var user in users)
+                {
+                    UserViewModel currentUser = new UserViewModel
+                    {
+                        title = user.Title,
+                        email = user.Email,
+                        userId = user.UserId,
+                        username = user.Username,
+                        authLevel = user.AuthLevelRefId,
+                        firstName = user.FirstName,
+                        lastName = user.Lastname,
+                        mobile = user.Mobile,
+                        telephone = user.Telephone,
+                        role = user.Role,
+                        nationality = user.Nationality,
+                        countryId = user.CountryId,
+                        city = user.City,
+                        birthday = user.Birthday,
+                        pictureFileName = user.PictureFileName,
+                        companyname = user.CompanyName,
+                        branchname = user.BranchName,
+
+                    };
+
+                    userList.Add(currentUser);
+                }
+
+            }
+            return userList;
+        }
+
+
+
+
+        [Route("getUserById")]
+        [HttpPost]
         public async Task<UserViewModel> getUserById([FromBody] JsonElement objData )
         {
             int _id = objData.GetProperty("id").GetInt16();
@@ -93,7 +180,7 @@ namespace API
                         nationality = user.Nationality,
                         countryId = user.CountryId,
                         city = user.City,
-                        birthday = user.Birthday.ToString("dd/MM/yyyy"),
+                        birthday = user.Birthday,
                         pictureFileName = user.PictureFileName,
                     };
 
@@ -424,7 +511,7 @@ namespace API
                 nationality = user.Nationality,
                 countryId = user.CountryId,
                 city = user.City,
-                birthday = user.Birthday.ToString("dd/MM/yyyy"),
+                birthday = user.Birthday,
                 pictureFileName = user.PictureFileName,
             };
 

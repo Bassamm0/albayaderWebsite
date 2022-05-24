@@ -56,6 +56,13 @@ namespace Entity
        
         [StringLength(150, ErrorMessage = "File Name Can't br longer than 150 characters")]
         public string PictureFileName { get; set; }
+
+        public int BranchId { get; set; }
+        public int CompanyId { get; set; }
+        public string BranchName { get; set; }
+        public string CompanyName { get; set; }
+        public string ResidentContry { get; set; }
+        public string NationalityName { get; set; }
         public int OpId { get; set; }
     }
 }

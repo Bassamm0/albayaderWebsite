@@ -68,6 +68,135 @@ namespace DAL.Functions
 
             return users;
         }
+
+        public List<EUser> getCompanyUsers(int companyId)
+        {
+            List<EUser> users = new List<EUser>();
+
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+                    
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.Append("select CON.Name ResidentCountry,CONN.Name NationalityName, CO.Name CompanyName  ,* from users U ");
+                    sQuery.Append("inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
+                    sQuery.Append("inner join Branchs BR on BR.branchId=UAB.BranchId ");
+                    sQuery.Append("inner join Companies CO on CO.CompanyID = BR.compnayId ");
+                    sQuery.Append("inner join Countries CON on CON.CountryId=U.CountryId ");
+                    sQuery.Append("inner join Countries CONN on CONN.CountryId=U.Nationality ");
+
+                    sQuery.AppendFormat("where U.IsDeleted = 0 and UAB.EndDate is null and CO.EndDate is null and CO.CompanyID={0}", companyId);
+                    command.CommandText = sQuery.ToString();
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            EUser oEUsers = new EUser();
+                            if (dataReader["UserId"] != DBNull.Value) { oEUsers.UserId = (int)dataReader["UserId"]; }
+                            if (dataReader["Nationality"] != DBNull.Value) { oEUsers.Nationality = (int)dataReader["Nationality"]; }
+                            if (dataReader["CountryId"] != DBNull.Value) { oEUsers.CountryId = (int)dataReader["CountryId"]; }
+                            if (dataReader["PositionId"] != DBNull.Value) { oEUsers.PositionId = (int)dataReader["PositionId"]; }
+                            if (dataReader["Title"] != DBNull.Value) { oEUsers.Title = (string)dataReader["Title"]; }
+                            if (dataReader["Username"] != DBNull.Value) { oEUsers.Username = (string)dataReader["Username"]; }
+                            if (dataReader["Password"] != DBNull.Value) { oEUsers.Password = m_oEncrption.Decrypt((string)dataReader["Password"]); }
+                            if (dataReader["FirstName"] != DBNull.Value) { oEUsers.FirstName = (string)dataReader["FirstName"]; }
+                            if (dataReader["LastName"] != DBNull.Value) { oEUsers.Lastname = (string)dataReader["LastName"]; }
+                            if (dataReader["City"] != DBNull.Value) { oEUsers.City = (string)dataReader["City"]; }
+                            if (dataReader["Birthday"] != DBNull.Value) { oEUsers.Birthday = (DateTime)dataReader["Birthday"]; }
+                            if (dataReader["Email"] != DBNull.Value) { oEUsers.Email = (string)dataReader["Email"]; }
+                            if (dataReader["Mobile"] != DBNull.Value) { oEUsers.Mobile = (string)dataReader["Mobile"]; }
+                            if (dataReader["Telephone"] != DBNull.Value) { oEUsers.Telephone = (string)dataReader["Telephone"]; }
+                            if (dataReader["AuthLevelRefId"] != DBNull.Value) { oEUsers.AuthLevelRefId = (int)dataReader["AuthLevelRefId"]; }
+                            if (dataReader["PictureFileName"] != DBNull.Value) { oEUsers.PictureFileName = (string)dataReader["PictureFileName"]; }
+                            if (dataReader["Role"] != DBNull.Value) { oEUsers.Role = (string)dataReader["Role"]; }
+                            if (dataReader["Name"] != DBNull.Value) { oEUsers.CompanyName = (string)dataReader["Name"]; }
+                            if (dataReader["BranchName"] != DBNull.Value) { oEUsers.BranchName = (string)dataReader["BranchName"]; }
+                            if (dataReader["ResidentCountry"] != DBNull.Value) { oEUsers.ResidentContry = (string)dataReader["ResidentCountry"]; }
+                            if (dataReader["NationalityName"] != DBNull.Value) { oEUsers.NationalityName = (string)dataReader["NationalityName"]; }
+                            if (dataReader["CompanyName"] != DBNull.Value) { oEUsers.CompanyName = (string)dataReader["CompanyName"]; }
+                            users.Add(oEUsers);
+                        }
+                    }
+                    dataReader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return users;
+        }
+
+        public List<EUser> getBranchUsers(int branchId)
+        {
+            List<EUser> users = new List<EUser>();
+
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.Append("select CON.Name ResidentCountry,CONN.Name NationalityName, CO.Name CompanyName  ,* from users U ");
+                    sQuery.Append("inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
+                    sQuery.Append("inner join Branchs BR on BR.branchId=UAB.BranchId ");
+                    sQuery.Append("inner join Companies CO on CO.CompanyID = BR.compnayId ");
+                    sQuery.Append("inner join Countries CON on CON.CountryId=U.CountryId ");
+                    sQuery.Append("inner join Countries CONN on CONN.CountryId=U.Nationality ");
+                    sQuery.AppendFormat("where U.IsDeleted = 0 and UAB.EndDate is null and CO.EndDate is null and BR.branchId={0}", branchId);
+                    command.CommandText = sQuery.ToString();
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            EUser oEUsers = new EUser();
+                            if (dataReader["UserId"] != DBNull.Value) { oEUsers.UserId = (int)dataReader["UserId"]; }
+                            if (dataReader["Nationality"] != DBNull.Value) { oEUsers.Nationality = (int)dataReader["Nationality"]; }
+                            if (dataReader["CountryId"] != DBNull.Value) { oEUsers.CountryId = (int)dataReader["CountryId"]; }
+                            if (dataReader["PositionId"] != DBNull.Value) { oEUsers.PositionId = (int)dataReader["PositionId"]; }
+                            if (dataReader["Title"] != DBNull.Value) { oEUsers.Title = (string)dataReader["Title"]; }
+                            if (dataReader["Username"] != DBNull.Value) { oEUsers.Username = (string)dataReader["Username"]; }
+                            if (dataReader["Password"] != DBNull.Value) { oEUsers.Password = m_oEncrption.Decrypt((string)dataReader["Password"]); }
+                            if (dataReader["FirstName"] != DBNull.Value) { oEUsers.FirstName = (string)dataReader["FirstName"]; }
+                            if (dataReader["LastName"] != DBNull.Value) { oEUsers.Lastname = (string)dataReader["LastName"]; }
+                            if (dataReader["City"] != DBNull.Value) { oEUsers.City = (string)dataReader["City"]; }
+                            if (dataReader["Birthday"] != DBNull.Value) { oEUsers.Birthday = (DateTime)dataReader["Birthday"]; }
+                            if (dataReader["Email"] != DBNull.Value) { oEUsers.Email = (string)dataReader["Email"]; }
+                            if (dataReader["Mobile"] != DBNull.Value) { oEUsers.Mobile = (string)dataReader["Mobile"]; }
+                            if (dataReader["Telephone"] != DBNull.Value) { oEUsers.Telephone = (string)dataReader["Telephone"]; }
+                            if (dataReader["AuthLevelRefId"] != DBNull.Value) { oEUsers.AuthLevelRefId = (int)dataReader["AuthLevelRefId"]; }
+                            if (dataReader["PictureFileName"] != DBNull.Value) { oEUsers.PictureFileName = (string)dataReader["PictureFileName"]; }
+                            if (dataReader["Role"] != DBNull.Value) { oEUsers.Role = (string)dataReader["Role"]; }
+                            if (dataReader["Name"] != DBNull.Value) { oEUsers.CompanyName = (string)dataReader["Name"]; }
+                            if (dataReader["BranchName"] != DBNull.Value) { oEUsers.BranchName = (string)dataReader["BranchName"]; }
+                            if (dataReader["ResidentCountry"] != DBNull.Value) { oEUsers.ResidentContry = (string)dataReader["ResidentCountry"]; }
+                            if (dataReader["NationalityName"] != DBNull.Value) { oEUsers.NationalityName = (string)dataReader["NationalityName"]; }
+                            if (dataReader["CompanyName"] != DBNull.Value) { oEUsers.CompanyName = (string)dataReader["CompanyName"]; }
+                            users.Add(oEUsers);
+                        }
+                    }
+                    dataReader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return users;
+        }
         public EUser getSingleUser(int Id)
         {
             var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
@@ -79,7 +208,13 @@ namespace DAL.Functions
                 using (var command = conn.CreateCommand())
                 {
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.AppendFormat("select * from users where UserId ={0} ", Id);
+                    sQuery.Append("select CON.Name ResidentCountry,CONN.Name NationalityName, CO.Name CompanyName ,* from users U ");
+                    sQuery.Append("inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
+                    sQuery.Append("inner join Branchs BR on BR.branchId=UAB.BranchId ");
+                    sQuery.Append("inner join Companies CO on CO.CompanyID = BR.compnayId ");
+                    sQuery.Append("inner join Countries CON on CON.CountryId=U.CountryId ");
+                    sQuery.Append("inner join Countries CONN on CONN.CountryId=U.Nationality ");
+                    sQuery.AppendFormat("where U.UserId ={0} ", Id);
                    
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -107,6 +242,10 @@ namespace DAL.Functions
                             if (dataReader["AuthLevelRefId"] != DBNull.Value) { oEUsers.AuthLevelRefId = (int)dataReader["AuthLevelRefId"]; }
                             if (dataReader["PictureFileName"] != DBNull.Value) { oEUsers.PictureFileName = (string)dataReader["PictureFileName"]; }
                             if (dataReader["Role"] != DBNull.Value) { oEUsers.Role = (string)dataReader["Role"]; }
+                            if (dataReader["BranchName"] != DBNull.Value) { oEUsers.BranchName = (string)dataReader["BranchName"]; }
+                            if (dataReader["ResidentCountry"] != DBNull.Value) { oEUsers.ResidentContry = (string)dataReader["ResidentCountry"]; }
+                            if (dataReader["NationalityName"] != DBNull.Value) { oEUsers.NationalityName = (string)dataReader["NationalityName"]; }
+                            if (dataReader["CompanyName"] != DBNull.Value) { oEUsers.CompanyName = (string)dataReader["CompanyName"]; }
 
                         }
                     }

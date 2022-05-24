@@ -27,7 +27,8 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" Select * from Companies C ");
+                    sQuery.Append(" Select C.*,CO.Name CountryName  from Companies C  ");
+                    sQuery.Append(" inner join Countries CO on CO.CountryId=C.CountryId ");
                     sQuery.Append(" where C.EndDate is null order by C.CompanyID");
 
                     command.CommandText = sQuery.ToString();
@@ -39,7 +40,7 @@ namespace DAL.Functions
                         {
                             ECompanies oECompanies = new ECompanies();
                             if (dataReader["CompanyID"] != DBNull.Value) { oECompanies.CompanyID = (int)dataReader["CompanyID"]; }
-                             if (dataReader["CountryId"] != DBNull.Value) { oECompanies.CountryId = (int)dataReader["CountryId"]; }
+                            if (dataReader["CountryId"] != DBNull.Value) { oECompanies.CountryId = (int)dataReader["CountryId"]; }
                             if (dataReader["Name"] != DBNull.Value) { oECompanies.Name = (string)dataReader["Name"]; }
                             if (dataReader["Description"] != DBNull.Value) { oECompanies.Description = (string)dataReader["Description"]; }
                             if (dataReader["City"] != DBNull.Value) { oECompanies.City = (string)dataReader["City"]; }
@@ -50,7 +51,8 @@ namespace DAL.Functions
                             if (dataReader["Latitude"] != DBNull.Value) { oECompanies.Latitude = (decimal)dataReader["Latitude"]; }
                             if (dataReader["Longitude"] != DBNull.Value) { oECompanies.Longitude = (decimal)dataReader["Longitude"]; }
                             if (dataReader["Altitude"] != DBNull.Value) { oECompanies.Altitude = (decimal)dataReader["Altitude"]; }
-                            if (dataReader["CompanyLogo"] != DBNull.Value) { oECompanies.CompanyLogo = (string)dataReader["CompanyLogo"]; }
+                            if (dataReader["CompanyLogo"] != DBNull.Value) { oECompanies.CompanyLogo = (string)dataReader["CountryName"]; }
+                            if (dataReader["CountryName"] != DBNull.Value) { oECompanies.CountryName = (string)dataReader["CompanyLogo"]; }
                             if (dataReader["OpId"] != DBNull.Value) { oECompanies.OpId = (int)dataReader["OpId"]; }
                             if (dataReader["CompanyTypeId"] != DBNull.Value) { oECompanies.CompanyTypeId = (int)dataReader["CompanyTypeId"]; }
  
@@ -82,7 +84,8 @@ namespace DAL.Functions
                 using (var command = conn.CreateCommand())
                 {
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" Select * from Companies C ");
+                    sQuery.Append(" Select C.*,CO.Name CountryName  from Companies C  ");
+                    sQuery.Append(" inner join Countries CO on CO.CountryId=C.CountryId ");
                     sQuery.AppendFormat(" where C.CompanyID ={0} ", Id);
 
                     command.CommandText = sQuery.ToString();
@@ -109,6 +112,7 @@ namespace DAL.Functions
                             if (dataReader["CompanyLogo"] != DBNull.Value) { oECompanies.CompanyLogo = (string)dataReader["CompanyLogo"]; }
                             if (dataReader["OpId"] != DBNull.Value) { oECompanies.OpId = (int)dataReader["OpId"]; }
                             if (dataReader["CompanyTypeId"] != DBNull.Value) { oECompanies.CompanyTypeId = (int)dataReader["CompanyTypeId"]; }
+                            if (dataReader["CountryName"] != DBNull.Value) { oECompanies.CountryName = (string)dataReader["CountryName"]; }
 
                         }
                     }

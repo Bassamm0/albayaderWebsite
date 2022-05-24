@@ -26,6 +26,7 @@ namespace Entity
         public DateTime?  EndDate { get; set; }
         public string CompanyLogo { get; set; }
         public int CompanyTypeId { get; set; }
+        public string CountryName { get; set; }
         public int OpId { get; set; }
     
    

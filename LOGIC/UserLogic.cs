@@ -57,9 +57,21 @@ namespace LOGIC.UserLogic
 
             return user;
         }
+        public async Task<List<EUser>> getCompanyUsers(int companyId)
+        {
+             List<EUser> users = _DUser.getCompanyUsers(companyId);
+
+            return users;
+        }
+        public async Task<List<EUser>> getBranchUsers(int branchId)
+        {
+            List<EUser> users = _DUser.getBranchUsers(branchId);
+
+            return users;
+        }
         public async Task<List<EUser>> getAllUsers()
         {
-             List<EUser> users = _DUser.getAllUsers();
+            List<EUser> users = _DUser.getAllUsers();
 
             return users;
         }

@@ -1,8 +1,9 @@
 ﻿@page
-@model AlbayaderWeb.Pages.CompanyModel
+@model AlbayaderWeb.Pages.UserModel
 @{
-     ViewData["Title"] = "Companies";
+    ViewData["Title"] = "Users";
 }
+
 <div class="content-wrapper">
 
     <section class="content-header">
@@ -11,13 +12,14 @@
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-left">
                   <li class="breadcrumb-item"><a href="Dashboard">Dashboard</a></li>
-                  <li class="breadcrumb-item active">Companies </li>
+                  <li class="breadcrumb-item " ><a href="compnay" >Companyies</a> </li>
+                  <li class="breadcrumb-item active" id="titleUser">@Model.title Users</li>
                 </ol>
               </div>
                <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <form method="post">
-                  <button type="submit" class="btn btn-default" asp-page-handler="AddCompany" style="background-color: rgb(250, 245, 245);"><i class="fas fa-plus"></i></button>
+                  <button type="submit" class="btn btn-default" asp-page-handler="AddUser" asp-route-companyname="@Model.title" asp-route-companyid="@Model.companyId" style="background-color: rgb(250, 245, 245);"><i class="fas fa-plus"></i></button>
                   
                     </form>
               
@@ -46,24 +48,24 @@
                 <!-- small box card start -->
               
 
-                        @if(Model.companayList != null)
+                        @if(Model.User != null)
                         {
-                             @foreach (var item in Model.companayList)
+                             @foreach (var item in Model.User)
                                 {
-                                   <div class="col-12 col-md-6 col-lg-3 companyHolder" companyid="@item.CompanyID" >
+                                   <div class="col-12 col-md-6 col-lg-3 companyHolder" companyid="@item.UserId" >
                                      <div class="small-box" style="text-align: center">
                                       <div class="inner">
                                         <div>
                                           <img
                                             class=""
-                                            src="https://localhost:7174/api/uploads/@item.CompanyLogo"
+                                            src="https://localhost:7174/api/uploads/@item.PictureFileName"
                                             style="width: 100px;max-height: 60px;"
                                             alt="User Avatar"
                                           />
                                         </div>
                                         <div>
-                                          <h2> @Html.DisplayFor(modelItem => item.Name)</h2>
-                                          <h3 style="min-height:50px">@Html.DisplayFor(modelItem => item.Telephone)</h3>
+                                          <h2>  <h2> @Html.DisplayFor(modelItem => item.FirstName)<span> </span> @Html.DisplayFor(modelItem => item.Lastname)</h2></h2>
+                                          <h3 style="min-height:50px">@Html.DisplayFor(modelItem => item.BranchName)</h3>
                                         </div>
                                       </div>
                                       <div class="icon">
@@ -81,32 +83,22 @@
                                         </button>
                                         <div class="dropdown-menu"
                                           aria-labelledby="dropdownMenuButton"  style="width: 100%;">
-                                                 <button class="dropdown-item bg-info" asp-page-handler="DeleteCompany" asp-route-id="@item.CompanyID" > <i class="fa-solid fa-hands-holding-circle"></i> Start Preventive</button>
+                                                 <button class="dropdown-item bg-info" asp-page-handler="DeleteUser" asp-route-id="@item.UserId" > <i class="fa-solid fa-hands-holding-circle"></i> Start Preventive</button>
                                                <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
-                                                 <button class="dropdown-item  bg-info"><i class="fas fa-wrench"></i> Start Corrective</button>
-                                               <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
-                                                 <button class="dropdown-item bg-info"  ><i class="fas fa-screwdriver-wrench"></i> Start Other</button>
-                                                 <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
-                                                 <button class="dropdown-item"  style="color: rgb(124, 123, 123);"><i class="fas fa-chart-pie" ></i> Reports</button>
-                                              <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
-                                                 <button type="submit" class="dropdown-item" asp-page-handler="EditCompany" asp-route-id="@item.CompanyID" style="color: rgb(124, 123, 123);">
+                                               
+                                                 <button type="submit" class="dropdown-item" asp-page-handler="EditUser" asp-route-id="@item.UserId" style="color: rgb(124, 123, 123);">
                                                      <i class="fas fa-pen"></i> Edit</button>
-                                                     <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
-                                                 <button type="button" class="dropdown-item"  id="ViewCompany" name="ViewCompany"  
-                                                 companyId='@item.CompanyID' style="color: rgb(124, 123, 123);"  data-toggle="modal" data-target="#modal-view">
-                                                    <i class="fa-solid fa-eye"></i> View</button>
-                                              <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
-                                                 <a class="dropdown-item"  style="color: rgb(124, 123, 123);" href="branchs?companyid=@item.CompanyID&companyName=@item.Name"><i class="fa-solid fa-landmark"></i> Branchs</a>
-                                              <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
-                                                 <a class="dropdown-item"  style="color: rgb(124, 123, 123);" href="users?companyid=@item.CompanyID&companyName=@item.Name"><i class="fas fa-user"></i> Users</a>
+                                                <button type="button" class="dropdown-item"  
+                                                userid="@item.UserId" style="color: rgb(124, 123, 123);" id="ViewUser"  data-toggle="modal" data-target="#modal-view">
+                                                     <i class="fa-solid fa-eye"></i> View</button>
+
                                             <div class="dropdown-divider"></div>
-                                            <button class="dropdown-item text-danger deleteBtn" type="button" id="deleteBtn" name="deletBtn" companyid="@item.CompanyID" CompanyName="@item.Name" data-toggle="modal" data-target="#modal-delete">
+                                            <button class="dropdown-item text-danger deleteBtn" type="button" id="deleteBtn" name="deletBtn" companyid="@item.UserId" CompanyName="@item.FirstName ' ' @item.Lastname" data-toggle="modal" data-target="#modal-delete">
                                                 <i class="fas fa-trash"></i> Delete</button>
                                         </div>
                                       </div>
                                     </div>  
                                   </div>
-                                
                                 }
                         }
                          </div>
@@ -137,8 +129,8 @@
             </div>
             <div class="modal-body">
               <div id="Deletetext">
-                  Are you sure you want to delete the company
-                  <span style="font-weight:bold;" id=companyToDeleteName>
+                  Are you sure you want to delete the User
+                  <span style="font-weight:bold;" id=UserToDeleteName>
 
                   </span>
                   <div class="deleteWarning" > Please note that this action can't be rolled back and the deleted data can't be retrived</div>
@@ -147,8 +139,8 @@
             <form method="post" id="deleteForm" enctype="multipart/form-data">
               <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-danger" asp-page-handler="DeleteCompany" asp-route-id="" id="DeleteCompany">Delete</button>
-              <input type="hidden" id="deletedCompanyId" />
+              <button type="button" class="btn btn-danger" asp-page-handler="DeleteUser" asp-route-id="" id="DeleteUser">Delete</button>
+              <input type="hidden" id="deletedUserId" name="deletedUserId" />
             </div>
             </form>
            
@@ -157,13 +149,15 @@
         </div>
         <!-- /.modal-dialog -->
       </div>
-
       <!-- /.modal -->
+
+
+       <!-- /.modal -->
         <div class="modal fade" id="modal-view">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Company Detials</h4>
+              <h4 class="modal-title">User Details</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -171,7 +165,7 @@
             <div class="modal-body">
           
 
-                <ul class="list-group list-group-flush" id="CompanyDetails">
+                <ul class="list-group list-group-flush" id="UserDetails">
                 
                
                 </ul>
@@ -193,5 +187,4 @@
     <script src="plugins/jquery/jquery.min.js"></script>
        <!-- Bootstrap 4 -->
     <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="js/Company/Company.js"></script>
-
+    <script src="js/Users/Users.js"></script>

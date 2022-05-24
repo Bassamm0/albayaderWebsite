@@ -13,6 +13,7 @@ namespace LOGIC
     public class CompanyLogic
     {
         DCompanies dCompanies = new DCompanies();
+       
         public async Task<List<ECompanies>> getAllCompanies()
         {
            
@@ -33,6 +34,16 @@ namespace LOGIC
             var resul = await dCompanies.addCompany(newCompany);
             if (resul.CompanyID > 0)
             {
+
+                // create main branch
+                DBranchs dbranchs = new DBranchs();
+                EBranchs ebranchs = new EBranchs();
+                ebranchs.BranchName = newCompany.Name;
+                ebranchs.CompnayId = newCompany.CompanyID;
+                ebranchs.Latitude = newCompany.Latitude;
+                ebranchs.Longitude = newCompany.Longitude;
+                var addbranch=await dbranchs.addBranch(ebranchs);
+
                 return true;
             }
             else

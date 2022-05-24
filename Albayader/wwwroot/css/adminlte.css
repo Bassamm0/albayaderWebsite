@@ -53031,3 +53031,14 @@ a.text-muted:hover {
     font-size:14px;
     padding:20px 0px;
 }
+.ViewDetailsTit{
+    font-weight:bold;
+}
+.logoView{
+    width:60px;
+    height:60px;
+    margin-left:auto;
+    margin-right:auto;
+   
+    
+}

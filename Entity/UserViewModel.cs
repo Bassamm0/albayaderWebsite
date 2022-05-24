@@ -36,10 +36,12 @@ namespace Entity
       
         public string city { get; set; }
 
-        public string birthday { get; set; }
+        public DateTime birthday { get; set; }
 
 
         public string pictureFileName { get; set; }
+        public string companyname { get; set; }
+        public string branchname { get; set; }
 
     }
 }
