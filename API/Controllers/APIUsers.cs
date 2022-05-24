@@ -99,8 +99,8 @@ namespace API
                         birthday = user.Birthday,
                        // birthday = user.Birthday.ToString("dd/MM/yyyy"),
                         pictureFileName = user.PictureFileName,
-                        companyname = user.CompanyName,
-                        branchname = user.BranchName,
+                        CompanyName = user.CompanyName,
+                        BranchName = user.BranchName,
 
                     };
 
@@ -140,8 +140,8 @@ namespace API
                         city = user.City,
                         birthday = user.Birthday,
                         pictureFileName = user.PictureFileName,
-                        companyname = user.CompanyName,
-                        branchname = user.BranchName,
+                        CompanyName = user.CompanyName,
+                        BranchName = user.BranchName,
 
                     };
 
@@ -182,6 +182,10 @@ namespace API
                         city = user.City,
                         birthday = user.Birthday,
                         pictureFileName = user.PictureFileName,
+                        BranchName=user.BranchName,
+                        CompanyName = user.CompanyName, 
+                        ResidentContry =user.ResidentContry,
+                        NationalityName = user.NationalityName,
                     };
 
             return currentUser;

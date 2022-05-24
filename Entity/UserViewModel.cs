@@ -40,8 +40,11 @@ namespace Entity
 
 
         public string pictureFileName { get; set; }
-        public string companyname { get; set; }
-        public string branchname { get; set; }
-
+ 
+        public string BranchName { get; set; }
+        public string CompanyName { get; set; }
+        public string ResidentContry { get; set; }
+        public string NationalityName { get; set; }
+ 
     }
 }

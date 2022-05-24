@@ -83,11 +83,11 @@
                     + ` <li class="list-group-item"><span class='ViewDetailsTit'>Email:</span> ${data.email}</li>`
                     + ` <li class="list-group-item"><span class='ViewDetailsTit'>Mobile:</span> ${data.mobile}</li>`
                     + ` <li class="list-group-item"><span class='ViewDetailsTit'>Tel:</span> ${data.telephone}</li>`
-                    + ` <li class="list-group-item"><span class='ViewDetailsTit'>Company:</span> ${data.companyname}</li>`
-                    + ` <li class="list-group-item"><span class='ViewDetailsTit'>Branch:</span> ${data.branchname}</li>`
+                    + ` <li class="list-group-item"><span class='ViewDetailsTit'>Company:</span> ${data.companyName}</li>`
+                    + ` <li class="list-group-item"><span class='ViewDetailsTit'>Branch:</span> ${data.branchName}</li>`
 
-                    + ` <li class="list-group-item"><span class='ViewDetailsTit'>Country:</span> ${data.ResidentContry}</li>`
-                    + ` <li class="list-group-item"><span class='ViewDetailsTit'>Nationality:</span> ${data.NationalityName}</li>`
+                    + ` <li class="list-group-item"><span class='ViewDetailsTit'>Country:</span> ${data.residentContry}</li>`
+                    + ` <li class="list-group-item"><span class='ViewDetailsTit'>Nationality:</span> ${data.nationalityName}</li>`
                     + ` <li class="list-group-item"><span class='ViewDetailsTit'>City:</span> ${data.city}</li>`
                     + ` <li class="list-group-item"><span class='ViewDetailsTit'>Birthday:</span> ${data.birthday}</li>`
 
