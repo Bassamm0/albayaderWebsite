@@ -220,6 +220,13 @@ namespace LOGIC.UserLogic
             }
 
         }
+        public async Task<List<EPositions>> getPostions()
+        {
+
+            List<EPositions> positions = _DUser.getPostions();
+
+            return positions;
+        }
 
         public static bool IsValidPassword(string password)
         {

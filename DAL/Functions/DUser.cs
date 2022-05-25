@@ -641,7 +641,50 @@ namespace DAL.Functions
             return errorLogin;
         }
 
+        public List<EPositions> getPostions()
+        {
+            List<EPositions> lpositions = new List<EPositions>();
+
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.Append(" Select * from positions ");
 
 
+                    command.CommandText = sQuery.ToString();
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            EPositions positions = new EPositions();
+                            if (dataReader["PositionId"] != DBNull.Value) { positions.PositionId = (int)dataReader["PositionId"]; }
+                            if (dataReader["Name"] != DBNull.Value) { positions.Name = (string)dataReader["Name"]; }
+
+
+
+                            lpositions.Add(positions);
+                        }
+                    }
+                    dataReader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return lpositions;
+        }
     }
 }
+
+
+ 

@@ -84,7 +84,7 @@
                 }
             },
             error: function (xhr, textStatus, errorThrown) {
-                $('#ddCountry').append('<option value=""Data Not Loaded  ...</option>')
+                $('#ddCountry').append('<option value="">Data Not Loaded  ...</option>')
                 console.log('Error in Operation');
             }
         });

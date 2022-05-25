@@ -1,11 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using System.Text;
 using Entity;
-
 
 namespace AlbayaderWeb.Pages
 {
@@ -244,8 +241,6 @@ namespace AlbayaderWeb.Pages
         public string fax { get; set; }
         public decimal latitude { get; set; }
         public decimal longitude { get; set; }
-
-
         public string companylogo { get; set; }
         public int companytypeid { get; set; }
 

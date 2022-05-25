@@ -549,5 +549,16 @@ namespace API
             }
             return null;
         }
+        [Route("getpostions")]
+        [HttpGet]
+        public async Task<List<EPositions>> getPostions()
+        {
+            List<EPositions> positions = await userLogic.getPostions();
+
+            return positions;
+        }
+
+
+
     }
 }
