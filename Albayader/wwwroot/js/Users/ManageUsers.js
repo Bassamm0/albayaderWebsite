@@ -95,6 +95,10 @@
                 required: true,
                 equalTo: "#password"
             },
+            ddAuth: {
+                required: true,
+
+            },
 
 
         },

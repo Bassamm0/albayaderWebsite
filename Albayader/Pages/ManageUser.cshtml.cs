@@ -102,11 +102,12 @@ namespace AlbayaderWeb.Pages
                     _User.Password = Request.Form["password"];
                     _User.PositionId = Convert.ToInt32(Request.Form["ddPosition"]);
                     _User.PictureFileName = Request.Form["uploadedfile"];
+                    _User.AuthLevelRefId = Convert.ToInt16(Request.Form["ddAuth"]);
 
-                  
+
                     //_User.UserId = Convert.ToInt16(Request.Form["hdUserId"]);
                     string companyNamefield = Request.Form["companyNamefield"];
-                    int _companyId =Convert.ToInt32(Request.Form["hdCompanyId"]);
+                    int _companyId =Convert.ToInt16(Request.Form["hdCompanyId"]);
                     statusCode = await addUsery(_User);
                     if (statusCode == "OK")
                     {
@@ -139,14 +140,14 @@ namespace AlbayaderWeb.Pages
                     _User.Password = Request.Form["password"];
                     _User.PositionId = Convert.ToInt16(Request.Form["ddPosition"]);
                     _User.PictureFileName = Request.Form["uploadedfile"];
+                    _User.AuthLevelRefId = Convert.ToInt16(Request.Form["ddAuth"]);
 
-
-                    _User.UserId = Convert.ToInt32(Request.Form["hdUserId"]);
+                    _User.UserId = Convert.ToInt16(Request.Form["hdUserId"]);
                     _User.UserAndBranchId = Convert.ToInt16(Request.Form["hdUserAndBranchId"]);
                     string companyNamefield = Request.Form["companyNamefield"];
-                    int _companyId = Convert.ToInt32(Request.Form["hdCompanyId"]);
+                    int _companyId = Convert.ToInt16(Request.Form["hdCompanyId"]);
 
-                    statusCode = await updateUser(_PostUser);
+                    statusCode = await updateUser(_User);
                     if (statusCode == "OK")
                     {
 
@@ -199,7 +200,7 @@ namespace AlbayaderWeb.Pages
 
 
 
-        private async Task<string> updateUser(User User)
+        private async Task<string> updateUser(EUser User)
         {
 
             var json = JsonConvert.SerializeObject(User);

@@ -17,7 +17,7 @@
                 <ol class="breadcrumb float-sm-left">
                   <li class="breadcrumb-item"><a href="Dashboard">Dashboard</a></li>
                   <li class="breadcrumb-item "><a href="Company">Companies</a></li>
-                  <li class="breadcrumb-item "><a href="Users?companyid=@Model.CompanyId&companyName=@Model.CompanyName">Companies</a></li>
+                  <li class="breadcrumb-item "><a href="Users?companyid=@Model.CompanyId&companyName=@Model.CompanyName">@Model.CompanyName Users</a></li>
                   <li class="breadcrumb-item active" id="currentLable">@Model.pageTitle </li>
                 </ol>
               </div>
@@ -152,11 +152,20 @@
                       <progress id="fileProgress" style="display: none"></progress>
                       <span id="lblMessage" style="color: Green"></span>
                     </div>
-                   
+                     <select name="ddAuth" id="ddAuth" class="form-control " style="width: 100%;">
+                      <option value="">Select The Role</option>
+                        <option value="1">Administrator</option>
+                       <option value="2">Techniction </option>
+                       <option value="3">Manager </option>
+                       <option value="4">Client Manager </option>
+                       <option value="5">Client User </option>
+                    
+    
+                    </select>
                    
                      
                      <input type="hidden" id="hdUserId" name="hdUserId" value="@Model._User.UserId"/>
-                     <input type="hidden" id="hdUserAndBranchId" name="hdUserId" value="@Model._User.UserAndBranchId"/>
+                     <input type="hidden" id="hdUserAndBranchId" name="hdUserAndBranchId" value="@Model._User.UserAndBranchId"/>
                     
                 
                      
@@ -168,6 +177,7 @@
                         $("#ddNationality").val(@Model._User.Nationality).trigger('change');
                         $("#ddBranch").val(@Model._User.BranchId).trigger('change');     
                         $("#ddPosition").val(@Model._User.PositionId).trigger('change');
+                        $("#ddAuth").val(@Model._User.AuthLevelRefId).trigger('change');
                         })
                          </script>
                        }
@@ -292,6 +302,17 @@
                       <span id="lblMessage" style="color: Green"></span>
                     </div>
                    
+                     <select name="ddAuth" id="ddAuth" class="form-control " style="width: 100%;">
+                       <option value="">Select The Role</option>
+                       <option value="1">Administrator</option>
+                       <option value="2">Techniction </option>
+                       <option value="3">Manager </option>
+                       <option value="4">Client Manager </option>
+                       <option value="5">Client User </option>
+                    
+    
+                    </select>
+
                      <input type="hidden" id="uploadedfile" name="uploadedfile" value=""/>
 
                    @section Scripts{
@@ -307,11 +328,11 @@
 
                  <input type="hidden" id="companyNamefield" name="companyNamefield" value="@Model.CompanyName"/>
                  <input type="hidden" id="Smode" name="Smode" value="@Model.PageActionMode"/>
-
+                  <input type="hidden" id="hdCompanyId" name="hdCompanyId" value="@Model.CompanyId"/>
                      </form>
                
             
-                       <input type="hidden" id="hdCompanyId" name="hdCompanyId" value="@Model.CompanyId"/>
+                      
 
           
                 
@@ -324,7 +345,7 @@
             
             <div class="row" style="float: right;"> 
              <div style="padding: 20px;">
-            <a href='Users' class="btn btn-block btn-default btn-lg" style="width: 200px;">Cancel</a>
+            <a href='Users?companyid=@Model.CompanyId&companyName=@Model.CompanyName' class="btn btn-block btn-default btn-lg" style="width: 200px;">Cancel</a>
 
              </div>
 

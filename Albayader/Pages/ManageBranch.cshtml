@@ -13,7 +13,7 @@
                 <ol class="breadcrumb float-sm-left">
                   <li class="breadcrumb-item"><a href="Dashboard">Dashboard</a></li>
                   <li class="breadcrumb-item "><a href="Company">Companies</a></li>
-                  <li class="breadcrumb-item "><a href="branchs?companyid=@Model.CompanyId&companyName=@Model.CompanyName">Companies</a></li>
+                  <li class="breadcrumb-item "><a href="branchs?companyid=@Model.CompanyId&companyName=@Model.CompanyName">@Model.CompanyName Branchs</a></li>
                   <li class="breadcrumb-item active" id="currentLable">@Model.pageTitle </li>
                 </ol>
               </div>
@@ -117,7 +117,7 @@
             
             <div class="row" style="float: right;"> 
              <div style="padding: 20px;">
-            <a href='branchs' class="btn btn-block btn-default btn-lg" style="width: 200px;">Cancel</a>
+            <a href='branchs?companyid=@Model.CompanyId&companyName=@Model.CompanyName' class="btn btn-block btn-default btn-lg" style="width: 200px;">Cancel</a>
 
              </div>
 
