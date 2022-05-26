@@ -17,7 +17,7 @@ namespace API.Controllers
         {
             var currentUser = GetCurrentUser();
 
-            return Ok($"Hi {currentUser.FirstName}, you are an {currentUser.Role}");
+            return Ok($"Hi {currentUser.FirstName}, you are an {currentUser.UserRole}");
         }
 
         [HttpGet("Sellers")]
@@ -26,7 +26,7 @@ namespace API.Controllers
         {
             var currentUser = GetCurrentUser();
 
-            return Ok($"Hi {currentUser.FirstName}, you are a {currentUser.Role}");
+            return Ok($"Hi {currentUser.FirstName}, you are a {currentUser.UserRole}");
         }
 
         [HttpGet("AdminsAndSellers")]
@@ -35,7 +35,7 @@ namespace API.Controllers
         {
             var currentUser = GetCurrentUser();
 
-            return Ok($"Hi {currentUser.FirstName}, you are an {currentUser.Role}");
+            return Ok($"Hi {currentUser.FirstName}, you are an {currentUser.UserRole}");
         }
 
         [HttpGet("Public")]
@@ -57,7 +57,7 @@ namespace API.Controllers
                     Email = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value,
                     FirstName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.GivenName)?.Value,
                     Lastname = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Surname)?.Value,
-                    Role = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Role)?.Value,
+                    UserRole = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Role)?.Value,
                     UserId =Convert.ToInt32(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Sid)?.Value),
                     Mobile = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.MobilePhone)?.Value,
                     PositionId = Convert.ToInt32(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Actor)?.Value),

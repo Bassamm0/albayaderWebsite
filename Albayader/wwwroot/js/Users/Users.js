@@ -40,8 +40,8 @@
         }).done(function () {
 
             $('#modal-delete').modal('hide');
-
-            $('.UserHolder[Userid=' + Userid + ']').animate({ 'background': 'yellow' }, 1000).fadeOut(500, function () { $(this).remove(); });
+         
+            $('.userHolder[Userid=' + Userid + ']').animate({ 'background': 'yellow' }, 700).fadeOut(500, function () { $(this).remove(); });
         });
 
 

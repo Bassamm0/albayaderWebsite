@@ -47,7 +47,7 @@ namespace API.Controllers
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.GivenName, user.FirstName),
                 new Claim(ClaimTypes.Surname, user.Lastname),
-                new Claim(ClaimTypes.Role, user.Role),
+                new Claim(ClaimTypes.Role, user.UserRole),
                 new Claim(ClaimTypes.Sid, user.UserId.ToString())
             };
 

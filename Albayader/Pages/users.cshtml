@@ -52,7 +52,7 @@
                         {
                              @foreach (var item in Model.User)
                                 {
-                                   <div class="col-12 col-md-6 col-lg-3 companyHolder" companyid="@item.UserId" >
+                                   <div class="col-12 col-md-6 col-lg-3 userHolder" Userid="@item.UserId" >
                                      <div class="small-box" style="text-align: center">
                                       <div class="inner">
                                         <div>
@@ -91,7 +91,8 @@
                                                      <i class="fa-solid fa-eye"></i> View</button>
 
                                             <div class="dropdown-divider"></div>
-                                            <button class="dropdown-item text-danger deleteBtn" type="button" id="deleteBtn" name="deletBtn" companyid="@item.UserId" CompanyName="@item.FirstName ' ' @item.Lastname" data-toggle="modal" data-target="#modal-delete">
+                                            <button class="dropdown-item text-danger deleteBtn" type="button" id="deleteBtn" name="deletBtn"  userid="@item.UserId"
+                                            UserName="@item.FirstName  @item.Lastname" data-toggle="modal" data-target="#modal-delete">
                                                 <i class="fas fa-trash"></i> Delete</button>
                                         </div>
                                       </div>

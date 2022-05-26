@@ -38,6 +38,8 @@ namespace Entity
         public string ResidentContry { get; set; }
         public string NationalityName { get; set; }
 
+        public string UserRole { get; set; }
+
 
 
     }

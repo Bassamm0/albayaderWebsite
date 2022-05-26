@@ -8,7 +8,7 @@ namespace AlbayaderWeb.Pages
 {
     public class ManageUserModel : PageModel
     {
-        public User _PostUser = new User();
+    
         public EUser _User = new EUser();
         public string token { get; set; }
         public string errorMessage { get; set; }
@@ -228,24 +228,6 @@ namespace AlbayaderWeb.Pages
             return errorMessage;
         }
     }
-    public class User
-    {
-        public string title { get; set; }
-        public int userid { get; set; }
-         public string username { get; set; }
-        public string firstName { get; set; }
-        public string lastname { get; set; }
-        public string password { get; set; }
-        public string mobile { get; set; }
-        public string telephone { get; set; }
-        public string role { get; set; }
-        public int authLevelId { get; set; }
-        public int nationality { get; set; }
-        public int countryId { get; set; }
-        public int positionid { get; set; }
-        public string city { get; set; }
-        public DateTime birthday { get; set; }
-        public string pictureFileName { get; set; }
-    }
+   
 
 }

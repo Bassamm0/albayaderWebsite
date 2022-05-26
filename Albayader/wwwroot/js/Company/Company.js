@@ -41,7 +41,7 @@
          
             $('#modal-delete').modal('hide');
             
-            $('.companyHolder[companyid=' + companyid + ']').animate({ 'background': 'yellow' }, 1000).fadeOut(500, function () { $(this).remove(); });
+            $('.companyHolder[companyid=' + companyid + ']').animate({ 'background': 'yellow' }, 700).fadeOut(500, function () { $(this).remove(); });
           });
           
   

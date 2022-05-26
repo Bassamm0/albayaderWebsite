@@ -27,7 +27,6 @@ namespace Entity
        
         public string ?Mobile { get; set; }
         public string ?Telephone { get; set; }
-        public string ?Role { get; set; }
 
         [Required]
         public Int32 AuthLevelRefId { get; set; }
@@ -60,6 +59,8 @@ namespace Entity
         
         [NotMapped]
         public int UserAndBranchId { get; set; }
+        [NotMapped]
+        public string ?UserRole { get; set; }
     }
 }
 
