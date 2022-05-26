@@ -212,6 +212,7 @@ namespace DAL.Functions
                     sQuery.Append("inner join Companies CO on CO.CompanyID = BR.compnayId ");
                     sQuery.Append("inner join Countries CON on CON.CountryId=U.CountryId ");
                     sQuery.Append("inner join Countries CONN on CONN.CountryId=U.Nationality ");
+                    sQuery.Append("inner join Positions PO on PO.PositionId=U.PositionId ");
                     sQuery.AppendFormat("where U.UserId ={0} ", Id);
                    
                     command.CommandText = sQuery.ToString();
@@ -243,6 +244,8 @@ namespace DAL.Functions
                             if (dataReader["ResidentCountry"] != DBNull.Value) { oEUsers.ResidentContry = (string)dataReader["ResidentCountry"]; }
                             if (dataReader["NationalityName"] != DBNull.Value) { oEUsers.NationalityName = (string)dataReader["NationalityName"]; }
                             if (dataReader["CompanyName"] != DBNull.Value) { oEUsers.CompanyName = (string)dataReader["CompanyName"]; }
+                            if (dataReader["BranchId"] != DBNull.Value) { oEUsers.BranchId = (int)dataReader["BranchId"]; }
+                            if (dataReader["UserAndBranchId"] != DBNull.Value) { oEUsers.UserAndBranchId = (int)dataReader["UserAndBranchId"]; }
 
                         }
                     }
@@ -372,8 +375,8 @@ namespace DAL.Functions
 
             return newUser;
         }
-
        
+
         public async Task<EUser> updateUser(EUser user)
         {
             EUser eUser = new EUser();

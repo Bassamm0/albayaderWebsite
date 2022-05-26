@@ -54,24 +54,37 @@
                            
                 
                   <div class="col">
+                      <div class="form-group">
+                    <label>Branch</label>
+                    <select name="ddBranch" id="ddBranch" class="form-control select2" style="width: 100%;">
+                 
+    
+                    </select>
+                  </div>
 
-                   <div class="form-group">
-                    <label for="companyname">Title</label>
-                    <input type="text" class="form-control" name="UserName" id="UserName" placeholder="Enter Title" value="" />
+                    <div class="form-group">
+                    <label>Title</label>
+                    <select name="ddTitle" id="ddTitle" class="form-control " style="width: 100%;">
+                       <option value="Mr.">Mr.</option>
+                       <option value="Ms.">Ms.</option>
+                    
+    
+                    </select>
                   </div>
                    <div class="form-group">
-                    <label for="companyname">First Name</label>
-                    <input type="text" class="form-control" name="UserName" id="UserName" placeholder="Enter First Name" value="" />
+                    <label for="firstname">First Name</label>
+                    <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Enter First Name" value="@Model._User.FirstName" />
                   </div>
                
                    <div class="form-group">
-                    <label for="companyname">Last Name</label>
-                    <input type="text" class="form-control" name="UserName" id="UserName" placeholder="Enter Last Name" value="" />
+                    <label for="lastname">Last Name</label>
+                    <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Enter Last Name" value="@Model._User.Lastname" />
                   </div>
                   <div class="form-group">
-                                
+                                <label for="mon=bile">Birthday</label>
                      <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"/>
+                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" 
+                        id="birthday" name="birthday" value="@Model._User.Birthday"/>
                         <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
@@ -79,12 +92,16 @@
 
                     </div>
                    <div class="form-group">
-                    <label for="companyname">Mobile</label>
-                    <input type="text" class="form-control" name="UserName" id="UserName" placeholder="Enter Mobile" value="" />
+                    <label for="mon=bile">Email</label>
+                    <input type="text" class="form-control" name="email" id="email" placeholder="Enter Mobile" value="@Model._User.Email" readonly />
+                  </div>
+                   <div class="form-group">
+                    <label for="mon=bile">Mobile</label>
+                    <input type="text" class="form-control" name="mobile" id="mobile" placeholder="Enter Mobile" value="@Model._User.Mobile" />
                   </div>
                   <div class="form-group">
-                    <label for="companyname">Tel</label>
-                    <input type="text" class="form-control" name="UserName" id="UserName" placeholder="Enter Telphone" value="" />
+                    <label for="tel">Tel</label>
+                    <input type="text" class="form-control" name="tel" id="tel" placeholder="Enter Telphone" value="@Model._User.Telephone" />
                   </div>
                   <div class="form-group">
                     <label>Nationality</label>
@@ -103,7 +120,7 @@
 
                   <div class="form-group">
                     <label for="companyname">City</label>
-                    <input type="text" class="form-control" name="UserName" id="UserName" placeholder="Enter Telphone" value="" />
+                    <input type="text" class="form-control" name="city" id="city" placeholder="Enter City" value="@Model._User.City" />
                   </div>
                   
                   <div class="form-group">
@@ -113,13 +130,145 @@
     
                     </select>
                   </div>
-                  <div class="form-group">
-                    <label for="lat">Latitude</label>
-                    <input type="text" class="form-control" name="latitude" id="latitude" placeholder="Enter Latitude" value=""/>
+          
+                 </div>
+
+                    <div class="form-group">
+                        <label for="logo">Picture</label>
+                        <div class="input-group">
+                          <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="logoFile">
+                            <label class="custom-file-label" for="exampleInputFile" id="logoFile">Choose file</label>
+                          </div>
+                            <div class="input-group-append">
+                            <div class="btn btn-block btn-info remove" id="UploadLogobtn">Upload</div>
+                             <div class="btn btn-warning remove" id="RemoveLogobtn" >Remove</div>
+                          </div>
+                        </div>
+                    </div>
+                    <div id="pictureHolder">
+                      <a href="https://localhost:7174/API/uploads/@Model._User.PictureFileName" >@Model._User.PictureFileName</a>
+                      <span id="uploadError" class="errorMessage" ></span>
+                      <progress id="fileProgress" style="display: none"></progress>
+                      <span id="lblMessage" style="color: Green"></span>
+                    </div>
+                   
+                   
+                     
+                     <input type="hidden" id="hdUserId" name="hdUserId" value="@Model._User.UserId"/>
+                     <input type="hidden" id="hdUserAndBranchId" name="hdUserId" value="@Model._User.UserAndBranchId"/>
+                    
+                
+                     
+                    @section Scripts{
+                        <script type="text/javascript">
+                        $(document).ready(function () {
+                        $('.select2').select2();
+                        $("#ddCountry").val(@Model._User.CountryId).trigger('change');
+                        $("#ddNationality").val(@Model._User.Nationality).trigger('change');
+                        $("#ddBranch").val(@Model._User.BranchId).trigger('change');     
+                        $("#ddPosition").val(@Model._User.PositionId).trigger('change');
+                        })
+                         </script>
+                       }
+
+                   }else{
+ 
+                            
+                    <div class="col">
+                   <div class="form-group">
+                    <label>Branch</label>
+                    <select name="ddBranch" id="ddBranch" class="form-control select2" style="width: 100%;">
+                 
+    
+                    </select>
+                  </div>
+                    <div class="form-group">
+                    <label>Title</label>
+                    <select name="ddTitle" id="ddTitle" class="form-control select2" style="width: 100%;">
+                       <option value="Mr.">Mr.</option>
+                       <option value="Ms.">Ms.</option>
+                    
+    
+                    </select>
+                  </div>
+                   <div class="form-group">
+                    <label for="firstname">First Name</label>
+                    <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Enter First Name" value="" />
+                  </div>
+               
+                   <div class="form-group">
+                    <label for="lastname">Last Name</label>
+                    <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Enter Last Name" value="" />
                   </div>
                   <div class="form-group">
-                    <label for="long">Longitude</label>
-                    <input type="text" class="form-control" name="longitude" id="longitude" placeholder="Enter Longitude" value=""/>
+                                <label for="mon=bile">Birthday</label>
+                                
+                     <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" id="birthday" name="birthday"/>
+                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+
+                    </div>
+
+                   <div class="form-group">
+                    <label for="mon=bile">Email</label>
+                    <input type="text" class="form-control" name="email" id="email" placeholder="Enter Email" value="" />
+                  </div>
+                   <div class="form-group">
+                    <label for="mon=bile">Mobile</label>
+                    <input type="text" class="form-control" name="mobile" id="mobile" placeholder="Enter Mobile" value="" />
+                  </div>
+                  <div class="form-group">
+                    <label for="tel">Tel</label>
+                    <input type="text" class="form-control" name="tel" id="tel" placeholder="Enter Telphone" value="" />
+                  </div>
+                  <div class="form-group">
+                    <label>Nationality</label>
+                    <select name="ddNationality" id="ddNationality" class="form-control select2" style="width: 100%;">
+                 
+    
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Country</label>
+                    <select name="ddCountry" id="ddCountry" class="form-control select2" style="width: 100%;">
+    
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="companyname">City</label>
+                    <input type="text" class="form-control" name="city" id="city" placeholder="Enter city" value="" />
+                  </div>
+                  
+                  <div class="form-group">
+                    <label>Postion</label>
+                    <select name="ddPosition" id="ddPosition" class="form-control select2" style="width: 100%;">
+                 
+    
+                    </select>
+                  </div>
+                   <div class="form-group" id="passwordHolder">
+                    <label for="lat">Password</label>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter password" value=""/>
+                  </div>
+                  <div id="pswd_info" class="pswd_infoCss">
+                              <h4>Password requirements:</h4>
+                              <ul>
+                                  <li id="letter" class="invalid">At least <strong>one letter</strong></li>
+                                  <li id="capital" class="invalid">At least <strong>one capital letter</strong></li>
+                                  <li id="number" class="invalid">At least <strong>one number</strong></li>
+                                  <li id="length" class="invalid">Be at least <strong>8 characters</strong></li>
+                                  <li id="Symbol" class="invalid">Be at least one <strong>Symbol (~!#$%^&^&)</strong></li>
+                              </ul>
+                          </div>
+                  <div class="form-group">
+                    <label for="long">Confirm Password</label>
+                    <input type="password" class="form-control" name="password1" id="password1" placeholder="Enter confirm password" value=""/>
                   </div>
                  </div>
 
@@ -137,45 +286,13 @@
                         </div>
                     </div>
                     <div id="pictureHolder">
-                      <a href="https://localhost:7174/api/uploads/@Model._User.PictureFileName" >@Model._User.PictureFileName</a>
+                      <a href="" ></a>
                       <span id="uploadError" class="errorMessage" ></span>
                       <progress id="fileProgress" style="display: none"></progress>
                       <span id="lblMessage" style="color: Green"></span>
                     </div>
                    
-                   
-                     
-                   @*  <input type="hidden" id="hdUserId" name="hdUserId" value="@Model._User.UserId"/>
-                     <input type="hidden" id="hdCompanyId" name="hdCompanyId" value="@Model.CompanyId"/>*@
-                
-
-
-                   }else{
- 
-                            
-                    <div class="col">
-                   <div class="form-group">
-                    <label for="companyname">User Name</label>
-                    <input type="text" class="form-control" name="UserName" id="UserName" placeholder="Enter User Name" value="" />
-                  </div>
-                  
-                
-                  <div class="form-group">
-                    <label for="lat">Latitude</label>
-                    <input type="text" class="form-control" name="latitude" id="latitude" placeholder="Enter Latitude" value=""/>
-                  </div>
-                  <div class="form-group">
-                    <label for="long">Longitude</label>
-                    <input type="text" class="form-control" name="longitude" id="longitude" placeholder="Enter Longitude" value=""/>
-                  </div>
-          
-
-                      <span id="uploadError" class="errorMessage" ></span>
-                   
-                     </div>
-                      
-                  <input type="hidden" id="hdCompanyId" name="hdCompanyId" value="@Model.CompanyId"/>
-
+                     <input type="hidden" id="uploadedfile" name="uploadedfile" value=""/>
 
                    @section Scripts{
                         <script type="text/javascript">
@@ -194,7 +311,7 @@
                      </form>
                
             
-                      
+                       <input type="hidden" id="hdCompanyId" name="hdCompanyId" value="@Model.CompanyId"/>
 
           
                 
@@ -248,18 +365,4 @@
             <script src="plugins/jquery-validation/jquery.validate.min.js"></script>
             <script src="plugins/jquery-validation/additional-methods.min.js"></script>
  
-            @section Scripts{
-                
-               <script>
-               $(function(){
-                   
-                $('#reservationdate').datetimepicker({
-                    format: 'L'
-                });
-
-   
-
-               })
-                 </script>
-           }
-         
+           

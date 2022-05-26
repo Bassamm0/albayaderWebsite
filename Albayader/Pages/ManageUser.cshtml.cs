@@ -9,7 +9,7 @@ namespace AlbayaderWeb.Pages
     public class ManageUserModel : PageModel
     {
         public User _PostUser = new User();
-        public EUser? _User = null;
+        public EUser _User = new EUser();
         public string token { get; set; }
         public string errorMessage { get; set; }
         public string pageTitle { get; set; }
@@ -85,15 +85,32 @@ namespace AlbayaderWeb.Pages
             {
                 try
                 {
-                    _PostUser.firstName = Request.Form["UserName"];
+                  
+                    _User.BranchId =Convert.ToInt32(Request.Form["ddBranch"]);
+                    _User.Title = Request.Form["ddTitle"];
+                    _User.FirstName = Request.Form["firstname"];
+                    _User.Lastname = Request.Form["lastname"];
+                    _User.Birthday =Convert.ToDateTime(Request.Form["birthday"]);
+                    _User.Email = Request.Form["email"];
+                    _User.Username = Request.Form["email"];
+                    _User.Mobile = Request.Form["mobile"];
+                    _User.Telephone = Request.Form["tel"];
+                    _User.Nationality = Convert.ToInt32(Request.Form["ddNationality"]);
+                    _User.CountryId = Convert.ToInt32(Request.Form["ddCountry"]);
+                    _User.City = Request.Form["city"];
+                    _User.PositionId = Convert.ToInt16(Request.Form["ddPosition"]);
+                    _User.Password = Request.Form["password"];
+                    _User.PositionId = Convert.ToInt32(Request.Form["ddPosition"]);
+                    _User.PictureFileName = Request.Form["uploadedfile"];
 
                   
-                    _PostUser.userid = Convert.ToInt16(Request.Form["hdUserId"]);
+                    //_User.UserId = Convert.ToInt16(Request.Form["hdUserId"]);
                     string companyNamefield = Request.Form["companyNamefield"];
-                    statusCode = await addUsery(_PostUser);
+                    int _companyId =Convert.ToInt32(Request.Form["hdCompanyId"]);
+                    statusCode = await addUsery(_User);
                     if (statusCode == "OK")
                     {
-                        return RedirectToPage("Users", new { companyid = _PostUser.userid, companyname = companyNamefield });
+                        return RedirectToPage("Users", new { companyid = _companyId, companyname = companyNamefield });
                     }
                 }
                 catch (Exception ex)
@@ -106,20 +123,34 @@ namespace AlbayaderWeb.Pages
             {
                 try
                 {
-                    _PostUser.userid = Convert.ToInt16(Request.Form["hdUserId"]);
-                    _PostUser.firstName = Request.Form["firstName"];
+                    _User.BranchId = Convert.ToInt32(Request.Form["ddBranch"]);
+                    _User.Title = Request.Form["ddTitle"];
+                    _User.FirstName = Request.Form["firstname"];
+                    _User.Lastname = Request.Form["lastname"];
+                    _User.Birthday = Convert.ToDateTime(Request.Form["birthday"]);
+                    _User.Email = Request.Form["email"];
+                    _User.Username = Request.Form["email"];
+                    _User.Mobile = Request.Form["mobile"];
+                    _User.Telephone = Request.Form["tel"];
+                    _User.Nationality = Convert.ToInt32(Request.Form["ddNationality"]);
+                    _User.CountryId = Convert.ToInt32(Request.Form["ddCountry"]);
+                    _User.City = Request.Form["city"];
+                    _User.PositionId = Convert.ToInt16(Request.Form["ddPosition"]);
+                    _User.Password = Request.Form["password"];
+                    _User.PositionId = Convert.ToInt16(Request.Form["ddPosition"]);
+                    _User.PictureFileName = Request.Form["uploadedfile"];
 
-                   
 
-                   
-                    string companyId= Request.Form["hdCompanyId"];
+                    _User.UserId = Convert.ToInt32(Request.Form["hdUserId"]);
+                    _User.UserAndBranchId = Convert.ToInt16(Request.Form["hdUserAndBranchId"]);
                     string companyNamefield = Request.Form["companyNamefield"];
+                    int _companyId = Convert.ToInt32(Request.Form["hdCompanyId"]);
 
                     statusCode = await updateUser(_PostUser);
                     if (statusCode == "OK")
                     {
 
-                        return RedirectToPage("Users", new { companyid = companyId, companyname = companyNamefield });
+                        return RedirectToPage("Users", new { companyid = _companyId, companyname = companyNamefield });
                     }
                 }
                 catch (Exception ex)
@@ -132,7 +163,7 @@ namespace AlbayaderWeb.Pages
         }
 
 
-        private async Task<string> addUsery(User User)
+        private async Task<string> addUsery(EUser User)
         {
 
             var json = JsonConvert.SerializeObject(User);
@@ -141,7 +172,7 @@ namespace AlbayaderWeb.Pages
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PostAsync("https://localhost:7174/api/User/add", data))
+                using (var response = await httpClient.PostAsync("https://localhost:7174/api/User/addwithbranch", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")
@@ -177,7 +208,7 @@ namespace AlbayaderWeb.Pages
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PostAsync("https://localhost:7174/api/User/update", data))
+                using (var response = await httpClient.PostAsync("https://localhost:7174/api/User/updatewithbranch", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")
@@ -198,12 +229,12 @@ namespace AlbayaderWeb.Pages
     }
     public class User
     {
-        public int UserId { get; set; }
-        public string Title { get; set; }
-        public int userid { get; set; }
         public string title { get; set; }
+        public int userid { get; set; }
+         public string username { get; set; }
         public string firstName { get; set; }
         public string lastname { get; set; }
+        public string password { get; set; }
         public string mobile { get; set; }
         public string telephone { get; set; }
         public string role { get; set; }

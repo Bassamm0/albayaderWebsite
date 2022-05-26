@@ -14,19 +14,11 @@ namespace Entity
         public string username { get; set; }
         public string email { get; set; }
         public Int32 authLevel { get; set; }
-        public string title { get; set; }
-
-       
-        
+        public string title { get; set; }        
         public string firstName { get; set; }
-       
         public string lastName { get; set; }
-       
-         
-       
         public string mobile { get; set; }
-
-       
+    
         public string telephone { get; set; }
         public string role { get; set; }
 
@@ -45,6 +37,8 @@ namespace Entity
         public string CompanyName { get; set; }
         public string ResidentContry { get; set; }
         public string NationalityName { get; set; }
- 
+
+
+
     }
 }

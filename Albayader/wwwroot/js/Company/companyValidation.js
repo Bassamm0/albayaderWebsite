@@ -37,12 +37,12 @@ $(document).ready(function () {
             tel: {
                 digits:true,
                 minlength: 11,
-                maxlength: 11
+                maxlength: 15
             },
             fax: {
                 digits: true,
                 minlength: 11,
-                maxlength: 11
+                maxlength: 15
             },
             street: {
                 maxlength: 50,

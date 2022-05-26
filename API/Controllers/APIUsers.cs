@@ -97,10 +97,12 @@ namespace API
                         countryId = user.CountryId,
                         city = user.City,
                         birthday = user.Birthday,
-                       // birthday = user.Birthday.ToString("dd/MM/yyyy"),
+                        // birthday = user.Birthday.ToString("dd/MM/yyyy"),
                         pictureFileName = user.PictureFileName,
                         CompanyName = user.CompanyName,
                         BranchName = user.BranchName,
+                        NationalityName = user.NationalityName,
+                        ResidentContry = user.ResidentContry
 
                     };
 
@@ -157,87 +159,69 @@ namespace API
 
         [Route("getUserById")]
         [HttpPost]
-        public async Task<UserViewModel> getUserById([FromBody] JsonElement objData )
+        public async Task<EUser> getUserById([FromBody] JsonElement objData )
         {
             int _id = objData.GetProperty("id").GetInt16();
-            var user = await userLogic.getUserById(_id);
+            EUser user = await userLogic.getUserById(_id);
             if (user == null) {
                 throw new DomainValidationFundException("No data");
             }
            
-                    UserViewModel currentUser = new UserViewModel
-                    {
-                        title = user.Title,
-                        email = user.Email,
-                        userId = user.UserId,
-                        username = user.Username,
-                        authLevel = user.AuthLevelRefId,
-                        firstName = user.FirstName,
-                        lastName = user.Lastname,
-                        mobile = user.Mobile,
-                        telephone = user.Telephone,
-                        role = user.Role,
-                        nationality = user.Nationality,
-                        countryId = user.CountryId,
-                        city = user.City,
-                        birthday = user.Birthday,
-                        pictureFileName = user.PictureFileName,
-                        BranchName=user.BranchName,
-                        CompanyName = user.CompanyName, 
-                        ResidentContry =user.ResidentContry,
-                        NationalityName = user.NationalityName,
-                    };
-
-            return currentUser;
+            return user;
         }
         [Route("add")]
         [HttpPost]
-          public async Task<Boolean> AddUser([FromBody] JsonElement objData)
+          public async Task<Boolean> AddUser([FromBody] EUser newUser)
          {
 
             bool result = false;
             try
             {
-                var Title = objData.GetProperty("title").GetString();
-                var username = objData.GetProperty("username").GetString();
-                var FirstName = objData.GetProperty("firstName").GetString();
-                var Lastname = objData.GetProperty("lastname").GetString();
-                var Email = objData.GetProperty("email").GetString();
-                var Password = objData.GetProperty("password").GetString();
-                var Mobile = objData.GetProperty("mobile").GetString();
-                var Telephone = objData.GetProperty("telephone").GetString();
-                var Role = objData.GetProperty("role").GetString();
-                var authLevelId = objData.GetProperty("authLevelId").GetInt16();
-                var Nationality = objData.GetProperty("nationality").GetInt16();
-                var CountryId = objData.GetProperty("countryId").GetInt16();
-                var PositionId = objData.GetProperty("positionId").GetInt16();
-                var city = objData.GetProperty("city").GetString();
-                var Birthday = objData.GetProperty("birthday").GetString();
-                var PictureFileName = objData.GetProperty("pictureFileName").GetString();
+                //var Title = objData.GetProperty("title").GetString();
+                //var username = objData.GetProperty("username").GetString();
+                //var FirstName = objData.GetProperty("firstName").GetString();
+                //var Lastname = objData.GetProperty("lastname").GetString();
+                //var Email = objData.GetProperty("email").GetString();
+                //var Password = objData.GetProperty("password").GetString();
+                //var Mobile = objData.GetProperty("mobile").GetString();
+                //var Telephone = objData.GetProperty("telephone").GetString();
+                //var Role = objData.GetProperty("role").GetString();
+                //var authLevelId = objData.GetProperty("authLevelId").GetInt16();
+                //var Nationality = objData.GetProperty("nationality").GetInt16();
+                //var CountryId = objData.GetProperty("countryId").GetInt16();
+                //var PositionId = objData.GetProperty("positionId").GetInt16();
+                //var city = objData.GetProperty("city").GetString();
+                //var Birthday = objData.GetProperty("birthday").GetString();
+                //var PictureFileName = objData.GetProperty("pictureFileName").GetString();
 
              
                 
-                EUser newUser = new EUser
-                {
-                    Title = Title,
-                    Username = username,
-                    FirstName = FirstName,
-                    Lastname = Lastname,
-                    Email = Email,
-                    Password = Password,
-                    Mobile = Mobile,
-                    Telephone = Telephone,
-                    Role = Role,
-                    AuthLevelRefId = authLevelId,
-                    Birthday = DateTime.ParseExact(Birthday, "dd/M/yyyy", CultureInfo.InvariantCulture),
-                    PictureFileName = PictureFileName,
-                    Nationality = Nationality,
-                    CountryId = CountryId,
-                    PositionId=PositionId,
-                    City = city
+                //EUser newUser = new EUser
+                //{
+                //    Title = Title,
+                //    Username = username,
+                //    FirstName = FirstName,
+                //    Lastname = Lastname,
+                //    Email = Email,
+                //    Password = Password,
+                //    Mobile = Mobile,
+                //    Telephone = Telephone,
+                //    Role = Role,
+                //    AuthLevelRefId = authLevelId,
+                //    Birthday = DateTime.ParseExact(Birthday, "dd/M/yyyy", CultureInfo.InvariantCulture),
+                //    PictureFileName = PictureFileName,
+                //    Nationality = Nationality,
+                //    CountryId = CountryId,
+                //    PositionId=PositionId,
+                //    City = city
 
-                };
-                 result = await userLogic.addUser(newUser);
+                //};
+                if(newUser != null)
+                {
+                    result = await userLogic.addUser(newUser);
+                }
+
+                
             }
             catch (Exception ex)
             {
@@ -255,9 +239,75 @@ namespace API
 
             return result;
         }
+        [Route("addwithbranch")]
+        [HttpPost]
+        public async Task<Boolean> AddUserWithBranch([FromBody] EUser user)
+        {
+
+            bool result = false;
+            try
+            {
+               
+                if (user != null)
+                {
+                    result = await userLogic.AddUserWithBranch(user);
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "The given key was not present in the dictionary.")
+                {
+                    throw new DomainValidationFundException("Validation : One or more paramter are missing in the request,Error could be becuase of case sensetive");
+                }
+                if (ex.InnerException != null && ex.InnerException.ToString().Contains("Cannot insert the value NULL into column"))
+                {
+                    throw new DomainValidationFundException("Validation : null value not allowed to one of the parameters");
+                }
+                return false;
+            }
+
+
+
+            return result;
+        }
+
+        [Route("updatewithbranch")]
+        [HttpPost]
+        public async Task<Boolean> updateUserwithbranch([FromBody] EUser UpdatedUser)
+
+        {
+
+            bool result = false;
+
+            try
+            {
+                if (updateUser != null)
+                {
+                    result = await userLogic.updateUserwithbranch(UpdatedUser);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "The given key was not present in the dictionary.")
+                {
+                    throw new DomainValidationFundException("Validation : One or more paramter are missing in the request,Error could be becuase of case sensetive");
+                }
+                if (ex.InnerException != null && ex.InnerException.ToString().Contains("Cannot insert the value NULL into column"))
+                {
+                    throw new DomainValidationFundException("Validation : null value not allowed to one of the parameters");
+                }
+                return false;
+            }
+
+            return result;
+        }
+
         [Route("update")]
         [HttpPost]
-        public async Task<Boolean> updateUser([FromBody] JsonElement objData)
+        public async Task<Boolean> updateUser([FromBody] EUser UpdatedUser)
       
         {
            
@@ -265,47 +315,52 @@ namespace API
 
             try
             {
-                var UserId = objData.GetProperty("userid").GetInt16();
-                var Title = objData.GetProperty("title").GetString();
+                //var UserId = objData.GetProperty("userid").GetInt16();
+                //var Title = objData.GetProperty("title").GetString();
              
-                var FirstName = objData.GetProperty("firstName").GetString();
-                var Lastname = objData.GetProperty("lastname").GetString();
+                //var FirstName = objData.GetProperty("firstName").GetString();
+                //var Lastname = objData.GetProperty("lastname").GetString();
             
-                var Mobile = objData.GetProperty("mobile").GetString();
-                var Telephone = objData.GetProperty("telephone").GetString();
-                var Role = objData.GetProperty("role").GetString();
-                var authLevelId = objData.GetProperty("authLevelId").GetInt16();
-                var Nationality = objData.GetProperty("nationality").GetInt16();
-                var CountryId = objData.GetProperty("countryId").GetInt16();
-                var PositionId = objData.GetProperty("positionid").GetInt16();
-                var city = objData.GetProperty("city").GetString();
-                var Birthday = objData.GetProperty("birthday").GetString();
-                var PictureFileName = objData.GetProperty("pictureFileName").GetString();
+                //var Mobile = objData.GetProperty("mobile").GetString();
+                //var Telephone = objData.GetProperty("telephone").GetString();
+                //var Role = objData.GetProperty("role").GetString();
+                //var authLevelId = objData.GetProperty("authLevelId").GetInt16();
+                //var Nationality = objData.GetProperty("nationality").GetInt16();
+                //var CountryId = objData.GetProperty("countryId").GetInt16();
+                //var PositionId = objData.GetProperty("positionid").GetInt16();
+                //var city = objData.GetProperty("city").GetString();
+                //var Birthday = objData.GetProperty("birthday").GetString();
+                //var PictureFileName = objData.GetProperty("pictureFileName").GetString();
 
 
 
-                EUser UpdatedUser = new EUser
+                //EUser UpdatedUser = new EUser
+                //{
+                //    UserId = UserId,
+                //    Title = Title,
+                  
+                //    FirstName = FirstName,
+                //    Lastname = Lastname,
+                  
+                  
+                //    Mobile = Mobile,
+                //    Telephone = Telephone,
+                //    Role = Role,
+                //    AuthLevelRefId = authLevelId,
+                //    Birthday = DateTime.ParseExact(Birthday, "dd/M/yyyy", CultureInfo.InvariantCulture),
+                //    PictureFileName = PictureFileName,
+                //    Nationality = Nationality,
+                //    CountryId = CountryId,
+                //    PositionId = PositionId,
+                //    City = city
+
+                //};
+
+                if(updateUser != null)
                 {
-                    UserId = UserId,
-                    Title = Title,
-                  
-                    FirstName = FirstName,
-                    Lastname = Lastname,
-                  
-                  
-                    Mobile = Mobile,
-                    Telephone = Telephone,
-                    Role = Role,
-                    AuthLevelRefId = authLevelId,
-                    Birthday = DateTime.ParseExact(Birthday, "dd/M/yyyy", CultureInfo.InvariantCulture),
-                    PictureFileName = PictureFileName,
-                    Nationality = Nationality,
-                    CountryId = CountryId,
-                    PositionId = PositionId,
-                    City = city
+                    result = await userLogic.updateUser(UpdatedUser);
 
-                };
-                result = await userLogic.updateUser(UpdatedUser);
+                }
             }
             catch (Exception ex)
             {

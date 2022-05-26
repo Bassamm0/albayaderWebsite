@@ -96,19 +96,45 @@ namespace LOGIC.UserLogic
 
         public async Task<Boolean> addUser(EUser newUser)
         {
-            
+
             //validate the username and email already existed
-            
-                var resul = await _DUser.addUser(newUser);
-                if (resul.UserId > 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+
+            var resul = await _DUser.addUser(newUser);
+            if (resul.UserId > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
+        public async Task<Boolean> AddUserWithBranch(EUser newUser)
+        {
+
+            //validate the username and email already existed
+
+            var resul = await _DUser.addUser(newUser);
+            if (resul.UserId > 0)
+            {
+                // insert user and branch
+                EUserAndBranch _eUserAndBranch = new EUserAndBranch();
+                DUserAndBranch _dUserAndBranch = new DUserAndBranch();
+
+                _eUserAndBranch.UserId = resul.UserId;
+                _eUserAndBranch.BranchId = resul.BranchId;
+               var branchRes= await _dUserAndBranch.addUserAndBranch(_eUserAndBranch);
+
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
         public async Task<Boolean> updateUser(EUser user)
         {
            
@@ -122,6 +148,28 @@ namespace LOGIC.UserLogic
                     return false;
                 }
                     
+        }
+        public async Task<Boolean> updateUserwithbranch(EUser user)
+        {
+
+            var resul = await _DUser.updateUser(user);
+            if (resul != null && resul.UserId > 0)
+            {
+                // insert user and branch
+                EUserAndBranch _eUserAndBranch = new EUserAndBranch();
+                DUserAndBranch _dUserAndBranch = new DUserAndBranch();
+                _eUserAndBranch.UserAndBranchId = resul.UserAndBranchId;
+                _eUserAndBranch.UserId = resul.UserId;
+                _eUserAndBranch.BranchId = resul.BranchId;
+                var branchRes = await _dUserAndBranch.updateUserAndBranch(_eUserAndBranch);
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
         public async Task<Boolean> deleteUser(int Id)
         {

@@ -75,7 +75,8 @@
             .then(response => response.json())
             .then((data) => {
                 // trigger model
-                console.log(data)
+                var dateObject = ASPDate(data.birthday);
+    
 
                 html = ` <li class="list-group-item"><span class='ViewDetailsTit'><img class="logoView" src="uploads/${data.pictureFileName}" /></li>`
                     + ` <li class="list-group-item"><span class='ViewDetailsTit'>First Name:</span> ${data.firstName}</li>`
@@ -89,7 +90,7 @@
                     + ` <li class="list-group-item"><span class='ViewDetailsTit'>Country:</span> ${data.residentContry}</li>`
                     + ` <li class="list-group-item"><span class='ViewDetailsTit'>Nationality:</span> ${data.nationalityName}</li>`
                     + ` <li class="list-group-item"><span class='ViewDetailsTit'>City:</span> ${data.city}</li>`
-                    + ` <li class="list-group-item"><span class='ViewDetailsTit'>Birthday:</span> ${data.birthday}</li>`
+                    + ` <li class="list-group-item"><span class='ViewDetailsTit'>Birthday:</span> ${dateObject}</li>`
 
                 $('#UserDetails').html(html)
             })

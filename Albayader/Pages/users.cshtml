@@ -83,10 +83,8 @@
                                         </button>
                                         <div class="dropdown-menu"
                                           aria-labelledby="dropdownMenuButton"  style="width: 100%;">
-                                                 <button class="dropdown-item bg-info" asp-page-handler="DeleteUser" asp-route-id="@item.UserId" > <i class="fa-solid fa-hands-holding-circle"></i> Start Preventive</button>
-                                               <div class="dropdown-divider" style="padding: 0;margin: 0;"></div>
-                                               
-                                                 <button type="submit" class="dropdown-item" asp-page-handler="EditUser" asp-route-id="@item.UserId" style="color: rgb(124, 123, 123);">
+                                                
+                                                 <button type="submit" class="dropdown-item" asp-page-handler="EditUser" asp-route-id="@item.UserId" style="color: rgb(124, 123, 123);" asp-route-companyid="@Model.companyId"  asp-route-companyname="@Model.title"> 
                                                      <i class="fas fa-pen"></i> Edit</button>
                                                 <button type="button" class="dropdown-item"  
                                                 userid="@item.UserId" style="color: rgb(124, 123, 123);" id="ViewUser"  data-toggle="modal" data-target="#modal-view">

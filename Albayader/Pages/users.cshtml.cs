@@ -11,6 +11,8 @@ namespace AlbayaderWeb.Pages
     {
         public string errorMessage { get; set; }
         public List<EUser>? User = null;
+        public List<UserViewModel>? ViewUser = null;
+
         public int companyId { get; set; }
         public string? title { get; set; }
         public async Task<IActionResult> OnGet(int companyid, string companyName)
@@ -18,11 +20,11 @@ namespace AlbayaderWeb.Pages
 
             title = companyName;
             companyId = companyid;
-            User = await getAllCompanyUser(companyid);
+            ViewUser = await getAllCompanyUser(companyid);
             return null;
         }
 
-        public async Task<List<EUser>> getAllCompanyUser(int companyid)
+        public async Task<List<UserViewModel>> getAllCompanyUser(int companyid)
         {
 
             // if user admin
@@ -59,7 +61,7 @@ namespace AlbayaderWeb.Pages
             }
 
 
-            return User;
+            return ViewUser;
         }
         public IActionResult OnPostAddUser(int companyid, string companyname)
         {
