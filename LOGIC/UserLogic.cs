@@ -199,8 +199,20 @@ namespace LOGIC.UserLogic
             }
 
         }
-        public async Task<Boolean> changePassword(int id, string password)
+        public async Task<Boolean> changePassword(int id, string oldPassword,string password)
         {
+
+            // validate the old password
+
+            var user = await _DUser.getSingleUserBypasswordAndIdl(oldPassword, id);
+            if (user == null)
+            {
+                throw new DomainValidationFundException("Invalid Old Password.");
+             }
+            if(password == oldPassword)
+            {
+                throw new DomainValidationFundException("You can't use the same old password.");
+            }
             if (!IsValidPassword(password))
             {
                  throw new DomainValidationFundException("The provided password didn't meet the minimum required complexity.");
@@ -209,6 +221,7 @@ namespace LOGIC.UserLogic
             if (resul != null && resul.UserId > 0)
             {
                 return true;
+                // send email
             }
             else
             {

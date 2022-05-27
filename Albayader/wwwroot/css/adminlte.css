@@ -12619,7 +12619,7 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 
 .user-panel,
 .user-panel .info {
-  overflow: hidden;
+ 
   white-space: nowrap;
 }
 
@@ -53019,8 +53019,15 @@ a.text-muted:hover {
     display: block;
     width: 100%;
     margin-top: 0.25rem;
-    font-size: 80%;
+    text-align:center;
     color: #dc3545;
+}
+.successMessage {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    text-align: center;
+    color: #28a745;
 }
 
 .remove{

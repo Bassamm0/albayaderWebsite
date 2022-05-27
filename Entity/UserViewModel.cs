@@ -39,6 +39,8 @@ namespace Entity
         public string NationalityName { get; set; }
 
         public string UserRole { get; set; }
+        public int CompanyId { get; set; }
+        public int BranchId { get; set; }
 
 
 

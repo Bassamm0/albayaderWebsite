@@ -36,6 +36,7 @@ namespace API.Controllers
             return NotFound("User name or password is not correct.");
         }
 
+
         private string Generate(EUser user)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
@@ -48,7 +49,19 @@ namespace API.Controllers
                 new Claim(ClaimTypes.GivenName, user.FirstName),
                 new Claim(ClaimTypes.Surname, user.Lastname),
                 new Claim(ClaimTypes.Role, user.UserRole),
-                new Claim(ClaimTypes.Sid, user.UserId.ToString())
+                new Claim(ClaimTypes.Sid, user.UserId.ToString()),
+                new Claim(ClaimTypes.MobilePhone, user.Mobile.ToString()),
+                new Claim(ClaimTypes.Actor, user.PositionId.ToString()),
+                new Claim(ClaimTypes.Country, user.NationalityName),
+                new Claim(ClaimTypes.Locality, user.ResidentContry),
+                new Claim(ClaimTypes.DateOfBirth, user.Birthday.ToString()),
+                new Claim(ClaimTypes.Thumbprint, user.PictureFileName.ToString()),
+                new Claim(ClaimTypes.StateOrProvince, user.City),
+                new Claim(ClaimTypes.PrimarySid, user.CompanyId.ToString()),
+                new Claim(ClaimTypes.GroupSid, user.BranchId.ToString()),
+                new Claim(ClaimTypes.PrimaryGroupSid, user.CompanyName.ToString()),
+                new Claim(ClaimTypes.DenyOnlySid, user.BranchName.ToString()),
+
             };
 
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],

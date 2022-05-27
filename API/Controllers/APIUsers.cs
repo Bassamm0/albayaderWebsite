@@ -430,9 +430,10 @@ namespace API
                 eUser=GetCurrentUser();
 
                 var password = objData.GetProperty("password").GetString();
+                var oldPassword = objData.GetProperty("oldPassword").GetString();
                 int id = eUser.UserId;
 
-                result = await userLogic.changePassword(id,password);
+                result = await userLogic.changePassword(id, oldPassword,password);
             }
             catch (Exception ex)
             {
@@ -447,6 +448,14 @@ namespace API
                 if (ex.Message == "The provided password didn't meet the minimum required complexity.")
                 {
                      throw new DomainValidationFundException("The provided password didn't meet the minimum required complexity.");
+                }
+                if (ex.Message == "Invalid Old Password.")
+                {
+                    throw new DomainValidationFundException("Invalid Old Password.");
+                }
+                if (ex.Message == "You can't use the same old password.")
+                {
+                    throw new DomainValidationFundException("You can't use the same old password.");
                 }
                 return false;
             }
@@ -546,35 +555,19 @@ namespace API
         [Authorize]
         [Route("getLoginUser")]
         [HttpGet]
-        public async Task<UserViewModel> getLoginUserDetails()
+        public async Task<EUser> getLoginUserDetails()
         {
-            
-            var user =  GetCurrentUser();
+            EUser user=new EUser();
+             user =  GetCurrentUser();
             if (user == null)
             {
                 throw new DomainValidationFundException("No data");
             }
 
-            UserViewModel currentUser = new UserViewModel
-            {
-               
-                email = user.Email,
-                userId = user.UserId,
-                username = user.Username,
-                //authLevel = user.AuthLevelRefId,
-                firstName = user.FirstName,
-                lastName = user.Lastname,
-                mobile = user.Mobile,
-               // telephone = user.Telephone,
-                role = user.UserRole,
-                nationality = user.Nationality,
-                countryId = user.CountryId,
-                city = user.City,
-                birthday = user.Birthday,
-                pictureFileName = user.PictureFileName,
-            };
+           
 
-            return currentUser;
+
+            return user;
         }
 
         //required  [Authorize]
@@ -594,11 +587,16 @@ namespace API
                     UserId = Convert.ToInt32(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Sid)?.Value),
                     Mobile = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.MobilePhone)?.Value,
                     PositionId = Convert.ToInt32(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Actor)?.Value),
-                    Nationality = Convert.ToInt32(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Country)?.Value),
-                    CountryId = Convert.ToInt32(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Locality)?.Value),
+                    NationalityName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Country)?.Value,
+                    ResidentContry = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Locality)?.Value,
                     Birthday = Convert.ToDateTime(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.DateOfBirth)?.Value),
                     PictureFileName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Thumbprint)?.Value,
                     City = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.StateOrProvince)?.Value,
+                    CompanyId = Convert.ToInt32(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.PrimarySid)?.Value),
+                    BranchId = Convert.ToInt32(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.GroupSid)?.Value),
+                    CompanyName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.PrimaryGroupSid)?.Value,
+                    BranchName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.DenyOnlySid)?.Value,
+
                 };
 
             }

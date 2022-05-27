@@ -188,6 +188,7 @@ namespace DAL.Functions
                             if (dataReader["ResidentCountry"] != DBNull.Value) { oEUsers.ResidentContry = (string)dataReader["ResidentCountry"]; }
                             if (dataReader["NationalityName"] != DBNull.Value) { oEUsers.NationalityName = (string)dataReader["NationalityName"]; }
                             if (dataReader["CompanyName"] != DBNull.Value) { oEUsers.CompanyName = (string)dataReader["CompanyName"]; }
+                            if (dataReader["CompanyId"] != DBNull.Value) { oEUsers.CompanyId = (int)dataReader["CompanyId"]; }
                             if (dataReader["UserRole"] != DBNull.Value) { oEUsers.UserRole = (string)dataReader["UserRole"]; }
                             users.Add(oEUsers);
                         }
@@ -256,6 +257,7 @@ namespace DAL.Functions
                             if (dataReader["UserAndBranchId"] != DBNull.Value) { oEUsers.UserAndBranchId = (int)dataReader["UserAndBranchId"]; }
                             if (dataReader["UserRole"] != DBNull.Value) { oEUsers.UserRole = (string)dataReader["UserRole"]; }
 
+
                         }
                     }
                     dataReader.Dispose();
@@ -279,8 +281,14 @@ namespace DAL.Functions
                 using (var command = conn.CreateCommand())
                 {
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select AU.Authname UserRole,* from users U  ");
-                    sQuery.Append(" inner join AuthenticationLevels AU on AU.AuthId=U.AuthLevelRefId  ");
+                    sQuery.Append("select AU.Authname UserRole,CON.Name ResidentCountry,CONN.Name NationalityName, CO.Name CompanyName ,* from users U ");
+                    sQuery.Append("inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
+                    sQuery.Append("inner join Branchs BR on BR.branchId=UAB.BranchId ");
+                    sQuery.Append("inner join Companies CO on CO.CompanyID = BR.compnayId ");
+                    sQuery.Append("inner join Countries CON on CON.CountryId=U.CountryId ");
+                    sQuery.Append("inner join Countries CONN on CONN.CountryId=U.Nationality ");
+                    sQuery.Append("inner join Positions PO on PO.PositionId=U.PositionId ");
+                    sQuery.Append("inner join AuthenticationLevels AU on AU.AuthId=U.AuthLevelRefId ");
 
                     sQuery.AppendFormat(" where U.email='{0}' and U.password ='{1}' and U.IsDeleted=0 ", email, m_oEncrption.Encrypt(password));
 
@@ -299,7 +307,6 @@ namespace DAL.Functions
                             if (dataReader["PositionId"] != DBNull.Value) { oEUsers.PositionId = (int)dataReader["PositionId"]; }
                             if (dataReader["Title"] != DBNull.Value) { oEUsers.Title = (string)dataReader["Title"]; }
                             if (dataReader["Username"] != DBNull.Value) { oEUsers.Username = (string)dataReader["Username"]; }
-                            if (dataReader["Password"] != DBNull.Value) { oEUsers.Password = m_oEncrption.Decrypt((string)dataReader["Password"]); }
                             if (dataReader["FirstName"] != DBNull.Value) { oEUsers.FirstName = (string)dataReader["FirstName"]; }
                             if (dataReader["LastName"] != DBNull.Value) { oEUsers.Lastname = (string)dataReader["LastName"]; }
                             if (dataReader["City"] != DBNull.Value) { oEUsers.City = (string)dataReader["City"]; }
@@ -309,6 +316,12 @@ namespace DAL.Functions
                             if (dataReader["Telephone"] != DBNull.Value) { oEUsers.Telephone = (string)dataReader["Telephone"]; }
                             if (dataReader["AuthLevelRefId"] != DBNull.Value) { oEUsers.AuthLevelRefId = (int)dataReader["AuthLevelRefId"]; }
                             if (dataReader["PictureFileName"] != DBNull.Value) { oEUsers.PictureFileName = (string)dataReader["PictureFileName"]; }
+                            if (dataReader["Name"] != DBNull.Value) { oEUsers.CompanyName = (string)dataReader["Name"]; }
+                            if (dataReader["BranchName"] != DBNull.Value) { oEUsers.BranchName = (string)dataReader["BranchName"]; }
+                            if (dataReader["ResidentCountry"] != DBNull.Value) { oEUsers.ResidentContry = (string)dataReader["ResidentCountry"]; }
+                            if (dataReader["NationalityName"] != DBNull.Value) { oEUsers.NationalityName = (string)dataReader["NationalityName"]; }
+                            if (dataReader["CompanyName"] != DBNull.Value) { oEUsers.CompanyName = (string)dataReader["CompanyName"]; }
+                            if (dataReader["CompanyId"] != DBNull.Value) { oEUsers.CompanyId = (int)dataReader["CompanyId"]; }
                             if (dataReader["UserRole"] != DBNull.Value) { oEUsers.UserRole = (string)dataReader["UserRole"]; }
 
                         }
@@ -337,6 +350,63 @@ namespace DAL.Functions
                     sQuery.Append(" select AU.Authname UserRole,* from users U  ");
                     sQuery.Append(" inner join AuthenticationLevels AU on AU.AuthId=U.AuthLevelRefId  ");
                     sQuery.AppendFormat("where U.email ='{0}'  and U.IsDeleted=0 ", email);
+
+                    command.CommandText = sQuery.ToString();
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            oEUsers = new EUser();
+
+                            if (dataReader["UserId"] != DBNull.Value) { oEUsers.UserId = (int)dataReader["UserId"]; }
+                            if (dataReader["Nationality"] != DBNull.Value) { oEUsers.Nationality = (int)dataReader["Nationality"]; }
+                            if (dataReader["CountryId"] != DBNull.Value) { oEUsers.CountryId = (int)dataReader["CountryId"]; }
+                            if (dataReader["PositionId"] != DBNull.Value) { oEUsers.PositionId = (int)dataReader["PositionId"]; }
+                            if (dataReader["Title"] != DBNull.Value) { oEUsers.Title = (string)dataReader["Title"]; }
+                            if (dataReader["Username"] != DBNull.Value) { oEUsers.Username = (string)dataReader["Username"]; }
+                            if (dataReader["Password"] != DBNull.Value) { oEUsers.Password = m_oEncrption.Decrypt((string)dataReader["Password"]); }
+                            if (dataReader["FirstName"] != DBNull.Value) { oEUsers.FirstName = (string)dataReader["FirstName"]; }
+                            if (dataReader["LastName"] != DBNull.Value) { oEUsers.Lastname = (string)dataReader["LastName"]; }
+                            if (dataReader["City"] != DBNull.Value) { oEUsers.City = (string)dataReader["City"]; }
+                            if (dataReader["Birthday"] != DBNull.Value) { oEUsers.Birthday = (DateTime)dataReader["Birthday"]; }
+                            if (dataReader["Email"] != DBNull.Value) { oEUsers.Email = (string)dataReader["Email"]; }
+                            if (dataReader["Mobile"] != DBNull.Value) { oEUsers.Mobile = (string)dataReader["Mobile"]; }
+                            if (dataReader["Telephone"] != DBNull.Value) { oEUsers.Telephone = (string)dataReader["Telephone"]; }
+                            if (dataReader["AuthLevelRefId"] != DBNull.Value) { oEUsers.AuthLevelRefId = (int)dataReader["AuthLevelRefId"]; }
+                            if (dataReader["PictureFileName"] != DBNull.Value) { oEUsers.PictureFileName = (string)dataReader["PictureFileName"]; }
+                            if (dataReader["UserRole"] != DBNull.Value) { oEUsers.UserRole = (string)dataReader["UserRole"]; }
+                        }
+                    }
+                    dataReader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return oEUsers;
+        }
+
+        public async Task<EUser> getSingleUserBypasswordAndIdl(string password,int id)
+        {
+
+            string encPassword= m_oEncrption.Encrypt(password);
+        
+             var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            EUser oEUsers = null;
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.Append(" select AU.Authname UserRole,* from users U  ");
+                    sQuery.Append(" inner join AuthenticationLevels AU on AU.AuthId=U.AuthLevelRefId  ");
+                    sQuery.AppendFormat("where U.Password ='{0}' and U.UserId={1} and U.IsDeleted=0 ", encPassword,id);
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -481,6 +551,24 @@ namespace DAL.Functions
 
                 await context.SaveChangesAsync();
             }
+            // send email
+
+            // ***** send email your password been changed.
+            StringBuilder body = new StringBuilder();
+            body.AppendFormat("Hello {0}", eUser.FirstName + ' ' + eUser.Lastname);
+            body.AppendLine("Your password changed successfuly  ");
+
+
+            body.AppendLine("");
+            body.AppendLine("Regards ");
+            body.AppendLine("Al Bayader Team ");
+
+            string subject = "Password Recovered AL Bayader";
+            UtilityHelper utilityHelper = new UtilityHelper();
+
+            bool result = false;
+            result = await utilityHelper.SendEmailAsync("Bassam@albayader-me.com", eUser.Email, subject, body.ToString());
+
 
             return eUser;
         }
