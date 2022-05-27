@@ -451,13 +451,61 @@ namespace API
                 }
                 if(ex.Message == "Token already expired")
                 {
+                    throw new DomainExpiredException(ex.Message);
+                }
+                if (ex.Message == "Token not correct")
+                {
+                    throw new DomainNotFundException(ex.Message);
+                }
+                if (ex.InnerException!=null && ex.InnerException.ToString().Contains("Cannot insert the value NULL into column"))
+                {
+                    throw new DomainValidationFundException(ex.Message);
+                }
+                if (ex.Message == "The provided password didn't meet the minimum required complexity.")
+                {
+                    throw new DomainValidationFundException(ex.Message);
+                }
+                if (ex.Message == "Password has been changed but Email can't be sent")
+                {
+                    throw new DomainValidationFundException(ex.Message);
+                }
+
+                return false;
+            }
+
+            return result;
+        }
+
+        [Route("validatetoken")]
+        [HttpPost]
+        public async Task<Boolean> validateToken([FromBody] JsonElement objData)
+        {
+            bool result = false;
+            try
+            {
+
+                // EUser eUser = new EUser();
+                // eUser = GetCurrentUser();
+
+                 var token = objData.GetProperty("token").GetString();
+                result = await userLogic.validateToken(token);
+
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "The given key was not present in the dictionary.")
+                {
+                    throw new DomainValidationFundException("Validation : One or more paramter are missing in the request,Error could be becuase of case sensetive");
+                }
+                if (ex.Message == "Token already expired")
+                {
                     throw new DomainExpiredException("Token already expired");
                 }
                 if (ex.Message == "Token not correct")
                 {
                     throw new DomainNotFundException("Token not correct");
                 }
-                if (ex.InnerException!=null && ex.InnerException.ToString().Contains("Cannot insert the value NULL into column"))
+                if (ex.InnerException != null && ex.InnerException.ToString().Contains("Cannot insert the value NULL into column"))
                 {
                     throw new DomainValidationFundException("Validation : null value not allowed to one of the parameters");
                 }
@@ -471,6 +519,7 @@ namespace API
 
             return result;
         }
+
 
         [Route("forgetpassword")]
         [HttpPost]
@@ -493,9 +542,9 @@ namespace API
                     throw new DomainValidationFundException("Validation : One or more paramter are missing in the request,Error could be becuase of case sensetive");
                 }
        
-                if (ex.Message == "Validation : The email doesn't exist")
+                if (ex.Message == "The email doesn't exist")
                 {
-                    throw new DomainNotFundException("Validation: The email doesn't exist");
+                    throw new DomainNotFundException("The email doesn't exist");
                 }
                 if (ex.Message == "Email can't be sent, plesae try again later")
                 {

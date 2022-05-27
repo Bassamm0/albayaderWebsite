@@ -670,7 +670,7 @@ namespace DAL.Functions
 
             if (!result)
             {
-                throw new DomainInternalException("Email can't be sent, plesae try again later");
+                throw new DomainInternalException("Password has been changed but Email can't be sent");
             }
 
             //*****
@@ -683,7 +683,7 @@ namespace DAL.Functions
             eUser = getSingleUserByEmail(email);
             if (eUser == null)
             {
-                throw new DomainValidationFundException("Validation : The email doesn't exist");
+                throw new DomainValidationFundException("The email doesn't exist");
             }
             // insert token
             ERecoverPassword eRecoverPassword = new ERecoverPassword();
@@ -702,7 +702,7 @@ namespace DAL.Functions
             body.AppendFormat("Hello {0} you requested to change your password",eUser.FirstName + ' '+ eUser.Lastname);
             body.AppendLine("To change your password please click the link below ");
             body.AppendLine("");
-            body.AppendFormat("<a href='http://www.albayader-me.com?token={0}'>Change Password</a>", eRecoverPassword.token);
+            body.AppendFormat("<a href='http://www.albayader-me.com/recoverpassword?token={0}'>Change Password</a>", eRecoverPassword.token);
             body.AppendLine("if you didn't requested to change the password please ignore the email");
             body.AppendLine("Regards ");
             body.AppendLine("Al Bayader Team ");

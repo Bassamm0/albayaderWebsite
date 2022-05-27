@@ -108,15 +108,10 @@ namespace AlbayaderWeb.Pages
         }
         public async Task<string> deletUser(int id)
         {
-
-
             var parameters = new Dictionary<string, int>();
             parameters["id"] = id;
             var json = JsonConvert.SerializeObject(parameters);
-
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-
-
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.PostAsync("https://localhost:7174/api/User/remove", data))

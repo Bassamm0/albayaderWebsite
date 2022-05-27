@@ -1,10 +1,23 @@
 ﻿$(document).ready(function () {
 
-    $('#changepassword').click(function (e) {
+    $('#recover').click(function (e) {
 
-        if ($("#ChangePasswordForm").valid()) {
+        if (!PasswordRequirement) {
 
-            $('#ChangePasswordForm').submit();
+
+
+            $('#pswd_info').css({
+                top: $('#passwordHolder').position().top + 50,
+                right: 0
+            });
+            $('#pswd_info').show();
+            e.preventDefault();
+            return;
+        }
+
+        if ($("#recoverPasswordForm").valid()) {
+
+            $('#recoverPasswordForm').submit();
 
         } else {
             e.preventDefault();
@@ -12,14 +25,8 @@
         }
     })
 
-    $('#ChangePasswordForm').validate({
+    $('#recoverPasswordForm').validate({
         rules: {
-            oldpassword: {
-                required: true,
-                minlength: 8,
-                maxlength: 30
-
-            },
            
             password: {
                 required: true,
@@ -28,7 +35,7 @@
                 required: true,
                 equalTo: "#password"
             },
-            
+
 
 
         },
@@ -113,13 +120,14 @@
             $('#Symbol').removeClass('valid').addClass('invalid');
             PasswordRequirement = false;
         }
+        
 
     }).focus(function () {
 
-
+        
         $('#pswd_info').css({
-            top: $('#passwordHolder').position().top + 80,
-            right: 40
+            top: $('#passwordHolder').position().top + 50,
+            right: 0
         });
         $('#pswd_info').show();
 

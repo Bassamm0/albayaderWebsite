@@ -234,6 +234,12 @@ namespace LOGIC.UserLogic
 
 
             ERecoverPassword eRecoverPassword = _DUser.getTokenDetails(token);
+            if (eRecoverPassword == null)
+            {
+                throw new DomainNotFundException("Token not correct");
+
+            }
+
             DateTime tokenDate = eRecoverPassword.generatedDate;
  
             TimeSpan ts = DateTime.Now - tokenDate;
@@ -262,6 +268,34 @@ namespace LOGIC.UserLogic
                 return false;
             }
 
+        }
+
+
+        public async Task<Boolean> validateToken(string token)
+        {
+
+
+            ERecoverPassword eRecoverPassword = _DUser.getTokenDetails(token);
+            if(eRecoverPassword == null)
+            {
+                throw new DomainNotFundException("Token not correct");
+
+            }
+            DateTime tokenDate = eRecoverPassword.generatedDate;
+
+            TimeSpan ts = DateTime.Now - tokenDate;
+
+           
+            if (ts.TotalMinutes > 15)
+            {
+                throw new DomainExpiredException("Token already expired");
+            }
+
+           
+
+           
+                return true;
+          
         }
         public async Task<Boolean> forgetpassword( string email)
         {
