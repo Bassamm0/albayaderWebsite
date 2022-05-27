@@ -315,46 +315,7 @@ namespace API
 
             try
             {
-                //var UserId = objData.GetProperty("userid").GetInt16();
-                //var Title = objData.GetProperty("title").GetString();
-             
-                //var FirstName = objData.GetProperty("firstName").GetString();
-                //var Lastname = objData.GetProperty("lastname").GetString();
-            
-                //var Mobile = objData.GetProperty("mobile").GetString();
-                //var Telephone = objData.GetProperty("telephone").GetString();
-                //var Role = objData.GetProperty("role").GetString();
-                //var authLevelId = objData.GetProperty("authLevelId").GetInt16();
-                //var Nationality = objData.GetProperty("nationality").GetInt16();
-                //var CountryId = objData.GetProperty("countryId").GetInt16();
-                //var PositionId = objData.GetProperty("positionid").GetInt16();
-                //var city = objData.GetProperty("city").GetString();
-                //var Birthday = objData.GetProperty("birthday").GetString();
-                //var PictureFileName = objData.GetProperty("pictureFileName").GetString();
-
-
-
-                //EUser UpdatedUser = new EUser
-                //{
-                //    UserId = UserId,
-                //    Title = Title,
-                  
-                //    FirstName = FirstName,
-                //    Lastname = Lastname,
-                  
-                  
-                //    Mobile = Mobile,
-                //    Telephone = Telephone,
-                //    Role = Role,
-                //    AuthLevelRefId = authLevelId,
-                //    Birthday = DateTime.ParseExact(Birthday, "dd/M/yyyy", CultureInfo.InvariantCulture),
-                //    PictureFileName = PictureFileName,
-                //    Nationality = Nationality,
-                //    CountryId = CountryId,
-                //    PositionId = PositionId,
-                //    City = city
-
-                //};
+               
 
                 if(updateUser != null)
                 {
@@ -520,10 +481,8 @@ namespace API
             try
             {
  
-
                 var email = objData.GetProperty("email").GetString();
               
-
                 result = await userLogic.forgetpassword(email);
 
             }
