@@ -54,12 +54,23 @@
                                      <div class="small-box" style="text-align: center">
                                       <div class="inner">
                                         <div>
-                                          <img
+                                          @if(!string.IsNullOrEmpty(@item.CompanyLogo!)){
+                                                <img
                                             class=""
-                                            src="https://localhost:7174/api/uploads/@item.CompanyLogo"
+                                            src="https://localhost:7174/uploads/@item.CompanyLogo"
                                             style="width: 100px;max-height: 60px;"
                                             alt="User Avatar"
                                           />
+                                           }else{
+                                                 <img
+                                            class=""
+                                            src="images/branch.png"
+                                            style="width: 60px;max-height: 60px;"
+                                            alt="User Avatar"
+                                          />
+                                           }
+                                         
+
                                         </div>
                                         <div>
                                           <h2> @Html.DisplayFor(modelItem => item.Name)</h2>

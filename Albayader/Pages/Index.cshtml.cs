@@ -12,7 +12,7 @@ namespace Core_3Tire.Pages
         private readonly ILogger<IndexModel> _logger;
         public EUser _userView=new EUser();
 
-        public string Message { get; set; } = "any thing";
+        public string Message { get; set; } 
         public string email { get; set; }
         public string password { get; set; }
         public bool Authenticated { get; set; }=false;

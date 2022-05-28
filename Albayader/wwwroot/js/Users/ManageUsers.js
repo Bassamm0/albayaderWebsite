@@ -72,7 +72,7 @@
             tel: {
               
                 digits: true,
-                minlength: 11,
+                minlength: 10,
                 maxlength: 15
             },
             ddNationality: {

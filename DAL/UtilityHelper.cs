@@ -17,7 +17,7 @@ namespace DAL
 
 
         AppConfiguration AppConfig=new AppConfiguration();
-        public async Task<bool>  SendEmailAsync(string from, string to, string subject, string body)
+        public async Task<bool>  SendEmailAsync( string to, string subject, string body)
         {
             string smtpClient = AppConfig.smtpClient;
             string emailFrom = AppConfig.emailFrom;
@@ -51,28 +51,28 @@ namespace DAL
         }
 
 
-        //public async Task SendEmailAs(string from, string to, string subject, string body)
-        //{
+        public async Task SendEmailAs(string from, string to, string subject, string body)
+        {
 
 
-        //     SmtpClient client = new SmtpClient("mail.albayader-me.com");
-        //    client.UseDefaultCredentials = false;
-        //    client.Credentials = new System.Net.NetworkCredential("bassam@albayader-me.com", "e02e6cTl8");
-        //    MailMessage message = new MailMessage(from, to, subject, body);
+            SmtpClient client = new SmtpClient("mail.albayader-me.com");
+            client.UseDefaultCredentials = false;
+            client.Credentials = new System.Net.NetworkCredential("bassam@albayader-me.com", "e02e6cTl8");
+            MailMessage message = new MailMessage(from, to, subject, body);
 
-        //    message.IsBodyHtml = true;
+            message.IsBodyHtml = true;
 
-        //    try
-        //    {
-        //       await client.SendMailAsync(message);
-        //    }
-        //    catch (Exception e)
-        //    {
+            try
+            {
+                await client.SendMailAsync(message);
+            }
+            catch (Exception e)
+            {
 
-        //    }
+            }
 
 
-        //}
+        }
 
 
     }

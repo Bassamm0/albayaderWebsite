@@ -26,6 +26,7 @@ namespace API.Controllers
                 }
 
                 //string directoryPath = Path.Combine(AppContext.BaseDirectory, "/Albayader/Uploads");
+                
                 string directoryPath = Path.Combine(env.ContentRootPath, "Uploads");
                 foreach (var file in files)
                 {

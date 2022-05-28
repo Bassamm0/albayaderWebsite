@@ -51,8 +51,8 @@ namespace DAL.Functions
                             if (dataReader["Latitude"] != DBNull.Value) { oECompanies.Latitude = (decimal)dataReader["Latitude"]; }
                             if (dataReader["Longitude"] != DBNull.Value) { oECompanies.Longitude = (decimal)dataReader["Longitude"]; }
                             if (dataReader["Altitude"] != DBNull.Value) { oECompanies.Altitude = (decimal)dataReader["Altitude"]; }
-                            if (dataReader["CompanyLogo"] != DBNull.Value) { oECompanies.CompanyLogo = (string)dataReader["CountryName"]; }
-                            if (dataReader["CountryName"] != DBNull.Value) { oECompanies.CountryName = (string)dataReader["CompanyLogo"]; }
+                            if (dataReader["CompanyLogo"] != DBNull.Value) { oECompanies.CompanyLogo = (string)dataReader["CompanyLogo"]; }
+                            if (dataReader["CountryName"] != DBNull.Value) { oECompanies.CountryName = (string)dataReader["CountryName"]; }
                             if (dataReader["OpId"] != DBNull.Value) { oECompanies.OpId = (int)dataReader["OpId"]; }
                             if (dataReader["CompanyTypeId"] != DBNull.Value) { oECompanies.CompanyTypeId = (int)dataReader["CompanyTypeId"]; }
  

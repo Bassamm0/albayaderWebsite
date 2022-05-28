@@ -36,12 +36,12 @@ $(document).ready(function () {
             },
             tel: {
                 digits:true,
-                minlength: 11,
+                minlength: 10,
                 maxlength: 15
             },
             fax: {
                 digits: true,
-                minlength: 11,
+                minlength: 10,
                 maxlength: 15
             },
             street: {

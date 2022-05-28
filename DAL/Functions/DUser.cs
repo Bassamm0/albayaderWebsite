@@ -567,7 +567,7 @@ namespace DAL.Functions
             UtilityHelper utilityHelper = new UtilityHelper();
 
             bool result = false;
-            result = await utilityHelper.SendEmailAsync("Bassam@albayader-me.com", eUser.Email, subject, body.ToString());
+            result = await utilityHelper.SendEmailAsync( eUser.Email, subject, body.ToString());
 
 
             return eUser;
@@ -666,7 +666,7 @@ namespace DAL.Functions
             UtilityHelper utilityHelper = new UtilityHelper();
 
             bool result = false;
-            result = await utilityHelper.SendEmailAsync("Bassam@albayader-me.com", eUser.Email, subject, body.ToString());
+            result = await utilityHelper.SendEmailAsync( eUser.Email, subject, body.ToString());
 
             if (!result)
             {
@@ -711,7 +711,7 @@ namespace DAL.Functions
             UtilityHelper utilityHelper = new UtilityHelper();
 
             bool result = false;
-            result =  await utilityHelper.SendEmailAsync("Bassam@albayader-me.com",email,subject,body.ToString());
+            result =  await utilityHelper.SendEmailAsync(email,subject,body.ToString());
 
             if (!result)
             {
