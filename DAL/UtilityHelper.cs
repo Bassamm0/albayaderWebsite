@@ -7,8 +7,8 @@ using DAL.DataContext;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
-//using System.Net;
-//using System.Net.Mail;
+using System.Net;
+using System.Net.Mail;
 
 namespace DAL
 {
@@ -55,21 +55,21 @@ namespace DAL
         {
 
 
-            SmtpClient client = new SmtpClient("mail.albayader-me.com");
-            client.UseDefaultCredentials = false;
-            client.Credentials = new System.Net.NetworkCredential("bassam@albayader-me.com", "e02e6cTl8");
-            MailMessage message = new MailMessage(from, to, subject, body);
+            //SmtpClient client = new SmtpClient("mail.albayader-me.com");
+            //client.UseDefaultCredentials = false;
+            //client.Credentials = new System.Net.NetworkCredential("bassam@albayader-me.com", "e02e6cTl8");
+            //MailMessage message = new MailMessage(from, to, subject, body);
 
-            message.IsBodyHtml = true;
+            //message.IsBodyHtml = true;
 
-            try
-            {
-                await client.SendMailAsync(message);
-            }
-            catch (Exception e)
-            {
+            //try
+            //{
+            //    await client.SendMailAsync(message);
+            //}
+            //catch (Exception e)
+            //{
 
-            }
+            //}
 
 
         }
