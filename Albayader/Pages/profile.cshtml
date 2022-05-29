@@ -1,0 +1,203 @@
+﻿@page
+@model AlbayaderWeb.Pages.profileModel
+@{
+     ViewData["Title"] = "My Profile";
+}
+
+<div class="content-wrapper">
+<section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-left">
+                                <li class="breadcrumb-item"><a href="Dashboard">Dashboard</a></li>
+                                <li class="breadcrumb-item active">My Profile</li>
+                            </ol>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+                <!-- /.container-fluid -->
+            </section>
+
+              <!-- Main content -->
+        <section class="content">
+          <div class="container-fluid">
+ <div class="row">
+       
+          <div class="col-md-12">
+<div class="card">
+        
+        <div class="card-body">
+
+
+           <div class="col">
+
+
+                  <div class="card card-primary card-outline">
+              <div class="card-body box-profile">
+                <div class="text-center">
+                  <img class="profile-user-img img-fluid img-circle"
+                       src="img/user4-128x128.jpg"
+                       alt="User profile picture">
+                </div>
+
+                <h3 class="profile-username text-center">Nina Mcintire</h3>
+
+                <p class="text-muted text-center">Software Engineer</p>
+
+               
+              </div>
+              <!-- /.card-body -->
+            </div>
+
+
+
+
+
+          </div>
+          <form class="form-horizontal">
+                      
+
+
+
+
+                     
+                    <div class="col">
+                
+                    <div class="form-group">
+                    <label>Title</label>
+                    <select name="ddTitle" id="ddTitle" class="form-control select2" style="width: 100%;">
+                       <option value="Mr.">Mr.</option>
+                       <option value="Ms.">Ms.</option>
+                    
+    
+                    </select>
+                  </div>
+                   <div class="form-group">
+                    <label for="firstname">First Name</label>
+                    <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Enter First Name" value="" />
+                  </div>
+               
+                   <div class="form-group">
+                    <label for="lastname">Last Name</label>
+                    <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Enter Last Name" value="" />
+                  </div>
+                  <div class="form-group">
+                                <label for="mon=bile">Birthday</label>
+                                
+                     <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" id="birthday" name="birthday"/>
+                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+
+                    </div>
+
+                   <div class="form-group">
+                    <label for="mon=bile">Email</label>
+                    <input type="text" class="form-control" name="email" id="email" placeholder="Enter Email" value="" readonly/>
+                  </div>
+                   <div class="form-group">
+                    <label for="mon=bile">Mobile</label>
+                    <input type="text" class="form-control" name="mobile" id="mobile" placeholder="Enter Mobile" value="" />
+                  </div>
+                  <div class="form-group">
+                    <label for="tel">Tel</label>
+                    <input type="text" class="form-control" name="tel" id="tel" placeholder="Enter Telphone" value="" />
+                  </div>
+                  <div class="form-group">
+                    <label>Nationality</label>
+                    <select name="ddNationality" id="ddNationality" class="form-control select2" style="width: 100%;">
+                 
+    
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Country</label>
+                    <select name="ddCountry" id="ddCountry" class="form-control select2" style="width: 100%;">
+    
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="companyname">City</label>
+                    <input type="text" class="form-control" name="city" id="city" placeholder="Enter city" value="" />
+                  </div>
+                  
+                  <div class="form-group">
+                    <label>Postion</label>
+                    <select name="ddPosition" id="ddPosition" class="form-control select2" style="width: 100%;">
+                 
+    
+                    </select>
+            
+                 </div>
+
+                    <div class="form-group">
+                        <label for="logo">Picture</label>
+                        <div class="input-group">
+                          <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="logoFile">
+                            <label class="custom-file-label" for="exampleInputFile" id="logoFile">Choose file</label>
+                          </div>
+                            <div class="input-group-append">
+                            <div class="btn btn-block btn-info remove" id="UploadLogobtn">Upload</div>
+                             <div class="btn btn-warning remove" id="RemoveLogobtn" >Remove</div>
+                          </div>
+                        </div>
+                    </div>
+                    <div id="pictureHolder">
+                      <a href="" ></a>
+                      <span id="uploadError" class="errorMessage" ></span>
+                      <progress id="fileProgress" style="display: none"></progress>
+                      <span id="lblMessage" style="color: Green"></span>
+                    </div>
+                   
+                  
+                     
+
+
+                     <div class="dropdown-divider" ></div>
+
+                     
+                      <div class="row" style="float: right;"> 
+       
+
+           <div style="padding: 20px;">
+            <button type="button" id="SaveUser" class="btn btn-block btn-info btn-lg" style="width: 200px;">Save</button>
+
+             </div>
+              <!-- /.col -->
+            </div>
+
+                      </div>
+                    </form>
+          
+
+
+        </div>
+        <!-- /.card-body -->
+        
+        <!-- /.card-footer-->
+      </div>
+          </div>
+   
+
+               
+           
+        
+</div>
+
+            <!-- /.row -->
+          </div>
+          <!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+
+        </div>
