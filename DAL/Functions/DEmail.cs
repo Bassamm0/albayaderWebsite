@@ -14,7 +14,7 @@ namespace DAL.Functions
             EUser eUser = new EUser();
             eUser.FirstName = "Bassam";
             eUser.Lastname = "mhisen";
-           eUser.Email = "bassam_m_99@yahoo.com";
+           eUser.Email = "mohaisen_bassam@hotmail.com";
 
             // ***** send email your password been changed.
             StringBuilder body = new StringBuilder();

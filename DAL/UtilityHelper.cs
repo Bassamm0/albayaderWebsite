@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.DataContext;
 using MailKit.Net.Smtp;
+using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
-using System.Net;
-using System.Net.Mail;
+//using System.Net;
+//using System.Net.Mail;
 
 namespace DAL
 {
@@ -23,20 +24,29 @@ namespace DAL
             string emailFrom = AppConfig.emailFrom;
             string pwd = AppConfig.ePassword;
 
+            //string smtpClient = "smtp.gmail.com";
+            //string emailFrom = "bassam.mhisen@gmail.com";
+            //string pwd = "Bassam@123";
+
+
+            InternetAddressList list = new InternetAddressList();
+            list.Add(new MailboxAddress("",to));
+            list.Add(new MailboxAddress("Bassam","bassam.mhisen@gmail.com"));
 
             bool isSent = false;
             try
             {
                 var email = new MimeMessage();
                 email.Sender = MailboxAddress.Parse(emailFrom);
-                email.To.Add(MailboxAddress.Parse(to));
+                email.To.AddRange(list);
                 email.Subject = subject;
                 var builder = new BodyBuilder();
 
                 builder.HtmlBody = body;
                 email.Body = builder.ToMessageBody();
                 using var smtp = new SmtpClient();
-                smtp.Connect(smtpClient, 25 , true);
+            
+                smtp.Connect(smtpClient, 587, SecureSocketOptions.None);
                 smtp.Authenticate(emailFrom, pwd);
                 await smtp.SendAsync(email);
                 smtp.Disconnect(true);
