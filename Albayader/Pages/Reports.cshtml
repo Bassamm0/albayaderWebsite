@@ -4,6 +4,151 @@
     ViewData["Title"] = "Reports";
 }
 
+  <!-- Bootstrap Switch -->
+<script src="plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+
+<!-- daterange picker -->
+  <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+<!-- Select2 -->
+  <link rel="stylesheet" href="plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+
+    <!-- DataTables -->
+  <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <style>
+      .dropdown-menu{
+        padding-top: 0;
+        
+      }
+      .dropdown-divider{
+        margin: 0;
+      }
+
+
+
+      .custom-switch.custom-switch-sm .custom-control-label {
+    padding-left: 1rem;
+    padding-bottom: 1rem;
+}
+
+.custom-switch.custom-switch-sm .custom-control-label::before {
+    height: 1rem;
+    width: calc(1rem + 0.75rem);
+    border-radius: 2rem;
+}
+
+.custom-switch.custom-switch-sm .custom-control-label::after {
+    width: calc(1rem - 4px);
+    height: calc(1rem - 4px);
+    border-radius: calc(1rem - (1rem / 2));
+}
+
+.custom-switch.custom-switch-sm .custom-control-input:checked ~ .custom-control-label::after {
+    transform: translateX(calc(1rem - 0.25rem));
+}
+
+/* for md */
+
+.custom-switch.custom-switch-md .custom-control-label {
+    padding-left: 2rem;
+    padding-bottom: 1.5rem;
+}
+
+.custom-switch.custom-switch-md .custom-control-label::before {
+    height: 1.5rem;
+    width: calc(2rem + 0.75rem);
+    border-radius: 3rem;
+}
+
+.custom-switch.custom-switch-md .custom-control-label::after {
+    width: calc(1.5rem - 4px);
+    height: calc(1.5rem - 4px);
+    border-radius: calc(2rem - (1.5rem / 2));
+}
+
+.custom-switch.custom-switch-md .custom-control-input:checked ~ .custom-control-label::after {
+    transform: translateX(calc(1.5rem - 0.25rem));
+}
+
+/* for lg */
+
+.custom-switch.custom-switch-lg .custom-control-label {
+    padding-top: 7px;;
+    padding-left: 3rem;
+    padding-bottom: 2rem;
+}
+
+.custom-switch.custom-switch-lg .custom-control-label::before {
+    height: 2rem;
+    width: calc(3rem + 0.75rem);
+    border-radius: 4rem;
+}
+
+.custom-switch.custom-switch-lg .custom-control-label::after {
+    width: calc(2rem - 4px);
+    height: calc(2rem - 4px);
+    border-radius: calc(3rem - (2rem / 2));
+}
+
+.custom-switch.custom-switch-lg .custom-control-input:checked ~ .custom-control-label::after {
+    transform: translateX(calc(2rem - 0.25rem));
+}
+
+/* for xl */
+
+.custom-switch.custom-switch-xl .custom-control-label {
+    padding-left: 4rem;
+    padding-bottom: 2.5rem;
+}
+
+.custom-switch.custom-switch-xl .custom-control-label::before {
+    height: 2.5rem;
+    width: calc(4rem + 0.75rem);
+    border-radius: 5rem;
+}
+
+.custom-switch.custom-switch-xl .custom-control-label::after {
+    width: calc(2.5rem - 4px);
+    height: calc(2.5rem - 4px);
+    border-radius: calc(4rem - (2.5rem / 2));
+}
+
+.custom-switch.custom-switch-xl .custom-control-input:checked ~ .custom-control-label::after {
+    transform: translateX(calc(2.5rem - 0.25rem));
+}
+
+
+.checkbox-lg .custom-control-label::before, 
+.checkbox-lg .custom-control-label::after {
+  top: .8rem;
+  width: 1.55rem;
+  height: 1.55rem;
+}
+
+.checkbox-lg .custom-control-label {
+  padding-top: 13px;
+  padding-left: 6px;
+}
+
+
+.checkbox-xl .custom-control-label::before, 
+.checkbox-xl .custom-control-label::after {
+  top: 1.2rem;
+  width: 1.85rem;
+  height: 1.85rem;
+}
+
+.checkbox-xl .custom-control-label {
+  padding-top: 23px;
+  padding-left: 10px;
+}
+    </style>
+
 <div class="content-wrapper">
 <section class="content-header">
                 <div class="container-fluid">
@@ -23,23 +168,277 @@
                 <!-- /.container-fluid -->
             </section>
 
-              <!-- Main content -->
+         <!-- Main content -->
         <section class="content">
+         
           <div class="container-fluid">
- <div class="row">
-       
+     
 
-   
+            <div class="card card-default">
+          <div class="card-header">
+            <h3 class="card-title">Preventive Reports</h3>
 
-               
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
            
-        
-</div>
 
+
+              <div class="col-md-12">
+                
+                 
+                        
+                        <div class="row">
+                            <div class="col">
+                             <div class="form-group">
+                                
+                                  <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                      <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" placeholder="From Date"/>
+                                      <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                      </div>
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="col">
+                             <div class="form-group">
+                                
+                                  <div class="input-group date" id="reservationdate2" data-target-input="nearest">
+                                      <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" placeholder="To Date"/>
+                                      <div class="input-group-append" data-target="#reservationdate2" data-toggle="datetimepicker">
+                                          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                      </div>
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="col">
+                             <div >
+                              <button type="button" class="btn btn-block btn-info" style="width: 150px;">Apply</button>
+
+                              </div>
+                            </div>
+                            <div class="col">
+                             <div class="form-group">
+                              <select class="form-control select2" style="width: 100%;">
+                                <option selected="selected">All Type</option>
+                                 <option>Preventive</option>
+                                <option>Corrective</option>
+                                <option>Others</option>
+                               
+                              </select>
+                            </div>
+                              
+                            </div>
+                                    <div class="col">
+                                      <div class="form-group">
+                                        <select class="form-control select2" style="width: 100%;">
+                                          <option selected="selected">All Branches</option>
+                                          <option>Mirdif</option>
+                                          <option>Zahia</option>
+                                          <option>Deira</option>
+                                    
+                                        </select>
+                                      </div>
+                                    
+                                    </div>
+                      
+                        </div>
+             
+                    
+     
+              <div class="dropdown-divider" ></div>
+                <div class="form-group">
+                         <div class="row">
+                            <div class="col">
+
+<div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>Ref.</th>
+                    <th>Branch</th>
+                    <th>Equipments</th>
+                    <th>Date Time</th>
+                    <th>Remarkers *  </th>
+                    <th>Supervisor  Feedback</th>
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td>#81</td>
+                    <td>Mirdif</td>
+                    <td>Equipment1</td>
+                    <td>16/04/2022</td>
+                    <td style="color: rgb(241, 0, 0);"> This equipments required electric part </td>
+                    <td> All good</td><td><button type="button" class="btn btn-block btn-secondary btn-lg">Feedback</button></td>
+                  </tr>
+                  <tr>
+                    <td>#82</td>
+                    <td>Zahiz</td>
+                    <td>Equipment2</td>
+                    <td>19/04/2022</td>
+                    <td style="color: rgb(241, 0, 0);"> Please consider to change this equipment</td>
+                    <td> All good</td>
+                    <td><button type="button" class="btn btn-block btn-secondary btn-lg">Feedback</button></td>
+                  </tr>
+                   <tr>
+                    <td>#83</td>
+                    <td>Mirdif</td>
+                    <td>Equipment1</td>
+                    <td>16/04/2022</td>
+                     <td style="color: rgb(241, 0, 0);"> This equipments required electric part </td>
+                  <td> All good</td>
+                  <td><button type="button" class="btn btn-block btn-secondary btn-lg">Feedback</button></td>
+                  </tr>
+                   <tr>
+                    <td>#84</td>
+                    <td>Deira</td>
+                    <td>Equipment3</td>
+                    <td>22/04/2022</td>
+                  <td style="color: rgb(241, 0, 0);">nothing required</td>
+                    <td> All good</td>
+                    <td><button type="button" class="btn btn-block btn-secondary btn-lg">Feedback</button></td>
+                  </tr>
+                  <tr>
+                    <td>#85</td>
+                    <td>Mirdif</td>
+                    <td>Equipment1</td>
+                    <td>16/04/2022</td>
+                     <td style="color: rgb(241, 0, 0);"> This equipments required electric part </td>
+                    <td> All good</td>
+                    <td><button type="button" class="btn btn-block btn-secondary btn-lg">Feedback</button></td>
+                  </tr>
+                  <tr>
+                    <td>#86</td>
+                    <td>Zahiz</td>
+                    <td>Equipment2</td>
+                    <td>19/04/2022</td>
+                    <td style="color: rgb(241, 0, 0);"> Please consider to change this equipment</td>
+                    <td> All good</td>
+                    <td><button type="button" class="btn btn-block btn-secondary btn-lg">Feedback</button></td>
+                  </tr>
+                   <tr>
+                    <td>#87</td>
+                    <td>Mirdif</td>
+                    <td>Equipment1</td>
+                    <td>16/04/2022</td>
+                     <td style="color: rgb(241, 0, 0);"> This equipments required electric part </td>
+                    <td> All good</td>
+                    <td><button type="button" class="btn btn-block btn-secondary btn-lg">Feedback</button></td>
+                  </tr>
+                   <tr>
+                    <td>#88</td>
+                    <td>Deira</td>
+                    <td>Equipment3</td>
+                    <td>22/04/2022</td>
+                    <td style="color: rgb(241, 0, 0);">nothing required</td>
+                    <td> All good</td>
+                    <td><button type="button" class="btn btn-block btn-secondary btn-lg">Feedback</button></td>
+                  </tr>
+                  <tr>
+                    <td>#89</td>
+                    
+                    <td>Mirdif</td>
+                    <td>Equipment1</td>
+                    <td>16/04/2022</td>
+                     <td style="color: rgb(241, 0, 0);"> This equipments required electric part </td>
+                    <td> All good</td>
+                    <td><button type="button" class="btn btn-block btn-secondary btn-lg">Feedback</button></td>
+                  </tr>
+                  <tr>
+                    <td>#90</td>
+
+                    <td>Zahiz</td>
+                    <td>Equipment2</td>
+                    <td>19/04/2022</td>
+                    <td style="color: rgb(241, 0, 0);"> Please consider to change this equipment</td>
+                    <td> All good</td>
+                    <td><button type="button" class="btn btn-block btn-secondary btn-lg">Feedback</button></td>
+                  </tr>
+                   <tr>
+                    <td>#91</td>
+                    <td>Mirdif</td>
+                    <td>Equipment1</td>
+                    <td>16/04/2022</td>
+                     <td style="color: rgb(241, 0, 0);"> This equipments required electric part </td>
+                    <td> All good</td>
+                    <td><button type="button" class="btn btn-block btn-secondary btn-lg">Feedback</button></td>
+                  </tr>
+                   <tr>
+                    <td>#92</td>
+                    <td>Deira</td>
+                    <td>Equipment3</td>
+                    <td>22/04/2022</td>
+                    <td style="color: rgb(241, 0, 0);">nothing required</td>
+                    <td> All good</td>
+                    <td><button type="button" class="btn btn-block btn-secondary btn-lg">Feedback</button></td>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+
+
+                            </div>
+                         
+                            </div>
+                     
+                </div>
+           
+
+            
+          
             <!-- /.row -->
           </div>
+          <!-- /.card-body -->
+         
+        </div>
+        <!-- /.card -->
+
+
+        </div>
+
+
+        
+        <!-- /.card-body -->
+      </div>
+
+
+
+    
+
+
+
           <!-- /.container-fluid -->
         </section>
         <!-- /.content -->
 
+
         </div>
+
+
+        <!-- dropzonejs -->
+<script src="plugins/dropzone/min/dropzone.min.js"></script>
+
+<!-- Select2 -->
+<script src="plugins/select2/js/select2.full.min.js"></script>
+
+<!-- DataTables  & Plugins -->
+<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="plugins/jszip/jszip.min.js"></script>
+<script src="plugins/pdfmake/pdfmake.min.js"></script>
+<script src="plugins/pdfmake/vfs_fonts.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>

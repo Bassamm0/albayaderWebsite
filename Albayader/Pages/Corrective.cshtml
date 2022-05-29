@@ -5,6 +5,136 @@
     ViewData["Title"] = "Corrective Service";
 }
 
+<script src="plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+  <style>
+      .dropdown-menu{
+        padding-top: 0;
+        
+      }
+      .dropdown-divider{
+        margin: 0;
+      }
+
+
+
+      .custom-switch.custom-switch-sm .custom-control-label {
+    padding-left: 1rem;
+    padding-bottom: 1rem;
+}
+
+.custom-switch.custom-switch-sm .custom-control-label::before {
+    height: 1rem;
+    width: calc(1rem + 0.75rem);
+    border-radius: 2rem;
+}
+
+.custom-switch.custom-switch-sm .custom-control-label::after {
+    width: calc(1rem - 4px);
+    height: calc(1rem - 4px);
+    border-radius: calc(1rem - (1rem / 2));
+}
+
+.custom-switch.custom-switch-sm .custom-control-input:checked ~ .custom-control-label::after {
+    transform: translateX(calc(1rem - 0.25rem));
+}
+
+/* for md */
+
+.custom-switch.custom-switch-md .custom-control-label {
+    padding-left: 2rem;
+    padding-bottom: 1.5rem;
+}
+
+.custom-switch.custom-switch-md .custom-control-label::before {
+    height: 1.5rem;
+    width: calc(2rem + 0.75rem);
+    border-radius: 3rem;
+}
+
+.custom-switch.custom-switch-md .custom-control-label::after {
+    width: calc(1.5rem - 4px);
+    height: calc(1.5rem - 4px);
+    border-radius: calc(2rem - (1.5rem / 2));
+}
+
+.custom-switch.custom-switch-md .custom-control-input:checked ~ .custom-control-label::after {
+    transform: translateX(calc(1.5rem - 0.25rem));
+}
+
+/* for lg */
+
+.custom-switch.custom-switch-lg .custom-control-label {
+    padding-top: 7px;;
+    padding-left: 3rem;
+    padding-bottom: 2rem;
+}
+
+.custom-switch.custom-switch-lg .custom-control-label::before {
+    height: 2rem;
+    width: calc(3rem + 0.75rem);
+    border-radius: 4rem;
+}
+
+.custom-switch.custom-switch-lg .custom-control-label::after {
+    width: calc(2rem - 4px);
+    height: calc(2rem - 4px);
+    border-radius: calc(3rem - (2rem / 2));
+}
+
+.custom-switch.custom-switch-lg .custom-control-input:checked ~ .custom-control-label::after {
+    transform: translateX(calc(2rem - 0.25rem));
+}
+
+/* for xl */
+
+.custom-switch.custom-switch-xl .custom-control-label {
+    padding-left: 4rem;
+    padding-bottom: 2.5rem;
+}
+
+.custom-switch.custom-switch-xl .custom-control-label::before {
+    height: 2.5rem;
+    width: calc(4rem + 0.75rem);
+    border-radius: 5rem;
+}
+
+.custom-switch.custom-switch-xl .custom-control-label::after {
+    width: calc(2.5rem - 4px);
+    height: calc(2.5rem - 4px);
+    border-radius: calc(4rem - (2.5rem / 2));
+}
+
+.custom-switch.custom-switch-xl .custom-control-input:checked ~ .custom-control-label::after {
+    transform: translateX(calc(2.5rem - 0.25rem));
+}
+
+
+.checkbox-lg .custom-control-label::before, 
+.checkbox-lg .custom-control-label::after {
+  top: .8rem;
+  width: 1.55rem;
+  height: 1.55rem;
+}
+
+.checkbox-lg .custom-control-label {
+  padding-top: 13px;
+  padding-left: 6px;
+}
+
+
+.checkbox-xl .custom-control-label::before, 
+.checkbox-xl .custom-control-label::after {
+  top: 1.2rem;
+  width: 1.85rem;
+  height: 1.85rem;
+}
+
+.checkbox-xl .custom-control-label {
+  padding-top: 23px;
+  padding-left: 10px;
+}
+    </style>
+
 <div class="content-wrapper">
 <section class="content-header">
                 <div class="container-fluid">
@@ -27,15 +157,229 @@
               <!-- Main content -->
         <section class="content">
           <div class="container-fluid">
- <div class="row">
-       
+                 <div class="card">
+     
+        <div class="card-body">
+          <div class="row">
+            
 
-   
 
-               
+                <div class="col-sm">
+                 
+                    <div class="info-box-content">
+                     <div class="user-block">
+                        <img class="img-circle img-bordered-sm" src="img/user1-128x128.jpg" alt="user image">
+                        <span class="username">
+                          <a href="#">Jonathan Burke Jr.</a>
+                        </span>
+                        <span class="description">Technician</span>
+                      </div>
+                    
+                  </div>
+                </div>
+                <div class="col-sm">
+                  
+                    <div class="info-box-content">
+                      <div class="info-box-text text-center text-muted"><b>Carrefour</b></div>
+                      <div class="info-box-number text-center text-muted mb-0">MCC</div>
+                    </div>
+                 
+                </div>
+                <div class="col-sm">
+                
+                    <div class="info-box-content" style="float: right;text-align: left;">
+                      <div class="info-box-text text-center text-muted"><i class="fa-solid fa-calendar-days"></i> 13/04/2022</div>
+                      <div class="info-box-number text-muted mb-0"><i class="fa-solid fa-clock"></i> 10:00 AM</div>
+                    </div>
+                
+                </div>
            
+              </div>
+            </div>
+   
+          </div>
+
+          
+
+           <div class="card card-default">
+          <div class="card-header">
+            <h3 class="card-title">Corrective Service Form</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <div class="row">
+               <div class="col-md-6">
+                 <div class="form-group">
+                    <label for="exampleInputFile">Before Problem fixed</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="exampleInputFile">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                      </div>
+                     
+                    </div>
+                  </div>
+              </div>
+               <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputEmail1"></label>
+                    
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Nature of the problem</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+              </div>
+              <!-- /.col -->
+       
+            </div>
+            <fieldset class="form-group border p-3">
+                        <legend class="w-auto px-2">System Details</legend>
+             <div class="row">
+               
+              <div class="col">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Make</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Make">
+                </div>
+              </div>
+              <!-- /.col -->
+              <div class="col">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Model</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Model">
+                </div>
+                
+              </div>
+               <div class="col">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Serial No.</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Serial No.">
+                </div>
+                
+              </div>
+            </div>
+            </fieldset>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                   <fieldset class="form-group border p-3">
+                        <legend class="w-auto px-2">System Condition</legend>
+                        <div class="row">
+                            <div class="col">
+                             <div class="custom-control custom-checkbox checkbox-xl">
+                              <input type="checkbox" class="custom-control-input" id="checkbox-1" >
+                              <label class="custom-control-label" for="checkbox-1">Running</label>
+                            </div>
+                            </div>
+                            <div class="col">
+                             <div class="custom-control custom-checkbox checkbox-xl">
+                              <input type="checkbox" class="custom-control-input" id="checkbox-2">
+                              <label class="custom-control-label" for="checkbox-2">Shutdown</label>
+                            </div>
+                            </div>
+                            <div class="col">
+                             <div class="custom-control custom-checkbox checkbox-xl">
+                              <input type="checkbox" class="custom-control-input" id="checkbox-3" >
+                              <label class="custom-control-label" for="checkbox-3">Under construction</label>
+                            </div>
+                            </div>
+                             
+                      
+                        </div>
+                        </fieldset> 
+                    
+                </div>
+                <div class="col-md-12">
+                <div class="form-group">
+                   <fieldset class="form-group border p-3">
+                        <legend class="w-auto px-2">Service Details</legend>
+                        <div class="row">
+                            <div class="col">
+                               <div class="form-group">
+                                  <label for="exampleInputEmail1">Remarks</label>
+                                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                              </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                  <label for="exampleInputEmail1">Service Rendered</label>
+                                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                              </div>                               
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                  <label for="exampleInputEmail1">Used Parts</label>
+                                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                              </div>                               
+                            </div>
+                            </div>
+                        </fieldset> 
+                    
+                </div>
+            <div class="row">
+             
+
+
+            <div class="col-md-6">
+                 <div class="form-group">
+                    <label for="exampleInputFile">Picture After Problem fixed</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="exampleInputFile">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                      </div>
+                     
+                    </div>
+                  </div>
+              </div>
+               <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputEmail1"></label>
+                    
+                </div>
+              </div>
+            </div>
+            <!-- /.row -->
+ <div class="dropdown-divider" ></div>
+            
+            <div class="row" style="float: right;"> 
+             <div style="padding: 20px;">
+            <button type="button" class="btn btn-block btn-default btn-lg" style="width: 200px;">Save</button>
+
+             </div>
+
+           <div style="padding: 20px;">
+            <button type="button" class="btn btn-block btn-info btn-lg" style="width: 200px;">Save & Continue</button>
+
+             </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.card-body -->
+         
+        </div>
+        <!-- /.card -->
+
+
+        </div>
+
+
         
-</div>
+        <!-- /.card-body -->
+      </div>
+
+
 
             <!-- /.row -->
           </div>
