@@ -100,7 +100,7 @@ namespace AlbayaderWeb.Pages
                     _User.City = Request.Form["city"];
                     _User.PositionId = Convert.ToInt16(Request.Form["ddPosition"]);
                     _User.Password = Request.Form["password"];
-                    _User.PositionId = Convert.ToInt32(Request.Form["ddPosition"]);
+                    
                     _User.PictureFileName = Request.Form["uploadedfile"];
                     _User.AuthLevelRefId = Convert.ToInt16(Request.Form["ddAuth"]);
 
@@ -200,10 +200,10 @@ namespace AlbayaderWeb.Pages
 
 
 
-        private async Task<string> updateUser(EUser User)
+        private async Task<string> updateUser(EUser user)
         {
 
-            var json = JsonConvert.SerializeObject(User);
+            var json = JsonConvert.SerializeObject(user);
 
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 

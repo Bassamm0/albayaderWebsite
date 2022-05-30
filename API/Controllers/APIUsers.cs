@@ -304,6 +304,37 @@ namespace API
 
             return result;
         }
+        [Route("updateprofile")]
+        [HttpPost]
+        public async Task<Boolean> updateProfile([FromBody] EUser user)
+
+        {
+
+            bool result = false;
+
+            try
+            {
+                if (user != null)
+                {
+                    result = await userLogic.updateProfile(user);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "The given key was not present in the dictionary.")
+                {
+                    throw new DomainValidationFundException("Validation : One or more paramter are missing in the request,Error could be becuase of case sensetive");
+                }
+                if (ex.InnerException != null && ex.InnerException.ToString().Contains("Cannot insert the value NULL into column"))
+                {
+                    throw new DomainValidationFundException("Validation : null value not allowed to one of the parameters");
+                }
+                return false;
+            }
+
+            return result;
+        }
 
         [Route("update")]
         [HttpPost]

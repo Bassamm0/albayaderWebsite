@@ -147,11 +147,14 @@
                         </div>
                     </div>
                     <div id="pictureHolder">
-                      <a href="https://localhost:7174/API/uploads/@Model._User.PictureFileName" >@Model._User.PictureFileName</a>
+                      <a href="https://localhost:7174/uploads/@Model._User.PictureFileName" target="_blank" >@Model._User.PictureFileName</a>
                       <span id="uploadError" class="errorMessage" ></span>
                       <progress id="fileProgress" style="display: none"></progress>
                       <span id="lblMessage" style="color: Green"></span>
                     </div>
+
+                     <input type="hidden" id="uploadedfile" name="uploadedfile" value="@Model._User.PictureFileName"/>
+
                      <select name="ddAuth" id="ddAuth" class="form-control " style="width: 100%;">
                       <option value="">Select The Role</option>
                         <option value="1">Administrator</option>
@@ -301,6 +304,8 @@
                       <progress id="fileProgress" style="display: none"></progress>
                       <span id="lblMessage" style="color: Green"></span>
                     </div>
+
+                     <input type="hidden" id="uploadedfile" name="uploadedfile" value=""/>
                    
                      <select name="ddAuth" id="ddAuth" class="form-control " style="width: 100%;">
                        <option value="">Select The Role</option>
@@ -325,7 +330,7 @@
                        }
 
                       }
-                      <input type="hidden" id="uploadedfile" name="uploadedfile" value=""/>
+                     
                  <input type="hidden" id="companyNamefield" name="companyNamefield" value="@Model.CompanyName"/>
                  <input type="hidden" id="Smode" name="Smode" value="@Model.PageActionMode"/>
                   <input type="hidden" id="hdCompanyId" name="hdCompanyId" value="@Model.CompanyId"/>

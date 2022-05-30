@@ -488,6 +488,33 @@ namespace DAL.Functions
 
             return user;
         }
+
+        public async Task<EUser> updateProfile(EUser user)
+        {
+            EUser eUser = new EUser();
+            eUser = getSingleUser(user.UserId);
+            if (eUser == null)
+            {
+                throw new DomainValidationFundException("Validation : The user is not found, make sure you are updating the correct user");
+            }
+            using (var context = new DatabaseContext(DatabaseContext.ops.dbOptions))
+            {
+                context.Users.Attach(user);
+                 context.Entry(user).Property(x => x.FirstName).IsModified = true;
+                context.Entry(user).Property(x => x.Lastname).IsModified = true;
+                context.Entry(user).Property(x => x.Mobile).IsModified = true;
+                context.Entry(user).Property(x => x.Telephone).IsModified = true;
+                 context.Entry(user).Property(x => x.Birthday).IsModified = true;
+                context.Entry(user).Property(x => x.PictureFileName).IsModified = true;
+                context.Entry(user).Property(x => x.Nationality).IsModified = true;
+                context.Entry(user).Property(x => x.CountryId).IsModified = true;
+                context.Entry(user).Property(x => x.PositionId).IsModified = true;
+                context.Entry(user).Property(x => x.City).IsModified = true;
+                await context.SaveChangesAsync();
+            }
+
+            return user;
+        }
         public async Task<EUser> deleteUser(int Id)
         {
             EUser eUser = new EUser();

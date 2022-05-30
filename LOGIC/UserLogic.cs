@@ -171,6 +171,22 @@ namespace LOGIC.UserLogic
             }
 
         }
+
+        public async Task<Boolean> updateProfile(EUser user)
+        {
+
+            var resul = await _DUser.updateProfile(user);
+            if (resul != null && resul.UserId > 0)
+            {
+               
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
         public async Task<Boolean> deleteUser(int Id)
         {
 

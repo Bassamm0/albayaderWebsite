@@ -41,13 +41,15 @@
               <div class="card-body box-profile">
                 <div class="text-center">
                   <img class="profile-user-img img-fluid img-circle"
-                       src="img/user4-128x128.jpg"
+                       src="https://localhost:7174/uploads/@Model._User.PictureFileName"
+                       style="width:100px;height:100px;"
                        alt="User profile picture">
+                      
                 </div>
 
-                <h3 class="profile-username text-center">Nina Mcintire</h3>
+                <h3 class="profile-username text-center">@Model._User.FirstName @Model._User.Lastname</h3>
 
-                <p class="text-muted text-center">Software Engineer</p>
+                <p class="text-muted text-center">@Model._User.Email</p>
 
                
               </div>
@@ -59,38 +61,25 @@
 
 
           </div>
-          <form class="form-horizontal">
-                      
-
-
-
-
+          <form id="UserForm" class="form-horizontal" method="post">
                      
                     <div class="col">
                 
-                    <div class="form-group">
-                    <label>Title</label>
-                    <select name="ddTitle" id="ddTitle" class="form-control select2" style="width: 100%;">
-                       <option value="Mr.">Mr.</option>
-                       <option value="Ms.">Ms.</option>
-                    
-    
-                    </select>
-                  </div>
+                   
                    <div class="form-group">
                     <label for="firstname">First Name</label>
-                    <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Enter First Name" value="" />
+                    <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Enter First Name" value="@Model._User.FirstName" />
                   </div>
                
                    <div class="form-group">
                     <label for="lastname">Last Name</label>
-                    <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Enter Last Name" value="" />
+                    <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Enter Last Name" value="@Model._User.Lastname" />
                   </div>
                   <div class="form-group">
                                 <label for="mon=bile">Birthday</label>
                                 
                      <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" id="birthday" name="birthday"/>
+                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" id="birthday" name="birthday" value="@Model._User.Birthday"/>
                         <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
@@ -100,15 +89,15 @@
 
                    <div class="form-group">
                     <label for="mon=bile">Email</label>
-                    <input type="text" class="form-control" name="email" id="email" placeholder="Enter Email" value="" readonly/>
+                    <input type="text" class="form-control" name="email" id="email" placeholder="Enter Email" value="@Model._User.Email" readonly/>
                   </div>
                    <div class="form-group">
                     <label for="mon=bile">Mobile</label>
-                    <input type="text" class="form-control" name="mobile" id="mobile" placeholder="Enter Mobile" value="" />
+                    <input type="text" class="form-control" name="mobile" id="mobile" placeholder="Enter Mobile" value="@Model._User.Mobile" />
                   </div>
                   <div class="form-group">
                     <label for="tel">Tel</label>
-                    <input type="text" class="form-control" name="tel" id="tel" placeholder="Enter Telphone" value="" />
+                    <input type="text" class="form-control" name="tel" id="tel" placeholder="Enter Telphone" value="@Model._User.Telephone" />
                   </div>
                   <div class="form-group">
                     <label>Nationality</label>
@@ -127,7 +116,7 @@
 
                   <div class="form-group">
                     <label for="companyname">City</label>
-                    <input type="text" class="form-control" name="city" id="city" placeholder="Enter city" value="" />
+                    <input type="text" class="form-control" name="city" id="city" placeholder="Enter city" value="@Model._User.City" />
                   </div>
                   
                   <div class="form-group">
@@ -139,7 +128,7 @@
             
                  </div>
 
-                    <div class="form-group">
+                     <div class="form-group">
                         <label for="logo">Picture</label>
                         <div class="input-group">
                           <div class="custom-file">
@@ -153,12 +142,12 @@
                         </div>
                     </div>
                     <div id="pictureHolder">
-                      <a href="" ></a>
+                      <a href="https://localhost:7174/uploads/@Model._User.PictureFileName" target="_blank" >@Model._User.PictureFileName</a>
                       <span id="uploadError" class="errorMessage" ></span>
                       <progress id="fileProgress" style="display: none"></progress>
                       <span id="lblMessage" style="color: Green"></span>
                     </div>
-                   
+                     <input type="hidden" id="uploadedfile" name="uploadedfile" value="@Model._User.PictureFileName"/>
                   
                      
 
@@ -201,3 +190,33 @@
         <!-- /.content -->
 
         </div>
+
+          @section Scripts{
+                        <script type="text/javascript">
+                        $(document).ready(function () {
+                        $('.select2').select2();
+                        $("#ddCountry").val(@Model._User.CountryId).trigger('change');
+                        $("#ddNationality").val(@Model._User.Nationality).trigger('change');
+                        $("#ddBranch").val(@Model._User.BranchId).trigger('change');     
+                        $("#ddPosition").val(@Model._User.PositionId).trigger('change');
+                        $("#ddAuth").val(@Model._User.AuthLevelRefId).trigger('change');
+                        })
+                         </script>
+                       }
+
+                        <!-- jQuery -->
+            <script src="plugins/jquery/jquery.min.js"></script>
+            <!-- Bootstrap 4 -->
+            <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Tempusdominus Bootstrap 4 -->
+            <!-- Select2 -->
+            <script src="plugins/select2/js/select2.full.min.js"></script>
+          <!-- InputMask -->
+        <script src="plugins/moment/moment.min.js"></script>
+        <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+        <!-- date-range-picker -->
+<script src="plugins/daterangepicker/daterangepicker.js"></script>
+            <script src="~/js/Users/UsersProfile.js"></script>
+
+            <script src="plugins/jquery-validation/jquery.validate.min.js"></script>
+            <script src="plugins/jquery-validation/additional-methods.min.js"></script>

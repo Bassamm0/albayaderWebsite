@@ -15,7 +15,7 @@ namespace Entity
         
         public string ?Title { get; set; }
      
-        public string Username { get; set; }
+        public string ?Username { get; set; }
        
         public string FirstName { get; set; }
        
