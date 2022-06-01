@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
+using LOGIC;
+using static DAL.DALException;
 
 namespace API.Controllers
 {
@@ -7,14 +10,13 @@ namespace API.Controllers
     [ApiController]
     public class APIUploadFile : ControllerBase
     {
-
+        UploadFileLogic _uploadFileLogic= new UploadFileLogic();
         private readonly IWebHostEnvironment env;
         public APIUploadFile(IWebHostEnvironment webHostEnvironment)
         {
                 env = webHostEnvironment;
         }
         [Route("upload")]
-
         [HttpPost]
         public IActionResult UploadFile(List<IFormFile> files)
             {
@@ -30,7 +32,7 @@ namespace API.Controllers
                 string directoryPath = Path.Combine(env.ContentRootPath, "Uploads");
                 foreach (var file in files)
                 {
-                 fileName = changeFilename(file.FileName);
+                    fileName = UtilityHelper.changeFilename(file.FileName);
                     string filePath = Path.Combine(directoryPath, fileName);
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
@@ -42,23 +44,61 @@ namespace API.Controllers
             }
 
 
-        public static string changeFilename(string fileName)
+        [Route("uploadserviceimages")]
+        [HttpPost]
+        public async Task<List<string>> UploadServiceImages(List<IFormFile> files, [FromForm] int  serviceid)
         {
-
-            string filename = Path.GetFileNameWithoutExtension(fileName);
-            if (filename != "")
+      
+            List<string> lfileName=new List<string>();
+            
+            string fileName = "";
+            if (files.Count == 0)
             {
-                string strExtn = Path.GetExtension(fileName);
-                filename = AppendDateTime(filename, strExtn);
+
+                return null;
+            }
+
+            //string directoryPath = Path.Combine(AppContext.BaseDirectory, "/Albayader/Uploads");
+            try
+            {
+                string directoryPath = Path.Combine(env.ContentRootPath, "Uploads");
+                foreach (var file in files)
+                {
+                    fileName = UtilityHelper.changeFilename(file.FileName);
+                    string filePath = Path.Combine(directoryPath, fileName);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+                    var result =await _uploadFileLogic.UploadServiceImages(fileName, serviceid);
+                    if (result)
+                    {
+                        lfileName.Add(fileName);
+                    }
+                }
 
             }
-            return filename;
+
+            catch (Exception ex)
+            {
+                if (ex.Message == "The given key was not present in the dictionary.")
+                {
+                    throw new DomainValidationFundException("Validation : One or more paramter are missing in the request,Error could be becuase of case sensetive");
+                }
+                if (ex.InnerException.ToString().Contains("Cannot insert the value NULL into column"))
+                {
+                    throw new DomainValidationFundException("Validation : null value not allowed to one of the parameters");
+                }
+               
+            }
+           
+          
+            return lfileName;
         }
-        public static string AppendDateTime(string filename, string fileExt)
-        {
-            filename = filename + "_" + DateTime.Now.ToString("yyyyMMddhhmmssfffffff") + fileExt;
-            return filename;
-        }
+
+
+
+
     }
-    }
+}
 

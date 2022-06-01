@@ -118,6 +118,12 @@
     border-color: #ae45ff;
     box-shadow: none;
 }
+.file-thumbnail-footer{
+    display:none;
+}
+.file-drop-zone{
+   min-height:100px;
+}
   </style>
 
 <div class="content-wrapper">
@@ -186,355 +192,206 @@
             </div>
 
           </div>
+
           <!--Equipment 1-->
-          <div class="card card-default">
-            <div class="card-header">
-              <h3 class="card-title">Equipment Details 1</h3>
+         
+         <div id="mainEquHolder">
+                        <div class="card card-default" id="Equipment">
+                            <div class="card-header">
+                                <h3 class="card-title">Equipment Details </h3>
 
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-
-              </div>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-              <div class="row">
-
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Equipments</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Equipments">
-                  </div>
-                </div>
-                <!-- /.col -->
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Serial No.</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Serial No.">
-                  </div>
-
-                </div>
-
-
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="exampleInputFile">Before Problem fixed</label>
-                    <div class="input-group">
-                      <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="exampleInputFile">
-                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1"></label>
-
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div class="form-group">
-                  <fieldset class="form-group border p-3">
-                    <legend class="w-auto px-2">Parts</legend>
-                    <div class="row">
-                      <div class="col">
-                        <div class="custom-control custom-switch custom-switch-lg">
-                          <input type="checkbox" class="custom-control-input" id="customSwitch6">
-                          <label class="custom-control-label" for="customSwitch6">Elect Parts</label>
-                        </div>
-                      </div>
-                      <div class="col">
-                        <div class="custom-control custom-switch custom-switch-lg">
-                          <input type="checkbox" class="custom-control-input" id="customSwitch6" checked>
-                          <label class="custom-control-label" for="customSwitch6">Moving Parts</label>
-                        </div>
-                      </div>
-                      <div class="col">
-                        <div class="custom-control custom-switch custom-switch-lg">
-                          <input type="checkbox" class="custom-control-input" id="customSwitch6">
-                          <label class="custom-control-label" for="customSwitch6">Bearings</label>
-                        </div>
-                      </div>
-                      <div class="col">
-                        <div class="custom-control custom-switch custom-switch-lg">
-                          <input type="checkbox" class="custom-control-input" id="customSwitch6">
-                          <label class="custom-control-label" for="customSwitch6">Bells</label>
-                        </div>
-                      </div>
-                      <div class="col">
-                        <div class="custom-control custom-switch custom-switch-lg">
-                          <input type="checkbox" class="custom-control-input" id="customSwitch6">
-                          <label class="custom-control-label" for="customSwitch6">Motor</label>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col">
-                        <div class="custom-control custom-switch custom-switch-lg">
-                          <input type="checkbox" class="custom-control-input" id="customSwitch6" checked>
-                          <label class="custom-control-label" for="customSwitch6">Heater</label>
-                        </div>
-                      </div>
-                      <div class="col">
-                        <div class="custom-control custom-switch custom-switch-lg">
-                          <input type="checkbox" class="custom-control-input" id="customSwitch6">
-                          <label class="custom-control-label" for="customSwitch6">Safety Switch</label>
-                        </div>
-                      </div>
-                      <div class="col">
-                        <div class="custom-control custom-switch custom-switch-lg">
-                          <input type="checkbox" class="custom-control-input" id="customSwitch6">
-                          <label class="custom-control-label" for="customSwitch6">Control Board</label>
-                        </div>
-                      </div>
-                      <div class="col">
-                        <div class="custom-control custom-switch custom-switch-lg">
-                          <input type="checkbox" class="custom-control-input" id="customSwitch6">
-                          <label class="custom-control-label" for="customSwitch6">Compressor</label>
-                        </div>
-                      </div>
-                      <div class="col">
-                        <div class="custom-control custom-switch custom-switch-lg">
-                          <input type="checkbox" class="custom-control-input" id="customSwitch6">
-                          <label class="custom-control-label" for="customSwitch6">Tmp. Control</label>
-                        </div>
-                      </div>
-                    </div>
-
-
-                  </fieldset>
-
-                </div>
-
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Materials Used</label>
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                    </div>
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Required Materials</label>
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                    </div>
-
-                  </div>
-
-
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="exampleInputFile">Picture After Problem fixed</label>
-                      <div class="input-group">
-                        <div class="custom-file">
-                          <input type="file" class="custom-file-input" id="exampleInputFile">
-                          <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="exampleInputEmail1"></label>
-
-                    </div>
-                  </div>
-                </div>
-                <!-- /.row -->
-                <div class="dropdown-divider"></div>
-
-                
-                <!-- /.row -->
-              </div>
-              <!-- /.card-body -->
-
-            </div>
-            <!-- /.card -->
-
-
-          </div>  
-
-          <!--Equipment 2-->
-              <div class="card card-default">
-                <div class="card-header">
-                  <h3 class="card-title">Equipment Details 2</h3>
-              
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-              
-                  </div>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                  <div class="row">
-              
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Equipments</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Equipments">
-                      </div>
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Serial No.</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Serial No.">
-                      </div>
-              
-                    </div>
-              
-              
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputFile">Before Problem fixed</label>
-                        <div class="input-group">
-                          <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="exampleInputFile">
-                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                          </div>
-              
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1"></label>
-              
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <fieldset class="form-group border p-3">
-                        <legend class="w-auto px-2">Parts</legend>
-                        <div class="row">
-                          <div class="col">
-                            <div class="custom-control custom-switch custom-switch-lg">
-                              <input type="checkbox" class="custom-control-input" id="customSwitch6">
-                              <label class="custom-control-label" for="customSwitch6">Elect Parts</label>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool removeForm" data-card-widget="" >
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
                             </div>
-                          </div>
-                          <div class="col">
-                            <div class="custom-control custom-switch custom-switch-lg">
-                              <input type="checkbox" class="custom-control-input" id="customSwitch6" checked>
-                              <label class="custom-control-label" for="customSwitch6">Moving Parts</label>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail">Equipments</label>
+                                            <input type="email" class="form-control" id="Equipments"
+                                                placeholder="Enter Equipments">
+                                        </div>
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail">Serial No.</label>
+                                            <input type="email" class="form-control" id="Serial"
+                                                placeholder="Enter Serial No.">
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-md-12">
+                                        <div class="form-group col-md-12">
+                                            <label for="exampleInputFile">Before Problem fixed</label>
+                                            <div class="input-group " id="uploadBeforeHolder">   
+                                               
+                                                <input id="PicturesBeforeFix" name="PicturesBeforeFix" class="file fa-2x fileImage " type="file" multiple="true" style="height:50px;">
+
+                                            
+
+                                                  <div class="fielUploadValidationHolder">
+                                                    <span id="uploadError" class="errorMessage uploadError"></span>
+                                                    <progress id="fileProgress" style="display: none" class="progress"></progress>
+                                                    <span id="lblMessage" class="uploadSccessMessage lblMessage"></span>
+                                                    <div id="thumbHolder" class="thumbHolder""></div>
+                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                      
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <fieldset class="form-group border p-3">
+                                            <legend class="w-auto px-2">Parts</legend>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="custom-control custom-switch custom-switch-lg">
+                                                        <input type="checkbox" class="custom-control-input" id="Elect">
+                                                        <label class="custom-control-label" for="Elect" >Elect
+                                                            Parts</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="custom-control custom-switch custom-switch-lg">
+                                                        <input type="checkbox" class="custom-control-input" id="Moving"
+                                                            checked>
+                                                        <label class="custom-control-label" for="Moving" i>Moving
+                                                            Parts</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="custom-control custom-switch custom-switch-lg">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="Bearings">
+                                                        <label class="custom-control-label"
+                                                            for="Bearings">Bearings</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="custom-control custom-switch custom-switch-lg">
+                                                        <input type="checkbox" class="custom-control-input" id="Bells">
+                                                        <label class="custom-control-label" for="Bells">Bells</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="custom-control custom-switch custom-switch-lg">
+                                                        <input type="checkbox" class="custom-control-input" id="Motor">
+                                                        <label class="custom-control-label" for="Motor">Motor</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="custom-control custom-switch custom-switch-lg">
+                                                        <input type="checkbox" class="custom-control-input" id="Heater"
+                                                            checked>
+                                                        <label class="custom-control-label" for="Heater">Heater</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="custom-control custom-switch custom-switch-lg">
+                                                        <input type="checkbox" class="custom-control-input" id="Safety">
+                                                        <label class="custom-control-label" for="Safety">Safety
+                                                            Switch</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="custom-control custom-switch custom-switch-lg">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="Control">
+                                                        <label class="custom-control-label" for="Control">Control
+                                                            Board</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="custom-control custom-switch custom-switch-lg">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="Compressor">
+                                                        <label class="custom-control-label"
+                                                            for="Compressor">Compressor</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="custom-control custom-switch custom-switch-lg">
+                                                        <input type="checkbox" class="custom-control-input" id="Tmp">
+                                                        <label class="custom-control-label" for="Tmp">Tmp.
+                                                            Control</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </fieldset>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail">Materials Used</label>
+                                                <textarea class="form-control" id="MaterialUsed"
+                                                    rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                        <!-- /.col -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail">Required Materials</label>
+                                                <textarea class="form-control" id="Rquiredmaterials"
+                                                    rows="3"></textarea>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="col-md-12">
+                                            <div class="form-group col-md-12">
+                                                <label for="exampleInputFile">Before Problem fixed</label>
+                                                <div class="input-group " id="uploadAftereHolder">   
+                                                   
+                                                    <input id="PicturesAfterFix" name="PicturesAfterFix" class="file fa-2x fileImage " type="file" multiple="true" style="height:50px;">
+                             
+                                                   <div class="fielUploadValidationHolder">
+                                                    <span id="uploadError" class="errorMessage uploadError"></span>
+                                                    <progress id="fileProgress" style="display: none" class="progress"></progress>
+                                                    <span id="lblMessage" class="uploadSccessMessage lblMessage"></span>
+                                                    <div id="thumbHolder" class="thumbHolder"></div>
+                                                 </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                      
+                                    </div>
+                                    <!-- /.row -->
+                                    
+
+                                    <!-- /.row -->
+                                </div>
+                                <!-- /.card-body -->
+
                             </div>
-                          </div>
-                          <div class="col">
-                            <div class="custom-control custom-switch custom-switch-lg">
-                              <input type="checkbox" class="custom-control-input" id="customSwitch6">
-                              <label class="custom-control-label" for="customSwitch6">Bearings</label>
-                            </div>
-                          </div>
-                          <div class="col">
-                            <div class="custom-control custom-switch custom-switch-lg">
-                              <input type="checkbox" class="custom-control-input" id="customSwitch6">
-                              <label class="custom-control-label" for="customSwitch6">Bells</label>
-                            </div>
-                          </div>
-                          <div class="col">
-                            <div class="custom-control custom-switch custom-switch-lg">
-                              <input type="checkbox" class="custom-control-input" id="customSwitch6">
-                              <label class="custom-control-label" for="customSwitch6">Motor</label>
-                            </div>
-                          </div>
+                            <!-- /.card -->
+
+
                         </div>
-                        <div class="row">
-                          <div class="col">
-                            <div class="custom-control custom-switch custom-switch-lg">
-                              <input type="checkbox" class="custom-control-input" id="customSwitch6" checked>
-                              <label class="custom-control-label" for="customSwitch6">Heater</label>
-                            </div>
-                          </div>
-                          <div class="col">
-                            <div class="custom-control custom-switch custom-switch-lg">
-                              <input type="checkbox" class="custom-control-input" id="customSwitch6">
-                              <label class="custom-control-label" for="customSwitch6">Safety Switch</label>
-                            </div>
-                          </div>
-                          <div class="col">
-                            <div class="custom-control custom-switch custom-switch-lg">
-                              <input type="checkbox" class="custom-control-input" id="customSwitch6">
-                              <label class="custom-control-label" for="customSwitch6">Control Board</label>
-                            </div>
-                          </div>
-                          <div class="col">
-                            <div class="custom-control custom-switch custom-switch-lg">
-                              <input type="checkbox" class="custom-control-input" id="customSwitch6">
-                              <label class="custom-control-label" for="customSwitch6">Compressor</label>
-                            </div>
-                          </div>
-                          <div class="col">
-                            <div class="custom-control custom-switch custom-switch-lg">
-                              <input type="checkbox" class="custom-control-input" id="customSwitch6">
-                              <label class="custom-control-label" for="customSwitch6">Tmp. Control</label>
-                            </div>
-                          </div>
-                        </div>
-              
-              
-                      </fieldset>
-              
                     </div>
-              
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="exampleInputEmail1">Materials Used</label>
-                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                        </div>
-                      </div>
-                      <!-- /.col -->
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="exampleInputEmail1">Required Materials</label>
-                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                        </div>
-              
-                      </div>
-              
-              
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="exampleInputFile">Picture After Problem fixed</label>
-                          <div class="input-group">
-                            <div class="custom-file">
-                              <input type="file" class="custom-file-input" id="exampleInputFile">
-                              <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                            </div>
-              
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="exampleInputEmail1"></label>
-              
-                        </div>
-                      </div>
-                    </div>
-                    <!-- /.row -->
-                    <div class="dropdown-divider"></div>
-              
-              
-                    <!-- /.row -->
-                  </div>
-                  <!-- /.card-body -->
-              
-                </div>
-                <!-- /.card -->
-              
-              
-              </div>
+
+
+
 
         <div class="card">
         
@@ -557,7 +414,7 @@
           
           <div class="row">
             <div class="col">
-            <button type="button" class="btn btn-block btn-addEquipment btn-lg" >
+            <button type="button" class="btn btn-block btn-addEquipment btn-lg" id="AddAnotherForm" >
               
             <i class="fas fa-plus"></i> Add Another Equipment</button>
 
@@ -581,16 +438,41 @@
           <!-- /.card-body -->
         </div>
 
-
-
-
-    </div>
-
-
-    <!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
-
-        <!-- /.content -->
-
+        </section>
         </div>
+
+
+         <!-- jQuery -->
+            <script src="plugins/jquery/jquery.min.js"></script>
+            <!-- Bootstrap 4 -->
+            <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  
+            <!-- Select2 -->
+            <script src="plugins/select2/js/select2.full.min.js"></script>
+
+             <script src="~/js/preventive/preventive.js"></script>
+
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/tus-js-client@latest/dist/tus.min.js"></script>
+
+
+
+
+            <script src="plugins/jquery-validation/jquery.validate.min.js"></script>
+            <script src="plugins/jquery-validation/additional-methods.min.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="~/plugins/fileInput/fileinput.css"/>
+    <script type="text/javascript" src="~/plugins/fileInput/fileinput.js"></script>
+
+    
+<!-- default icons used in the plugin are from Bootstrap 5.x icon library (which can be enabled by loading CSS below) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.min.css" crossorigin="anonymous">
+
+    <!-- piexif.min.js is needed for auto orienting image files OR when restoring exif data in resized images and when you
+    wish to resize images before upload. This must be loaded before fileinput.min.js -->
+<script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/plugins/piexif.min.js" type="text/javascript"></script>
+ 
+<!-- sortable.min.js is only needed if you wish to sort / rearrange files in initial preview. 
+    This must be loaded before fileinput.min.js -->
+<script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/plugins/sortable.min.js" type="text/javascript"></script>
+ 

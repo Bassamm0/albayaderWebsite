@@ -260,12 +260,17 @@
             }
         });
     });
+
+
+
     $("body").on("click", "#RemoveLogobtn", function () {
         $('#logoFile').next('label').html('Select a file');
         $('#logoFile').val('')
         $('#RemoveLogobtn').hide();
         $('#UploadLogobtn').hide();
     })
+
+
 
 
     GetCountries();
