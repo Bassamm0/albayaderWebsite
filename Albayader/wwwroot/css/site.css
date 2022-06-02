@@ -110,3 +110,19 @@
 .fielUploadValidationHolder{
     width:100%;
 }
+
+.partslable{
+    padding:10px;
+    display:block;
+    text-align:justify-all;
+  
+
+}
+
+.file-thumbnail-footer {
+    display: none;
+}
+
+.file-drop-zone {
+    min-height: 100px;
+}

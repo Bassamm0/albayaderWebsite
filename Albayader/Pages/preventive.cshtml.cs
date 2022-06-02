@@ -5,8 +5,11 @@ namespace AlbayaderWeb.Pages
 {
     public class preventiveModel : PageModel
     {
-        public void OnGet()
+        public void OnGet(int BranchId)
         {
+
+           int _BranchId = BranchId;
+
         }
     }
 }

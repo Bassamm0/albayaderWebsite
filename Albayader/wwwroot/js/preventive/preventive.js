@@ -3,30 +3,70 @@
     
     let cn = 0;
     $('body').on('click', '#AddAnotherForm', function () {
+
+
+
         var fielUploadValidationHolder ='<div class="fielUploadValidationHolder">'
             +' <span id="uploadError" class="errorMessage uploadError"></span>'
             +' <progress id="fileProgress" style="display: none" class="progress"></progress>'
             +' <span id="lblMessage" class="uploadSccessMessage lblMessage"></span>'
             +'  <div id="thumbHolder" class="thumbHolder"></div>'
-            +' </div>'
+            + ' </div>'
+
+
+
+
+
+
+
        
         cn++;
 
+
+        var parts = ''
+            + ' <legend class="w-auto px-2">Parts</legend>'
+            + '<div class="row"> '
+            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Elect'+cn+'" name="Elect'+cn+'" data-on="Yes" data-off="No" > '
+            + '<label class="partslable" for="Elect'+cn+'">Elect</label> </div>'
+            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Moving'+cn+'" name="Moving'+cn+'" data-on="Yes" data-off="No" > '
+            + '<label class="partslable" for="Moving'+cn+'">Moving</label> </div>'
+            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Bearings'+cn+'" name="Bearings'+cn+'" data-on="Yes" data-off="No" > '
+            + '<label class="partslable" for="Bearings'+cn+'">Bearings</label> </div>'
+            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Bells'+cn+'" name="Bells'+cn+'" data-on="Yes" data-off="No" > '
+            + '<label class="partslable" for="Bells'+cn+'">Bells</label> </div>'
+            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Motor'+cn+'" name="Motor'+cn+'" data-on="Yes" data-off="No" > '
+            + '<label class="partslable" for="Motor'+cn+'">Motor</label> </div>'
+            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Heater'+cn+'" name="Heater'+cn+'" data-on="Yes" data-off="No" > '
+            + '<label class="partslable" for="Heater'+cn+'">Heater</label> </div>'
+            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Safety'+cn+'" name="Safety'+cn+'" data-on="Yes" data-off="No" > '
+            + '<label class="partslable" for="Safety'+cn+'">Safety</label> </div>'
+            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Control'+cn+'" name="Control'+cn+'" data-on="Yes" data-off="No" > '
+            + '<label class="partslable" for="Control'+cn+'">Control</label> </div>'
+            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Compressor'+cn+'" name="Compressor'+cn+'" data-on="Yes" data-off="No" > '
+            + '<label class="partslable" for="Compressor'+cn+'">Compressor</label> </div>'
+            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Tmp'+cn+'" name="Tmp'+cn+'" data-on="Yes" data-off="No" > '
+            + '<label class="partslable" for="Tmp'+cn+'">Tmp</label> </div>'
+            + '</div>'
+
+
+
+
         let clone = $("#Equipment").clone()
+
+       // clone.find('#Elect,#Moving,#Bearings,#Bells,#Motor,#Heater,#Safety,#Control,#Compressor,#Tmp').removeAttr("checked")
+       
         clone.find('.removeForm').attr("data-card-widget", "remove")
+
+        clone.find('#Equipments').val('')
+        clone.find('#Serial').val('')
+        clone.find('#MaterialUsed').val('')
+        clone.find('#Rquiredmaterials').val('')
+
         clone.find('#Equipment').attr("id", "Equipment" + cn)
+        clone.find('#Equipments').attr("id", "Equipments" + cn)
         clone.find('#Serial').attr("id", "Serial" + cn)
         clone.find('#BeforePropFixed').attr("id", "BeforePropFixed" + cn)
-        clone.find('#Elect').attr("id", "Elect" + cn)
-        clone.find('#Moving').attr("id", "Moving" + cn)
-        clone.find('#Bearings').attr("id", "Bearings" + cn)
-        clone.find('#Bells').attr("id", "Bells" + cn)
-        clone.find('#Motor').attr("id", "Motor" + cn)
-        clone.find('#Heater').attr("id", "Heater" + cn)
-        clone.find('#Safety').attr("id", "Safety" + cn)
-        clone.find('#Control').attr("id", "Control" + cn)
-        clone.find('#Compressor').attr("id", "Compressor" + cn)
-        clone.find('#Tmp').attr("id", "Tmp" + cn)
+        clone.find('#partsHolder').html(parts)
         clone.find('#MaterialUsed').attr("id", "MaterialUsed" + cn)
         clone.find('#Rquiredmaterials').attr("id", "Rquiredmaterials" + cn)
         clone.find('#afterFix').attr("id", "afterFix" + cn)
@@ -35,23 +75,30 @@
         clone.find('#PicturesAfterFix').attr("id", "PicturesAfterFix" + cn)
 
 
-        clone.find('[for="Elect"]').attr("for", "Elect" + cn)
-        clone.find('[for="Moving"]').attr("for", "Moving" + cn)
-        clone.find('[for="Bearings"]').attr("for", "Bearings" + cn)
-        clone.find('[for="Bells"]').attr("for", "Bells" + cn)
-        clone.find('[for="Motor"]').attr("for", "Motor" + cn)
-        clone.find('[for="Heater"]').attr("for", "Heater" + cn)
-        clone.find('[for="Control"]').attr("for", "Control" + cn)
-        clone.find('[for="Safety"]').attr("for", "Safety" + cn)
-        clone.find('[for="Compressor"]').attr("for", "Compressor" + cn)
-        clone.find('[for="Tmp"]').attr("for", "Tmp" + cn)
+
         clone.find('#uploadBeforeHolder').html(' <input id="PicturesBeforeFix' + cn + '" name="PicturesBeforeFix" class="file fa-2x fileImage " type="file" multiple="true" style="height:50px;">' + fielUploadValidationHolder)
         clone.find('#uploadAftereHolder').html(' <input id="PicturesAfterFix' + cn + '" name="PicturesBeforeFix" class="file fa-2x fileImage " type="file" multiple="true" style="height:50px;">' + fielUploadValidationHolder)
 
         clone.appendTo('#mainEquHolder');
 
+    
+      // initailaize the switch
+        $('#Elect' + cn).bootstrapToggle();
+        $('#Moving' + cn).bootstrapToggle();
+        $('#Bearings' + cn).bootstrapToggle();
+        $('#Bells' + cn).bootstrapToggle();
+        $('#Motor' + cn).bootstrapToggle();
+        $('#Heater' + cn).bootstrapToggle();
+        $('#Control' + cn).bootstrapToggle();
+        $('#Safety' + cn).bootstrapToggle();
+        $('#Compressor' + cn).bootstrapToggle();
+        $('#Tmp' + cn).bootstrapToggle();
+
+
+         // initailaize the uploader
         initFileInput("PicturesBeforeFix" + cn);
         initFileInput("PicturesAfterFix" + cn);
+
     })
 
     $('body').on('click', '.removeForm', function () {
@@ -170,6 +217,13 @@
 
 
 
+    })
+
+
+
+    // save draft
+    $('#SaveDraft').click(function () {
+       console.log($('#Elect1').prop('checked'))
     })
 
 });
