@@ -59,7 +59,6 @@ namespace Core_3Tire.Pages
                     HttpContext.Session.SetString("email", userdetails.Email);
                     HttpContext.Session.SetString("FullName", userdetails.FirstName +" "+ userdetails.Lastname);
                     HttpContext.Session.SetString("mobile", userdetails.Mobile);
-                    HttpContext.Session.SetString("email", userdetails.Email);
                     HttpContext.Session.SetString("Role", userdetails.UserRole);
                     HttpContext.Session.SetString("userid", userdetails.UserId.ToString());
                     HttpContext.Session.SetString("NationalityName", userdetails.NationalityName.ToString());

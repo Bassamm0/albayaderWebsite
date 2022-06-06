@@ -65,10 +65,12 @@
         },
         themeSystem: 'bootstrap',
         //Random default events
+
+
         events: [
             {
                 title: 'All Day Event',
-                start: new Date(y, m, 1),
+                start: new Date(2022, 05, 02),
                 backgroundColor: '#f56954', //red
                 borderColor: '#f56954', //red
                 allDay: true
@@ -105,8 +107,8 @@
             },
             {
                 title: 'Click for Google',
-                start: new Date(y, m, 28),
-                end: new Date(y, m, 29),
+                start: new Date(y,m,28),
+                end: new Date(y, m, 30),
                 url: 'https://www.google.com/',
                 backgroundColor: '#3c8dbc', //Primary (light-blue)
                 borderColor: '#3c8dbc' //Primary (light-blue)
