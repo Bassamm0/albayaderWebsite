@@ -1,5 +1,13 @@
 ﻿$(document).ready(function () {
-   
+
+    $('#Equipments').select2();
+    $('#MaterialUsed').select2({
+        placeholder: 'Select  Materials Used  ...'
+    });
+    $('#Rquiredmaterials').select2({
+        placeholder: 'Select  Materials Required  ...'
+    });
+
     
     let cn = 1;
     $('body').on('click', '#AddAnotherForm', function () {
@@ -45,7 +53,9 @@
             + '</div>'
 
 
-
+        $('#Equipments').select2('destroy');
+        $('#MaterialUsed').select2('destroy');
+        $('#Rquiredmaterials').select2('destroy');
 
         let clone = $("#Equipment").clone()
 
@@ -70,6 +80,10 @@
         clone.find('#MaterialUsed').attr("id", "MaterialUsed" + cn)
         clone.find('#Rquiredmaterials').attr("id", "Rquiredmaterials" + cn)
 
+        clone.find('#MaterialUsed').attr("name", "MaterialUsed" + cn)
+        clone.find('#Rquiredmaterials').attr("name", "Rquiredmaterials" + cn)
+
+
         clone.find('#afterFix').attr("id", "afterFix" + cn)
 
         clone.find('#PicturesBeforeFix').attr("id", "PicturesBeforeFix" + cn)
@@ -83,9 +97,9 @@
 
 
         // remove select
-        clone.find('#Equipments'+cn).next('.select2-container').remove();
-        clone.find('#MaterialUsed'+cn).next('.select2-container').remove();
-        clone.find('#Rquiredmaterials'+cn).next('.select2-container').remove();
+        //clone.find('#Equipments'+cn).next('.select2-container').remove();
+        //clone.find('#MaterialUsed'+cn).next('.select2-container').remove();
+        //clone.find('#Rquiredmaterials'+cn).next('.select2-container').remove();
 
         clone.appendTo('#mainEquHolder');
 
@@ -108,14 +122,22 @@
         initFileInput("PicturesAfterFix" + cn);
 
 
-       
-     
+        $("#Equipments").select2();
+        $("#MaterialUsed").select2();
+        $("#Rquiredmaterials").select2();
       
-        $('#Equipments1').trigger('change');
+       
+       // $('#Equipments1').trigger('change');
         $('#Equipments' + cn).select2();
-        $('#MaterialUsed' + cn).select2();
-        $('#Rquiredmaterials' + cn).select2();
+        $('#MaterialUsed' + cn).select2({
+            placeholder:'Select  Materials Used  ...'
+        });
+        $('#Rquiredmaterials' + cn).select2({
+            placeholder: 'Select  Materials Required  ...'
+        });
 
+        $('#MaterialUsed' + cn).val(null).trigger('change');
+        $('#Rquiredmaterials' + cn).val(null).trigger('change');
     })
 
     $('body').on('click', '.removeForm', function () {

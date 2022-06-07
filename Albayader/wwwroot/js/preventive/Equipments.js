@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
 
-    $('.select2').select2();
+  
 
     GetEquipments();
     function GetEquipments() {
@@ -43,8 +43,8 @@
             success: function (data, textStatus, xhr) {
                 var arrUpdates = (typeof data) == 'string' ? eval('(' + data + ')') : data;
 
-                $('#MaterialUsed').append('<option value="">Select  Materials Used  ...</option>')
-                $('#Rquiredmaterials').append('<option value="">Select  Materials Required  ...</option>')
+                //$('#MaterialUsed').append('<option value="">Select  Materials Used  ...</option>')
+                //$('#Rquiredmaterials').append('<option value="">Select  Materials Required  ...</option>')
                 for (var i = 0; i < arrUpdates.length; i++) {
                     text = $.trim(arrUpdates[i].materialName);
                     val = arrUpdates[i].materialId;
