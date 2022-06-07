@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
    
     
-    let cn = 0;
+    let cn = 1;
     $('body').on('click', '#AddAnotherForm', function () {
 
 
@@ -15,21 +15,17 @@
 
 
 
-
-
-
-
-       
         cn++;
 
+        console.log('add', cn)
 
         var parts = ''
             + ' <legend class="w-auto px-2">Parts</legend>'
             + '<div class="row"> '
             + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Elect'+cn+'" name="Elect'+cn+'" data-on="Yes" data-off="No" > '
-            + '<label class="partslable" for="Elect'+cn+'">Elect</label> </div>'
+            + '<label class="partslable" for="Elect' + cn +'">Elect Parts</label> </div>'
             + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Moving'+cn+'" name="Moving'+cn+'" data-on="Yes" data-off="No" > '
-            + '<label class="partslable" for="Moving'+cn+'">Moving</label> </div>'
+            + '<label class="partslable" for="Moving' + cn +'">Moving Parts</label> </div>'
             + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Bearings'+cn+'" name="Bearings'+cn+'" data-on="Yes" data-off="No" > '
             + '<label class="partslable" for="Bearings'+cn+'">Bearings</label> </div>'
             + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Bells'+cn+'" name="Bells'+cn+'" data-on="Yes" data-off="No" > '
@@ -39,13 +35,13 @@
             + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Heater'+cn+'" name="Heater'+cn+'" data-on="Yes" data-off="No" > '
             + '<label class="partslable" for="Heater'+cn+'">Heater</label> </div>'
             + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Safety'+cn+'" name="Safety'+cn+'" data-on="Yes" data-off="No" > '
-            + '<label class="partslable" for="Safety'+cn+'">Safety</label> </div>'
+            + '<label class="partslable" for="Safety' + cn +'">Safety Switch</label> </div>'
             + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Control'+cn+'" name="Control'+cn+'" data-on="Yes" data-off="No" > '
-            + '<label class="partslable" for="Control'+cn+'">Control</label> </div>'
+            + '<label class="partslable" for="Control' + cn +'">Control Board</label> </div>'
             + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Compressor'+cn+'" name="Compressor'+cn+'" data-on="Yes" data-off="No" > '
             + '<label class="partslable" for="Compressor'+cn+'">Compressor</label> </div>'
             + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Tmp'+cn+'" name="Tmp'+cn+'" data-on="Yes" data-off="No" > '
-            + '<label class="partslable" for="Tmp'+cn+'">Tmp</label> </div>'
+            + '<label class="partslable" for="Tmp'+cn+'">Tmp. Control</label> </div>'
             + '</div>'
 
 
@@ -56,19 +52,24 @@
        // clone.find('#Elect,#Moving,#Bearings,#Bells,#Motor,#Heater,#Safety,#Control,#Compressor,#Tmp').removeAttr("checked")
        
         clone.find('.removeForm').attr("data-card-widget", "remove")
+        clone.find('.removeForm').attr("EquId", cn)
 
-        clone.find('#Equipments').val('')
+       
         clone.find('#Serial').val('')
         clone.find('#MaterialUsed').val('')
         clone.find('#Rquiredmaterials').val('')
 
+        clone.find('#Equipment').attr("EquId",   cn)
         clone.find('#Equipment').attr("id", "Equipment" + cn)
         clone.find('#Equipments').attr("id", "Equipments" + cn)
+
         clone.find('#Serial').attr("id", "Serial" + cn)
         clone.find('#BeforePropFixed').attr("id", "BeforePropFixed" + cn)
         clone.find('#partsHolder').html(parts)
+
         clone.find('#MaterialUsed').attr("id", "MaterialUsed" + cn)
         clone.find('#Rquiredmaterials').attr("id", "Rquiredmaterials" + cn)
+
         clone.find('#afterFix').attr("id", "afterFix" + cn)
 
         clone.find('#PicturesBeforeFix').attr("id", "PicturesBeforeFix" + cn)
@@ -78,6 +79,13 @@
 
         clone.find('#uploadBeforeHolder').html(' <input id="PicturesBeforeFix' + cn + '" name="PicturesBeforeFix" class="file fa-2x fileImage " type="file" multiple="true" style="height:50px;">' + fielUploadValidationHolder)
         clone.find('#uploadAftereHolder').html(' <input id="PicturesAfterFix' + cn + '" name="PicturesBeforeFix" class="file fa-2x fileImage " type="file" multiple="true" style="height:50px;">' + fielUploadValidationHolder)
+
+
+
+        // remove select
+        clone.find('#Equipments'+cn).next('.select2-container').remove();
+        clone.find('#MaterialUsed'+cn).next('.select2-container').remove();
+        clone.find('#Rquiredmaterials'+cn).next('.select2-container').remove();
 
         clone.appendTo('#mainEquHolder');
 
@@ -99,10 +107,28 @@
         initFileInput("PicturesBeforeFix" + cn);
         initFileInput("PicturesAfterFix" + cn);
 
+
+       
+     
+      
+        $('#Equipments1').trigger('change');
+        $('#Equipments' + cn).select2();
+        $('#MaterialUsed' + cn).select2();
+        $('#Rquiredmaterials' + cn).select2();
+
     })
 
     $('body').on('click', '.removeForm', function () {
+
+        var eqNum = $(this).attr('EquId')
+        if (eqNum == "1") {
+            return;
+        }
+        // remove all form
+        $(this).parent('div').parent('div').parent('div').remove()
+     
         cn--;
+        console.log('remove',cn)
     });
 
 
@@ -120,7 +146,7 @@
     
     
     function initFileInput(element) {
-
+        
         $('#'+element).fileinput('refresh',
             {
                 initialPreviewAsData: true,

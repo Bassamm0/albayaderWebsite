@@ -74,8 +74,8 @@
                 <div class="col-sm">
 
                   <div class="info-box-content">
-                    <div class="info-box-text text-center text-muted"><b>Carrefour</b></div>
-                    <div class="info-box-number text-center text-muted mb-0">MCC</div>
+                    <div class="info-box-text text-center text-muted"><b>Carrefour - MCC</b></div>
+                    <div class="info-box-number text-center text-muted mb-0"> <span class="RefNum"> Ref:#35542</span></div>
                   </div>
 
                 </div>
@@ -90,6 +90,7 @@
                 </div>
 
               </div>
+            
             </div>
 
           </div>
@@ -100,7 +101,7 @@
 
 
 
-                        <div class="card card-default" id="Equipment">
+                        <div class="card card-default" id="Equipment" EquId="1">
                             <div class="card-header">
                                 <h3 class="card-title">Equipment Details </h3>
 
@@ -108,7 +109,7 @@
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fas fa-minus"></i>
                                     </button>
-                                    <button type="button" class="btn btn-tool removeForm" data-card-widget="" >
+                                    <button type="button" class="btn btn-tool removeForm" data-card-widget="" EquId="1" >
                                         <i class="fas fa-times"></i>
                                     </button>
                                 </div>
@@ -119,16 +120,27 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail">Equipments</label>
-                                            <input type="email" class="form-control" id="Equipments"
-                                                placeholder="Enter Equipments">
+                                         <label>Equipment</label>
+                                         <div id="EquipmentsHolder">
+                                              <select name="Equipments" id="Equipments" class="form-control select2" style="width: 100%;" >
+                                          
+                    
+    
+                                            </select>
+                                         </div>
+                                         
+                                        
+                               
                                         </div>
                                     </div>
+
+
+
                                     <!-- /.col -->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exampleInputEmail">Serial No.</label>
-                                            <input type="email" class="form-control" id="Serial"
+                                            <input type="text" class="form-control" id="Serial"
                                                 placeholder="Enter Serial No.">
                                         </div>
 
@@ -211,23 +223,23 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail">Materials Used</label>
-                                                <textarea class="form-control" id="MaterialUsed"
-                                                    rows="3"></textarea>
-                                            </div>
-                                        </div>
-                                        <!-- /.col -->
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail">Required Materials</label>
-                                                <textarea class="form-control" id="Rquiredmaterials"
-                                                    rows="3"></textarea>
-                                            </div>
-
-                                        </div>
-
+                                        
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                         <label>Materials Used</label>
+                                              <select name="MaterialUsed" id="MaterialUsed" class="form-control select2" style="width: 100%;" multiple >
+    
+                                            </select>
+                                         </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                         <label>Required Materials</label>
+                                              <select name="Rquiredmaterials" id="Rquiredmaterials" class="form-control select2" style="width: 100%;" multiple >
+    
+                                            </select>
+                                         </div>
+                                    </div>
 
                                         <div class="col-md-12">
                                             <div class="form-group col-md-12">
@@ -329,7 +341,7 @@
             <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/tus-js-client@latest/dist/tus.min.js"></script>
 
 
-
+                     <script src="~/js/preventive/Equipments.js"></script>
 
             <script src="plugins/jquery-validation/jquery.validate.min.js"></script>
             <script src="plugins/jquery-validation/additional-methods.min.js"></script>

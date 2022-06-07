@@ -97,6 +97,8 @@ namespace AlbayaderWeb.Pages
                 try
                 {
                     _Postbranch.branchname = Request.Form["BranchName"];
+                    _Postbranch.emirateId =Convert.ToInt16(Request.Form["ddEmirates"]);
+                    _Postbranch.district = Request.Form["District"];
                     
                     if (!String.IsNullOrEmpty(Request.Form["latitude"]))
                     {
@@ -126,7 +128,9 @@ namespace AlbayaderWeb.Pages
                 {
                     _Postbranch.branchid = Convert.ToInt16(Request.Form["hdBranchId"]);
                     _Postbranch.branchname = Request.Form["BranchName"];
-                  
+                    _Postbranch.emirateId = Convert.ToInt16(Request.Form["ddEmirates"]);
+                    _Postbranch.district = Request.Form["District"];
+
                     if (!String.IsNullOrEmpty(Request.Form["latitude"]))
                     {
                         _Postbranch.latitude = Convert.ToDecimal(Request.Form["latitude"]);
@@ -230,6 +234,9 @@ namespace AlbayaderWeb.Pages
             public int companyid { get; set; }
             public decimal latitude { get; set; }
             public decimal longitude { get; set; }
+            public int emirateId { get; set; }
+            public string district { get; set; }
+
         }
     }
 

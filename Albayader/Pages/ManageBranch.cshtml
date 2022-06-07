@@ -3,7 +3,8 @@
 @{
     ViewData["Title"] = "Manage Company Branchs";
 }
-
+            <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 <div class="content-wrapper">
 
   <section class="content-header">
@@ -52,8 +53,26 @@
                     <label for="companyname">Branch Name</label>
                     <input type="text" class="form-control" name="BranchName" id="BranchName" placeholder="Enter Company Name" value="@Model._branch.BranchName" />
                   </div>
-                  
+                   <div class="form-group">
+                    <label>Emirates</label>
+                    <select name="ddEmirates" id="ddEmirates" class="form-control select2" style="width: 100%;">
+                       <option value="">Select Emirates</option>
+                       <option value="1">Abu Dhabi</option>
+                       <option value="2">Dubai</option>
+                       <option value="3">Sharjah</option>
+                       <option value="4">Ajman</option>
+                       <option value="5">Ras Al Khaimah</option>
+                       <option value="6">Umm Alquwain</option>
+                       <option value="7">Fujairah</option>
+    
+                    </select>
+                  </div>
                
+                  <div class="form-group">
+                    <label for="lat">District</label>
+                    <input type="text" class="form-control" name="District" id="District" placeholder="Enter District" value="@Model._branch.District"/>
+                  </div>
+
                   <div class="form-group">
                     <label for="lat">Latitude</label>
                     <input type="text" class="form-control" name="latitude" id="latitude" placeholder="Enter Latitude" value="@Model._branch.Latitude"/>
@@ -67,7 +86,16 @@
                      <input type="hidden" id="hdBranchId" name="hdBranchId" value="@Model._branch.BranchId"/>
                      <input type="hidden" id="hdCompanyId" name="hdCompanyId" value="@Model._branch.CompnayId"/>
                    
-                   
+                     @section Scripts{
+                        <script type="text/javascript">
+                        $(document).ready(function () {
+                        $('.select2').select2();
+                        $("#ddEmirates").val(@Model._branch.EmirateId).trigger('change');
+      
+                       
+                        })
+                         </script>
+                       }
 
                         }
                         else
@@ -78,7 +106,26 @@
                     <label for="companyname">Branch Name</label>
                     <input type="text" class="form-control" name="BranchName" id="BranchName" placeholder="Enter Branch Name" value="" />
                   </div>
-                  
+                   <div class="form-group">
+                    <label>Emirates</label>
+                    <select name="ddEmirates" id="ddEmirates" class="form-control select2" style="width: 100%;">
+                       <option value="">Select Emirates</option>
+                       <option value="1">Abu Dhabi</option>
+                       <option value="2">Dubai</option>
+                       <option value="3">Sharjah</option>
+                       <option value="4">Ajman</option>
+                       <option value="5">Ras Al Khaimah</option>
+                       <option value="6">Umm Alquwain</option>
+                       <option value="7">Fujairah</option>
+    
+                    </select>
+                  </div>
+               
+                  <div class="form-group">
+                    <label for="lat">District</label>
+                    <input type="text" class="form-control" name="District" id="District" placeholder="Enter District" value=""/>
+                  </div>
+
                 
                   <div class="form-group">
                     <label for="lat">Latitude</label>
@@ -143,13 +190,18 @@
 
         </div>
 
-            <!-- jQuery -->
+
+           <!-- jQuery -->
             <script src="plugins/jquery/jquery.min.js"></script>
             <!-- Bootstrap 4 -->
             <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  
- 
-
+  <!-- Tempusdominus Bootstrap 4 -->
+            <!-- Select2 -->
+            <script src="plugins/select2/js/select2.full.min.js"></script>
+          <!-- InputMask -->
+        <script src="plugins/moment/moment.min.js"></script>
+        <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+        <!-- date-range-picker -->
 
         
             <script src="~/js/branch/ManageBranch.js"></script>

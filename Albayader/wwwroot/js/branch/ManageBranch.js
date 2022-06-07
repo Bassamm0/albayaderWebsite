@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
 
 
- 
+    $('.select2').select2();
 
     // validation 
     $('#SaveBranch').click(function (e) {
@@ -15,11 +15,19 @@
 
     $('#BranchForm').validate({
         rules: {
-            BranchyName: {
+            BranchName: {
                 required: true,
                 maxlength: 50,
             },
 
+            ddEmirates: {
+                required: true,
+        
+            },
+            District: {
+             
+                maxlength: 150,
+            },
 
 
         },

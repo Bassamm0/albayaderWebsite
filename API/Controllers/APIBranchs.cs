@@ -60,9 +60,11 @@ namespace API.Controllers
             try
             {
                 var BranchName = branch.GetProperty("branchname").GetString();
+                var EmirateId = branch.GetProperty("emirateId").GetInt16();
                 var CompnayId = branch.GetProperty("companyid").GetInt16();
                 var Latitude = branch.GetProperty("latitude").GetDecimal();
                 var Longitude = branch.GetProperty("longitude").GetDecimal();
+                var District = branch.GetProperty("district").GetString();
 
                 EBranchs newBranch = new EBranchs
                 {
@@ -71,6 +73,8 @@ namespace API.Controllers
                     Latitude = Latitude,
                     Longitude = Longitude,
                     EndDate = null,
+                    EmirateId = EmirateId,
+                    District = District,
 
 
                 };
@@ -101,7 +105,9 @@ namespace API.Controllers
             try
             {
                 var BranchId = branch.GetProperty("branchid").GetInt16();
+                var EmirateId = branch.GetProperty("emirateId").GetInt16();
                 var BranchName = branch.GetProperty("branchname").GetString();
+                var District = branch.GetProperty("district").GetString();
                 var CompnayId = branch.GetProperty("companyid").GetInt16();
                 var Latitude = branch.GetProperty("latitude").GetDecimal();
                 var Longitude = branch.GetProperty("longitude").GetDecimal();
@@ -113,6 +119,8 @@ namespace API.Controllers
                     CompnayId = CompnayId,
                     Latitude = Latitude,
                     Longitude = Longitude,
+                    EmirateId = EmirateId,
+                    District = District,
                 };
                 result = await BranchLogic.updateBranch(UpdatedBranch);
             }

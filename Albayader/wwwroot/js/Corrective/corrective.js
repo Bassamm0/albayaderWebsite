@@ -11,4 +11,15 @@ $(".fileImage").fileinput({
     showUploadedThumbs: false,
     showRemove: true,
 });
+
+
+    $('.select2').select2();
+
+    $('#reportedDate').datetimepicker({
+        format: 'L'
+    });
+
+
+
+
 });

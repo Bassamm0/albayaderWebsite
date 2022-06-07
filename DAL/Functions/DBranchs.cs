@@ -43,6 +43,8 @@ namespace DAL.Functions
                             if (dataReader["CompnayId"] != DBNull.Value) { oEBranchs.CompnayId = (int)dataReader["CompnayId"]; }
                             if (dataReader["Latitude"] != DBNull.Value) { oEBranchs.Latitude = (decimal)dataReader["Latitude"]; }
                             if (dataReader["Longitude"] != DBNull.Value) { oEBranchs.Longitude = (decimal)dataReader["Longitude"]; }
+                            if (dataReader["EmirateId"] != DBNull.Value) { oEBranchs.EmirateId = (int)dataReader["EmirateId"]; }
+                            if (dataReader["District"] != DBNull.Value) { oEBranchs.District = (string)dataReader["District"]; }
 
                             users.Add(oEBranchs);
                         }
@@ -88,6 +90,9 @@ namespace DAL.Functions
                             if (dataReader["CompnayId"] != DBNull.Value) { oEBranchs.CompnayId = (int)dataReader["CompnayId"]; }
                             if (dataReader["Latitude"] != DBNull.Value) { oEBranchs.Latitude = (decimal)dataReader["Latitude"]; }
                             if (dataReader["Longitude"] != DBNull.Value) { oEBranchs.Longitude = (decimal)dataReader["Longitude"]; }
+                            if (dataReader["EmirateId"] != DBNull.Value) { oEBranchs.EmirateId = (int)dataReader["EmirateId"]; }
+                            if (dataReader["District"] != DBNull.Value) { oEBranchs.District = (string)dataReader["District"]; }
+
 
                             users.Add(oEBranchs);
                         }
@@ -133,6 +138,8 @@ namespace DAL.Functions
                             if (dataReader["CompnayId"] != DBNull.Value) { oEBranchs.CompnayId = (int)dataReader["CompnayId"]; }
                             if (dataReader["Latitude"] != DBNull.Value) { oEBranchs.Latitude = (decimal)dataReader["Latitude"]; }
                             if (dataReader["Longitude"] != DBNull.Value) { oEBranchs.Longitude = (decimal)dataReader["Longitude"]; }
+                            if (dataReader["EmirateId"] != DBNull.Value) { oEBranchs.EmirateId = (int)dataReader["EmirateId"]; }
+                            if (dataReader["District"] != DBNull.Value) { oEBranchs.District = (string)dataReader["District"]; }
 
                         }
                     }
@@ -172,6 +179,8 @@ namespace DAL.Functions
                 context.Entry(Branch).Property(x => x.Latitude).IsModified = true;
                 context.Entry(Branch).Property(x => x.Longitude).IsModified = true;
                 context.Entry(Branch).Property(x => x.BranchName).IsModified = true;
+                context.Entry(Branch).Property(x => x.EmirateId).IsModified = true;
+                context.Entry(Branch).Property(x => x.District).IsModified = true;
              
                 await context.SaveChangesAsync();
             }

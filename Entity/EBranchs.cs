@@ -18,6 +18,8 @@ namespace Entity
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
         public DateTime ?EndDate { get; set; }
+        public int EmirateId { get; set; }
+        public string District { get; set; }
 
 
     }

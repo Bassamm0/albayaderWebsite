@@ -20,27 +20,14 @@
 
 
     $('.select2').select2();
+    // get comp
+    getCompanies()
+    function getCompanies() {
 
-
-    var companyId = getUrlParameter('companyId');
-    var serviceType = getUrlParameter('serviceType');
-    $('#serviceType').val(serviceType)
-   
-    if (companyId > 0) {
-        getCompanyBranch(companyId);
-   
-    } else {
-      
-        getAllBranch();
-    }
-
-
-    function getAllBranch() {
-       
-        $("#ddBranch").html()
+        $("#ddCompanies").html()
         $.ajax({
             type: "GET",
-            url: "https://localhost:7174/api/branch/all",
+            url: "https://localhost:7174/api/company/all",
             contentType: "application/json; charset=utf-8",
             data: {},
             async: false,
@@ -51,16 +38,16 @@
             success: function (data, textStatus, xhr) {
                 var arrUpdates = (typeof data) == 'string' ? eval('(' + data + ')') : data;
                 console.log(arrUpdates)
-                $('#ddBranch').append('<option value="">Select Client Branch  ...</option>')
+                $('#ddCompanies').append('<option value="">Select Client Company  ...</option>')
                 for (var i = 0; i < arrUpdates.length; i++) {
-                    text = $.trim(arrUpdates[i].branchName);
-                    val = arrUpdates[i].branchId;
-                    populate(text, val, '#ddBranch');
+                    text = $.trim(arrUpdates[i].name);
+                    val = arrUpdates[i].companyID;
+                    populate(text, val, '#ddCompanies');
 
                 }
             },
             error: function (xhr, textStatus, errorThrown) {
-                $('#ddBranch').append('<option value="">Data Not Loaded  ...</option>')
+                $('#ddCompanies').append('<option value="">Data Not Loaded  ...</option>')
                 console.log('Error in Operation');
             }
         });
@@ -68,10 +55,28 @@
     }
 
 
+    var companyId = getUrlParameter('companyId');
+    var serviceType = getUrlParameter('serviceType');
+    $('#serviceType').val(serviceType)
+   
+    if (companyId > 0) {
+        getCompanyBranch(companyId);
+        $("#ddCompanies").val(companyId).trigger('change');
+        $("#ddCompanies").select2('enable', false);
+    } 
+
+
+
+    $('body').on("change", "#ddCompanies", function () {
+        companyId = $('#ddCompanies').val()
+        getCompanyBranch(companyId);
+    });
+    
+
 
     function getCompanyBranch(_companyId) {
 
-        $("#ddBranch").html()
+        $("#ddBranch").html('')
         $.ajax({
             type: "POST",
             url: "https://localhost:7174/api/branch/companybranchs",

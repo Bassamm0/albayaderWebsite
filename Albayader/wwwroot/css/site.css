@@ -126,3 +126,7 @@
 .file-drop-zone {
     min-height: 100px;
 }
+
+.RefNum {
+    color: #007bff;
+}
