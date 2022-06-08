@@ -5,15 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
 namespace Entity
 {
-    public class EMaterials
+    public class EMaterialsUsed
     {
+        public int MaterialsUsedId { get; set; }
+        public int ServiceDetailId { get; set; }
         public int MaterialId { get; set; }
+
+        [NotMapped]
         public string MaterialName { get; set; }
-        public string Description { get; set; }
-        public Decimal Price { get; set; }
 
     }
 }

@@ -268,7 +268,7 @@
     })
 
 
-
+    
     // save draft
     $('#SaveDraft').click(function () {
        console.log($('#Elect1').prop('checked'))
