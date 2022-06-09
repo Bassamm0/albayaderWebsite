@@ -8,15 +8,20 @@ namespace AlbayaderWeb.Pages
 {
     public class ChangePasswordModel : PageModel
     {
+        AppConfiguration AppConfig = new AppConfiguration();
         public string token { get; set; }
         public string errorMessage { get; set; }
         public string successMessage { get; set; }
         public string pageTitle { get; set; }
         public string CompanyName { get; set; }
         public int CompanyId { get; set; }
+        public string? apiurl { get; set; }
+        public string? uploadurl { get; set; }
 
-         public void OnGet()
+        public void OnGet()
         {
+            apiurl = AppConfig.APIUrl;
+            uploadurl = AppConfig.UploadURL;
         }
         public async Task<IActionResult> OnPost()
         {
@@ -48,6 +53,8 @@ namespace AlbayaderWeb.Pages
         {
             Boolean result=false;
 
+
+             apiurl = AppConfig.APIUrl;
             token = HttpContext.Session.GetString("token");
 
             var parameters = new Dictionary<string, string>();
@@ -60,7 +67,7 @@ namespace AlbayaderWeb.Pages
             {
                 httpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", token);
-                using (var response = await httpClient.PostAsync("https://localhost:7174/api/User/changepassword", data))
+                using (var response = await httpClient.PostAsync(apiurl+"User/changepassword", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")

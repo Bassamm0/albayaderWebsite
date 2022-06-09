@@ -147,7 +147,7 @@
                         </div>
                     </div>
                     <div id="pictureHolder">
-                      <a href="https://localhost:7174/uploads/@Model._User.PictureFileName" target="_blank" >@Model._User.PictureFileName</a>
+                      <a href="@Model.uploadurl@Model._User.PictureFileName" target="_blank" >@Model._User.PictureFileName</a>
                       <span id="uploadError" class="errorMessage" ></span>
                       <progress id="fileProgress" style="display: none"></progress>
                       <span id="lblMessage" style="color: Green"></span>
@@ -371,7 +371,7 @@
         <!-- /.card -->
 
 
-         
+          <input type="hidden" id="APIURI" name="APIURI" value="@Model.apiurl"/>
         </section>
         <!-- /.content -->
 

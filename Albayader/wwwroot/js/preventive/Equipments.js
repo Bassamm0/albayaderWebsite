@@ -1,13 +1,13 @@
 ﻿$(document).ready(function () {
 
-  
+    const APIURL = $('#APIURI').val();
 
     GetEquipments();
     function GetEquipments() {
       
         $("#Equipments").html('')
         $.ajax({
-            url: "https://localhost:7174/api/data/getEquipments",
+            url: APIURL+"data/getEquipments",
             type: 'GET',
             dataType: 'json',
             async: false,
@@ -36,7 +36,7 @@
         $("#MaterialUsed").html('')
         $("#Rquiredmaterials").html('')
         $.ajax({
-            url: "https://localhost:7174/api/data/getmaterials",
+            url: APIURL +"data/getmaterials",
             type: 'GET',
             dataType: 'json',
             async: false,

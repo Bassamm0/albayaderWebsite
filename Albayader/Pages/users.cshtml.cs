@@ -9,6 +9,12 @@ namespace AlbayaderWeb.Pages
 {
     public class UserModel : PageModel
     {
+        AppConfiguration AppConfig = new AppConfiguration();
+        public string? apiurl { get; set; }
+        public string? uploadurl { get; set; }
+        public string token { get; set; }
+        public string email { get; set; }
+
         public string errorMessage { get; set; }
         public List<EUser>? User = null;
         public List<UserViewModel>? ViewUser = null;
@@ -17,6 +23,8 @@ namespace AlbayaderWeb.Pages
         public string? title { get; set; }
         public async Task<IActionResult> OnGet(int companyid, string companyName)
         {
+            apiurl = AppConfig.APIUrl;
+            uploadurl = AppConfig.UploadURL;
 
             title = companyName;
             companyId = companyid;
@@ -26,7 +34,7 @@ namespace AlbayaderWeb.Pages
 
         public async Task<List<UserViewModel>> getAllCompanyUser(int companyid)
         {
-
+             apiurl = AppConfig.APIUrl;
             // if user admin
             var parameters = new Dictionary<string, int>();
             parameters["companyid"] = companyid;
@@ -38,7 +46,7 @@ namespace AlbayaderWeb.Pages
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PostAsync("https://localhost:7174/api/User/getCompanyUsers", data))
+                using (var response = await httpClient.PostAsync(apiurl+"User/getCompanyUsers", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")
@@ -108,13 +116,14 @@ namespace AlbayaderWeb.Pages
         }
         public async Task<string> deletUser(int id)
         {
+            string apiurl = AppConfig.APIUrl;
             var parameters = new Dictionary<string, int>();
             parameters["id"] = id;
             var json = JsonConvert.SerializeObject(parameters);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PostAsync("https://localhost:7174/api/User/remove", data))
+                using (var response = await httpClient.PostAsync(apiurl+"User/remove", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")

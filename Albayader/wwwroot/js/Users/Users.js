@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
 
+    const APIURL = $('#APIURI').val();
 
 
     $('body').on('click', '.deleteBtn', function () {
@@ -60,7 +61,7 @@
     function getUserById(UserId) {
 
         let html = '';
-        const uri = "https://localhost:7174/api/User/getUserById";
+        const uri = APIURL+"User/getUserById";
 
         fetch(uri, {
             method: 'POST',

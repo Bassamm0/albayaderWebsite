@@ -7,13 +7,18 @@ namespace AlbayaderWeb.Pages
 {
     public class branchsModel : PageModel
     {
+        AppConfiguration AppConfig = new AppConfiguration();
         public string errorMessage { get; set; }
          public List<EBranchs>? branchs = null;
          public int companyId { get; set; }
         public string? title { get; set; }
+        public string? apiurl { get; set; }
+        public string? uploadurl { get; set; }
+
         public async Task<IActionResult> OnGet(int companyid,string companyName)
         {
-         
+            apiurl = AppConfig.APIUrl;
+            uploadurl = AppConfig.UploadURL;
             title =companyName;
             companyId = companyid;
             branchs = await getAllCompanyBranchs(companyid);
@@ -24,6 +29,7 @@ namespace AlbayaderWeb.Pages
         {
 
             // if user admin
+             apiurl = AppConfig.APIUrl;
             var parameters = new Dictionary<string, int>();
             parameters["companyid"] = companyid;
             var json = JsonConvert.SerializeObject(parameters);
@@ -34,7 +40,7 @@ namespace AlbayaderWeb.Pages
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PostAsync("https://localhost:7174/api/branch/companybranchs",data))
+                using (var response = await httpClient.PostAsync(apiurl+"branch/companybranchs",data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")
@@ -105,7 +111,7 @@ namespace AlbayaderWeb.Pages
         public async Task<string> deletBranch(int id)
         {
 
-
+            string apiurl = AppConfig.APIUrl;
             var parameters = new Dictionary<string, int>();
             parameters["id"] = id;
             var json = JsonConvert.SerializeObject(parameters);
@@ -115,7 +121,7 @@ namespace AlbayaderWeb.Pages
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PostAsync("https://localhost:7174/api/branch/remove", data))
+                using (var response = await httpClient.PostAsync(apiurl+"branch/remove", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")

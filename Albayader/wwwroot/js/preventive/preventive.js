@@ -1,5 +1,9 @@
 ﻿$(document).ready(function () {
 
+
+    const APIURL = $('#APIURI').val();
+    const UploadUrl = $('#Uploadlocation').val();
+
     $('#Equipments').select2();
     $('#MaterialUsed').select2({
         placeholder: 'Select  Materials Used  ...'
@@ -209,7 +213,7 @@
         }
         formData.append("serviceid", "1");
         $.ajax({
-            url: 'https://localhost:7174/api/fileupload/UploadServiceImages',
+            url: APIURL +'fileupload/UploadServiceImages',
             type: 'POST',
             data: formData,
             cache: false,
@@ -230,7 +234,7 @@
                     for (var i = 0; i < arrUpdates.length; i++) {
                         uploadedFiles += "<div>"
                         uploadedFiles += "<div class='file-preview-frame krajee-default  kv-preview-thumb'>"
-                        uploadedFiles += "<div><a href='https://localhost:7174/uploads/" + arrUpdates[i] + "' target='_blank'><image src='https://localhost:7174/uploads/" + arrUpdates[i] + "' style='width:100px;height:100px' /></a></div>"
+                        uploadedFiles += "<div><a href='" + UploadUrl + arrUpdates[i] + "' target='_blank'><image src='" + UploadUrl + arrUpdates[i] + "' style='width:100px;height:100px' /></a></div>"
                         uploadedFiles += "<div><button type='button' class='btn btn-block btn-info deletImage' filename='" + arrUpdates[i] +"'>Delete</button></div>"
                         uploadedFiles += "</div>"
                         uploadedFiles += "</div>"

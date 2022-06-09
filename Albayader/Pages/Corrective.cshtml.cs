@@ -5,8 +5,13 @@ namespace AlbayaderWeb.Pages
 {
     public class CorrectiveModel : PageModel
     {
+        AppConfiguration AppConfig = new AppConfiguration();
+        public string? apiurl { get; set; }
+        public string? uploadurl { get; set; }
         public void OnGet()
         {
+            apiurl = AppConfig.APIUrl;
+            uploadurl = AppConfig.UploadURL;
         }
     }
 }

@@ -38,7 +38,7 @@ namespace DAL.DataContext
         public DbSet<AuthenticationLevel> AuthenticationLevels { get; set; }
         public DbSet<ELoginLog> LoginLog { get; set; }
         public DbSet<EErrorLogin> ErrorLogin { get; set; }
-        public DbSet<EServices> Service { get; set; }
+        public DbSet<EServices> Services { get; set; }
 
 
     }

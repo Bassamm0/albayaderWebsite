@@ -62,9 +62,9 @@
 
                   <div class="info-box-content">
                     <div class="user-block">
-                      <img class="img-circle img-bordered-sm" src="img/user1-128x128.jpg" alt="user image">
+                      <img class="img-circle img-bordered-sm" src="@Model.uploadurl@Model._service.PictureFileName" alt="user image">
                       <span class="username">
-                        <a href="#">Jonathan Burke Jr.</a>
+                        <a href="#">@Model._service.TechnicianName</a>
                       </span>
                       <span class="description">Technician</span>
                     </div>
@@ -74,8 +74,8 @@
                 <div class="col-sm">
 
                   <div class="info-box-content">
-                    <div class="info-box-text text-center text-muted"><b>Carrefour - MCC</b></div>
-                    <div class="info-box-number text-center text-muted mb-0"> <span class="RefNum"> Ref:#35542</span></div>
+                    <div class="info-box-text text-center text-muted"><b>@Model._service.CompanyName - @Model._service.BranchName</b></div>
+                    <div class="info-box-number text-center text-muted mb-0"> <span class="RefNum"> Ref:#@Model._service.ServiceId</span></div>
                   </div>
 
                 </div>
@@ -83,8 +83,9 @@
 
                   <div class="info-box-content" style="float: right;text-align: left;">
                     <div class="info-box-text text-center text-muted"><i class="fa-solid fa-calendar-days"></i>
-                      13/04/2022</div>
-                    <div class="info-box-number text-muted mb-0"><i class="fa-solid fa-clock"></i> 10:00 AM</div>
+                     @Model._service.CreatedDate.ToShortDateString()
+                       </div>
+                    <div class="info-box-number text-muted mb-0"><i class="fa-solid fa-clock"></i> @Model._service.CreatedDate.ToString("HH:mm")</div>
                   </div>
 
                 </div>
@@ -325,6 +326,8 @@
         </div>
 
         </section>
+        <input type="hidden" id="APIURI" name="APIURI" value="@Model.apiurl"/>
+        <input type="hidden" id="Uploadlocation" name="APIURI" value="@Model.uploadurl"/>
         </div>
 
 

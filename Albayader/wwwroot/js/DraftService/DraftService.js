@@ -1,5 +1,12 @@
 ﻿$(document).ready(function (){
 
+
+
+
+
+
+    const APIURL = $('#APIURI').val();
+
     $('.select2').select2();
 
 

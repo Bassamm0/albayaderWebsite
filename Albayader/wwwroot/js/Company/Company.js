@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
 
+    const APIURL = $('#APIURI').val();
 
 
     $('body').on('click', '.deleteBtn', function () {
@@ -57,7 +58,7 @@
 
     function getCompanyById(companyId) {
         let html = '';
-        const uri = "https://localhost:7174/api/company/getCompanyById";
+        const uri = APIURL+"company/getCompanyById";
 
         fetch(uri, {
             method: 'POST',

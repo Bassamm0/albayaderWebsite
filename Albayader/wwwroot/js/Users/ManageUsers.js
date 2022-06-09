@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
 
-
+    const APIURL = $('#APIURI').val();
     //$('.select2').select2();
 
     $('#reservationdate').datetimepicker({
@@ -228,7 +228,7 @@
 
         formData.append("files", $("#logoFile")[0].files[0]);
         $.ajax({
-            url: 'https://localhost:7174/api/fileupload/upload',
+            url: APIURL+'fileupload/upload',
             type: 'POST',
             data: formData,
             cache: false,
@@ -278,7 +278,7 @@
         $("#ddCountry").html('')
         $("#ddNationality").html('')
         $.ajax({
-            url: "https://localhost:7174/api/company/getcountries",
+            url: APIURL+"company/getcountries",
             type: 'GET',
             dataType: 'json',
             async: false,
@@ -306,7 +306,7 @@
     function GetPositions() {
         $("#ddPosition").html('')
         $.ajax({
-            url: "https://localhost:7174/api/user/getpostions",
+            url: APIURL+"/user/getpostions",
             type: 'GET',
             dataType: 'json',
             async: false,
@@ -341,7 +341,7 @@
         $("#ddBranch").html()
         $.ajax({
             type: "POST",
-            url: "https://localhost:7174/api/branch/companybranchs",
+            url: APIURL+"branch/companybranchs",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({ 'companyid': _companyId }),
             async: false,

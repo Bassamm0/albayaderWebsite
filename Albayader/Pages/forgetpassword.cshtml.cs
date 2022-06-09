@@ -7,6 +7,11 @@ namespace AlbayaderWeb.Pages
 {
     public class forgetpasswordModel : PageModel
     {
+        AppConfiguration AppConfig = new AppConfiguration();
+        public string? apiurl { get; set; }
+        public string? uploadurl { get; set; }
+
+
         public string errorMessage { get; set; }
         public string successMessage { get; set; }
         public void OnGet()
@@ -40,13 +45,15 @@ namespace AlbayaderWeb.Pages
 
         private async Task<bool> forgetPassword(string  email)
         {
+
+             apiurl = AppConfig.APIUrl;
             var parameters = new Dictionary<string, string>();
             parameters["email"] = email;
             var json = JsonConvert.SerializeObject(parameters);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PostAsync("https://localhost:7174/api/User/forgetpassword", data))
+                using (var response = await httpClient.PostAsync(apiurl+"User/forgetpassword", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")

@@ -9,10 +9,15 @@ namespace AlbayaderWeb.Pages
 
     public class ManageBranchModel : PageModel
     {
-       public branch _Postbranch=new branch();
-        public EBranchs? _branch = null;
+        AppConfiguration AppConfig = new AppConfiguration();
+        public string? apiurl { get; set; }
+        public string? uploadurl { get; set; }
         public string token { get; set; }
-        public string errorMessage { get; set; }
+        public string email { get; set; }
+
+        public branch _Postbranch=new branch();
+        public EBranchs? _branch = null;
+         public string errorMessage { get; set; }
         public string pageTitle { get; set; }
         public string PageActionMode { get; set; }
         public string CompanyName { get; set; }
@@ -26,6 +31,9 @@ namespace AlbayaderWeb.Pages
 
         public async Task<IActionResult> OnGetSmode(string Smode, int id,string companyname,int companyid)
         {
+            apiurl = AppConfig.APIUrl;
+            uploadurl = AppConfig.UploadURL;
+
             CompanyId = companyid;
             PageActionMode = Smode;
             CompanyName= companyname;
@@ -49,7 +57,7 @@ namespace AlbayaderWeb.Pages
         public async Task<EBranchs> getBranchById(int id)
         {
 
-
+             apiurl = AppConfig.APIUrl;
             var parameters = new Dictionary<string, int>();
             parameters["id"] = id;
             var json = JsonConvert.SerializeObject(parameters);
@@ -59,7 +67,7 @@ namespace AlbayaderWeb.Pages
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PostAsync("https://localhost:7174/api/Branch/getBranchById", data))
+                using (var response = await httpClient.PostAsync(apiurl+"Branch/getBranchById", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")
@@ -165,13 +173,15 @@ namespace AlbayaderWeb.Pages
         private async Task<string> addBranchy(branch branch)
         {
 
+            string apiurl = AppConfig.APIUrl;
+
             var json = JsonConvert.SerializeObject(branch);
 
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PostAsync("https://localhost:7174/api/branch/add", data))
+                using (var response = await httpClient.PostAsync(apiurl+"branch/add", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")
@@ -201,13 +211,14 @@ namespace AlbayaderWeb.Pages
         private async Task<string> updateBranch(branch branch)
         {
 
+            string apiurl = AppConfig.APIUrl;
             var json = JsonConvert.SerializeObject(branch);
 
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PostAsync("https://localhost:7174/api/branch/update", data))
+                using (var response = await httpClient.PostAsync(apiurl+"branch/update", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")

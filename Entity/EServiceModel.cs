@@ -23,6 +23,8 @@ namespace Entity
         [NotMapped]
         public string TechnicianName { get; set; }
         [NotMapped]
+        public string PictureFileName { get; set; }
+        [NotMapped]
         public string ServiceTypeName { get; set; }
         [NotMapped]
         public string BranchName { get; set; }

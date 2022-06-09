@@ -44,7 +44,7 @@
                        @if(!string.IsNullOrEmpty(@Model._User.PictureFileName)){
                                              <img
                                            class="profile-user-img img-fluid img-circle"
-                                            src="https://localhost:7174/uploads/@Model._User.PictureFileName"
+                                            src="@Model.uploadurl@Model._User.PictureFileName"
                                             style="width: 100px;height: 100px;"
                                             alt="User Avatar"
                                           />
@@ -157,7 +157,7 @@
                         </div>
                     </div>
                     <div id="pictureHolder">
-                      <a href="https://localhost:7174/uploads/@Model._User.PictureFileName" target="_blank" >@Model._User.PictureFileName</a>
+                      <a href="@Model.uploadurl@Model._User.PictureFileName" target="_blank" >@Model._User.PictureFileName</a>
                       <span id="uploadError" class="errorMessage" ></span>
                       <progress id="fileProgress" style="display: none"></progress>
                       <span id="lblMessage" style="color: Green"></span>

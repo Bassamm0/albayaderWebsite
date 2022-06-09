@@ -129,6 +129,8 @@ namespace DAL.Functions
 
         public async Task<ECompanies> addCompany(ECompanies newCompany)
         {
+
+         
             using (var context = new DatabaseContext(DatabaseContext.ops.dbOptions))
             {
                 await context.Companies.AddAsync(newCompany);

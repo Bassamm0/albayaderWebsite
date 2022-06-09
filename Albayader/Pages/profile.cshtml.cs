@@ -8,8 +8,15 @@ namespace AlbayaderWeb.Pages
 {
     public class profileModel : PageModel
     {
-        public EUser _User = new EUser();
+        AppConfiguration AppConfig = new AppConfiguration();
+        public string? apiurl { get; set; }
+        public string? uploadurl { get; set; }
         public string token { get; set; }
+        public string email { get; set; }
+
+
+        public EUser _User = new EUser();
+      
         public string errorMessage { get; set; }
         public string pageTitle { get; set; }
         public int UserId { get; set; }
@@ -27,11 +34,14 @@ namespace AlbayaderWeb.Pages
                 _User = await getuserById(UserId);
 
             }
+            apiurl = AppConfig.APIUrl;
+            uploadurl = AppConfig.UploadURL;
 
             return null;
         }
         public async Task<EUser> getuserById(int id)
         {
+             apiurl = AppConfig.APIUrl;
             var parameters = new Dictionary<string, int>();
             parameters["id"] = id;
             var json = JsonConvert.SerializeObject(parameters);
@@ -41,7 +51,7 @@ namespace AlbayaderWeb.Pages
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PostAsync("https://localhost:7174/api/User/getUserById", data))
+                using (var response = await httpClient.PostAsync(apiurl+"User/getUserById", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")
@@ -95,13 +105,14 @@ namespace AlbayaderWeb.Pages
         private async Task<string> updateUser(EUser User)
         {
 
+            string apiurl = AppConfig.APIUrl;
             var json = JsonConvert.SerializeObject(User);
 
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PostAsync("https://localhost:7174/api/User/updateprofile", data))
+                using (var response = await httpClient.PostAsync(apiurl+"User/updateprofile", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")

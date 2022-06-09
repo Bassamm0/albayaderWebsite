@@ -8,6 +8,11 @@ namespace AlbayaderWeb.Pages
 {
     public class ManageCompany : PageModel
     {
+
+        AppConfiguration AppConfig = new AppConfiguration();
+        public string? apiurl { get; set; }
+        public string? uploadurl { get; set; }
+
         public company _company = new company();
 
         public ECompanies? _companay = null;
@@ -20,6 +25,8 @@ namespace AlbayaderWeb.Pages
 
         public void OnGet()
         {
+            apiurl = AppConfig.APIUrl;
+            uploadurl = AppConfig.UploadURL;
         }
 
         public async Task<IActionResult> OnGetSmode(string Smode, int id)
@@ -128,14 +135,14 @@ namespace AlbayaderWeb.Pages
 
         private async Task<string> addCompany(company company)
         {
-
+            string apiurl = AppConfig.APIUrl;
             var json = JsonConvert.SerializeObject(company);
 
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PostAsync("https://localhost:7174/api/company/add", data))
+                using (var response = await httpClient.PostAsync(apiurl+"company/add", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")
@@ -161,7 +168,7 @@ namespace AlbayaderWeb.Pages
         public async Task<ECompanies> getCompanyById(int id)
         {
 
-
+            string apiurl = AppConfig.APIUrl;
             var parameters = new Dictionary<string, int>();
             parameters["id"] = id;
             var json = JsonConvert.SerializeObject(parameters);
@@ -171,7 +178,7 @@ namespace AlbayaderWeb.Pages
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PostAsync("https://localhost:7174/api/company/getCompanyById", data))
+                using (var response = await httpClient.PostAsync(apiurl+"company/getCompanyById", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")
@@ -202,13 +209,14 @@ namespace AlbayaderWeb.Pages
         private async Task<string> updateCompany(company company)
         {
 
+            string apiurl = AppConfig.APIUrl;
             var json = JsonConvert.SerializeObject(company);
 
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PostAsync("https://localhost:7174/api/company/update", data))
+                using (var response = await httpClient.PostAsync(apiurl+"company/update", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")

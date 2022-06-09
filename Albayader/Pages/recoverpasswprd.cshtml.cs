@@ -7,9 +7,15 @@ namespace AlbayaderWeb.Pages
 {
     public class recoverpasswprdModel : PageModel
     {
+        AppConfiguration AppConfig = new AppConfiguration();
+        public string? apiurl { get; set; }
+        public string? uploadurl { get; set; }
+        public string token { get; set; }
+        public string email { get; set; }
+
         public string errorMessage { get; set; }
         public string successMessage { get; set; }
-        public string token { get; set; }
+
         public bool tokenStatus { get; set; }
         public async Task<IActionResult> OnGet()
         {
@@ -28,6 +34,9 @@ namespace AlbayaderWeb.Pages
                 tokenStatus = false;
                 errorMessage = "Not correct page!";
             }
+
+            apiurl = AppConfig.APIUrl;
+            uploadurl = AppConfig.UploadURL;
 
             return null;
         }
@@ -60,7 +69,7 @@ namespace AlbayaderWeb.Pages
         {
             Boolean result = false;
 
-
+             apiurl = AppConfig.APIUrl;
 
             var parameters = new Dictionary<string, string>();
             parameters["token"] = token;
@@ -70,7 +79,7 @@ namespace AlbayaderWeb.Pages
             using (var httpClient = new HttpClient())
             {
 
-                using (var response = await httpClient.PostAsync("https://localhost:7174/api/User/validatetoken", data))
+                using (var response = await httpClient.PostAsync(apiurl+"User/validatetoken", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")
@@ -97,8 +106,8 @@ namespace AlbayaderWeb.Pages
         {
             Boolean result = false;
 
-           
 
+            string apiurl = AppConfig.APIUrl;
             var parameters = new Dictionary<string, string>();
             parameters["password"] = password;
             parameters["token"] = token;
@@ -108,7 +117,7 @@ namespace AlbayaderWeb.Pages
             using (var httpClient = new HttpClient())
             {
                
-                using (var response = await httpClient.PostAsync("https://localhost:7174/api/User/recoverpassword", data))
+                using (var response = await httpClient.PostAsync(apiurl+"User/recoverpassword", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")

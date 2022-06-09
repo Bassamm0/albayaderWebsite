@@ -1,5 +1,8 @@
 ﻿$(document).ready(function () {
 
+    const APIURL = $('#APIURI').val();
+
+
 $(".fileImage").fileinput({
     initialPreviewAsData: true,
     allowedFileExtensions: ['jpg', 'png', 'gif', 'pmb', 'esp', 'tif'],

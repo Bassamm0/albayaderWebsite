@@ -1,15 +1,36 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
+using System.Text;
+using Entity;
 
 namespace AlbayaderWeb.Pages
 {
     public class preventiveStartModel : PageModel
     {
+        AppConfiguration AppConfig = new AppConfiguration();
+        public string? apiurl { get; set; }
+        public string? uploadurl { get; set; }
+        public string token { get; set; }
+        public string email { get; set; }
+
         public string ?ServiceType { get; set; }
         public string? companyId { get; set; }
+
+        public EServices postedService = new EServices();
+        public EServices _eServices = new EServices();
+     
+        public string errorMessage { get; set; }
+
+        public int userid { get; set; }
+
         public void OnGet(string serviceType,int companyId)
         {
+            userid=Convert.ToInt16(HttpContext.Session.GetString("userid"));
+
             string ServiceType=serviceType;
+            apiurl = AppConfig.APIUrl;
+            uploadurl = AppConfig.UploadURL;
         }
 
         public async Task<IActionResult> OnPost()
@@ -17,36 +38,73 @@ namespace AlbayaderWeb.Pages
 
 
             int BranchId=Convert.ToInt16(Request.Form["ddBranch"]);
-            string type =Request.Form["serviceType"];
+            string type = Request.Form["serviceType"];
+            int serviceTypeId = 1;
+            if (type == "preventive")
+            {
+                serviceTypeId = 1;
+            }
+            else if (type == "corrective")
+            {
+                serviceTypeId = 2;
+            }
+            else
+            {
+                serviceTypeId = 3;
+            }
+            postedService.TechnicianId = Convert.ToInt16(HttpContext.Session.GetString("userid"));
+            postedService.CreatedBy = Convert.ToInt16(HttpContext.Session.GetString("userid"));
+            postedService.StatusId = 1;
+            postedService.BranchId = BranchId;
+            postedService.CreatedDate= DateTime.Now;
+            postedService.ServiceTypeId = serviceTypeId;
 
-           string url= createSearvice(type);
+
+           _eServices = await addService(postedService);
+            if (_eServices == null)
+            {
+                return null;
+            }
+            string url = url = type+ "?ServiceId=" + _eServices.ServiceId; ;
+
+            
             return Redirect(url);
         }
 
 
-        public string createSearvice(string type)
+        
+
+        private async Task<EServices> addService(EServices Service)
         {
+             apiurl = AppConfig.APIUrl;
+            var json = JsonConvert.SerializeObject(Service);
+
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
 
 
-            string serviceId = "1";
-            string url = "";
-            // create service and redirect with service ID
-            if (type == "preventive")
+            EServices returnService=new EServices();
+
+            using (var httpClient = new HttpClient())
             {
-                url = "Preventive?service="+serviceId;
-            }
-            else if(type == "corrective")
-            {
-                url = "corrective?service=" + serviceId;
-            }
-            else
-            {
-                url = "other?service=" + serviceId;
-            }
+                using (var response = await httpClient.PostAsync(apiurl+"service/add", data))
+                {
+                    // string apiResponse = await response.Content.ReadAsStringAsync();
+                    if (response.StatusCode.ToString() == "OK")
+                    {
+                        string responseJson = response.Content.ReadAsStringAsync().Result;
+                        returnService = JsonConvert.DeserializeObject<EServices>(responseJson);
+                       
+                    }
+                    else
+                    {
+                        errorMessage = response.Content.ReadAsStringAsync().Result;
+                       // return response.StatusCode.ToString();
+                    }
 
-
-
-            return url ;
+                }
+            }
+            return returnService;
         }
-      }
+
+    }
 }

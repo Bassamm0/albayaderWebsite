@@ -89,7 +89,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append("select CONCAT_WS(' ',U.FirstName,U.Lastname) as CreaterName ,CONCAT_WS(' ',UT.FirstName,UT.Lastname) as TechnicianName, ");
+                    sQuery.Append("select CONCAT_WS(' ',U.FirstName,U.Lastname) as CreaterName ,CONCAT_WS(' ',UT.FirstName,UT.Lastname) as TechnicianName,UT.PictureFileName, ");
                     sQuery.Append(" BR.BranchName,CO.Name CompanyName,ST.ServiceTypeName ,SR.* from services SR ");
                     sQuery.Append(" inner join  Branchs BR on BR.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
@@ -119,6 +119,7 @@ namespace DAL.Functions
                             if (dataReader["ServiceTypeName"] != DBNull.Value) { oEServiceModel.ServiceTypeName = (string)dataReader["ServiceTypeName"]; }
                             if (dataReader["BranchName"] != DBNull.Value) { oEServiceModel.BranchName = (string)dataReader["BranchName"]; }
                             if (dataReader["CompanyName"] != DBNull.Value) { oEServiceModel.CompanyName = (string)dataReader["CompanyName"]; }
+                            if (dataReader["PictureFileName"] != DBNull.Value) { oEServiceModel.PictureFileName = (string)dataReader["PictureFileName"]; }
                             oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);                          
                         }
                     }
@@ -147,8 +148,16 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-            
-                    sQuery.AppendFormat(" select SR.* from services SR where SR.EndDate is null and SR.ServiceId={0}",ServiceId);
+
+                    sQuery.Append("select CONCAT_WS(' ',U.FirstName,U.Lastname) as CreaterName ,CONCAT_WS(' ',UT.FirstName,UT.Lastname) as TechnicianName, ");
+                    sQuery.Append(" BR.BranchName,CO.Name CompanyName,ST.ServiceTypeName ,SR.* from services SR ");
+                    sQuery.Append(" inner join  Branchs BR on BR.branchId=SR.BranchId ");
+                    sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
+                    sQuery.Append(" inner join Users U on U.UserId=SR.CreatedBy ");
+                    sQuery.Append(" inner join Users UT on UT.UserId=SR.TechnicianId ");
+                    sQuery.Append(" inner join ServiceType ST on ST.ServiceTypeId=SR.ServiceTypeId ");
+                    sQuery.AppendFormat(" where SR.ServiceId={0} ", ServiceId);
+               
                     
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -166,6 +175,8 @@ namespace DAL.Functions
                             if (dataReader["BranchId"] != DBNull.Value) { oEServiceModel.BranchId = (int)dataReader["BranchId"]; }
                             if (dataReader["CreatedDate"] != DBNull.Value) { oEServiceModel.CreatedDate = (DateTime)dataReader["CreatedDate"]; }
                             if (dataReader["CompletionDate"] != DBNull.Value) { oEServiceModel.CompletionDate = (DateTime)dataReader["CompletionDate"]; }
+
+
                        
                         }
                     }
@@ -183,9 +194,12 @@ namespace DAL.Functions
 
         public async Task<EServices> addService(EServices newService)
         {
+
+            newService.EndDate = null;
+            newService.CompletionDate = null;
             using (var context = new DatabaseContext(DatabaseContext.ops.dbOptions))
             {
-                await context.Service.AddAsync(newService);
+                await context.Services.AddAsync(newService);
                 await context.SaveChangesAsync();
             }
 
@@ -198,7 +212,7 @@ namespace DAL.Functions
              eServices = getSingleServiceOnly(Service.ServiceId);
             using (var context = new DatabaseContext(DatabaseContext.ops.dbOptions))
             {
-                context.Service.Attach(Service);
+                context.Services.Attach(Service);
                 context.Entry(eServices).Property(x => x.ServiceId).IsModified = true;
                 context.Entry(eServices).Property(x => x.StatusId).IsModified = true;
                 context.Entry(eServices).Property(x => x.TechnicianId).IsModified = true;
@@ -225,7 +239,7 @@ namespace DAL.Functions
             }
             using (var context = new DatabaseContext(DatabaseContext.ops.dbOptions))
             {
-                context.Service.Attach(eServices);
+                context.Services.Attach(eServices);
                 context.Entry(eServices).Property(x => x.EndDate).IsModified = true;
 
                 await context.SaveChangesAsync();

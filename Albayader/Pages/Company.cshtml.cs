@@ -9,16 +9,19 @@ namespace AlbayaderWeb.Pages
 {
     public class CompanyModel : PageModel
     {
-
+        AppConfiguration AppConfig = new AppConfiguration();
         public string errorMessage { get; set; }
         public List<ECompanies>? companayList = null;
 
+        public string? apiurl { get; set; }
+        public string? uploadurl { get; set; }
 
-     
 
 
         public async Task<IActionResult> OnGet()
         {
+            apiurl = AppConfig.APIUrl;
+            uploadurl = AppConfig.UploadURL;
             companayList = await getAllCompanies();
             return null;
         }
@@ -40,13 +43,13 @@ namespace AlbayaderWeb.Pages
         {
 
             // if user admin
-         
-            
-           
+
+
+            apiurl = AppConfig.APIUrl;
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync("https://localhost:7174/api/company/all"))
+                using (var response = await httpClient.GetAsync(apiurl+"company/all"))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")
@@ -110,7 +113,7 @@ namespace AlbayaderWeb.Pages
         public async Task<string> deletCompany(int id)
         {
 
-
+            string apiurl = AppConfig.APIUrl;
             var parameters = new Dictionary<string, int>();
             parameters["id"] = id;
             var json = JsonConvert.SerializeObject(parameters);
@@ -120,7 +123,7 @@ namespace AlbayaderWeb.Pages
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PostAsync("https://localhost:7174/api/company/remove", data))
+                using (var response = await httpClient.PostAsync(apiurl+"company/remove", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")

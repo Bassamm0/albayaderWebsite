@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
 
 
-
+    const APIURL = $('#APIURI').val();
     $(".custom-file-input").on("change", function () {
        
         var fileName = $(this).val().split("\\").pop();
@@ -26,7 +26,7 @@
      
         formData.append("files", $("#logoFile")[0].files[0]);
         $.ajax({
-            url: 'https://localhost:7174/api/fileupload/upload',
+            url: APIURL+'fileupload/upload',
             type: 'POST',
             data: formData,
             cache: false,
@@ -69,7 +69,7 @@
     function GetCountries( ) {
         $("#ddCountry").html('')
         $.ajax({
-            url: "https://localhost:7174/api/company/getcountries",
+            url: APIURL+"company/getcountries",
             type: 'GET',
             dataType: 'json',
             async:false,

@@ -29,18 +29,11 @@ namespace LOGIC
             return services;
         } 
 
-        public async Task<Boolean> addService(EServices newService)
+        public async Task<EServices> addService(EServices newService)
         {
 
             var resul = await dservice.addService(newService);
-            if (resul.ServiceId > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return resul;
         }
         public async Task<Boolean> updateService(EServices Service)
         {

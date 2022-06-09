@@ -8,7 +8,6 @@ namespace DAL.DataContext
         public AppConfiguration()
         {
             var configBuilder = new ConfigurationBuilder();
-           // var path = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
             var path = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
             configBuilder.AddJsonFile(path, false);
             var root = configBuilder.Build();

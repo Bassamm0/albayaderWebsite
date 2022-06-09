@@ -10,7 +10,7 @@ using System.Globalization;
 
 namespace API.Controllers
 {
-    [Route("api/services")]
+    [Route("api/service")]
     [ApiController]
     public class APIService : ControllerBase
     {
@@ -28,7 +28,7 @@ namespace API.Controllers
         }
 
         [Route("getservicebyid")]
-        [HttpGet]
+        [HttpPost]
         public async Task<EServiceModel> getSingleService(JsonElement objData)
         {
 
@@ -42,10 +42,11 @@ namespace API.Controllers
 
         [Route("add")]
         [HttpPost]
-        public async Task<Boolean> addService([FromBody] EServices service)
+        public async Task<EServices> addService([FromBody] EServices service)
         {
 
-            bool result = false;
+            var result = new EServices();
+
             try
             {
                 result = await serviceLogic.addService(service);
@@ -60,7 +61,7 @@ namespace API.Controllers
                 {
                     throw new DomainValidationFundException("Validation : null value not allowed to one of the parameters");
                 }
-                return false;
+             
             }
             return result;
         }

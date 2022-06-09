@@ -4,11 +4,14 @@ using Newtonsoft.Json;
 using System.Text;
 using Entity;
 using System.Net.Http.Headers;
+using AlbayaderWeb;
 
 namespace Core_3Tire.Pages
 {
     public class IndexModel : PageModel
     {
+        AppConfiguration AppConfig = new AppConfiguration();
+
         private readonly ILogger<IndexModel> _logger;
         public EUser _userView=new EUser();
 
@@ -115,11 +118,7 @@ namespace Core_3Tire.Pages
         private async Task<string> GetLogindetails(string email,string password)
         {
 
-         
-
-            
-           
-
+            string apiurl = AppConfig.APIUrl;
             var userLogin = new userLogin();
             userLogin.Email = email;
             userLogin.Password = password;
@@ -131,7 +130,7 @@ namespace Core_3Tire.Pages
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PostAsync("https://localhost:7174/api/Login",data))
+                using (var response = await httpClient.PostAsync(apiurl+"Login",data))
                 {
                    // string apiResponse = await response.Content.ReadAsStringAsync();
                    if(response.StatusCode.ToString()=="OK")

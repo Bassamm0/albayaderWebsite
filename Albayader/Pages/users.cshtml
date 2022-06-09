@@ -53,14 +53,14 @@
                              @foreach (var item in Model.User)
                                 {
                                    <div class="col-12 col-md-6 col-lg-3 userHolder" Userid="@item.UserId" >
-                                     <div class="small-box" style="text-align: center">
+                                     <div class="small-box " style="text-align: center">
                                       <div class="inner">
                                         <div>
                                            @if(!string.IsNullOrEmpty(@item.PictureFileName)){
                                                 <img
-                                            class=""
-                                            src="https://localhost:7174/uploads/@item.PictureFileName"
-                                            style="width: 100px;max-height: 60px;"
+                                            class="img-fluid img-circle"
+                                            src="@Model.uploadurl@item.PictureFileName"
+                                            style="width: 100px;height: 100px;"
                                             alt="User Avatar"
                                           />
                                            }else{
@@ -186,7 +186,7 @@
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
     
-           
+            <input type="hidden" id="APIURI" name="APIURI" value="@Model.apiurl"/>
           </div>
           <!-- /.modal-content -->
         </div>
