@@ -5,7 +5,7 @@
     GetEquipments();
     function GetEquipments() {
       
-        $("#Equipments").html('')
+        $("#Equipments1").html('')
         $.ajax({
             url: APIURL+"data/getEquipments",
             type: 'GET',
@@ -14,15 +14,15 @@
             success: function (data, textStatus, xhr) {
                 var arrUpdates = (typeof data) == 'string' ? eval('(' + data + ')') : data;
                
-                $('#Equipments').append('<option value="">Select  Equipments  ...</option>')
+                $('#Equipments1').append('<option value="">Select  Equipments  ...</option>')
                  for (var i = 0; i < arrUpdates.length; i++) {
                     text = $.trim(arrUpdates[i].name);
                      val = arrUpdates[i].equipmentId;
-                      populate(text, val, '#Equipments');
+                      populate(text, val, '#Equipments1');
                 }
             },
             error: function (xhr, textStatus, errorThrown) {
-                $('#Equipments').append('<option value="">Data Not Loaded  ...</option>')
+                $('#Equipments1').append('<option value="">Data Not Loaded  ...</option>')
                  console.log('Error in Operation');
             }
         });
@@ -33,8 +33,8 @@
 
     GetMaterials();
     function GetMaterials() {
-        $("#MaterialUsed").html('')
-        $("#Rquiredmaterials").html('')
+        $("#MaterialUsed1").html('')
+        $("#Rquiredmaterials1").html('')
         $.ajax({
             url: APIURL +"data/getmaterials",
             type: 'GET',
@@ -48,13 +48,13 @@
                 for (var i = 0; i < arrUpdates.length; i++) {
                     text = $.trim(arrUpdates[i].materialName);
                     val = arrUpdates[i].materialId;
-                    populate(text, val, '#MaterialUsed');
-                    populate(text, val, '#Rquiredmaterials');
+                    populate(text, val, '#MaterialUsed1');
+                    populate(text, val, '#Rquiredmaterials1');
                 }
             },
             error: function (xhr, textStatus, errorThrown) {
-                $('#MaterialUsed').append('<option value="">Data Not Loaded  ...</option>')
-                $('#Rquiredmaterials').append('<option value="">Data Not Loaded  ...</option>')
+                $('#MaterialUsed1').append('<option value="">Data Not Loaded  ...</option>')
+                $('#Rquiredmaterials1').append('<option value="">Data Not Loaded  ...</option>')
                 console.log('Error in Operation');
             }
         });

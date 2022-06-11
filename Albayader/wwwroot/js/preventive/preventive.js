@@ -3,18 +3,27 @@
 
     const APIURL = $('#APIURI').val();
     const UploadUrl = $('#Uploadlocation').val();
+    const _ServiceId = $('#serviceid').val()
 
-    $('#Equipments').select2();
-    $('#MaterialUsed').select2({
+    $('#Equipments1').select2();
+    $('#MaterialUsed1').select2({
         placeholder: 'Select  Materials Used  ...'
     });
-    $('#Rquiredmaterials').select2({
+    $('#Rquiredmaterials1').select2({
         placeholder: 'Select  Materials Required  ...'
     });
+
+
 
     
     let cn = 1;
     $('body').on('click', '#AddAnotherForm', function () {
+
+
+
+
+        validator.resetForm();
+
 
 
 
@@ -57,47 +66,51 @@
             + '</div>'
 
 
-        $('#Equipments').select2('destroy');
-        $('#MaterialUsed').select2('destroy');
-        $('#Rquiredmaterials').select2('destroy');
+        $('#Equipments1').select2('destroy');
+        $('#MaterialUsed1').select2('destroy');
+        $('#Rquiredmaterials1').select2('destroy');
 
-        let clone = $("#Equipment").clone()
+        let clone = $("#Equipment1").clone()
 
        // clone.find('#Elect,#Moving,#Bearings,#Bells,#Motor,#Heater,#Safety,#Control,#Compressor,#Tmp').removeAttr("checked")
        
         clone.find('.removeForm').attr("data-card-widget", "remove")
         clone.find('.removeForm').attr("EquId", cn)
 
+        clone.find('#Equipments1').attr("aria-describedby", '#Equipments'+cn+'-error')
+        
+        clone.find('#Serial1').val('')
+        clone.find('#MaterialUsed1').val('')
+        clone.find('#Rquiredmaterials1').val('')
+
+        clone.find('#Equipment1').attr("EquId",   cn)
+        clone.find('#Equipment1').attr("id", "Equipment" + cn)
+
+        clone.find('#Equipments1').attr("name", "Equipments" + cn)
+        clone.find('#Equipments1').attr("id", "Equipments" + cn)
        
-        clone.find('#Serial').val('')
-        clone.find('#MaterialUsed').val('')
-        clone.find('#Rquiredmaterials').val('')
 
-        clone.find('#Equipment').attr("EquId",   cn)
-        clone.find('#Equipment').attr("id", "Equipment" + cn)
-        clone.find('#Equipments').attr("id", "Equipments" + cn)
+        clone.find('#Serial1').attr("id", "Serial" + cn)
+    
+        clone.find('#partsHolder1').html(parts)
 
-        clone.find('#Serial').attr("id", "Serial" + cn)
-        clone.find('#BeforePropFixed').attr("id", "BeforePropFixed" + cn)
-        clone.find('#partsHolder').html(parts)
+        clone.find('#MaterialUsed1').attr("name", "MaterialUsed" + cn)
+        clone.find('#Rquiredmaterials1').attr("name", "Rquiredmaterials" + cn)
 
-        clone.find('#MaterialUsed').attr("id", "MaterialUsed" + cn)
-        clone.find('#Rquiredmaterials').attr("id", "Rquiredmaterials" + cn)
-
-        clone.find('#MaterialUsed').attr("name", "MaterialUsed" + cn)
-        clone.find('#Rquiredmaterials').attr("name", "Rquiredmaterials" + cn)
+        clone.find('#MaterialUsed1').attr("id", "MaterialUsed" + cn)
+        clone.find('#Rquiredmaterials1').attr("id", "Rquiredmaterials" + cn)
 
 
-        clone.find('#afterFix').attr("id", "afterFix" + cn)
 
-        clone.find('#PicturesBeforeFix').attr("id", "PicturesBeforeFix" + cn)
-        clone.find('#PicturesAfterFix').attr("id", "PicturesAfterFix" + cn)
-
-
+        clone.find('#PicturesBeforeFix1').attr("id", "PicturesBeforeFix" + cn)
+        clone.find('#PicturesAfterFix1').attr("id", "PicturesAfterFix" + cn)
 
         clone.find('#uploadBeforeHolder').html(' <input id="PicturesBeforeFix' + cn + '" name="PicturesBeforeFix" class="file fa-2x fileImage " type="file" multiple="true" style="height:50px;">' + fielUploadValidationHolder)
         clone.find('#uploadAftereHolder').html(' <input id="PicturesAfterFix' + cn + '" name="PicturesBeforeFix" class="file fa-2x fileImage " type="file" multiple="true" style="height:50px;">' + fielUploadValidationHolder)
 
+        clone.find('#ServiceDetailsid1').attr("value", "")
+        clone.find('#ServiceDetailsid1').attr("id", "ServiceDetailsid" + cn)
+        clone.find('#ServiceDetailsid1').attr("name", "ServiceDetailsid" + cn)
 
 
         // remove select
@@ -124,14 +137,16 @@
          // initailaize the uploader
         initFileInput("PicturesBeforeFix" + cn);
         initFileInput("PicturesAfterFix" + cn);
+   
 
-
-        $("#Equipments").select2();
-        $("#MaterialUsed").select2();
-        $("#Rquiredmaterials").select2();
+        $("#Equipments1").select2();
+        $("#MaterialUsed1").select2();
+        $("#Rquiredmaterials1").select2();
       
        
        // $('#Equipments1').trigger('change');
+        $('#Equipments' + cn).attr("required");
+   
         $('#Equipments' + cn).select2();
         $('#MaterialUsed' + cn).select2({
             placeholder:'Select  Materials Used  ...'
@@ -168,6 +183,7 @@
             previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
             showUploadedThumbs: false,
             showRemove: true,
+     
         });
     
     
@@ -184,22 +200,43 @@
                 previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
                 showUploadedThumbs: false,
                 showRemove: true,
+
             });
+        $('#' + element).attr("EquId", cn)
+
+
+
+      
     }
    
 
 
-    // upload
-
-    //$('body').on('click', '.fileinput-upload-button', function () {
-    //    console.log($(this).next('div').children('input').attr('id'))
-    //})
-
     $('body').on('click', '.fileinput-upload-button', function () {
 
-        var validationElem = $(this).next('div').parent('span').parent('div').next('div');
-        var InputElmentid = $(this).next('div').children('input').attr('id')
+        $("#ServiceForm").submit(function (e) {
+            return false;
+        });
+
+        var EquId = $(this).next('div').children('input').attr('EquId')
         
+        if ($('#Equipments' + EquId).val() == '') {
+
+            alert('Please select Equipment before uploading any image')
+            return;
+
+        }
+        // validate the service details
+
+
+        var validationElem = $(this).next('div').parent('span').parent('div').next('div');
+        var InputElmentid = $(this).next('div').children('input').attr('id');
+
+        uploadImages(InputElmentid, validationElem, InputElmentid, EquId)
+       
+    })
+
+    function uploadImages(InputElmentid, validationElem, InputElmentid, EquId) {
+
         var files = document.getElementById(InputElmentid).files
 
         var formData = new FormData();
@@ -208,12 +245,10 @@
             var file = files[i];
             formData.append("files", file);
 
-
-
         }
-        formData.append("serviceid", "1");
+        formData.append("serviceid", _ServiceId);
         $.ajax({
-            url: APIURL +'fileupload/UploadServiceImages',
+            url: APIURL + 'fileupload/UploadServiceImages',
             type: 'POST',
             data: formData,
             cache: false,
@@ -235,7 +270,7 @@
                         uploadedFiles += "<div>"
                         uploadedFiles += "<div class='file-preview-frame krajee-default  kv-preview-thumb'>"
                         uploadedFiles += "<div><a href='" + UploadUrl + arrUpdates[i] + "' target='_blank'><image src='" + UploadUrl + arrUpdates[i] + "' style='width:100px;height:100px' /></a></div>"
-                        uploadedFiles += "<div><button type='button' class='btn btn-block btn-info deletImage' filename='" + arrUpdates[i] +"'>Delete</button></div>"
+                        uploadedFiles += "<div><button type='button' class='btn btn-block btn-info deletImage' filename='" + arrUpdates[i] + "'>Delete</button></div>"
                         uploadedFiles += "</div>"
                         uploadedFiles += "</div>"
 
@@ -267,15 +302,62 @@
             }
         });
 
-
-
-    })
-
+    }
 
     
     // save draft
     $('#SaveDraft').click(function () {
+
+
+
+        if ($("#ServiceForm").valid()) {
+
+
+        }
        console.log($('#Elect1').prop('checked'))
     })
+
+
+
+    // change Equip
+    $('body').on('change', '.ddEquipment', function () {
+        //if ($(this).val() != '') {
+        //    $('#PicturesBeforeFix').fileinput('enable');
+        //    $('#PicturesAfterFix').fileinput('enable');
+        //} else {
+        //    $('#PicturesBeforeFix').fileinput('disable');
+        //    $('#PicturesAfterFix').fileinput('disable');
+        //}
+      
+    })
+
+
+    
+
+    $('#ServiceForm').validate({
+   
+        
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+
+
+    var validator = $("#ServiceForm").validate();
+
+    
+
+    $.validator.addClassRules("ddEquipment", {
+        required: true,
+    });
+
 
 });

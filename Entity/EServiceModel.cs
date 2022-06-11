@@ -17,6 +17,15 @@ namespace Entity
         public DateTime CreatedDate { get; set; }
         public DateTime CompletionDate { get; set; }
 
+        public string ?Remark { get; set; }
+        public int StatusAfterId { get; set; }
+
+        public string? SupervisourName { get; set; }
+        [NotMapped]
+        public string? SupervisourSignature { get; set; }
+
+        [NotMapped]
+        public string? SupervisourFeedback { get; set; }
 
         [NotMapped]
         public string CreaterName { get; set; }

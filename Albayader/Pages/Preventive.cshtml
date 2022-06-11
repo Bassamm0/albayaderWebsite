@@ -98,11 +98,13 @@
 
           <!--Equipment 1-->
          
+         <form method="post" id="ServiceForm">
+
          <div id="mainEquHolder">
 
 
 
-                        <div class="card card-default" id="Equipment" EquId="1">
+                        <div class="card card-default" id="Equipment1" EquId="1">
                             <div class="card-header">
                                 <h3 class="card-title">Equipment Details </h3>
 
@@ -110,7 +112,7 @@
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fas fa-minus"></i>
                                     </button>
-                                    <button type="button" class="btn btn-tool removeForm" data-card-widget="" EquId="1" >
+                                    <button type="button" class="btn btn-tool removeForm" EquId="1" >
                                         <i class="fas fa-times"></i>
                                     </button>
                                 </div>
@@ -123,7 +125,7 @@
                                         <div class="form-group">
                                          <label>Equipment</label>
                                          <div id="EquipmentsHolder">
-                                              <select name="Equipments" id="Equipments" class="form-control select2" style="width: 100%;" >
+                                              <select name="Equipments1" id="Equipments1" class="form-control select2 ddEquipment" style="width: 100%;" required >
                                           
                     
     
@@ -141,7 +143,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exampleInputEmail">Serial No.</label>
-                                            <input type="text" class="form-control" id="Serial"
+                                            <input type="text" class="form-control serialCss" id="Serial1" name="Serial1" maxlength="30"
                                                 placeholder="Enter Serial No.">
                                         </div>
 
@@ -150,10 +152,10 @@
 
                                     <div class="col-md-12">
                                         <div class="form-group col-md-12">
-                                            <label for="exampleInputFile">After </label>
+                                            <label for="exampleInputFile">Before </label>
                                             <div class="input-group " id="uploadBeforeHolder">   
                                                
-                                                <input id="PicturesBeforeFix" name="PicturesBeforeFix" class="file fa-2x fileImage " type="file" multiple="true" style="height:50px;">
+                                                <input id="PicturesBeforeFix1" name="PicturesBeforeFix1" class="file fa-2x fileImage " type="file" multiple="true" style="height:50px;"  EquId="1" >
 
                                             
 
@@ -161,7 +163,7 @@
                                                     <span id="uploadError" class="errorMessage uploadError"></span>
                                                     <progress id="fileProgress" style="display: none" class="progress"></progress>
                                                     <span id="lblMessage" class="uploadSccessMessage lblMessage"></span>
-                                                    <div id="thumbHolder" class="thumbHolder""></div>
+                                                    <div id="thumbHolder" class="thumbHolder"></div>
                                                  </div>
                                             </div>
                                         </div>
@@ -170,51 +172,51 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <fieldset class="form-group border p-3" id="partsHolder">
+                                        <fieldset class="form-group border p-3" id="partsHolder1">
                                             <legend class="w-auto px-2">Parts</legend>
 
                                             <div class="row">
                                                 <div class="col">
-                                                    <input type="checkbox"  data-toggle="toggle"  data-width="75" data-height="50"  id="Elect" name="Elect" data-on="Yes" data-off="No" >
-                                                     <label class="partslable" for="Elect">Elect Parts</label>
+                                                    <input type="checkbox"  data-toggle="toggle"  data-width="75" data-height="50"  id="Elect1" name="Elect1" data-on="Yes" data-off="No" >
+                                                     <label class="partslable" for="Elect1">Elect Parts</label>
                                                 </div>
                                                 <div class="col ">
-                                                     <input type="checkbox"  data-toggle="toggle" data-width="75" data-height="50"  id="Moving" name="Moving"  data-on="Yes" data-off="No" >
-                                                      <label class="partslable" for="Moving">Moving Parts</label>
+                                                     <input type="checkbox"  data-toggle="toggle" data-width="75" data-height="50"  id="Moving1" name="Moving1"  data-on="Yes" data-off="No" >
+                                                      <label class="partslable" for="Moving1">Moving Parts</label>
                                                 </div>
                                                 <div class="col">
                                                   
-                                                     <input type="checkbox"  data-toggle="toggle"  data-width="75" data-height="50"   id="Bearings" name="Bearings"  data-on="Yes" data-off="No" >
-                                                      <label class="partslable" for="Bearings">Bearings</label>
+                                                     <input type="checkbox"  data-toggle="toggle"  data-width="75" data-height="50"   id="Bearings1" name="Bearings1"  data-on="Yes" data-off="No" >
+                                                      <label class="partslable" for="Bearings1">Bearings</label>
 
                                                 </div>
                                                 <div class="col">
-                                                     <input type="checkbox"  data-toggle="toggle" data-width="75" data-height="50"  id="Bells" name="Bells"  data-on="Yes" data-off="No" >
-                                                      <label class="partslable" for="Bells">Bells</label>
+                                                     <input type="checkbox"  data-toggle="toggle" data-width="75" data-height="50"  id="Bells1" name="Bells1"  data-on="Yes" data-off="No" >
+                                                      <label class="partslable" for="Bells1">Bells</label>
                                                 </div>
                                                 <div class="col">
-                                                       <input type="checkbox"  data-toggle="toggle"  data-width="75" data-height="50"  id="Motor" name="Motor"  data-on="Yes" data-off="No" >
-                                                        <label class="partslable" for="Motor">Motor</label>
+                                                       <input type="checkbox"  data-toggle="toggle"  data-width="75" data-height="50"  id="Motor1" name="Motor1"  data-on="Yes" data-off="No" >
+                                                        <label class="partslable" for="Motor1">Motor</label>
                                                 </div>
                                           
                                                 <div class="col">
-                                                         <input type="checkbox"  data-toggle="toggle"  data-width="75" data-height="50"   id="Heater" name="Heater"  data-on="Yes" data-off="No" >
-                                                        <label class="partslable" for="Heater">Heater</label>
+                                                         <input type="checkbox"  data-toggle="toggle"  data-width="75" data-height="50"   id="Heater1" name="Heater1"  data-on="Yes" data-off="No" >
+                                                        <label class="partslable" for="Heater1">Heater</label>
                                                 </div>
                                                 <div class="col">
-                                                         <input type="checkbox"  data-toggle="toggle"  data-width="75" data-height="50"   id="Safety" name="Safety"  data-on="Yes" data-off="No" >
-                                                        <label class="partslable" for="Safety">Safety Switch</label>
+                                                         <input type="checkbox"  data-toggle="toggle"  data-width="75" data-height="50"   id="Safety1" name="Safety1"  data-on="Yes" data-off="No" >
+                                                        <label class="partslable" for="Safety1">Safety Switch</label>
                                                 </div>
                                                 <div class="col">
-                                                         <input type="checkbox"  data-toggle="toggle"  data-width="75" data-height="50"   id="Control" name="Control"  data-on="Yes" data-off="No" >
-                                                        <label class="partslable" for="Control">Control Board</label>
+                                                         <input type="checkbox"  data-toggle="toggle"  data-width="75" data-height="50"   id="Control1" name="Control1"  data-on="Yes" data-off="No" >
+                                                        <label class="partslable" for="Control1">Control Board</label>
                                                 </div>
                                                 <div class="col">
-                                                         <input type="checkbox"  data-toggle="toggle"  data-width="75" data-height="50"   id="Compressor" name="Compressor"  data-on="Yes" data-off="No" >
-                                                        <label class="partslable" for="Compressor">Compressor</label>                                                </div>
+                                                         <input type="checkbox"  data-toggle="toggle"  data-width="75" data-height="50"   id="Compressor1" name="Compressor1"  data-on="Yes" data-off="No" >
+                                                        <label class="partslable" for="Compressor1">Compressor</label>                                                </div>
                                                 <div class="col">
-                                                         <input type="checkbox"  data-toggle="toggle"  data-width="75" data-height="50"   id="Tmp" name="Tmp"  data-on="Yes" data-off="No" >
-                                                        <label class="partslable" for="Tmp">Tmp. Control</label>
+                                                         <input type="checkbox"  data-toggle="toggle"  data-width="75" data-height="50"   id="Tmp1" name="Tmp1"  data-on="Yes" data-off="No" >
+                                                        <label class="partslable" for="Tmp1">Tmp. Control</label>
                                                 </div>
                                             </div>
 
@@ -228,7 +230,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                          <label>Materials Used</label>
-                                              <select name="MaterialUsed" id="MaterialUsed" class="form-control select2" style="width: 100%;" multiple >
+                                              <select name="MaterialUsed1" id="MaterialUsed1" class="form-control select2" style="width: 100%;" multiple >
     
                                             </select>
                                          </div>
@@ -236,18 +238,18 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                          <label>Required Materials</label>
-                                              <select name="Rquiredmaterials" id="Rquiredmaterials" class="form-control select2" style="width: 100%;" multiple >
+                                              <select name="Rquiredmaterials1" id="Rquiredmaterials1" class="form-control select2" style="width: 100%;" multiple >
     
                                             </select>
                                          </div>
                                     </div>
-
+                                    
                                         <div class="col-md-12">
                                             <div class="form-group col-md-12">
                                                 <label for="exampleInputFile">After </label>
                                                 <div class="input-group " id="uploadAftereHolder">   
                                                    
-                                                    <input id="PicturesAfterFix" name="PicturesAfterFix" class="file fa-2x fileImage " type="file" multiple="true" style="height:50px;">
+                                                    <input id="PicturesAfterFix1" name="PicturesAfterFix1" class="file fa-2x fileImage " type="file" multiple="true" style="height:50px;"  EquId="1" >
                              
                                                    <div class="fielUploadValidationHolder">
                                                     <span id="uploadError" class="errorMessage uploadError"></span>
@@ -272,12 +274,11 @@
                             </div>
                             <!-- /.card -->
 
-
+                            <input type="hidden" id="ServiceDetailsid1" name="ServiceDetailsid1" value=""/>
                         </div>
-                    </div>
+                   </div>
 
-
-
+        </form>
 
         <div class="card">
         
@@ -327,7 +328,8 @@
 
         </section>
         <input type="hidden" id="APIURI" name="APIURI" value="@Model.apiurl"/>
-        <input type="hidden" id="Uploadlocation" name="APIURI" value="@Model.uploadurl"/>
+        <input type="hidden" id="Uploadlocation" name="Uploadlocation" value="@Model.uploadurl"/>
+        <input type="hidden" id="serviceid" name="serviceid" value="@Model._service.ServiceId"/>
         </div>
 
 
@@ -346,8 +348,7 @@
 
                      <script src="~/js/preventive/Equipments.js"></script>
 
-            <script src="plugins/jquery-validation/jquery.validate.min.js"></script>
-            <script src="plugins/jquery-validation/additional-methods.min.js"></script>
+
 
 
     <link rel="stylesheet" type="text/css" href="~/plugins/fileInput/fileinput.css"/>
@@ -368,3 +369,7 @@
 
  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+
+            <script src="plugins/jquery-validation/jquery.validate.min.js"></script>
+            <script src="plugins/jquery-validation/additional-methods.min.js"></script>

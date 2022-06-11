@@ -56,6 +56,7 @@ namespace DAL.Functions
                             if (dataReader["ServiceTypeName"] != DBNull.Value) { oEServiceModel.ServiceTypeName = (string)dataReader["ServiceTypeName"]; }
                             if (dataReader["BranchName"] != DBNull.Value) { oEServiceModel.BranchName = (string)dataReader["BranchName"]; }
                             if (dataReader["CompanyName"] != DBNull.Value) { oEServiceModel.CompanyName = (string)dataReader["CompanyName"]; }
+                            if (dataReader["Remark"] != DBNull.Value) { oEServiceModel.Remark = (string)dataReader["Remark"]; }
                             oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);
 
 
@@ -217,6 +218,7 @@ namespace DAL.Functions
                 context.Entry(eServices).Property(x => x.StatusId).IsModified = true;
                 context.Entry(eServices).Property(x => x.TechnicianId).IsModified = true;
                 context.Entry(eServices).Property(x => x.ServiceTypeId).IsModified = true;
+                context.Entry(eServices).Property(x => x.SerialNo).IsModified = true;
                
 
                 await context.SaveChangesAsync();
@@ -284,6 +286,7 @@ namespace DAL.Functions
                             if (dataReader["ControlBoard"] != DBNull.Value) { oEServiceDetails.ControlBoard = (bool)dataReader["ControlBoard"]; }
                             if (dataReader["Compressor"] != DBNull.Value) { oEServiceDetails.Compressor = (bool)dataReader["Compressor"]; }
                             if (dataReader["TmpControl"] != DBNull.Value) { oEServiceDetails.TmpControl = (bool)dataReader["TmpControl"]; }
+                            if (dataReader["SerialNo"] != DBNull.Value) { oEServiceDetails.SerialNo = (string)dataReader["SerialNo"]; }
                             oEServiceDetails.MaterialsUsed = getMaterialsUsed(oEServiceDetails.ServiceDetailId);
                             oEServiceDetails.requiredMaterials = getRequiredMaterials(oEServiceDetails.ServiceDetailId);
                             oEServiceDetails.servicePictures = getServicePictures(oEServiceDetails.ServiceDetailId);

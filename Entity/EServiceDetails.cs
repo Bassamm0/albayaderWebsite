@@ -21,6 +21,9 @@ namespace Entity
 		public bool ControlBoard { get; set; }
 		public bool Compressor { get; set; }
 		public bool TmpControl { get; set; }
+        public string SerialNo { get; set; }
+
+
 
         [NotMapped]
         public List<EMaterialsUsed> ?MaterialsUsed { get; set; }
