@@ -220,7 +220,6 @@
         var EquId = $(this).next('div').children('input').attr('EquId')
         
         if ($('#Equipments' + EquId).val() == '') {
-
             alert('Please select Equipment before uploading any image')
             return;
 
@@ -230,13 +229,35 @@
 
         var validationElem = $(this).next('div').parent('span').parent('div').next('div');
         var InputElmentid = $(this).next('div').children('input').attr('id');
+        saveDetails(InputElmentid, validationElem, EquId)
 
-        uploadImages(InputElmentid, validationElem, InputElmentid, EquId)
        
     })
 
-    function uploadImages(InputElmentid, validationElem, InputElmentid, EquId) {
 
+    function saveDetails(InputElmentid, validationElem, EquId) {
+
+        var obj = $('body').find('#ServiceDetailsid' + EquId);
+        if ($(obj).val() == '') {
+            console.log('not saved yet')
+            // create new
+
+
+        } else {
+            // update 
+            ServiceDetailsId = $(obj).val()
+
+        }
+
+
+        uploadImages(InputElmentid, validationElem, EquId)
+    }
+
+
+    function uploadImages(InputElmentid, validationElem, EquId) {
+
+        console.log('equipment num:', EquId)
+      
         var files = document.getElementById(InputElmentid).files
 
         var formData = new FormData();
@@ -307,14 +328,24 @@
     
     // save draft
     $('#SaveDraft').click(function () {
-
-
-
+       
+        for (i = 1; i <= cn; i++){
+            var obj = $('body').find('#ServiceDetailsid' + i);
+            if ($(obj).val() == '') {
+                console.log('not saved')
+            } else {
+                console.log($(obj).val())
+            }
+            console.log(i);
+        
+            console.log('is Elect checked'+i,$('#Elect' + i).prop('checked'))
+    }
+        
         if ($("#ServiceForm").valid()) {
 
 
         }
-       console.log($('#Elect1').prop('checked'))
+       
     })
 
 

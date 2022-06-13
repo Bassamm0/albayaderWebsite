@@ -4,14 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace Entity
 {
     public class EServiceDetails
     {
+        [Key]
         public int ServiceDetailId { get; set; }
         public int ServiceId { get; set; }
-        public int EquipmentId { get; set; }
+        public int ?EquipmentId { get; set; }
         public bool Elect { get; set; }
         public bool Moving { get; set; }
         public bool Bearings { get; set; }
@@ -21,7 +23,7 @@ namespace Entity
 		public bool ControlBoard { get; set; }
 		public bool Compressor { get; set; }
 		public bool TmpControl { get; set; }
-        public string SerialNo { get; set; }
+        public string ?SerialNo { get; set; }
 
 
 
