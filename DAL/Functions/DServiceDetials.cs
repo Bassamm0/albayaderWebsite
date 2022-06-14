@@ -57,6 +57,7 @@ namespace DAL.Functions
                             if (dataReader["Bells"] != DBNull.Value) { oEServiceModel.Bells = (bool)dataReader["Bells"]; }
                             if (dataReader["Motor"] != DBNull.Value) { oEServiceModel.Motor = (bool)dataReader["Motor"]; }
                             if (dataReader["Heater"] != DBNull.Value) { oEServiceModel.Heater = (bool)dataReader["Heater"]; }
+                            if (dataReader["SafetySwitch"] != DBNull.Value) { oEServiceModel.SafetySwitch = (bool)dataReader["SafetySwitch"]; }
                             if (dataReader["ControlBoard"] != DBNull.Value) { oEServiceModel.ControlBoard = (bool)dataReader["ControlBoard"]; }
                             if (dataReader["Compressor"] != DBNull.Value) { oEServiceModel.Compressor = (bool)dataReader["Compressor"]; }
                             if (dataReader["TmpControl"] != DBNull.Value) { oEServiceModel.TmpControl = (bool)dataReader["TmpControl"]; }
@@ -116,6 +117,7 @@ namespace DAL.Functions
                             if (dataReader["Bells"] != DBNull.Value) { oEServiceModel.Bells = (bool)dataReader["Bells"]; }
                             if (dataReader["Motor"] != DBNull.Value) { oEServiceModel.Motor = (bool)dataReader["Motor"]; }
                             if (dataReader["Heater"] != DBNull.Value) { oEServiceModel.Heater = (bool)dataReader["Heater"]; }
+                            if (dataReader["Safety"] != DBNull.Value) { oEServiceModel.SafetySwitch = (bool)dataReader["Safety"]; }
                             if (dataReader["ControlBoard"] != DBNull.Value) { oEServiceModel.ControlBoard = (bool)dataReader["ControlBoard"]; }
                             if (dataReader["Compressor"] != DBNull.Value) { oEServiceModel.Compressor = (bool)dataReader["Compressor"]; }
                             if (dataReader["TmpControl"] != DBNull.Value) { oEServiceModel.TmpControl = (bool)dataReader["TmpControl"]; }
@@ -167,6 +169,7 @@ namespace DAL.Functions
                 context.Entry(ServiceDetails).Property(x => x.Heater).IsModified = true;
                 context.Entry(ServiceDetails).Property(x => x.Compressor).IsModified = true;
                 context.Entry(ServiceDetails).Property(x => x.ControlBoard).IsModified = true;
+                context.Entry(ServiceDetails).Property(x => x.SafetySwitch).IsModified = true;
                 context.Entry(ServiceDetails).Property(x => x.TmpControl).IsModified = true;
             
                 await context.SaveChangesAsync();

@@ -229,18 +229,59 @@
 
         var validationElem = $(this).next('div').parent('span').parent('div').next('div');
         var InputElmentid = $(this).next('div').children('input').attr('id');
-        saveDetails(InputElmentid, validationElem, EquId)
+        saveDetailsOnUpload(InputElmentid, validationElem, EquId)
 
        
     })
+    
+    function saveDetailsOnUpload(InputElmentid, validationElem, EquId) {
 
 
-    function saveDetails(InputElmentid, validationElem, EquId) {
-
+        var url = 'https://localhost:7174/api/servicedetails/add'
         var obj = $('body').find('#ServiceDetailsid' + EquId);
+       
         if ($(obj).val() == '') {
             console.log('not saved yet')
             // create new
+            var ServiceId=_ServiceId;
+            var equipmentId = $("#Equipments" + EquId).val();
+            var elect = $('#Elect' + EquId).prop('checked');
+            var moving = $('#Moving' + EquId).prop('checked');
+            var bearings = $('#Bearings' + EquId).prop('checked');
+            var bells = $('#Bells' + EquId).prop('checked');
+            var motor = $('#Motor' + EquId).prop('checked');
+            var heater = $('#Heater' + EquId).prop('checked');
+            var Safety = $('#Safety' + EquId).prop('checked');
+            var controlBoard = $('#Control' + EquId).prop('checked');
+            var compressor = $('#Compressor' + EquId).prop('checked');
+            var tmpControl = $('#Tmp' + EquId).prop('checked');
+            var serialNo = $("#Serial" + EquId).val();
+ 
+            var senddata = '{"serviceDetailId":' + 0 + ',"ServiceId":' + ServiceId + ',"equipmentId":' + equipmentId + ',"elect":' + elect + ',"moving":' + moving + ',"bearings":' + bearings + ',"bells":' + bells + ',"motor":' + motor + ',"heater":' + heater + ',"Safety":' + Safety + ',"controlBoard":' + controlBoard + ',"compressor":' + compressor + ',"tmpControl":' + tmpControl + ',"serialNo":"' + serialNo + '"}'
+             $.ajax({
+                type: "POST",
+                url: url,
+                contentType: "application/json; charset=utf-8",
+                data: senddata,
+                async:false,
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+                success: function (data, status, xhr) {   // success callback function
+                    
+                    uploadImages(InputElmentid, validationElem, EquId, data.serviceDetailId)
+                },
+                error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                    alert('Error: something went wronge please try again later');
+                }
+
+            }).done(function () {
+
+                console.log('done')
+              
+            });
+
 
 
         } else {
@@ -250,14 +291,17 @@
         }
 
 
-        uploadImages(InputElmentid, validationElem, EquId)
+      
     }
 
 
-    function uploadImages(InputElmentid, validationElem, EquId) {
+    function uploadImages(InputElmentid, validationElem, EquId, ServiceDetailsId) {
 
-        console.log('equipment num:', EquId)
-      
+        console.log('servicedetails id:', ServiceDetailsId)
+        return;
+
+
+
         var files = document.getElementById(InputElmentid).files
 
         var formData = new FormData();

@@ -20,6 +20,7 @@ namespace Entity
         public bool Bells { get; set; }
         public bool Motor { get; set; }
         public bool Heater { get; set; }
+        public bool SafetySwitch { get; set; }
 		public bool ControlBoard { get; set; }
 		public bool Compressor { get; set; }
 		public bool TmpControl { get; set; }
