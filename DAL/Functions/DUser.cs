@@ -599,8 +599,26 @@ namespace DAL.Functions
 
             return eUser;
         }
-        
 
+
+
+        public string getUserEmail(string userId)
+        {
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            string result;
+            conn.Open();
+            using (var command = conn.CreateCommand())
+            {
+
+                StringBuilder sQuery = new StringBuilder();
+                sQuery.AppendFormat("select email from users where userid={0} ", userId);
+                command.CommandText = sQuery.ToString();
+                result = (string)command.ExecuteScalar();
+            }
+
+            return result;
+        }
 
         public DateTime getTokenDate(string token)
         {
@@ -619,6 +637,10 @@ namespace DAL.Functions
           
             return result;
         }
+
+
+
+
 
 
         // get token details for recover password

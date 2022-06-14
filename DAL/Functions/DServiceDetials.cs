@@ -177,5 +177,119 @@ namespace DAL.Functions
 
             return ServiceDetails;
         }
+
+
+        public  bool insertBuldRequiredMaterials(int ServiceDetailsId,int[] requiredmaterials)
+        {
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            bool result =false;
+            conn.Open();
+            using (var command = conn.CreateCommand())
+            {
+
+                StringBuilder sQuery = new StringBuilder();
+                sQuery.AppendFormat(" insert into RequiredMaterials values " );
+
+               
+                for (int i = 0; i < requiredmaterials.Length; i++)
+                {
+                    if(i== requiredmaterials.Length - 1)
+                    {
+                        sQuery.AppendFormat(" ({0},{1}) ", ServiceDetailsId, requiredmaterials[i]);
+
+                    }
+                    else
+                    {
+                        sQuery.AppendFormat(" ({0},{1}), ", ServiceDetailsId, requiredmaterials[i]);
+
+                    }
+                }
+                command.CommandText = sQuery.ToString();
+                // for select only to retrive value ExecuteScalar()
+                return (command.ExecuteNonQuery()> 0);
+                
+            }
+
+            return result;
+        }
+
+        public bool insertBulkMaterialUsed(int ServiceDetailsId, int[] materialUsed)
+        {
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            bool result = false;
+            conn.Open();
+            using (var command = conn.CreateCommand())
+            {
+
+                StringBuilder sQuery = new StringBuilder();
+                sQuery.AppendFormat(" insert into MaterUsed values ");
+
+
+                for (int i = 0; i < materialUsed.Length; i++)
+                {
+                    if (i == materialUsed.Length - 1)
+                    {
+                        sQuery.AppendFormat(" ({0},{1}) ", ServiceDetailsId, materialUsed[i]);
+
+                    }
+                    else
+                    {
+                        sQuery.AppendFormat(" ({0},{1}), ", ServiceDetailsId, materialUsed[i]);
+
+                    }
+                }
+                command.CommandText = sQuery.ToString();
+                // for select only to retrive value ExecuteScalar()
+                return (command.ExecuteNonQuery() > 0);
+
+            }
+
+            
+        }
+
+        public bool deletRequiredMaterials(int ServiceDetailsId)
+        {
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+
+            conn.Open();
+            using (var command = conn.CreateCommand())
+            {
+
+                StringBuilder sQuery = new StringBuilder();
+                sQuery.AppendFormat(" delete  RequiredMaterials where ServiceDetailId={0} ", ServiceDetailsId);
+               
+                command.CommandText = sQuery.ToString();
+                // for select only to retrive value ExecuteScalar()
+                return (command.ExecuteNonQuery() > 0);
+
+            }
+
+            
+        }
+        public bool deleteMaterialUsed(int ServiceDetailsId)
+        {
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+          
+            conn.Open();
+            using (var command = conn.CreateCommand())
+            {
+
+                StringBuilder sQuery = new StringBuilder();
+                sQuery.AppendFormat(" delete  MaterUsed where ServiceDetailId={0} ", ServiceDetailsId);
+
+
+                command.CommandText = sQuery.ToString();
+                // for select only to retrive value ExecuteScalar()
+                return (command.ExecuteNonQuery() > 0);
+
+            }
+
+
+        }
+
     }
 }

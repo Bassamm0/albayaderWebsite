@@ -98,6 +98,40 @@ namespace API.Controllers
             return result;
         }
 
+        [Route("addMaterial")]
+        [HttpPost]
+        public async Task<Boolean> addMaterials([FromBody] MaterialReqAndUse materialsUsed)
+        {
+           
+            bool result = false;
+            
+            try
+            {
+                result = await serviceDetailsLogic.insertBuldRequiredMaterials(materialsUsed.ServiceDetailsId, materialsUsed.requiredmaterials);
+                result = await serviceDetailsLogic.insertBulkMaterialUsed(materialsUsed.ServiceDetailsId, materialsUsed.materialUsed);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "The given key was not present in the dictionary.")
+                {
+                    throw new DomainValidationFundException("Validation : One or more paramter are missing in the request,Error could be becuase of case sensetive");
+                }
+                if (ex.InnerException.ToString().Contains("Cannot insert the value NULL into column"))
+                {
+                    throw new DomainValidationFundException("Validation : null value not allowed to one of the parameters");
+                }
+
+            }
+            return result;
+        }
+
+        public class MaterialReqAndUse
+        {
+            public int ServiceDetailsId { get; set; }
+
+            public int[] requiredmaterials { get; set; }
+            public int[] materialUsed { get; set; }
+        }
 
     }
 }

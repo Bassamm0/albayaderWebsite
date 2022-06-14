@@ -239,13 +239,24 @@
     function saveDetailsOnUpload(InputElmentid, validationElem, EquId, pictureType) {
 
        
-        var url = 'https://localhost:7174/api/servicedetails/add'
         var obj = $('body').find('#ServiceDetailsid' + EquId);
-       
+         var Operation=""
         if ($(obj).val() == '') {
-            console.log('not saved yet')
+            Operation = "add"
+            ServiceDetailsId = 0;
+
+        } else {
+            // update 
+            ServiceDetailsId = $(obj).val();
+            console.log('id', ServiceDetailsId)
+            Operation = "update"
+
+        }
+
+        var url = 'https://localhost:7174/api/servicedetails/'+Operation
+       
             // create new
-            var ServiceId=_ServiceId;
+            var ServiceId = _ServiceId;
             var equipmentId = $("#Equipments" + EquId).val();
             var elect = $('#Elect' + EquId).prop('checked');
             var moving = $('#Moving' + EquId).prop('checked');
@@ -258,22 +269,24 @@
             var compressor = $('#Compressor' + EquId).prop('checked');
             var tmpControl = $('#Tmp' + EquId).prop('checked');
             var serialNo = $("#Serial" + EquId).val();
- 
-            var senddata = '{"serviceDetailId":' + 0 + ',"ServiceId":' + ServiceId + ',"equipmentId":' + equipmentId + ',"elect":' + elect + ',"moving":' + moving + ',"bearings":' + bearings + ',"bells":' + bells + ',"motor":' + motor + ',"heater":' + heater + ',"Safety":' + Safety + ',"controlBoard":' + controlBoard + ',"compressor":' + compressor + ',"tmpControl":' + tmpControl + ',"serialNo":"' + serialNo + '"}'
-             $.ajax({
+
+        var senddata = '{"serviceDetailId":' + ServiceDetailsId + ',"ServiceId":' + ServiceId + ',"equipmentId":' + equipmentId + ',"elect":' + elect + ',"moving":' + moving + ',"bearings":' + bearings + ',"bells":' + bells + ',"motor":' + motor + ',"heater":' + heater + ',"safetySwitch":' + Safety + ',"controlBoard":' + controlBoard + ',"compressor":' + compressor + ',"tmpControl":' + tmpControl + ',"serialNo":"' + serialNo + '"}'
+            $.ajax({
                 type: "POST",
                 url: url,
                 contentType: "application/json; charset=utf-8",
                 data: senddata,
-                async:false,
+                async: false,
                 headers: {
                     RequestVerificationToken:
                         $('input:hidden[name="__RequestVerificationToken"]').val()
                 },
                 success: function (data, status, xhr) {   // success callback function
-
-                    $(obj).val(data.serviceDetailId);
-                    uploadImages(InputElmentid, validationElem, EquId, data.serviceDetailId, pictureType)
+                    if (Operation == "add") {
+                          $(obj).val(data.serviceDetailId);
+                    }
+                  
+                    uploadImages(InputElmentid, validationElem, EquId, ServiceDetailsId, pictureType)
                 },
                 error: function (jqXhr, textStatus, errorMessage) { // error callback 
                     alert('Error: something went wronge please try again later');
@@ -282,18 +295,8 @@
             }).done(function () {
 
                 console.log('done')
-              
+
             });
-
-
-
-        } else {
-            // update 
-            ServiceDetailsId = $(obj).val()
-
-        }
-
-
       
     }
 
@@ -326,8 +329,6 @@
                 var arrUpdates = (typeof data) == 'string' ? eval('(' + data + ')') : data;
                 if (arrUpdates.length > 0) {
 
-
-                    console.log(arrUpdates);
                     $(validationElem).children(".progress").hide();
                     $(validationElem).children(".lblMessage").html("<b>" + files.length + "</b>  files has been uploaded successfuly.");
                     $(validationElem).children(".uploadError").html('')
@@ -372,10 +373,90 @@
 
     }
 
+
+
+
+    function addMaterials(EquId, ServiceDetailsId) {
+
+        var url = APIURL + 'servicedetails/addMaterial';
+
+        var selectedRequiredmaterials = $('#Rquiredmaterials' + EquId).select2('data');
+        var Requiredmaterials = [];
+        if (selectedRequiredmaterials.length > 0) {
+            for (var i = 0; i < selectedRequiredmaterials.length; i++) {
+                Requiredmaterials[i] =parseInt(selectedRequiredmaterials[i].id);
+            }
+        }
+
+        var selectedMaterialUsed = $('#MaterialUsed' + EquId).select2('data')
+        var MaterialUsed = []
+        if (selectedMaterialUsed.length > 0) {
+            for (var i = 0; i < selectedMaterialUsed.length; i++) {
+                MaterialUsed[i] = parseInt(selectedMaterialUsed[i].id);
+            }
+        }
+
+        //var formData = new FormData();
+        //formData.append("serviceDetailsId", ServiceDetailsId);
+        //formData.append("requiredmaterials", JSON.stringify(Requiredmaterials));
+        //formData.append("materialUsed", JSON.stringify(MaterialUsed));
+        var MaterialReqAndUse={
+            serviceDetailId: JSON.stringify(ServiceDetailsId),
+            requiredmaterials: JSON.stringify(Requiredmaterials),
+            materialUsed: JSON.stringify(MaterialUsed)
+
+        }
+
+
+       // {"serviceDetailsId": 11,"requiredmaterials": [ ],"materialUsed": []}
+        var sendReqData = '{"serviceDetailsId":' + ServiceDetailsId + ',"requiredmaterials":' + JSON.stringify(Requiredmaterials) + ',"materialUsed":' + JSON.stringify(MaterialUsed) + '}'
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            data: sendReqData,
+            async: false,
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            success: function (data, status, xhr) {   // success callback function
+                if (Operation == "add") {
+                    $(obj).val(data.serviceDetailId);
+                }
+
+                uploadImages(InputElmentid, validationElem, EquId, ServiceDetailsId, pictureType)
+            },
+            error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                alert('Error: something went wronge please try again later');
+            }
+
+        }).done(function () {
+
+            console.log('done')
+
+        });
+
+    }
+
     
     // save draft
     $('#SaveDraft').click(function () {
-       
+        // test
+        addMaterials(1, 17)
+
+
+  //
+        var selectedRequiredmaterials = $('#Rquiredmaterials1').select2('data')
+        var Reqmaterial = []
+        if (selectedRequiredmaterials.length > 0) {
+            for (var i = 0; i < selectedRequiredmaterials.length; i++) {
+                Reqmaterial[i] = selectedRequiredmaterials[i].id;
+            }
+          
+        }
+ 
         for (i = 1; i <= cn; i++){
             var obj = $('body').find('#ServiceDetailsid' + i);
             if ($(obj).val() == '') {

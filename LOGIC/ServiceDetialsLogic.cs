@@ -51,6 +51,40 @@ namespace LOGIC
 
         }
 
+        public async Task<Boolean> insertBuldRequiredMaterials(int ServiceDetailsId, int[] requiredmaterials)
+        {
+
+            var resul = false;
+
+            // delete all
+            resul = dServiceDetails.deletRequiredMaterials(ServiceDetailsId);
+            if (requiredmaterials.Length > 0)
+            {
+                 resul = dServiceDetails.insertBuldRequiredMaterials(ServiceDetailsId, requiredmaterials);
+
+            }
+           
+
+            return resul;
+            
+
+        }
+        public async Task<Boolean> insertBulkMaterialUsed(int ServiceDetailsId, int[] materialUsed)
+        {
+
+            var resul = false;
+
+            // delete all 
+            resul = dServiceDetails.deleteMaterialUsed(ServiceDetailsId);
+            if (materialUsed.Length > 0)
+            {
+                resul = dServiceDetails.insertBulkMaterialUsed(ServiceDetailsId, materialUsed);
+            }
+
+            return resul;
+
+        }
+
 
     }
 }
