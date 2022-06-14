@@ -40,6 +40,7 @@ namespace DAL.DataContext
         public DbSet<EErrorLogin> ErrorLogin { get; set; }
         public DbSet<EServices> Services { get; set; }
         public DbSet<EServiceDetails> ServiceDetails { get; set; }
+        public DbSet<EServicePictures> ServicePictures{ get; set; }
 
 
     }

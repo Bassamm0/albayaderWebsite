@@ -11,10 +11,10 @@ namespace LOGIC
     public class UploadFileLogic
     {
         DUploadFile _dUploadFile = new DUploadFile();
-        public async Task<Boolean> UploadServiceImages(string file,int serviceid)
+        public async Task<Boolean> UploadServiceImages(string file,int serviceDetailsId, int pictureTypeId)
         {
-            int result =await _dUploadFile.UploadServiceImages(file, serviceid);
-            if ( result > 0)
+            var result =await _dUploadFile.UploadServiceImages(file, serviceDetailsId, pictureTypeId);
+            if ( result.PictureId > 0)
             {
                 return true;
             }

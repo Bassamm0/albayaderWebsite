@@ -46,7 +46,7 @@ namespace API.Controllers
 
         [Route("uploadserviceimages")]
         [HttpPost]
-        public async Task<List<string>> UploadServiceImages(List<IFormFile> files, [FromForm] int  serviceid)
+        public async Task<List<string>> UploadServiceImages(List<IFormFile> files, [FromForm] int serviceDetailsId, [FromForm]  int pictureTypeId)
         {
       
             List<string> lfileName=new List<string>();
@@ -70,7 +70,7 @@ namespace API.Controllers
                     {
                         file.CopyTo(stream);
                     }
-                    var result =await _uploadFileLogic.UploadServiceImages(fileName, serviceid);
+                    var result =await _uploadFileLogic.UploadServiceImages(fileName, serviceDetailsId, pictureTypeId);
                     if (result)
                     {
                         lfileName.Add(fileName);

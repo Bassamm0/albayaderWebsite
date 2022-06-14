@@ -218,7 +218,9 @@
         });
 
         var EquId = $(this).next('div').children('input').attr('EquId')
-        
+        var pictureType = $(this).next('div').children('input').attr('picturetype')
+       
+
         if ($('#Equipments' + EquId).val() == '') {
             alert('Please select Equipment before uploading any image')
             return;
@@ -229,14 +231,14 @@
 
         var validationElem = $(this).next('div').parent('span').parent('div').next('div');
         var InputElmentid = $(this).next('div').children('input').attr('id');
-        saveDetailsOnUpload(InputElmentid, validationElem, EquId)
+        saveDetailsOnUpload(InputElmentid, validationElem, EquId, pictureType)
 
        
     })
     
-    function saveDetailsOnUpload(InputElmentid, validationElem, EquId) {
+    function saveDetailsOnUpload(InputElmentid, validationElem, EquId, pictureType) {
 
-
+       
         var url = 'https://localhost:7174/api/servicedetails/add'
         var obj = $('body').find('#ServiceDetailsid' + EquId);
        
@@ -269,8 +271,9 @@
                         $('input:hidden[name="__RequestVerificationToken"]').val()
                 },
                 success: function (data, status, xhr) {   // success callback function
-                    
-                    uploadImages(InputElmentid, validationElem, EquId, data.serviceDetailId)
+
+                    $(obj).val(data.serviceDetailId);
+                    uploadImages(InputElmentid, validationElem, EquId, data.serviceDetailId, pictureType)
                 },
                 error: function (jqXhr, textStatus, errorMessage) { // error callback 
                     alert('Error: something went wronge please try again later');
@@ -295,12 +298,9 @@
     }
 
 
-    function uploadImages(InputElmentid, validationElem, EquId, ServiceDetailsId) {
-
-        console.log('servicedetails id:', ServiceDetailsId)
-        return;
-
-
+    function uploadImages(InputElmentid, validationElem, EquId, ServiceDetailsId, pictureTypeId) {
+     
+     
 
         var files = document.getElementById(InputElmentid).files
 
@@ -311,7 +311,10 @@
             formData.append("files", file);
 
         }
-        formData.append("serviceid", _ServiceId);
+        formData.append("serviceDetailsId", ServiceDetailsId);
+        formData.append("pictureTypeId", pictureTypeId);
+        console.log(formData)
+        console.log('type', pictureTypeId)
         $.ajax({
             url: APIURL + 'fileupload/UploadServiceImages',
             type: 'POST',
