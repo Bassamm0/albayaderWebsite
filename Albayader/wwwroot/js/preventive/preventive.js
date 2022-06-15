@@ -135,8 +135,8 @@
 
 
          // initailaize the uploader
-        initFileInput("PicturesBeforeFix" + cn);
-        initFileInput("PicturesAfterFix" + cn);
+        initFileInput("PicturesBeforeFix" + cn,1);
+        initFileInput("PicturesAfterFix" + cn,2);
    
 
         $("#Equipments1").select2();
@@ -187,7 +187,7 @@
         });
     
     
-    function initFileInput(element) {
+    function initFileInput(element,type) {
         
         $('#'+element).fileinput('refresh',
             {
@@ -203,6 +203,8 @@
 
             });
         $('#' + element).attr("EquId", cn)
+        $('#' + element).attr("pictureType", type)
+     
 
 
 
@@ -237,7 +239,6 @@
     })
     
     function saveDetailsOnUpload(InputElmentid, validationElem, EquId, pictureType) {
-
        
         var obj = $('body').find('#ServiceDetailsid' + EquId);
          var Operation=""
@@ -283,10 +284,15 @@
                 },
                 success: function (data, status, xhr) {   // success callback function
                     if (Operation == "add") {
-                          $(obj).val(data.serviceDetailId);
+                        $(obj).val(data.serviceDetailId);
+                        addMaterials(EquId, data.serviceDetailId);
+                        uploadImages(InputElmentid, validationElem, EquId, data.serviceDetailId, pictureType);
+                    } else {
+                        serviceDetailId= $(obj).val()
+                        addMaterials(EquId, serviceDetailId);
+                        uploadImages(InputElmentid, validationElem, EquId, serviceDetailId, pictureType);
                     }
-                  
-                    uploadImages(InputElmentid, validationElem, EquId, ServiceDetailsId, pictureType)
+                   
                 },
                 error: function (jqXhr, textStatus, errorMessage) { // error callback 
                     alert('Error: something went wronge please try again later');
@@ -396,19 +402,12 @@
             }
         }
 
-        //var formData = new FormData();
-        //formData.append("serviceDetailsId", ServiceDetailsId);
-        //formData.append("requiredmaterials", JSON.stringify(Requiredmaterials));
-        //formData.append("materialUsed", JSON.stringify(MaterialUsed));
-        var MaterialReqAndUse={
-            serviceDetailId: JSON.stringify(ServiceDetailsId),
-            requiredmaterials: JSON.stringify(Requiredmaterials),
-            materialUsed: JSON.stringify(MaterialUsed)
-
+        if (Requiredmaterials.length == 0 && MaterialUsed.length == 0) {
+          
+            return
         }
-
-
-       // {"serviceDetailsId": 11,"requiredmaterials": [ ],"materialUsed": []}
+           
+       
         var sendReqData = '{"serviceDetailsId":' + ServiceDetailsId + ',"requiredmaterials":' + JSON.stringify(Requiredmaterials) + ',"materialUsed":' + JSON.stringify(MaterialUsed) + '}'
 
         $.ajax({
@@ -422,11 +421,7 @@
                     $('input:hidden[name="__RequestVerificationToken"]').val()
             },
             success: function (data, status, xhr) {   // success callback function
-                if (Operation == "add") {
-                    $(obj).val(data.serviceDetailId);
-                }
-
-                uploadImages(InputElmentid, validationElem, EquId, ServiceDetailsId, pictureType)
+                             
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
                 alert('Error: something went wronge please try again later');
@@ -518,5 +513,21 @@
         required: true,
     });
 
+
+
+
+    // delete 
+    $('body').on('click', '. deletImage', function () {
+        var image = $(this).attr('filename')
+        console.log(image)
+
+
+    })
+
+    function deleteImage(image) {
+
+
+
+    }
 
 });
