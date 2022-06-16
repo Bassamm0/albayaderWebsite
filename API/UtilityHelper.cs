@@ -20,10 +20,13 @@ using System.Net;
 using System.Collections;
 using Microsoft.Web.Helpers;
 
+
+
 namespace API
 {
     public static class UtilityHelper
     {
+
 
         public static string ChangeURL(string sUrl)
         {
@@ -208,7 +211,33 @@ namespace API
             foreach (System.IO.FileInfo file in directory.GetFiles()) file.Delete();
             foreach (System.IO.DirectoryInfo subDirectory in directory.GetDirectories()) subDirectory.Delete(true);
         }
+     
 
+        public static bool deleteFile(string physicalWebRootPath, string fileName)
+        {
+           
+            string rootFolder = Path.Combine(physicalWebRootPath, "Uploads");
+            try
+            {
+                // Check if file exists with its full path    
+                if (File.Exists(Path.Combine(rootFolder, fileName)))
+                {
+                    // If file found, delete it    
+                    File.Delete(Path.Combine(rootFolder, fileName));
+                    return true;
+                    Console.WriteLine("File deleted.");
+                }
+                else {
+                    return true;
+                }
+            }
+            catch (IOException ioExp)
+            {
+                Console.WriteLine(ioExp.Message);
+                return false;
+            }
+
+        }
 
 
         //public static void openLogTextFile(string message)

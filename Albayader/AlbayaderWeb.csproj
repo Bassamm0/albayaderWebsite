@@ -26,4 +26,8 @@
     <ProjectReference Include="..\LOGIC\LOGIC.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\plugins\lightBox\" />
+  </ItemGroup>
+
 </Project>

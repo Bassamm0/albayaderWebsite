@@ -11,6 +11,7 @@ using System.Data.Common;
 using static DAL.DALException;
 
 
+
 namespace DAL.Functions
 {
     public class DServiceDetials
@@ -29,14 +30,9 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append("select CONCAT_WS(' ',U.FirstName,U.Lastname) as CreaterName ,CONCAT_WS(' ',UT.FirstName,UT.Lastname) as TechnicianName, ");
-                    sQuery.Append(" BR.BranchName,CO.Name CompanyName,ST.ServiceTypeName ,SR.* from services SR ");
-                    sQuery.Append(" inner join  Branchs BR on BR.branchId=SR.BranchId ");
-                    sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
-                    sQuery.Append(" inner join Users U on U.UserId=SR.CreatedBy ");
-                    sQuery.Append(" inner join Users UT on UT.UserId=SR.TechnicianId ");
-                    sQuery.Append(" inner join ServiceType ST on ST.ServiceTypeId=SR.ServiceTypeId ");
-                    sQuery.Append(" order by SR.CreatedDate desc ");
+                    sQuery.AppendFormat(" select * from ServiceDetails where EndDate is null and ServiceId={0} ", ServiceId);
+     
+                    sQuery.Append(" order by ServiceDetailId desc ");
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -291,5 +287,44 @@ namespace DAL.Functions
 
         }
 
+        public bool  deleteImage(string fileName)
+        {
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+
+            conn.Open();
+            using (var command = conn.CreateCommand())
+            {
+
+                StringBuilder sQuery = new StringBuilder();
+                sQuery.AppendFormat(" delete  ServicePictures where fileName='{0}' ", fileName);
+
+
+                command.CommandText = sQuery.ToString();
+     
+                return (command.ExecuteNonQuery() > 0);
+
+            }
+
+        }
+
+        public bool removeServiceDetails(int serviceDetailsId)
+        {
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+
+            conn.Open();
+            using (var command = conn.CreateCommand())
+            {
+                StringBuilder sQuery = new StringBuilder();
+                sQuery.AppendFormat(" update ServiceDetails set  EndDate='{0}' where ServiceDetailId={1} ", DateTime.Now, serviceDetailsId);
+
+                command.CommandText = sQuery.ToString();
+
+                return (command.ExecuteNonQuery() > 0);
+
+            }
+
+        }
     }
 }

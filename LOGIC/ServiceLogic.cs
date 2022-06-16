@@ -21,6 +21,14 @@ namespace LOGIC
 
             return services;
         }
+
+        public async Task<List<EServiceModel>> getAllServiceByStatus(int StatusId)
+        {
+
+            List<EServiceModel> services = dservice.getAllServiceByStatus(StatusId);
+
+            return services;
+        }
         public async Task<EServiceModel> getSingleService(int ServiceId)
         {
 
@@ -55,6 +63,34 @@ namespace LOGIC
         {
 
             var resul = await dservice.removeService(id);
+            if (resul != null && resul.ServiceId > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        public async Task<Boolean> updateStatus(int serviceId,int statusId, string remark)
+        {
+
+            var resul = await dservice.updateStatus(serviceId, statusId,remark);
+            if (resul != null && resul.ServiceId > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        public async Task<Boolean> clientSignature(int serviceId,string SupervisourSignature,string SupervisourName,string SupervisourFeedback)
+        {
+
+            var resul = await dservice.clientSignature(serviceId, SupervisourSignature, SupervisourName, SupervisourFeedback);
             if (resul != null && resul.ServiceId > 0)
             {
                 return true;

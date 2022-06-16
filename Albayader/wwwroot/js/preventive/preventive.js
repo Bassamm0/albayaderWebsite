@@ -5,6 +5,23 @@
     const UploadUrl = $('#Uploadlocation').val();
     const _ServiceId = $('#serviceid').val()
 
+
+
+
+    $(".fileImage").fileinput({
+        initialPreviewAsData: true,
+        allowedFileExtensions: ['jpg', 'png', 'gif', 'pmb', 'esp', 'tif'],
+        showUpload: true,
+        showCaption: false,
+        maxFileSize: 4000,
+        browseClass: "btn btn-primary btn-lg",
+        previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+        showUploadedThumbs: false,
+        showRemove: true,
+
+    });
+
+
     $('#Equipments1').select2();
     $('#MaterialUsed1').select2({
         placeholder: 'Select  Materials Used  ...'
@@ -13,19 +30,10 @@
         placeholder: 'Select  Materials Required  ...'
     });
 
-
-
-    
     let cn = 1;
     $('body').on('click', '#AddAnotherForm', function () {
 
-
-
-
         validator.resetForm();
-
-
-
 
         var fielUploadValidationHolder ='<div class="fielUploadValidationHolder">'
             +' <span id="uploadError" class="errorMessage uploadError"></span>'
@@ -159,33 +167,6 @@
         $('#Rquiredmaterials' + cn).val(null).trigger('change');
     })
 
-    $('body').on('click', '.removeForm', function () {
-
-        var eqNum = $(this).attr('EquId')
-        if (eqNum == "1") {
-            return;
-        }
-        // remove all form
-        $(this).parent('div').parent('div').parent('div').remove()
-     
-        cn--;
-        console.log('remove',cn)
-    });
-
-
-        $(".fileImage").fileinput({
-            initialPreviewAsData: true,
-            allowedFileExtensions: ['jpg', 'png', 'gif', 'pmb', 'esp', 'tif'],
-            showUpload: true,
-            showCaption: false,
-            maxFileSize: 4000,
-            browseClass: "btn btn-primary btn-lg",
-            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-            showUploadedThumbs: false,
-            showRemove: true,
-     
-        });
-    
     
     function initFileInput(element,type) {
         
@@ -211,6 +192,7 @@
       
     }
    
+
 
 
     $('body').on('click', '.fileinput-upload-button', function () {
@@ -254,7 +236,7 @@
 
         }
 
-        var url = 'https://localhost:7174/api/servicedetails/'+Operation
+        var url = APIURL + 'servicedetails/'+Operation
        
             // create new
             var ServiceId = _ServiceId;
@@ -345,7 +327,7 @@
                         uploadedFiles += "<div>"
                         uploadedFiles += "<div class='file-preview-frame krajee-default  kv-preview-thumb'>"
                         uploadedFiles += "<div><a href='" + UploadUrl + arrUpdates[i] + "' target='_blank'><image src='" + UploadUrl + arrUpdates[i] + "' style='width:100px;height:100px' /></a></div>"
-                        uploadedFiles += "<div><button type='button' class='btn btn-block btn-info deletImage' filename='" + arrUpdates[i] + "'>Delete</button></div>"
+                        uploadedFiles += "<div><button type='button' class='btn btn-block btn-info deletImage' filename='" + arrUpdates[i] + "'  data-toggle='modal' data-target='#modal-delete'>Delete</button></div>"
                         uploadedFiles += "</div>"
                         uploadedFiles += "</div>"
 
@@ -436,40 +418,7 @@
     }
 
     
-    // save draft
-    $('#SaveDraft').click(function () {
-        // test
-        addMaterials(1, 17)
-
-
-  //
-        var selectedRequiredmaterials = $('#Rquiredmaterials1').select2('data')
-        var Reqmaterial = []
-        if (selectedRequiredmaterials.length > 0) {
-            for (var i = 0; i < selectedRequiredmaterials.length; i++) {
-                Reqmaterial[i] = selectedRequiredmaterials[i].id;
-            }
-          
-        }
- 
-        for (i = 1; i <= cn; i++){
-            var obj = $('body').find('#ServiceDetailsid' + i);
-            if ($(obj).val() == '') {
-                console.log('not saved')
-            } else {
-                console.log($(obj).val())
-            }
-            console.log(i);
-        
-            console.log('is Elect checked'+i,$('#Elect' + i).prop('checked'))
-    }
-        
-        if ($("#ServiceForm").valid()) {
-
-
-        }
-       
-    })
+    
 
 
 
@@ -517,17 +466,273 @@
 
 
     // delete 
-    $('body').on('click', '. deletImage', function () {
+    $('body').on('click', '.deletImage', function () {
         var image = $(this).attr('filename')
-        console.log(image)
-
-
+        $('#DeleteImageBtn').attr('fileName',image)
+        $('#deletedItemName').html('')
     })
 
+    $('body').on('click', '#DeleteImageBtn', function () {
+        var image = $(this).attr('filename');
+        deleteImage(image);
+    })
     function deleteImage(image) {
 
+        var url = APIURL + 'servicedetails/deleteimage';
+        var data = '{"image":"' + image + '"}'
+  
+     
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            data: data,
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            success: function (data, status, xhr) {   // success callback function
+                console.log('deleted')
+              
+              
+            },
+            error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                alert('Error: something went wronge please try again later');
+            }
+
+        }).done(function () {
+            $('#modal-delete').modal('hide');
+            $(".deletImage[filename='" + image + "']").parent('div').parent('div').remove();
+         
+
+        });
+    }
+    var deletedform;
+
+    $('body').on('click', '.removeForm', function () {
+        deletedform = $(this);
+        var EquId = $(this).attr('EquId')
+        if (EquId == "1") {
+            return;
+        }
+        // remove all form
+        $('#deletedItemName').html('full form details')
+
+        var ServiceDetailsId = $('body').find('#ServiceDetailsid' + EquId).val();
+        $('#deletedServiceDetailsId').val(ServiceDetailsId)
+        $('#modal-details').modal('show')
+        //deleteServiceDetails($(this),ServiceDetailsId)
+        cn--;
+        console.log('remove', cn)
+    });
+
+    $('body').on('click', '#deleteServiceDetailsbtn', function () {
+
+        deleteServiceDetails();
+
+    })
+    
+    function deleteServiceDetails() {
+
+
+        ServiceDetailsId = $('#deletedServiceDetailsId').val()
+
+        var url = APIURL + 'servicedetails/deleteservicedetails';
+        var data = '{"serviceDetailsId":' + ServiceDetailsId + '}'
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            data: data,
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            success: function (data, status, xhr) {   // success callback function
+                console.log('deleted')
+
+
+            },
+            error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                alert('Error: something went wronge please try again later');
+            }
+
+        }).done(function () {
+            $('#modal-details').modal('hide');
+            deletedform.parent('div').parent('div').parent('div').remove()
+
+
+        });
 
 
     }
 
+
+
+    // save draft
+    $('#SaveDraft').click(function () {
+
+        var validation = true;
+        if ($("#ServiceForm").valid()) {
+
+            for (i = 1; i <= cn; i++) {
+                if ($("#PicturesAfterFix" + i)[0].files[0] != null || $("#PicturesBeforeFix" + i)[0].files[0] != null) {
+
+                    alert('Please upload or remove the selected picture before save')
+                    validation = false;
+                    e.preventDefault();
+                    return;
+                } 
+            }
+
+            if (validation) {
+                for (i = 1; i <= cn; i++) {
+                    SaveService(i)
+                }
+                updateStatus(3)
+            }
+
+        }
+
+    })
+
+
+
+    function SaveService( EquId) {
+
+        var obj = $('body').find('#ServiceDetailsid' + EquId);
+        var Operation = ""
+        if ($(obj).val() == '') {
+            Operation = "add"
+            ServiceDetailsId = 0;
+
+        } else {
+            // update 
+            ServiceDetailsId = $(obj).val();
+            console.log('id', ServiceDetailsId)
+            Operation = "update"
+
+        }
+
+        var url = APIURL + 'servicedetails/' + Operation
+    
+        // create new
+        var ServiceId = _ServiceId;
+        var equipmentId = $("#Equipments" + EquId).val();
+        var elect = $('#Elect' + EquId).prop('checked');
+        var moving = $('#Moving' + EquId).prop('checked');
+        var bearings = $('#Bearings' + EquId).prop('checked');
+        var bells = $('#Bells' + EquId).prop('checked');
+        var motor = $('#Motor' + EquId).prop('checked');
+        var heater = $('#Heater' + EquId).prop('checked');
+        var Safety = $('#Safety' + EquId).prop('checked');
+        var controlBoard = $('#Control' + EquId).prop('checked');
+        var compressor = $('#Compressor' + EquId).prop('checked');
+        var tmpControl = $('#Tmp' + EquId).prop('checked');
+        var serialNo = $("#Serial" + EquId).val();
+
+        var senddata = '{"serviceDetailId":' + ServiceDetailsId + ',"ServiceId":' + ServiceId + ',"equipmentId":' + equipmentId + ',"elect":' + elect + ',"moving":' + moving + ',"bearings":' + bearings + ',"bells":' + bells + ',"motor":' + motor + ',"heater":' + heater + ',"safetySwitch":' + Safety + ',"controlBoard":' + controlBoard + ',"compressor":' + compressor + ',"tmpControl":' + tmpControl + ',"serialNo":"' + serialNo + '"}'
+        $.ajax({
+            type: "POST",
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            data: senddata,
+            async: false,
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            success: function (data, status, xhr) {   // success callback function
+                if (Operation == "add") {
+                    $(obj).val(data.serviceDetailId);
+                    addMaterials(EquId, data.serviceDetailId);
+                   
+                } else {
+                    serviceDetailId = $(obj).val()
+                    addMaterials(EquId, serviceDetailId);
+                  
+                }
+
+            },
+            error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                alert('Error: something went wronge please try again later');
+            }
+
+        }).done(function () {
+
+            console.log('done')
+
+        });
+
+    }
+
+
+
+
+    function updateStatus(statusId) {
+
+        console.log(_ServiceId)
+        var remark = $('#serviceRemark').val()
+        var url = APIURL + 'service/updatestatus'
+
+
+        var senddata = '{"serviceId":' + _ServiceId + ',"statusId":' + statusId + ',"remark":"' + remark + '"}'
+        $.ajax({
+            type: "POST",
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            data: senddata,
+            async: false,
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            success: function (data, status, xhr) {   // success callback function
+               
+                if (statusId == 4) {
+                   
+                    window.location.href = "PreventiveSignature?ServiceId=" + _ServiceId;
+                }
+            },
+            error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                alert('Error: something went wronge please try again later');
+            }
+
+        }).done(function () {
+
+            console.log('done')
+
+        });
+    }
+
+
+
+
+    $('#SaveAndContinue').click(function () {
+
+        var validation = true;
+        if ($("#ServiceForm").valid()) {
+
+            for (i = 1; i <= cn; i++) {
+                if ($("#PicturesAfterFix" + i)[0].files[0] != null || $("#PicturesBeforeFix" + i)[0].files[0] != null) {
+
+                    alert('Please upload or remove the selected picture before save')
+                    validation = false;
+                    e.preventDefault();
+                    return;
+                }
+            }
+
+            if (validation) {
+                for (i = 1; i <= cn; i++) {
+                    SaveService(i)
+                }
+                updateStatus(4)
+            }
+
+        }
+
+    })
 });

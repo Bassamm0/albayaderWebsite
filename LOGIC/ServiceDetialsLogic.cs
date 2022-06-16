@@ -84,7 +84,42 @@ namespace LOGIC
             return resul;
 
         }
+        public async Task<Boolean> deleteImage(string deleteImage)
+        {
+         
+            var resul =  dServiceDetails.deleteImage(deleteImage);
+            if (resul)
+            {
+                //delete phiscal
+                
 
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        public async Task<List<EServicePictures>> removeServiceDetails(int serviceDetailsId)
+        {
+
+            var resul =  dServiceDetails.removeServiceDetails(serviceDetailsId);
+            resul = dServiceDetails.deleteMaterialUsed(serviceDetailsId);
+            resul = dServiceDetails.deletRequiredMaterials(serviceDetailsId);
+
+            DService dSer = new DService();
+            List<EServicePictures> epicture = new List<EServicePictures>();
+           return epicture= dSer.getServicePictures(serviceDetailsId);
+
+            //foreach (EServicePictures pictures in epicture)
+            //{
+
+            //}
+
+          
+        }
 
     }
 }

@@ -124,6 +124,85 @@ namespace API.Controllers
             }
             return result;
         }
+        private readonly IWebHostEnvironment env;
+        public APIServiceDetials(IWebHostEnvironment webHostEnvironment)
+        {
+            env = webHostEnvironment;
+        }
+
+        [Route("deleteimage")]
+        [HttpPost]
+        public async Task<Boolean> deleteImage([FromBody] JsonElement objData)
+
+        {
+            var fileName = objData.GetProperty("image").GetString();
+
+            bool result = false;
+            if (string.IsNullOrEmpty(fileName))
+            {
+                return result;
+            }
+            result = await serviceDetailsLogic.deleteImage(fileName);
+            try
+            {
+                UtilityHelper.deleteFile(env.ContentRootPath, fileName);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "The given key was not present in the dictionary.")
+                {
+                    throw new DomainValidationFundException("Validation : One or more paramter are missing in the request,Error could be becuase of case sensetive");
+                }
+                if (ex.InnerException.ToString().Contains("Cannot insert the value NULL into column"))
+                {
+                    throw new DomainValidationFundException("Validation : null value not allowed to one of the parameters");
+                }
+
+            }
+
+
+            return result;
+        }
+        [Route("deleteservicedetails")]
+        [HttpPost]
+        public async Task<Boolean> deleteServiceDetails([FromBody] JsonElement objData)
+
+        {
+            var serviceDetailsid = objData.GetProperty("serviceDetailsId").GetInt16();
+
+            bool result = false;
+            try
+            {
+
+
+             List<EServicePictures> epicture = new List<EServicePictures>();
+            epicture = await serviceDetailsLogic.removeServiceDetails(serviceDetailsid);
+            foreach (EServicePictures eServicePictures in epicture)
+            {
+
+                result = await serviceDetailsLogic.deleteImage(eServicePictures.FileName);
+                UtilityHelper.deleteFile(env.ContentRootPath, eServicePictures.FileName);
+            }
+         
+           
+               
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "The given key was not present in the dictionary.")
+                {
+                    throw new DomainValidationFundException("Validation : One or more paramter are missing in the request,Error could be becuase of case sensetive");
+                }
+                if (ex.InnerException.ToString().Contains("Cannot insert the value NULL into column"))
+                {
+                    throw new DomainValidationFundException("Validation : null value not allowed to one of the parameters");
+                }
+
+            }
+
+
+            return result;
+        }
 
         public class MaterialReqAndUse
         {

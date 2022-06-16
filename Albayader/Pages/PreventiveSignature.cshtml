@@ -1,0 +1,201 @@
+﻿@page
+@model AlbayaderWeb.Pages.PreventiveSignatureModel
+@{
+}
+<div class="content-wrapper">
+
+<section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-left">
+                                <li class="breadcrumb-item"><a href="Dashboard">Dashboard</a></li>
+                                <li class="breadcrumb-item active">Peventive Service Supervisor Review</li>
+                            </ol>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+                <!-- /.container-fluid -->
+            </section>
+            <div class="container-fluid">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+
+                       <div class="col-sm">
+
+                          <div class="info-box-content">
+                            <div class="user-block">
+                              <img class="img-circle img-bordered-sm" src="@Model.uploadurl@Model._service.PictureFileName" alt="user image">
+                              <span class="username">
+                                <a href="#">@Model._service.TechnicianName</a>
+                              </span>
+                              <span class="description">Technician</span>
+                            </div>
+
+                          </div>
+                        </div>
+                        <div class="col-sm">
+
+                          <div class="info-box-content">
+                            <div class="info-box-text text-center text-muted"><b>@Model._service.CompanyName - @Model._service.BranchName</b></div>
+                            <div class="info-box-number text-center text-muted mb-0"> <span class="RefNum"> Ref:#@Model._service.ServiceId</span></div>
+                          </div>
+
+                        </div>
+                        <div class="col-sm">
+
+                          <div class="info-box-content" style="float: right;text-align: left;">
+                            <div class="info-box-text text-center text-muted"><i class="fa-solid fa-calendar-days"></i>
+                             @Model._service.CreatedDate.ToShortDateString()
+                               </div>
+                            <div class="info-box-number text-muted mb-0"><i class="fa-solid fa-clock"></i> @Model._service.CreatedDate.ToString("HH:mm")</div>
+                          </div>
+
+                             </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <!--body content-->
+  <section class="content">             
+         <form method="post" id="ClientSignatureForm" name="ClientSignatureForm">
+
+            <!--view data-->
+
+
+                   <div class="card card-default" >
+                            <div class="card-header">
+                                <h3 class="card-title">Client Review </h3>
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                
+                                </div>
+                            </div>
+
+
+                            </div>
+
+            <!-- end view data-->
+
+
+             <div id="SignatureMainHodler">
+                         <div class="card card-default" >
+                            <div class="card-header">
+                                <h3 class="card-title">Client Review </h3>
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                
+                                </div>
+
+
+                                 <div class="card-body">
+                                <div class="row" >
+                                    <div class="col-md-12">
+
+                                        @foreach (var item in Model._service.ServiceDetails)
+                                        {
+                                          <div>
+
+                                              @Html.DisplayFor(modelItem => item.EquipmentId)
+
+                                          </div>
+
+                                        
+                                        }
+
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="row" >
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail">Client Name</label>
+                                            <input type="text" class="form-control " id="ClientName" name="ClientName" maxlength="50"
+                                                placeholder="Enter your name.">
+                                        </div>
+
+                                    </div>
+
+                                     <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail">Client Feedback.</label>
+                                            <textarea class="form-control" id="clientFeedback" name="clientFeedback" rows="3"></textarea>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail">Signature </label>
+
+                                           <div style="width:80%" class='js-signature'></div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <button style="width:250px;" type="button" class="btn btn-block btn-default btn-lg" id="CleanSignature" name="CleanSignature" maxlength="250" >
+                        
+                                      Clear </button>
+                                        </div>
+
+                                    </div>
+
+                                     <div class="col-md-12">
+                                          <div class="form-group">
+                                    <button type="button" class="btn btn-block btn-info btn-lg" id="SaveAndComplete" name="SaveAndComplete" >
+                                      <i class="fa-solid fa-arrow-right"></i>
+                                      Submit </button>
+                                      </div>
+                                    </div>
+                                    
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+
+              <input type="hidden" id="APIURI" name="APIURI" value="@Model.apiurl"/>
+              <input type="hidden" id="Uploadlocation" name="Uploadlocation" value="@Model.uploadurl"/>
+        <input type="hidden" id="serviceid" name="serviceid" value="@Model._service.ServiceId"/>
+
+
+        </form>
+
+          <!-- /.container-fluid -->
+        </section>
+
+
+            </div>
+  
+        <!-- /.content -->
+
+    </div>
+
+  
+    <!-- jQuery -->
+    <script src="plugins/jquery/jquery.min.js"></script>
+       <!-- Bootstrap 4 -->
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/preventive/preventiveSignature.js"></script>
+    <script src="plugins/Signature/jq-signature.min.js"></script>
+
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/tus-js-client@latest/dist/tus.min.js"></script>
+         <script src="plugins/jquery-validation/jquery.validate.min.js"></script>
+            <script src="plugins/jquery-validation/additional-methods.min.js"></script>

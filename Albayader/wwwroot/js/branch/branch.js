@@ -17,14 +17,10 @@
         var branchid = $("#deletedbranchId").val()
         var url = 'branchs?handler=Deletebranch&id=' + $("#deletedbranchId").val();
 
-        //var formData = new FormData();
-        //formData.append("branchId", $("#deletedbranchId").val());
-
         $.ajax({
             type: "POST",
             url: url,
             contentType: "application/json; charset=utf-8", 
-            // dataType: "json",
             data: {},
             headers: {
                 RequestVerificationToken:

@@ -30,7 +30,11 @@ namespace AlbayaderWeb.Pages
            int _ServiceId = ServiceId;
 
             _service = await getService(ServiceId);
-            // get service details by id
+            int statusId = _service.StatusId;
+            if (statusId != 1 && statusId != 3)
+            {
+                return Redirect("Dashboard");
+            }
             return null;
         }
         public async Task<EServiceModel> getService(int id)

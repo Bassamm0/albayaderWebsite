@@ -25,6 +25,7 @@ namespace Entity
 		public bool Compressor { get; set; }
 		public bool TmpControl { get; set; }
         public string ?SerialNo { get; set; }
+     
 
 
 

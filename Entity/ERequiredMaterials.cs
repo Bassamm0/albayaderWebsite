@@ -14,6 +14,6 @@ namespace Entity
         public int MaterialId { get; set; }
 
         [NotMapped]
-        public string MaterialName { get; set; }
+        public string RequireMaterialName { get; set; }
     }
 }
