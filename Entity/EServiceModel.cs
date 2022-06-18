@@ -30,6 +30,8 @@ namespace Entity
         [NotMapped]
         public string CreaterName { get; set; }
         [NotMapped]
+        public string StatusAfterName { get; set; }
+        [NotMapped]
         public string TechnicianName { get; set; }
         [NotMapped]
         public string PictureFileName { get; set; }

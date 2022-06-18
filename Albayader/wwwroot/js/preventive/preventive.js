@@ -21,7 +21,7 @@
 
     });
 
-
+    $('#ddStatusAfter').select2();
     $('#Equipments1').select2();
     $('#MaterialUsed1').select2({
         placeholder: 'Select  Materials Used  ...'
@@ -438,8 +438,17 @@
     
 
     $('#ServiceForm').validate({
-   
-        
+        rules: {
+            ddStatusAfter: {
+                required: true,
+
+            },
+            serviceRemark: {
+
+                maxlength: 250,
+
+            },
+        },
         errorElement: 'span',
         errorPlacement: function (error, element) {
             error.addClass('invalid-feedback');
@@ -676,9 +685,9 @@
         console.log(_ServiceId)
         var remark = $('#serviceRemark').val()
         var url = APIURL + 'service/updatestatus'
+        var statusAfterId = $('#ddStatusAfter').val()
 
-
-        var senddata = '{"serviceId":' + _ServiceId + ',"statusId":' + statusId + ',"remark":"' + remark + '"}'
+        var senddata = '{"serviceId":' + _ServiceId + ',"statusId":' + statusId + ',"remark":"' + remark + '","statusAfterId":' + statusAfterId + '}'
         $.ajax({
             type: "POST",
             url: url,

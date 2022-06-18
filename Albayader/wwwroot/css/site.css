@@ -139,3 +139,28 @@
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
 }
+
+.ServiceSerialViewHeaders {
+    font-size: 22px;
+    padding-left: 10px;
+}
+.ServiceViewHeaders {
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.images-wrapper {
+    width: 100%;
+    display: flex;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+.img-item {
+    height: 130px;
+}
+
+.images-wrapper::-webkit-scrollbar {
+    display: none;
+}

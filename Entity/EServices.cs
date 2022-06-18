@@ -21,8 +21,8 @@ namespace Entity
         public DateTime ?CompletionDate { get; set; }
         public DateTime ?EndDate { get; set; }
 
-        [NotMapped]
-        public int StatusAfterId { get; set; }
+    
+        public int ?StatusAfterId { get; set; }
 
         public string ?Remark { get; set; }
    

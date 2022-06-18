@@ -34,6 +34,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join Users U on U.UserId=SR.CreatedBy ");
                     sQuery.Append(" inner join Users UT on UT.UserId=SR.TechnicianId ");
                     sQuery.Append(" inner join ServiceType ST on ST.ServiceTypeId=SR.ServiceTypeId ");
+                    sQuery.Append(" inner join StatusAfter STF on STF.StatusAfterId=SR.StatusAfterId ");
                     sQuery.Append(" order by SR.CreatedDate desc ");
 
                     command.CommandText = sQuery.ToString();
@@ -57,6 +58,8 @@ namespace DAL.Functions
                             if (dataReader["BranchName"] != DBNull.Value) { oEServiceModel.BranchName = (string)dataReader["BranchName"]; }
                             if (dataReader["CompanyName"] != DBNull.Value) { oEServiceModel.CompanyName = (string)dataReader["CompanyName"]; }
                             if (dataReader["Remark"] != DBNull.Value) { oEServiceModel.Remark = (string)dataReader["Remark"]; }
+                            if (dataReader["StatusAfterId"] != DBNull.Value) { oEServiceModel.StatusAfterId = (int)dataReader["StatusAfterId"]; }
+                            if (dataReader["StatusAfterName"] != DBNull.Value) { oEServiceModel.StatusAfterName = (string)dataReader["StatusAfterName"]; }
                             oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);
 
 
@@ -96,6 +99,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join Users U on U.UserId=SR.CreatedBy ");
                     sQuery.Append(" inner join Users UT on UT.UserId=SR.TechnicianId ");
                     sQuery.Append(" inner join ServiceType ST on ST.ServiceTypeId=SR.ServiceTypeId ");
+                    sQuery.Append(" inner join StatusAfter STF on STF.StatusAfterId=SR.StatusAfterId ");
                     sQuery.AppendFormat(" where SR.StatusId={0} ",StatusId);
                     sQuery.Append(" order by SR.CreatedDate desc ");
 
@@ -119,7 +123,8 @@ namespace DAL.Functions
                             if (dataReader["ServiceTypeName"] != DBNull.Value) { oEServiceModel.ServiceTypeName = (string)dataReader["ServiceTypeName"]; }
                             if (dataReader["BranchName"] != DBNull.Value) { oEServiceModel.BranchName = (string)dataReader["BranchName"]; }
                             if (dataReader["CompanyName"] != DBNull.Value) { oEServiceModel.CompanyName = (string)dataReader["CompanyName"]; }
-                            if (dataReader["Remark"] != DBNull.Value) { oEServiceModel.Remark = (string)dataReader["Remark"]; }
+                            if (dataReader["StatusAfterId"] != DBNull.Value) { oEServiceModel.StatusAfterId = (int)dataReader["StatusAfterId"]; }
+                            if (dataReader["StatusAfterName"] != DBNull.Value) { oEServiceModel.StatusAfterName = (string)dataReader["StatusAfterName"]; }
                             oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);
 
                             services.Add(oEServiceModel);
@@ -135,9 +140,7 @@ namespace DAL.Functions
 
             return services;
         }
-      
-
-      
+            
 
         public EServiceModel getSingleService(int ServiceId)
         {
@@ -154,12 +157,13 @@ namespace DAL.Functions
 
                     StringBuilder sQuery = new StringBuilder();
                     sQuery.Append("select CONCAT_WS(' ',U.FirstName,U.Lastname) as CreaterName ,CONCAT_WS(' ',UT.FirstName,UT.Lastname) as TechnicianName,UT.PictureFileName, ");
-                    sQuery.Append(" BR.BranchName,CO.Name CompanyName,ST.ServiceTypeName ,SR.* from services SR ");
+                    sQuery.Append(" BR.BranchName,CO.Name CompanyName,ST.ServiceTypeName ,SR.*,STF.StatusAfterName  from services SR ");
                     sQuery.Append(" inner join  Branchs BR on BR.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
                     sQuery.Append(" inner join Users U on U.UserId=SR.CreatedBy ");
                     sQuery.Append(" inner join Users UT on UT.UserId=SR.TechnicianId ");
                     sQuery.Append(" inner join ServiceType ST on ST.ServiceTypeId=SR.ServiceTypeId ");
+                    sQuery.Append(" inner join StatusAfter STF on STF.StatusAfterId=SR.StatusAfterId ");
                     sQuery.AppendFormat(" where SR.ServiceId={0} ",ServiceId);
 
                     command.CommandText = sQuery.ToString();
@@ -185,6 +189,8 @@ namespace DAL.Functions
                             if (dataReader["CompanyName"] != DBNull.Value) { oEServiceModel.CompanyName = (string)dataReader["CompanyName"]; }
                             if (dataReader["PictureFileName"] != DBNull.Value) { oEServiceModel.PictureFileName = (string)dataReader["PictureFileName"]; }
                             if (dataReader["Remark"] != DBNull.Value) { oEServiceModel.Remark = (string)dataReader["Remark"]; }
+                            if (dataReader["StatusAfterId"] != DBNull.Value) { oEServiceModel.StatusAfterId = (int)dataReader["StatusAfterId"]; }
+                            if (dataReader["StatusAfterName"] != DBNull.Value) { oEServiceModel.StatusAfterName = (string)dataReader["StatusAfterName"]; }
                             oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);                          
                         }
                     }
@@ -241,9 +247,9 @@ namespace DAL.Functions
                             if (dataReader["CreatedDate"] != DBNull.Value) { oEServiceModel.CreatedDate = (DateTime)dataReader["CreatedDate"]; }
                             if (dataReader["CompletionDate"] != DBNull.Value) { oEServiceModel.CompletionDate = (DateTime)dataReader["CompletionDate"]; }
                             if (dataReader["Remark"] != DBNull.Value) { oEServiceModel.Remark = (string)dataReader["Remark"]; }
+                            if (dataReader["StatusAfterId"] != DBNull.Value) { oEServiceModel.StatusAfterId = (int)dataReader["StatusAfterId"]; }
 
 
-                       
                         }
                     }
                     dataReader.Dispose();
@@ -267,6 +273,7 @@ namespace DAL.Functions
             newService.SupervisourName = null;
             newService.SupervisourSignature = null;
             newService.SupervisourFeedback = null;
+            newService.StatusAfterId = null;
 
             using (var context = new DatabaseContext(DatabaseContext.ops.dbOptions))
             {
@@ -289,7 +296,7 @@ namespace DAL.Functions
                 context.Entry(eServices).Property(x => x.TechnicianId).IsModified = true;
                 context.Entry(eServices).Property(x => x.ServiceTypeId).IsModified = true;
                 context.Entry(eServices).Property(x => x.Remark).IsModified = true;
-               
+                context.Entry(eServices).Property(x => x.StatusAfterId).IsModified = true;
 
                 await context.SaveChangesAsync();
             }
@@ -320,7 +327,7 @@ namespace DAL.Functions
             return eServices;
         }
 
-        public async Task<EServices> updateStatus(int serviceId, int statusId,string remark)
+        public async Task<EServices> updateStatus(int serviceId, int statusId,string remark,int statusAfterId)
         {
             EServices eServices = new EServices();
 
@@ -328,6 +335,7 @@ namespace DAL.Functions
             eServices = getSingleServiceOnly(serviceId);
             eServices.StatusId = statusId;
             eServices.Remark=remark;
+            eServices.StatusAfterId=statusAfterId;
 
             if (eServices == null)
             {
@@ -338,6 +346,7 @@ namespace DAL.Functions
                 context.Services.Attach(eServices);
                 context.Entry(eServices).Property(x => x.StatusId).IsModified = true;
                 context.Entry(eServices).Property(x => x.Remark).IsModified = true;
+                context.Entry(eServices).Property(x => x.StatusAfterId).IsModified = true;
 
                 await context.SaveChangesAsync();
             }
@@ -504,7 +513,7 @@ namespace DAL.Functions
 
                     StringBuilder sQuery = new StringBuilder();
                     sQuery.Append(" select *,M.MaterialName RequireMaterialName from RequiredMaterials RQM ");
-                    sQuery.Append(" inner join Materials MT on MT.MaterialId=RQM.MaterialId ");
+                    sQuery.Append(" inner join Materials M on M.MaterialId=RQM.MaterialId ");
                     sQuery.AppendFormat(" where RQM.ServiceDetailId={0}  ", serviceDetailsId);
 
                     command.CommandText = sQuery.ToString();

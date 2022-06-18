@@ -278,24 +278,42 @@
                         </div>
                    </div>
 
-        </form>
-
         <div class="card">
         
           <div class="card-body">
         
+
             <div class="row">
+             <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Status After Service</label>
+                            <div id="EquipmentsHolder">
+                                <select name="ddStatusAfter" id="ddStatusAfter" class="form-control select2 ddEquipment" style="width: 100%;"   >
+                                         <option value="">Please Select Status</option>
+                                         <option value="1">Complete</option>
+                                         <option value="2">Incomplete</option>
+                                         <option value="3">Pending for Spare</option>
+                                         <option value="4">Under Observation</option>
+    
+                            </select>
+                            </div>
+                                         
+                                        
+                               
+                        </div>
+                    </div>
+
               <div class="col-md-12">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Remarks</label>
-                  <textarea class="form-control" id="serviceRemark" name="serviceRemark" rows="3"></textarea>
+                  <textarea class="form-control" id="serviceRemark" name="serviceRemark" rows="3" maxlength="200"></textarea>
                 </div>
               </div>
               
             </div>
           </div>
         </div>
-        
+            </form>
       <div class="card">
 
         <div class="card-body">
