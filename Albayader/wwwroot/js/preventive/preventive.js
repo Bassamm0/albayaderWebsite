@@ -33,44 +33,154 @@
     let cn = 1;
     $('body').on('click', '#AddAnotherForm', function () {
 
+        addAnotherFormSer();
+    })
+
+    // load draft
+    getServiceDetails(_ServiceId)
+    function getServiceDetails(serivceId) {
+    
+        var Sdata = '{"id":' + serivceId + '}'
+        $.ajax({
+            type: "POST",
+            url: APIURL + "service/getservicebyid",
+            contentType: "application/json; charset=utf-8",
+            data: Sdata,
+           // async: false,
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            success: function (data, status, xhr) {   // success callback function
+                constract(data)
+            },
+            error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                alert('Error: something went wronge please try again later');
+            }
+
+        }).done(function () {
+
+            console.log('done')
+
+        });
+
+    }
+
+    function constract(ServiceObject) {
+        
+        console.log(ServiceObject)
+        for (var i = 0; i < ServiceObject.serviceDetails.length; i++) {
+            if (i > 0) {
+                addAnotherFormSer()
+            }
+            $("#Equipments"+(i+1)).val(ServiceObject.serviceDetails[i].equipmentId).trigger('change');
+            $("#Serial" + (i + 1)).val(ServiceObject.serviceDetails[i].serialNo);
+            $("#Elect" + (i + 1)).prop("checked", ServiceObject.serviceDetails[i].elect).change();
+            $("#Moving" + (i + 1)).prop("checked", ServiceObject.serviceDetails[i].moving).change();
+            $("#Bearings" + (i + 1)).prop("checked", ServiceObject.serviceDetails[i].bearings).change();
+            $("#Bells" + (i + 1)).prop("checked", ServiceObject.serviceDetails[i].bells).change();
+            $("#Motor" + (i + 1)).prop("checked", ServiceObject.serviceDetails[i].motor).change();
+            $("#Heater" + (i + 1)).prop("checked", ServiceObject.serviceDetails[i].heater).change();
+            $("#Safety" + (i + 1)).prop("checked", ServiceObject.serviceDetails[i].safetySwitch).change();
+            $("#Control" + (i + 1)).prop("checked", ServiceObject.serviceDetails[i].controlBoard).change();
+            $("#Compressor" + (i + 1)).prop("checked", ServiceObject.serviceDetails[i].compressor).change();
+            $("#Tmp" + (i + 1)).prop("checked", ServiceObject.serviceDetails[i].tmpControl).change();
+
+             IntuploadedFilesBefore = "";
+             IntuploadedFilesAfter = "";
+            for (var p = 0; p < ServiceObject.serviceDetails[i].servicePictures.length; p++) {
+
+               
+                if (ServiceObject.serviceDetails[i].servicePictures[p].pictureTypeId == 1) {
+                    IntuploadedFilesBefore += "<div>"
+                    IntuploadedFilesBefore += "<div class='file-preview-frame krajee-default  kv-preview-thumb'>"
+                    IntuploadedFilesBefore += "<div><a href='" + UploadUrl + ServiceObject.serviceDetails[i].servicePictures[p].fileName + "' target='_blank'><image src='" + UploadUrl + ServiceObject.serviceDetails[i].servicePictures[p].fileName + "' style='width:100px;height:100px' /></a></div>"
+                    IntuploadedFilesBefore += "<div><button type='button' class='btn btn-block btn-info deletImage' filename='" + ServiceObject.serviceDetails[i].servicePictures[p].fileName + "'  data-toggle='modal' data-target='#modal-delete'>Delete</button></div>"
+                    IntuploadedFilesBefore += "</div>"
+                    IntuploadedFilesBefore += "</div>"
+                }
+             
+                if (ServiceObject.serviceDetails[i].servicePictures[p].pictureTypeId == 2) {
+                    IntuploadedFilesAfter += "<div>"
+                    IntuploadedFilesAfter += "<div class='file-preview-frame krajee-default  kv-preview-thumb'>"
+                    IntuploadedFilesAfter += "<div><a href='" + UploadUrl + ServiceObject.serviceDetails[i].servicePictures[p].fileName + "' target='_blank'><image src='" + UploadUrl + ServiceObject.serviceDetails[i].servicePictures[p].fileName + "' style='width:100px;height:100px' /></a></div>"
+                    IntuploadedFilesAfter += "<div><button type='button' class='btn btn-block btn-info deletImage' filename='" + ServiceObject.serviceDetails[i].servicePictures[p].fileName + "'  data-toggle='modal' data-target='#modal-delete'>Delete</button></div>"
+                    IntuploadedFilesAfter += "</div>"
+                    IntuploadedFilesAfter += "</div>"
+                }
+
+                //append
+            }
+            $("#PicturesBeforeFix" + (i + 1)).parent('div').parent('span').parent('div').next('div').children('div').append(IntuploadedFilesBefore)
+            $("#PicturesAfterFix" + (i + 1)).parent('div').parent('span').parent('div').next('div').children('div').append(IntuploadedFilesAfter)
+
+
+            //$('#mySelect2').val(['1', '2']);
+            var arrayused=[]
+            for (var u = 0; u < ServiceObject.serviceDetails[i].materialsUsed.length; u++) {
+                arrayused[u] = ServiceObject.serviceDetails[i].materialsUsed[u].materialId
+            }
+            var arrayused = []
+            for (var r = 0; r < ServiceObject.serviceDetails[i].requiredMaterials.length; r++) {
+                arrayused[r] = ServiceObject.serviceDetails[i].materialsUsed[r].materialId
+            }
+
+            $('#MaterialUsed' + (i + 1)).val(arrayused);
+            $('#Rquiredmaterials' + (i + 1)).val(arrayused);
+            $('#MaterialUsed' + (i + 1)).trigger('change');
+            $('#Rquiredmaterials' + (i + 1)).trigger('change');
+            $('#ServiceDetailsid' + (i + 1)).val(ServiceObject.serviceDetails[i].serviceDetailId)
+
+        }
+            
+        $("#ddStatusAfter").val(ServiceObject.statusAfterId).trigger('change');
+        $("#serviceRemark").val(ServiceObject.remark);
+        //ServiceDetailsid1
+    }
+
+    // functions
+
+    function addAnotherFormSer() {
         validator.resetForm();
 
-        var fielUploadValidationHolder ='<div class="fielUploadValidationHolder">'
-            +' <span id="uploadError" class="errorMessage uploadError"></span>'
-            +' <progress id="fileProgress" style="display: none" class="progress"></progress>'
-            +' <span id="lblMessage" class="uploadSccessMessage lblMessage"></span>'
-            +'  <div id="thumbHolder" class="thumbHolder"></div>'
+        var fielUploadValidationHolder = '<div class="fielUploadValidationHolder">'
+            + ' <span id="uploadError" class="errorMessage uploadError"></span>'
+            + ' <progress id="fileProgress" style="display: none" class="progress"></progress>'
+            + ' <span id="lblMessage" class="uploadSccessMessage lblMessage"></span>'
+            + '  <div id="thumbHolder" class="thumbHolder"></div>'
             + ' </div>'
 
 
 
         cn++;
 
+
+
         console.log('add', cn)
 
         var parts = ''
             + ' <legend class="w-auto px-2">Parts</legend>'
             + '<div class="row"> '
-            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Elect'+cn+'" name="Elect'+cn+'" data-on="Yes" data-off="No" > '
-            + '<label class="partslable" for="Elect' + cn +'">Elect Parts</label> </div>'
-            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Moving'+cn+'" name="Moving'+cn+'" data-on="Yes" data-off="No" > '
-            + '<label class="partslable" for="Moving' + cn +'">Moving Parts</label> </div>'
-            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Bearings'+cn+'" name="Bearings'+cn+'" data-on="Yes" data-off="No" > '
-            + '<label class="partslable" for="Bearings'+cn+'">Bearings</label> </div>'
-            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Bells'+cn+'" name="Bells'+cn+'" data-on="Yes" data-off="No" > '
-            + '<label class="partslable" for="Bells'+cn+'">Bells</label> </div>'
-            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Motor'+cn+'" name="Motor'+cn+'" data-on="Yes" data-off="No" > '
-            + '<label class="partslable" for="Motor'+cn+'">Motor</label> </div>'
-            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Heater'+cn+'" name="Heater'+cn+'" data-on="Yes" data-off="No" > '
-            + '<label class="partslable" for="Heater'+cn+'">Heater</label> </div>'
-            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Safety'+cn+'" name="Safety'+cn+'" data-on="Yes" data-off="No" > '
-            + '<label class="partslable" for="Safety' + cn +'">Safety Switch</label> </div>'
-            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Control'+cn+'" name="Control'+cn+'" data-on="Yes" data-off="No" > '
-            + '<label class="partslable" for="Control' + cn +'">Control Board</label> </div>'
-            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Compressor'+cn+'" name="Compressor'+cn+'" data-on="Yes" data-off="No" > '
-            + '<label class="partslable" for="Compressor'+cn+'">Compressor</label> </div>'
-            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Tmp'+cn+'" name="Tmp'+cn+'" data-on="Yes" data-off="No" > '
-            + '<label class="partslable" for="Tmp'+cn+'">Tmp. Control</label> </div>'
+            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Elect' + cn + '" name="Elect' + cn + '" data-on="Yes" data-off="No" > '
+            + '<label class="partslable" for="Elect' + cn + '">Elect Parts</label> </div>'
+            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Moving' + cn + '" name="Moving' + cn + '" data-on="Yes" data-off="No" > '
+            + '<label class="partslable" for="Moving' + cn + '">Moving Parts</label> </div>'
+            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Bearings' + cn + '" name="Bearings' + cn + '" data-on="Yes" data-off="No" > '
+            + '<label class="partslable" for="Bearings' + cn + '">Bearings</label> </div>'
+            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Bells' + cn + '" name="Bells' + cn + '" data-on="Yes" data-off="No" > '
+            + '<label class="partslable" for="Bells' + cn + '">Bells</label> </div>'
+            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Motor' + cn + '" name="Motor' + cn + '" data-on="Yes" data-off="No" > '
+            + '<label class="partslable" for="Motor' + cn + '">Motor</label> </div>'
+            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Heater' + cn + '" name="Heater' + cn + '" data-on="Yes" data-off="No" > '
+            + '<label class="partslable" for="Heater' + cn + '">Heater</label> </div>'
+            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Safety' + cn + '" name="Safety' + cn + '" data-on="Yes" data-off="No" > '
+            + '<label class="partslable" for="Safety' + cn + '">Safety Switch</label> </div>'
+            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Control' + cn + '" name="Control' + cn + '" data-on="Yes" data-off="No" > '
+            + '<label class="partslable" for="Control' + cn + '">Control Board</label> </div>'
+            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Compressor' + cn + '" name="Compressor' + cn + '" data-on="Yes" data-off="No" > '
+            + '<label class="partslable" for="Compressor' + cn + '">Compressor</label> </div>'
+            + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Tmp' + cn + '" name="Tmp' + cn + '" data-on="Yes" data-off="No" > '
+            + '<label class="partslable" for="Tmp' + cn + '">Tmp. Control</label> </div>'
             + '</div>'
 
 
@@ -80,26 +190,26 @@
 
         let clone = $("#Equipment1").clone()
 
-       // clone.find('#Elect,#Moving,#Bearings,#Bells,#Motor,#Heater,#Safety,#Control,#Compressor,#Tmp').removeAttr("checked")
-       
-        clone.find('.removeForm').attr("data-card-widget", "remove")
+        // clone.find('#Elect,#Moving,#Bearings,#Bells,#Motor,#Heater,#Safety,#Control,#Compressor,#Tmp').removeAttr("checked")
+
+       // clone.find('.removeForm').attr("data-card-widget", "remove")
         clone.find('.removeForm').attr("EquId", cn)
 
-        clone.find('#Equipments1').attr("aria-describedby", '#Equipments'+cn+'-error')
-        
+        clone.find('#Equipments1').attr("aria-describedby", '#Equipments' + cn + '-error')
+
         clone.find('#Serial1').val('')
         clone.find('#MaterialUsed1').val('')
         clone.find('#Rquiredmaterials1').val('')
 
-        clone.find('#Equipment1').attr("EquId",   cn)
+        clone.find('#Equipment1').attr("EquId", cn)
         clone.find('#Equipment1').attr("id", "Equipment" + cn)
 
         clone.find('#Equipments1').attr("name", "Equipments" + cn)
         clone.find('#Equipments1').attr("id", "Equipments" + cn)
-       
+
 
         clone.find('#Serial1').attr("id", "Serial" + cn)
-    
+
         clone.find('#partsHolder1').html(parts)
 
         clone.find('#MaterialUsed1').attr("name", "MaterialUsed" + cn)
@@ -128,8 +238,8 @@
 
         clone.appendTo('#mainEquHolder');
 
-    
-      // initailaize the switch
+
+        // initailaize the switch
         $('#Elect' + cn).bootstrapToggle();
         $('#Moving' + cn).bootstrapToggle();
         $('#Bearings' + cn).bootstrapToggle();
@@ -142,22 +252,22 @@
         $('#Tmp' + cn).bootstrapToggle();
 
 
-         // initailaize the uploader
-        initFileInput("PicturesBeforeFix" + cn,1);
-        initFileInput("PicturesAfterFix" + cn,2);
-   
+        // initailaize the uploader
+        initFileInput("PicturesBeforeFix" + cn, 1);
+        initFileInput("PicturesAfterFix" + cn, 2);
+
 
         $("#Equipments1").select2();
         $("#MaterialUsed1").select2();
         $("#Rquiredmaterials1").select2();
-      
-       
-       // $('#Equipments1').trigger('change');
+
+
+        // $('#Equipments1').trigger('change');
         $('#Equipments' + cn).attr("required");
-   
+
         $('#Equipments' + cn).select2();
         $('#MaterialUsed' + cn).select2({
-            placeholder:'Select  Materials Used  ...'
+            placeholder: 'Select  Materials Used  ...'
         });
         $('#Rquiredmaterials' + cn).select2({
             placeholder: 'Select  Materials Required  ...'
@@ -165,9 +275,7 @@
 
         $('#MaterialUsed' + cn).val(null).trigger('change');
         $('#Rquiredmaterials' + cn).val(null).trigger('change');
-    })
-
-    
+    }
     function initFileInput(element,type) {
         
         $('#'+element).fileinput('refresh',
@@ -519,9 +627,10 @@
     }
     var deletedform;
 
-    $('body').on('click', '.removeForm', function () {
+    $('body').on('click', '.removeForm', function (e) {
         deletedform = $(this);
         var EquId = $(this).attr('EquId')
+        
         if (EquId == "1") {
             return;
         }
@@ -529,16 +638,23 @@
         $('#deletedItemName').html('full form details')
 
         var ServiceDetailsId = $('body').find('#ServiceDetailsid' + EquId).val();
+        
+        if (ServiceDetailsId == '') {
+            deletedform.parent('div').parent('div').parent('div').remove();
+
+            return;
+        }
         $('#deletedServiceDetailsId').val(ServiceDetailsId)
         $('#modal-details').modal('show')
         //deleteServiceDetails($(this),ServiceDetailsId)
-        cn--;
-        console.log('remove', cn)
+       
     });
 
     $('body').on('click', '#deleteServiceDetailsbtn', function () {
 
         deleteServiceDetails();
+       // cn--;
+        console.log('remove', cn)
 
     })
     

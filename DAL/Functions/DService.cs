@@ -425,6 +425,7 @@ namespace DAL.Functions
                             if (dataReader["ControlBoard"] != DBNull.Value) { oEServiceDetails.ControlBoard = (bool)dataReader["ControlBoard"]; }
                             if (dataReader["Compressor"] != DBNull.Value) { oEServiceDetails.Compressor = (bool)dataReader["Compressor"]; }
                             if (dataReader["TmpControl"] != DBNull.Value) { oEServiceDetails.TmpControl = (bool)dataReader["TmpControl"]; }
+                            if (dataReader["SafetySwitch"] != DBNull.Value) { oEServiceDetails.SafetySwitch = (bool)dataReader["SafetySwitch"]; }
                             if (dataReader["SerialNo"] != DBNull.Value) { oEServiceDetails.SerialNo = (string)dataReader["SerialNo"]; }
                             if (dataReader["EquipmentName"] != DBNull.Value) { oEServiceDetails.EquipmentName = (string)dataReader["EquipmentName"]; }
                             oEServiceDetails.MaterialsUsed = getMaterialsUsed(oEServiceDetails.ServiceDetailId);

@@ -164,3 +164,6 @@
 .images-wrapper::-webkit-scrollbar {
     display: none;
 }
+.removeForm{
+    cursor:pointer;
+}
