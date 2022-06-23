@@ -32,6 +32,9 @@
     <link rel="stylesheet" href="css/adminlte.css" />
     <link rel="stylesheet" href="css/site.css" />
  
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" />
+    
+
 </head>
 <body class="sidebar-mini">
         <div class="wrapper">
@@ -177,15 +180,25 @@
                                     </a>
                                 </li>
 
+                                <li class="nav-item">
+                                    <a href="newService" class="nav-link">
+                                       <i class="fa-solid fa-pen-to-square"></i>
+                                        <p>new  </p>
+                                    </a>
+                                </li>
+                                
                               <li class="nav-item">
                                     <a href="draftService" class="nav-link">
                                         <i class="fa-solid fa-pen-nib"></i>
-                                        <p>Draft Services </p>
+                                        <p>Draft  </p>
                                     </a>
                                 </li>
-                              
-
-
+                                 <li class="nav-item">
+                                    <a href="waitingService" class="nav-link">
+                                       <i class="fa-solid fa-signature"></i>
+                                        <p>Waiting for Signature  </p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         
@@ -252,12 +265,14 @@
    </div>
 
 
-
+               <script src="plugins/jquery-validation/jquery.validate.min.js"></script>
+            <script src="plugins/jquery-validation/additional-methods.min.js"></script>
     <!-- AdminLTE App -->
     <script src="js/adminlte.min.js"></script>
-    <script src="js/general.js"></script>
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+       <script src="js/general.js"></script>
+ 
 </body>
 </html>
 

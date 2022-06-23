@@ -38,6 +38,8 @@
             $('#modal-delete').modal('hide');
 
             $('.branchHolder[branchid=' + branchid + ']').animate({ 'background': 'yellow' }, 1000).fadeOut(500, function () { $(this).remove(); });
+
+            toastr["success"]("User delete successfuly.")
         });
 
 

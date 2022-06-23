@@ -11,7 +11,8 @@ namespace Entity
     {
         [Key]
         public int PictureId { get; set; }
-        public int ServiceDetailId { get; set; }
+        public int? ServiceDetailId { get; set; }
+        public int? CorrectiveServiceDetailsId { get; set; }
 
         public string FileName { get; set; }
         public int PictureTypeId { get; set; }

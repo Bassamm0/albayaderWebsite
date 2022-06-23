@@ -43,6 +43,7 @@
             $('#modal-delete').modal('hide');
          
             $('.userHolder[Userid=' + Userid + ']').animate({ 'background': 'yellow' }, 700).fadeOut(500, function () { $(this).remove(); });
+            toastr["success"]("User delete successfuly.")
         });
 
 

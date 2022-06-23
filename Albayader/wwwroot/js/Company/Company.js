@@ -43,6 +43,8 @@
             $('#modal-delete').modal('hide');
             
             $('.companyHolder[companyid=' + companyid + ']').animate({ 'background': 'yellow' }, 700).fadeOut(500, function () { $(this).remove(); });
+
+            toastr["success"]("Company delete successfuly.")
           });
           
   

@@ -1,6 +1,8 @@
 ﻿$(document).ready(function () {
 
 
+    
+
     const APIURL = $('#APIURI').val();
     const UploadUrl = $('#Uploadlocation').val();
     const _ServiceId = $('#serviceid').val()
@@ -10,7 +12,7 @@
 
     $(".fileImage").fileinput({
         initialPreviewAsData: true,
-        allowedFileExtensions: ['jpg', 'png', 'gif', 'pmb', 'esp', 'tif'],
+        allowedFileExtensions: ['jpg', 'png', 'gif', 'jpeg'],
         showUpload: true,
         showCaption: false,
         maxFileSize: 4000,
@@ -18,7 +20,7 @@
         previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
         showUploadedThumbs: false,
         showRemove: true,
-
+        maxFileCount: 5,
     });
 
     $('#ddStatusAfter').select2();
@@ -120,13 +122,13 @@
             for (var u = 0; u < ServiceObject.serviceDetails[i].materialsUsed.length; u++) {
                 arrayused[u] = ServiceObject.serviceDetails[i].materialsUsed[u].materialId
             }
-            var arrayused = []
+            var arrayReq = []
             for (var r = 0; r < ServiceObject.serviceDetails[i].requiredMaterials.length; r++) {
-                arrayused[r] = ServiceObject.serviceDetails[i].materialsUsed[r].materialId
+                arrayReq[r] = ServiceObject.serviceDetails[i].materialsUsed[r].materialId
             }
 
             $('#MaterialUsed' + (i + 1)).val(arrayused);
-            $('#Rquiredmaterials' + (i + 1)).val(arrayused);
+            $('#Rquiredmaterials' + (i + 1)).val(arrayReq);
             $('#MaterialUsed' + (i + 1)).trigger('change');
             $('#Rquiredmaterials' + (i + 1)).trigger('change');
             $('#ServiceDetailsid' + (i + 1)).val(ServiceObject.serviceDetails[i].serviceDetailId)
@@ -136,6 +138,7 @@
         $("#ddStatusAfter").val(ServiceObject.statusAfterId).trigger('change');
         $("#serviceRemark").val(ServiceObject.remark);
         //ServiceDetailsid1
+        toastr["success"]("Service loaded successfuly.")
     }
 
     // functions
@@ -150,11 +153,7 @@
             + '  <div id="thumbHolder" class="thumbHolder"></div>'
             + ' </div>'
 
-
-
         cn++;
-
-
 
         console.log('add', cn)
 
@@ -281,7 +280,7 @@
         $('#'+element).fileinput('refresh',
             {
                 initialPreviewAsData: true,
-                allowedFileExtensions: ['jpg', 'png', 'gif', 'pmb', 'esp', 'tif'],
+                allowedFileExtensions: ['jpg', 'png', 'gif', 'jpeg' ],
                 showUpload: true,
                 showCaption: false,
                 maxFileSize: 4000,
@@ -289,6 +288,7 @@
                 previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
                 showUploadedThumbs: false,
                 showRemove: true,
+                maxFileCount: 5,
 
             });
         $('#' + element).attr("EquId", cn)
@@ -399,11 +399,9 @@
 
     function uploadImages(InputElmentid, validationElem, EquId, ServiceDetailsId, pictureTypeId) {
      
-     
-
         var files = document.getElementById(InputElmentid).files
-
         var formData = new FormData();
+
         // Loop through files
         for (var i = 0; i < files.length; i++) {
             var file = files[i];
@@ -443,6 +441,7 @@
 
                     $(validationElem).children(".thumbHolder").append(uploadedFiles)
                     console.log(uploadedFiles)
+                    toastr["success"]("Picture uploaded successfuly.")
                 } else {
 
                     $(validationElem).children('.uploadError').html('Some Thing went wrong, please contact the administrator')
@@ -495,9 +494,7 @@
         if (Requiredmaterials.length == 0 && MaterialUsed.length == 0) {
           
             return
-        }
-           
-       
+        }       
         var sendReqData = '{"serviceDetailsId":' + ServiceDetailsId + ',"requiredmaterials":' + JSON.stringify(Requiredmaterials) + ',"materialUsed":' + JSON.stringify(MaterialUsed) + '}'
 
         $.ajax({
@@ -516,11 +513,8 @@
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
                 alert('Error: something went wronge please try again later');
             }
-
         }).done(function () {
-
             console.log('done')
-
         });
 
     }
@@ -530,20 +524,6 @@
 
 
 
-    // change Equip
-    $('body').on('change', '.ddEquipment', function () {
-        //if ($(this).val() != '') {
-        //    $('#PicturesBeforeFix').fileinput('enable');
-        //    $('#PicturesAfterFix').fileinput('enable');
-        //} else {
-        //    $('#PicturesBeforeFix').fileinput('disable');
-        //    $('#PicturesAfterFix').fileinput('disable');
-        //}
-      
-    })
-
-
-    
 
     $('#ServiceForm').validate({
         rules: {
@@ -611,7 +591,7 @@
             },
             success: function (data, status, xhr) {   // success callback function
                 console.log('deleted')
-              
+               
               
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
@@ -621,6 +601,7 @@
         }).done(function () {
             $('#modal-delete').modal('hide');
             $(".deletImage[filename='" + image + "']").parent('div').parent('div').remove();
+            toastr["success"]("Image deleted successfuly.")
          
 
         });
@@ -677,7 +658,7 @@
             },
             success: function (data, status, xhr) {   // success callback function
                 console.log('deleted')
-
+                toastr["success"]("Equipment deleted successfuly.")
 
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
@@ -717,6 +698,7 @@
                     SaveService(i)
                 }
                 updateStatus(3)
+                toastr["success"]("Service saved successfuly as Draft.")
             }
 
         }
@@ -773,11 +755,14 @@
                 if (Operation == "add") {
                     $(obj).val(data.serviceDetailId);
                     addMaterials(EquId, data.serviceDetailId);
+
+                   
                    
                 } else {
                     serviceDetailId = $(obj).val()
                     addMaterials(EquId, serviceDetailId);
-                  
+                    
+                   
                 }
 
             },
@@ -860,4 +845,6 @@
         }
 
     })
+
+    
 });

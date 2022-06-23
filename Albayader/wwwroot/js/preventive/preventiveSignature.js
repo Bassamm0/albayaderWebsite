@@ -54,18 +54,18 @@
                     $('input:hidden[name="__RequestVerificationToken"]').val()
             },
             success: function (data, status, xhr) {   // success callback function
-                console.log('deleted')
+               
 
-
+              
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
                 alert('Error: something went wronge please try again later');
             }
 
         }).done(function () {
-            $('#modal-delete').modal('hide');
-            $(".deletImage[filename='" + image + "']").parent('div').parent('div').remove();
-
+            //$('#modal-delete').modal('hide');
+            //$(".deletImage[filename='" + image + "']").parent('div').parent('div').remove();
+            toastr["success"]("Service signed by client successfuly.")
 
         });
 

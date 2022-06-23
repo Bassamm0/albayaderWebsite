@@ -135,6 +135,19 @@ namespace LOGIC.UserLogic
         }
 
 
+        public async Task<Boolean> getSingleUserByEmail(string email)
+        {
+            var resul =  _DUser.getSingleUserByEmail(email);
+            if (resul != null && resul.UserId > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public async Task<Boolean> updateUser(EUser user)
         {
            

@@ -30,10 +30,10 @@
                     e.preventDefault();
                     return;
                 } else {
-
-                    $('#UserForm').submit();
+                    emailValidation()
+                  
                 }
-
+                // email  exist
             }
          
      
@@ -306,7 +306,7 @@
     function GetPositions() {
         $("#ddPosition").html('')
         $.ajax({
-            url: APIURL+"/user/getpostions",
+            url: APIURL +"user/getpostions",
             type: 'GET',
             dataType: 'json',
             async: false,
@@ -333,9 +333,6 @@
     function getCompanyBranch() {
         _companyId = parseInt($('#hdCompanyId').val())
 
-        var formData = new FormData();
-
-        formData.append("companyid", _companyId);
 
    
         $("#ddBranch").html()
@@ -369,6 +366,41 @@
     }
     function populate(text, val, controlId) {
         $(controlId).append('<option value=' + val + '>' + text + '</option>');
+
+    }
+
+
+
+
+    function emailValidation() {
+       var email = $('#email').val()
+ 
+
+        $("#emailErrorMessage").html()
+        $.ajax({
+            type: "POST",
+            url: APIURL + "user/isemailexist",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ 'email': email }),
+            async: false,
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            success: function (data, textStatus, xhr) {
+                console.log(data)
+                if (data) {
+                    $("#emailErrorMessage").html('Sorry the email already exist, please use another email.');
+                    toastr["warning"]("User already exist.")
+                } else {
+                    //$('#UserForm').submit();
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+               
+                console.log('Error in Operation');
+            }
+        });
 
     }
 

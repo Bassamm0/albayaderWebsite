@@ -27,7 +27,7 @@ namespace API.Controllers
             return services;
         }
         [Route("allByStatus")]
-        [HttpGet]
+        [HttpPost]
         public async Task<List<EServiceModel>> getAllServiceByStatus(JsonElement objData)
         {
             int StatusId = objData.GetProperty("id").GetInt16();
@@ -48,7 +48,17 @@ namespace API.Controllers
 
             return services;
         }
+        [Route("getcorrectiveservicebyid")]
+        [HttpPost]
+        public async Task<ECorrectiveServiceModel> getCorrectiveSingleService(JsonElement objData)
+        {
 
+            int _id = objData.GetProperty("id").GetInt16();
+            ECorrectiveServiceModel services = new ECorrectiveServiceModel();
+            services = await serviceLogic.getCorrectiveSingleService(_id);
+
+            return services;
+        }
 
         [Route("add")]
         [HttpPost]

@@ -24,5 +24,18 @@ namespace LOGIC
             }
 
         }
+        public async Task<Boolean> UploadServiceImagesCorrective(string file, int CorrectiveServiceDetailsId, int pictureTypeId)
+        {
+            var result = await _dUploadFile.UploadServiceImagesCorrective(file, CorrectiveServiceDetailsId, pictureTypeId);
+            if (result.PictureId > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
     }
 }

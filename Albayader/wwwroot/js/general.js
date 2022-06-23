@@ -1,7 +1,26 @@
 ﻿// JavaScript Document
 
 $(document).ready(function () {
+	// toast
+	toastr.options = {
+		"closeButton": false,
+		"debug": false,
+		"newestOnTop": false,
+		"progressBar": false,
+		"positionClass": "toast-top-right",
+		"preventDuplicates": false,
+		"onclick": null,
+		"showDuration": "300",
+		"hideDuration": "1000",
+		"timeOut": "5000",
+		"extendedTimeOut": "1000",
+		"showEasing": "swing",
+		"hideEasing": "linear",
+		"showMethod": "fadeIn",
+		"hideMethod": "fadeOut"
+	}
 
+	
 
 	var getUrlParameter = function getUrlParameter(sParam) {
 		var sPageURL = window.location.search.substring(1),
@@ -418,13 +437,16 @@ $(document).ready(function () {
 	);
 
 
-	//// append copy right
-	//var copyRight = ' <div class="CopyRight">';
-	//copyRight += '<span style="line-height:30px;">';
-	//copyRight += '&copy;     2015 Think Plus. All Rights Reserved';
-	//copyRight += '</span>';
-	//copyRight += '</div>';
-	//$('body').append(copyRight)
+	$.validator.addMethod("greaterThan",
+		function (value, element, params) {
+
+			if (!/Invalid|NaN/.test(new Date(value))) {
+				return new Date(value) > new Date($(params).val());
+			}
+
+			return isNaN(value) && isNaN($(params).val())
+				|| (Number(value) > Number($(params).val()));
+		}, 'Must be greater than {0}.');
 
 });
 

@@ -51,6 +51,28 @@ namespace LOGIC
 
         }
 
+        public async Task<ECorrectiveServiceDetails> addCorrectiveServiceDetails(ECorrectiveServiceDetails newServiceDetails)
+        {
+
+            var resul = await dServiceDetails.addCorrectiveServiceDetails(newServiceDetails);
+            return resul;
+        }
+
+        public async Task<Boolean> updateCorrecgiveService(ECorrectiveServiceDetails newServiceDetails)
+        {
+
+            var resul = await dServiceDetails.updateCorrecgiveService(newServiceDetails);
+            if (resul != null && resul.CorrectiveServiceDetailsId > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
         public async Task<Boolean> insertBuldRequiredMaterials(int ServiceDetailsId, int[] requiredmaterials)
         {
 
@@ -79,6 +101,22 @@ namespace LOGIC
             if (materialUsed.Length > 0)
             {
                 resul = dServiceDetails.insertBulkMaterialUsed(ServiceDetailsId, materialUsed);
+            }
+
+            return resul;
+
+        }
+
+        public async Task<Boolean> insertBulkMaterialUsedCorrective(int ServiceDetailsId, int[] materialUsed)
+        {
+
+            var resul = false;
+
+            // delete all 
+            resul = dServiceDetails.deleteMaterialUsedCorrective(ServiceDetailsId);
+            if (materialUsed.Length > 0)
+            {
+                resul = dServiceDetails.insertBulkMaterialUsedCorrective(ServiceDetailsId, materialUsed);
             }
 
             return resul;

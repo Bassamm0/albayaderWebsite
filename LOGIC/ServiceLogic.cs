@@ -35,8 +35,15 @@ namespace LOGIC
             EServiceModel services = dservice.getSingleService(ServiceId);
 
             return services;
-        } 
+        }
 
+        public async Task<ECorrectiveServiceModel> getCorrectiveSingleService(int ServiceId)
+        {
+
+            ECorrectiveServiceModel services = dservice.getCorrectiveSingleService(ServiceId);
+
+            return services;
+        }
         public async Task<EServices> addService(EServices newService)
         {
 

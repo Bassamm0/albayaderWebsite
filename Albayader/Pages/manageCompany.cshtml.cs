@@ -31,6 +31,8 @@ namespace AlbayaderWeb.Pages
 
         public async Task<IActionResult> OnGetSmode(string Smode, int id)
         {
+            apiurl = AppConfig.APIUrl;
+            uploadurl = AppConfig.UploadURL;
             PageActionMode = Smode;
             if (PageActionMode == "Add")
             {

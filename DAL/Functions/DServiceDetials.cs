@@ -174,6 +174,43 @@ namespace DAL.Functions
             return ServiceDetails;
         }
 
+        public async Task<ECorrectiveServiceDetails> addCorrectiveServiceDetails(ECorrectiveServiceDetails newServiceDetails)
+        {
+
+
+            using (var context = new DatabaseContext(DatabaseContext.ops.dbOptions))
+            {
+                await context.CorrectiveServiceDetails.AddAsync(newServiceDetails);
+                await context.SaveChangesAsync();
+            }
+
+            return newServiceDetails;
+        }
+
+        public async Task<ECorrectiveServiceDetails> updateCorrecgiveService(ECorrectiveServiceDetails ServiceDetails)
+        {
+          
+            using (var context = new DatabaseContext(DatabaseContext.ops.dbOptions))
+            {
+
+                context.CorrectiveServiceDetails.Attach(ServiceDetails);
+                context.Entry(ServiceDetails).Property(x => x.ServiceId).IsModified = true;
+                context.Entry(ServiceDetails).Property(x => x.EquipmentId).IsModified = true;
+                context.Entry(ServiceDetails).Property(x => x.ConditionId).IsModified = true;
+                context.Entry(ServiceDetails).Property(x => x.EquipmentTypeId).IsModified = true;
+                context.Entry(ServiceDetails).Property(x => x.ReportedDate).IsModified = true;
+                context.Entry(ServiceDetails).Property(x => x.ReportedBy).IsModified = true;
+                context.Entry(ServiceDetails).Property(x => x.Model).IsModified = true;
+                context.Entry(ServiceDetails).Property(x => x.SerialNo).IsModified = true;
+                context.Entry(ServiceDetails).Property(x => x.ServiceRendered).IsModified = true;
+                context.Entry(ServiceDetails).Property(x => x.ProblemReported).IsModified = true;
+
+
+                await context.SaveChangesAsync();
+            }
+
+            return ServiceDetails;
+        }
 
         public  bool insertBuldRequiredMaterials(int ServiceDetailsId,int[] requiredmaterials)
         {
@@ -222,17 +259,17 @@ namespace DAL.Functions
                 StringBuilder sQuery = new StringBuilder();
                 sQuery.AppendFormat(" insert into MaterUsed values ");
 
-
+                int? nullfield = null;
                 for (int i = 0; i < materialUsed.Length; i++)
                 {
                     if (i == materialUsed.Length - 1)
                     {
-                        sQuery.AppendFormat(" ({0},{1}) ", ServiceDetailsId, materialUsed[i]);
+                        sQuery.AppendFormat(" ({0},{1},{2}) ", ServiceDetailsId, materialUsed[i], 0);
 
                     }
                     else
                     {
-                        sQuery.AppendFormat(" ({0},{1}), ", ServiceDetailsId, materialUsed[i]);
+                        sQuery.AppendFormat(" ({0},{1},{2}), ", ServiceDetailsId, materialUsed[i], 0);
 
                     }
                 }
@@ -244,6 +281,41 @@ namespace DAL.Functions
 
             
         }
+        public bool insertBulkMaterialUsedCorrective(int ServiceDetailsId, int[] materialUsed)
+        {
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            bool result = false;
+            conn.Open();
+            using (var command = conn.CreateCommand())
+            {
+
+                StringBuilder sQuery = new StringBuilder();
+                sQuery.AppendFormat(" insert into MaterUsed values ");
+
+
+                for (int i = 0; i < materialUsed.Length; i++)
+                {
+                    if (i == materialUsed.Length - 1)
+                    {
+                        sQuery.AppendFormat(" ({0},{1},{2}) ", 0, materialUsed[i], ServiceDetailsId);
+
+                    }
+                    else
+                    {
+                        sQuery.AppendFormat(" ({0},{1},{2}), ", 0, materialUsed[i], ServiceDetailsId);
+
+                    }
+                }
+                command.CommandText = sQuery.ToString();
+                // for select only to retrive value ExecuteScalar()
+                return (command.ExecuteNonQuery() > 0);
+
+            }
+
+
+        }
+
 
         public bool deletRequiredMaterials(int ServiceDetailsId)
         {
@@ -286,7 +358,27 @@ namespace DAL.Functions
 
 
         }
+        public bool deleteMaterialUsedCorrective(int ServiceDetailsId)
+        {
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
 
+            conn.Open();
+            using (var command = conn.CreateCommand())
+            {
+
+                StringBuilder sQuery = new StringBuilder();
+                sQuery.AppendFormat(" delete  MaterUsed where CorrectiveServiceDetailsId={0} ", ServiceDetailsId);
+
+
+                command.CommandText = sQuery.ToString();
+                // for select only to retrive value ExecuteScalar()
+                return (command.ExecuteNonQuery() > 0);
+
+            }
+
+
+        }
         public bool  deleteImage(string fileName)
         {
             var context = new DatabaseContext(DatabaseContext.ops.dbOptions);

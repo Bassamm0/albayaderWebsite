@@ -5,522 +5,535 @@
     ViewData["Title"] = "Corrective Service";
 }
 
+
 <!-- daterange picker -->
-  <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
-    <!-- Tempusdominus Bootstrap 4 -->
-  <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-
-<script src="plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
-  <style>
-      .dropdown-menu{
-        padding-top: 0;
-        
-      }
-      .dropdown-divider{
-        margin: 0;
-      }
+<link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+<!-- Tempusdominus Bootstrap 4 -->
+<link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 
 
-
-      .custom-switch.custom-switch-sm .custom-control-label {
-    padding-left: 1rem;
-    padding-bottom: 1rem;
-}
-
-.custom-switch.custom-switch-sm .custom-control-label::before {
-    height: 1rem;
-    width: calc(1rem + 0.75rem);
-    border-radius: 2rem;
-}
-
-.custom-switch.custom-switch-sm .custom-control-label::after {
-    width: calc(1rem - 4px);
-    height: calc(1rem - 4px);
-    border-radius: calc(1rem - (1rem / 2));
-}
-
-.custom-switch.custom-switch-sm .custom-control-input:checked ~ .custom-control-label::after {
-    transform: translateX(calc(1rem - 0.25rem));
-}
-
-/* for md */
-
-.custom-switch.custom-switch-md .custom-control-label {
-    padding-left: 2rem;
-    padding-bottom: 1.5rem;
-}
-
-.custom-switch.custom-switch-md .custom-control-label::before {
-    height: 1.5rem;
-    width: calc(2rem + 0.75rem);
-    border-radius: 3rem;
-}
-
-.custom-switch.custom-switch-md .custom-control-label::after {
-    width: calc(1.5rem - 4px);
-    height: calc(1.5rem - 4px);
-    border-radius: calc(2rem - (1.5rem / 2));
-}
-
-.custom-switch.custom-switch-md .custom-control-input:checked ~ .custom-control-label::after {
-    transform: translateX(calc(1.5rem - 0.25rem));
-}
-
-/* for lg */
-
-.custom-switch.custom-switch-lg .custom-control-label {
-    padding-top: 7px;;
-    padding-left: 3rem;
-    padding-bottom: 2rem;
-}
-
-.custom-switch.custom-switch-lg .custom-control-label::before {
-    height: 2rem;
-    width: calc(3rem + 0.75rem);
-    border-radius: 4rem;
-}
-
-.custom-switch.custom-switch-lg .custom-control-label::after {
-    width: calc(2rem - 4px);
-    height: calc(2rem - 4px);
-    border-radius: calc(3rem - (2rem / 2));
-}
-
-.custom-switch.custom-switch-lg .custom-control-input:checked ~ .custom-control-label::after {
-    transform: translateX(calc(2rem - 0.25rem));
-}
-
-/* for xl */
-
-.custom-switch.custom-switch-xl .custom-control-label {
-    padding-left: 4rem;
-    padding-bottom: 2.5rem;
-}
-
-.custom-switch.custom-switch-xl .custom-control-label::before {
-    height: 2.5rem;
-    width: calc(4rem + 0.75rem);
-    border-radius: 5rem;
-}
-
-.custom-switch.custom-switch-xl .custom-control-label::after {
-    width: calc(2.5rem - 4px);
-    height: calc(2.5rem - 4px);
-    border-radius: calc(4rem - (2.5rem / 2));
-}
-
-.custom-switch.custom-switch-xl .custom-control-input:checked ~ .custom-control-label::after {
-    transform: translateX(calc(2.5rem - 0.25rem));
-}
+<style>
 
 
-.checkbox-lg .custom-control-label::before, 
-.checkbox-lg .custom-control-label::after {
-  top: .8rem;
-  width: 1.55rem;
-  height: 1.55rem;
-}
+    .checkbox-lg .custom-control-label::before,
+    .checkbox-lg .custom-control-label::after {
+        top: .8rem;
+        width: 1.55rem;
+        height: 1.55rem;
+    }
 
-.checkbox-lg .custom-control-label {
-  padding-top: 13px;
-  padding-left: 6px;
-}
+    .checkbox-lg .custom-control-label {
+        padding-top: 13px;
+        padding-left: 6px;
+    }
 
 
-.checkbox-xl .custom-control-label::before, 
-.checkbox-xl .custom-control-label::after {
-  top: 1.2rem;
-  width: 1.85rem;
-  height: 1.85rem;
-}
+    .checkbox-xl .custom-control-label::before,
+    .checkbox-xl .custom-control-label::after {
+        top: 1.2rem;
+        width: 1.85rem;
+        height: 1.85rem;
+    }
 
-.checkbox-xl .custom-control-label {
-  padding-top: 23px;
-  padding-left: 10px;
-}
-    </style>
+    .checkbox-xl .custom-control-label {
+        padding-top: 23px;
+        padding-left: 10px;
+    }
+</style>
 
 <div class="content-wrapper">
-<section class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-left">
-                                <li class="breadcrumb-item"><a href="Dashboard">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Corrective Service</li>
-                            </ol>
-                        </div>
-
-                    </div>
-
-
-
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-left">
+                        <li class="breadcrumb-item"><a href="Dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Corrective Service</li>
+                    </ol>
                 </div>
-                <!-- /.container-fluid -->
-            </section>
 
-              <!-- Main content -->
-        <section class="content">
-          <div class="container-fluid">
-                 <div class="card">
-     
-        <div class="card-body">
-          <div class="row">
-            
-
-
-                <div class="col-sm">
-                 
-                    <div class="info-box-content">
-                     <div class="user-block">
-                        <img class="img-circle img-bordered-sm" src="img/user1-128x128.jpg" alt="user image">
-                        <span class="username">
-                          <a href="#">Jonathan Burke Jr.</a>
-                        </span>
-                        <span class="description">Technician</span>
-                      </div>
-                    
-                  </div>
-                </div>
-                <div class="col-sm">
-                  
-                    <div class="info-box-content">
-                      <div class="info-box-text text-center text-muted"><b>Carrefour - MCC</b></div>
-                      <div class="info-box-number text-center text-muted mb-0"><span class="RefNum"> Ref:#35542</span></div>
-                    </div>
-                 
-                </div>
-                <div class="col-sm">
-                
-                    <div class="info-box-content" style="float: right;text-align: left;">
-                      <div class="info-box-text text-center text-muted"><i class="fa-solid fa-calendar-days"></i> 13/04/2022</div>
-                      <div class="info-box-number text-muted mb-0"><i class="fa-solid fa-clock"></i> 10:00 AM</div>
-                    </div>
-                
-                </div>
-           
-              </div>
             </div>
-   
-          </div>
-
-          
-
-           <div class="card card-default">
-          <div class="card-header">
-            <h3 class="card-title">Corrective Service </h3>
-
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-              
-            </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <div class="row">
 
 
-                 <div class="form-group">
-                    <label>Site Vist Type</label>
-                    <select name="ddVistType" id="ddVistType" class="form-control select2" style="width: 100%;">
-                       <option value="">Select the vist type</option>
-                       <option value="Warranty">Warranty</option>
-                       <option value="Repairing">Repairing</option>
-                       <option value="Commissioning and Startup">Commissioning and Startup</option>
-                       <option value="Installation">Installation</option>
-                       <option value="AMC">AMC</option>
-                       <option value="Emergency">Emergency</option>
-                    
-    
-                    </select>
-                  </div>
 
-                 <div class="col-md-12">
-                    <div class="form-group col-md-12">
-                        <label for="exampleInputFile">Before</label>
-                        <div class="input-group " id="uploadBeforeHolder">   
-                                               
-                            <input id="PicturesBeforeFix" name="PicturesBeforeFix" class="file fa-2x fileImage" type="file" multiple="true" style="height:50px;">
+        </div>
+        <!-- /.container-fluid -->
+    </section>
 
-                                            
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card">
 
-                                <div class="fielUploadValidationHolder">
-                                <span id="uploadError" class="errorMessage uploadError"></span>
-                                <progress id="fileProgress" style="display: none" class="progress"></progress>
-                                <span id="lblMessage" class="uploadSccessMessage lblMessage"></span>
-                                <div id="thumbHolder" class="thumbHolder""></div>
+                <div class="card-body">
+                    <div class="row">
+
+
+
+                        <div class="col-sm">
+
+                            <div class="info-box-content">
+                                <div class="user-block">
+                                    <img class="img-circle img-bordered-sm" src="@Model.uploadurl@Model._service.PictureFileName" alt="user image">
+                                    <span class="username">
+                                        <a href="#">@Model._service.TechnicianName</a>
+                                    </span>
+                                    <span class="description">Technician</span>
                                 </div>
+
+                            </div>
                         </div>
-                    </div>
-                </div>
-              
-              <div class="col-md-12">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Problem Reported</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                </div>
-              </div>
-              <!-- /.col -->
-         <div class="col-md-6">
-             <div class="form-group">
-                    <label>Condition</label>
-                    <select name="ddCondition" id="ddCondition" class="form-control select2" style="width: 100%;">
-                       <option value="">Select the Condition</option>
-                       <option value="Running">Running</option>
-                       <option value="Shutdown">Shutdown</option>
-                       <option value="Under Construction">Under Construction</option>
-                  
-                    
-    
-                    </select>
-                  </div>
-         </div>
-                 
+                        <div class="col-sm">
 
-         <div class="col-md-6">
-                <div class="form-group">
-                    <label>Type</label>
-                    <select name="ddType" id="ddType" class="form-control select2" style="width: 100%;">
-                       <option value="">Select the Equiepment Type</option>
-                       <option value="Kitchen and Bakery Section">Kitchen and Bakery Section</option>
-                       <option value="Boiler">Boiler</option>
-                       <option value="Other">Other</option>
-                  
-                    
-    
-                    </select>
-                  </div>
-         </div>
-                 
-           <div class="col-md-6">
+                            <div class="info-box-content">
+                                <div class="info-box-text text-center text-muted"><b>@Model._service.CompanyName - @Model._service.BranchName</b></div>
+                                <div class="info-box-number text-center text-muted mb-0"> <span class="RefNum"> Ref:#@Model._service.ServiceId</span></div>
+                            </div>
 
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Call Reported By</label>
-                    <input type="text" class="form-control" id="reportedBy" name="reportedBy" placeholder="Enter Call Reported By">
-                </div>
-           </div>
-
-             
-          <div class="col-md-6">
-                <div class="form-group">
-                      <label for="mon=bile">Reported Date</label>
-                                
-                     <div class="input-group date" id="reportedDate" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input" data-target="#reportedDate" id="reportedDate" name="reportedDate"/>
-                        <div class="input-group-append" data-target="#reportedDate" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
+                        <div class="col-sm">
+
+                            <div class="info-box-content" style="float: right;text-align: left;">
+                                <div class="info-box-text text-center text-muted">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                    @Model._service.CreatedDate.ToShortDateString()
+                                </div>
+                                <div class="info-box-number text-muted mb-0"><i class="fa-solid fa-clock"></i> @Model._service.CreatedDate.ToString("HH:mm")</div>
+                            </div>
+
+                        </div>
+
                     </div>
 
                 </div>
 
-           </div>
-               
-
             </div>
 
-            <div class="row">
-            <fieldset class="form-group border p-3">
-                        <legend class="w-auto px-2">System Details</legend>
-             <div class="row">
-               
-              <div class="col">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Equipment</label>
-                    <input type="text" class="form-control" id="Equipment" name="Equipment" placeholder="Enter Equipment">
-                </div>
-              </div>
-              <!-- /.col -->
-              <div class="col">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Model</label>
-                    <input type="text" class="form-control" id="Model" name="Model" placeholder="Enter Model">
-                </div>
-                
-              </div>
-               <div class="col">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Serial No.</label>
-                    <input type="text" class="form-control" id="Serial" name="Serial" placeholder="Enter Serial No.">
-                </div>
-                
-              </div>
-            </div>
-            </fieldset>
 
-            </div>
-           
-            <div class="row">
-                  <div class="col-md-12">
-               
+
+            <div class="card card-default">
+                <div class="card-header">
+                    <h3 class="card-title">Corrective Service </h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+
+                    </div>
                 </div>
-                <div class="col-md-12">
-                <div class="form-group">
-                   <fieldset class="form-group border p-3">
-                        <legend class="w-auto px-2">Service Details</legend>
+                <!-- /.card-header -->
+
+                <div class="card-body">
+
+                    <form method="post" id="correctiveForm">
+
                         <div class="row">
-                            <div class="col">
-                               <div class="form-group">
-                                  <label for="exampleInputEmail1">Remarks</label>
-                                  <textarea class="form-control" id="Remarks" name="Remarks" rows="3"></textarea>
-                              </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-group">
-                                  <label for="exampleInputEmail1">Service Rendered</label>
-                                  <textarea class="form-control" id="Rendered" name="Rendered" rows="3"></textarea>
-                              </div>                               
-                            </div>
-                            <div class="col">
-                                <div class="form-group">
-                                  <label for="exampleInputEmail1">Used Parts</label>
-                                  <textarea class="form-control" id="UsedParts" name="UsedParts" rows="3"></textarea>
-                              </div>                               
-                            </div>
-                            </div>
-                        </fieldset> 
-                    
-                </div>
-            <div class="row">
-             
-                
-        <div class="col-md-12">
-            <div class="form-group col-md-12">
-                <label for="exampleInputFile">After</label>
-                <div class="input-group " id="uploadAftereHolder">   
-                                                   
-                    <input id="PicturesAfterFix" name="PicturesAfterFix" class="file fa-2x fileImage " type="file" multiple="true" style="height:50px;">
-                             
-                    <div class="fielUploadValidationHolder">
-                    <span id="uploadError" class="errorMessage uploadError"></span>
-                    <progress id="fileProgress" style="display: none" class="progress"></progress>
-                    <span id="lblMessage" class="uploadSccessMessage lblMessage"></span>
-                    <div id="thumbHolder" class="thumbHolder"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-             <div class="form-group">
-                   <fieldset class="form-group border p-3">
-                        <legend class="w-auto px-2">Status After Service</legend>
-                        <div class="row">
-                            <div class="col">
-                             <div class="custom-control custom-checkbox checkbox-xl">
-                              <input type="checkbox" class="custom-control-input" id="Complete" >
-                              <label class="custom-control-label" for="Complete">Complete</label>
+
+                            <div class="form-group">
+                                <label>Site Vist Type</label>
+                                <select name="ddVistType" id="ddVistType" class="form-control select2" style="width: 100%;">
+                                    <option value="">Select the vist type</option>
+                                    <option value="1">Planned</option>
+                                    <option value="2">Warranty</option>
+                                    <option value="3">Repairing</option>
+                                    <option value="4 and Startup">Commissioning and Startup</option>
+                                    <option value="5">Installation</option>
+                                    <option value="6">AMC</option>
+                                    <option value="7">Emergency</option>
+
+
+                                </select>
                             </div>
+                        
+                              
+
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Call Reported By</label>
+                                    <input type="text" class="form-control" id="reportedBy" name="reportedBy" 
+                                    placeholder="Enter Call Reported By" value="@(@Model._service.ServiceDetails.Count>0?@Model._service.ServiceDetails[0].ReportedBy:"")">
+                                </div>
                             </div>
-                            <div class="col">
-                             <div class="custom-control custom-checkbox checkbox-xl">
-                              <input type="checkbox" class="custom-control-input" id="Incomplete">
-                              <label class="custom-control-label" for="Incomplete">Incomplete</label>
+
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="mon=bile">Reported Date</label>
+
+                                    <div class="input-group date" id="reportedDate" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#reportedDate"
+                                        id="reportedDate" name="reportedDate" value="@(@Model._service.ServiceDetails.Count>0?@Model._service.ServiceDetails[0].ReportedDate:"")" />
+                                        <div class="input-group-append" data-target="#reportedDate" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Problem Reported</label>
+                                    <textarea class="form-control" id="problemReported" rows="3">@(@Model._service.ServiceDetails.Count>0?@Model._service.ServiceDetails[0].ProblemReported:"")</textarea>
+                                </div>
                             </div>
-                            <div class="col">
-                             <div class="custom-control custom-checkbox checkbox-xl">
-                              <input type="checkbox" class="custom-control-input" id="Pending" >
-                              <label class="custom-control-label" for="Pending">Pending For Spares</label>
+                            <!-- /.col -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Condition</label>
+                                    <select name="ddCondition" id="ddCondition" class="form-control select2" style="width: 100%;">
+                                        <option value="">Select the Condition</option>
+                                        <option value="1">Running</option>
+                                        <option value="2">Shutdown</option>
+                                        <option value="3">Under Construction</option>
+
+
+
+                                    </select>
+                                </div>
                             </div>
+
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Type</label>
+                                    <select name="ddType" id="ddType" class="form-control select2" style="width: 100%;">
+                                        <option value="">Select the Equiepment Type</option>
+                                        <option value="1">Kitchen and Bakery Section</option>
+                                        <option value="2">Boiler</option>
+                                        <option value="3">Other</option>
+
+
+
+                                    </select>
+                                </div>
                             </div>
-                             <div class="col">
-                             <div class="custom-control custom-checkbox checkbox-xl">
-                              <input type="checkbox" class="custom-control-input" id="Under" >
-                              <label class="custom-control-label" for="Under">Under Observation</label>
+
+
+                            <div class="row">
+                                <fieldset class="form-group border p-3">
+                                    <legend class="w-auto px-2">System Details</legend>
+                                    <div class="row">
+
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Equipment</label>
+                                                <div id="EquipmentsHolder">
+                                                    <select name="Equipments1" id="Equipments1" class="form-control select2 ddEquipment" style="width: 100%;">
+                                                    </select>
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+
+                                        <!-- /.col -->
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Model</label>
+                                                <input type="text" class="form-control" id="Model" name="Model" placeholder="Enter Model" value="@(@Model._service.ServiceDetails.Count>0?@Model._service.ServiceDetails[0].Model:"")">
+                                            </div>
+
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Serial No.</label>
+                                                <input type="text" class="form-control" id="Serial" name="Serial" placeholder="Enter Serial No." value="@(@Model._service.ServiceDetails.Count>0?@Model._service.ServiceDetails[0].SerialNo:"")">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </fieldset>
+
                             </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group col-md-12">
+                                    <label for="exampleInputFile">Before </label>
+                                    <div class="input-group " id="uploadBeforeHolder">
+
+                                        <input id="PicturesBeforeFix1" name="PicturesBeforeFix1" class="file fa-2x fileImage " type="file" multiple="true" style="height:50px;" EquId="1" pictureType="1">
+
+
+
+                                        <div class="fielUploadValidationHolder">
+                                            <span id="uploadError" class="errorMessage uploadError"></span>
+                                            <progress id="fileProgress" style="display: none" class="progress"></progress>
+                                            <span id="lblMessage" class="uploadSccessMessage lblMessage"></span>
+                                            <div id="thumbHolder" class="thumbHolder">
+
+                                                @if(@Model._service.ServiceDetails.Count>0){
+                                                @foreach (var item in Model._service.ServiceDetails[0].servicePictures)
+                                                {
+                                                    @if (item.PictureTypeId == 1)
+                                                    {
+
+
+                                                        <div>
+                                                            <div class="file-preview-frame krajee-default  kv-preview-thumb">
+                                                                <div><a href="@Model.uploadurl@item.FileName" target='_blank'><image src="@Model.uploadurl@item.FileName" style='width:100px;height:100px' /></a></div>
+                                                                <div><button type='button' class='btn btn-block btn-info deletImage' filename="@Model.uploadurl@item.FileName" data-toggle='modal' data-target='#modal-delete'>Delete</button></div>
+                                                            </div>
+                                                        </div>
+                                                    }
+
+
+                                                }
+                                                }
+
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                      
+
+
+
+
                         </div>
-                        </fieldset> 
-                    
+
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <fieldset class="form-group border p-3">
+                                        <legend class="w-auto px-2">Service Details</legend>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Remarks</label>
+                                                    <textarea class="form-control" id="Remarks" name="Remarks" rows="3">@Model._service.Remark</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Service Rendered</label>
+                                                    <textarea class="form-control" id="Rendered" name="Rendered" rows="3">@(@Model._service.ServiceDetails.Count>0?@Model._service.ServiceDetails[0].ServiceRendered:"")</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label>Materials Used</label>
+                                                    <select name="MaterialUsed1" id="MaterialUsed1" class="form-control select2" style="width: 100%;" multiple>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                </div>
+                                <div class="row">
+
+
+                                    <div class="col-md-12">
+                                        <div class="form-group col-md-12">
+                                            <label for="exampleInputFile">After </label>
+                                            <div class="input-group " id="uploadAftereHolder">
+
+                                                <input id="PicturesAfterFix1" name="PicturesAfterFix1" class="file fa-2x fileImage " type="file" multiple="true" style="height:50px;" EquId="1" pictureType="2">
+
+                                                <div class="fielUploadValidationHolder">
+                                                    <span id="uploadError" class="errorMessage uploadError"></span>
+                                                    <progress id="fileProgress" style="display: none" class="progress"></progress>
+                                                    <span id="lblMessage" class="uploadSccessMessage lblMessage"></span>
+                                                    <div id="thumbHolder" class="thumbHolder">
+
+                                                        @if(@Model._service.ServiceDetails.Count>0){
+                                                        @foreach (var item in Model._service.ServiceDetails[0].servicePictures)
+                                                        {
+                                                            @if (item.PictureTypeId == 2)
+                                                            {
+
+
+                                                                <div>
+                                                                    <div class="file-preview-frame krajee-default  kv-preview-thumb">
+                                                                        <div><a href="@Model.uploadurl@item.FileName" target='_blank'><image src="@Model.uploadurl@item.FileName" style='width:100px;height:100px' /></a></div>
+                                                                        <div><button type='button' class='btn btn-block btn-info deletImage' filename="@Model.uploadurl@item.FileName" data-toggle='modal' data-target='#modal-delete'>Delete</button></div>
+                                                                    </div>
+                                                                </div>
+                                                            }
+
+
+                                                        }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Status After Service</label>
+                                            <select name="ddStatusAfter" id="ddStatusAfter" class="form-control select2 ddEquipment" style="width: 100%;">
+                                                <option value="">Please Select Status</option>
+                                                <option value="1">Complete</option>
+                                                <option value="2">Incomplete</option>
+                                                <option value="3">Pending for Spare</option>
+                                                <option value="4">Under Observation</option>
+
+                                            </select>
+                                            <span id="stsAfter" class="errorMessage" style="text-align:left;"></span>
+
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- /.row -->
+                                <div class="dropdown-divider"></div>
+
+                                <div class="row" style="float: right;">
+                                    <div class="col">
+                                        <div style="padding: 20px;float:left">
+                                            <button type="button" id="SaveDraft" class="btn btn-block btn-default btn-lg">
+
+                                                <i class="fa-solid fa-pen-nib"></i> Save Draft
+                                            </button>
+
+                                        </div>
+
+                                        <div style="padding: 20px;float:left">
+                                            <button type="button" class="btn btn-block btn-info btn-lg">
+                                                <i class="fa-solid fa-arrow-right"></i>
+                                                Save &
+                                                Continue
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
+                                <!-- /.row -->
+
+                            </div>
+                            <!-- /.card-body -->
+
+                        </div>
+                    </form>
                 </div>
 
+                <!-- /.card -->
+                @{ List<int> arrayused =new List<int>();}
+                @if (@Model._service.ServiceDetails.Count > 0)
+                {
+                    
+                   
+                   
+                    for (int u = 0; u < @Model._service.ServiceDetails[0].MaterialsUsed.Count; u++)
+                    {
+                        arrayused[u] = @Model._service.ServiceDetails[0].MaterialsUsed[u].MaterialId;
+
+                    }
+
+                }
+                else
+                {
+                    
+                }
+
+
             </div>
-            <!-- /.row -->
- <div class="dropdown-divider" ></div>
-            
-            <div class="row" style="float: right;"> 
-             <div class="col">
-                     <div style="padding: 20px;float:left">
-              <button type="button" id="SaveDraft" class="btn btn-block btn-default btn-lg" >
+            @section Scripts{
+            <script type="text/javascript">
+                $(document).ready(function () {
+
+
+                 if(@Model._service.SiteVistTypeId==''){
+                     $("#ddVistType").val('').trigger('change');
+                 }else{
+                $("#ddVistType").val(@Model._service.SiteVistTypeId).trigger('change');
+
+                 }
+                 $("#ddStatusAfter").val(@Model._service.StatusAfterId).trigger('change');
+                 $("#ddType").val(@Model._service.ServiceTypeId).trigger('change');
                 
-              <i class="fa-solid fa-pen-nib"></i> Save Draft</button>
+                 if(@Model._service.ServiceDetails.Count>0){
+                 $("#ddCondition").val@(@Model._service.ServiceDetails.Count>0?@Model._service.ServiceDetails[0].ConditionId:"")).trigger('change');
+                 $("#Equipments1").val(@(@Model._service.ServiceDetails.Count>0?@Model._service.ServiceDetails[0].EquipmentId:"")).trigger('change');
+                 }
+                
 
-             </div>
 
-           <div style="padding: 20px;float:left">
-             <button type="button" class="btn btn-block btn-info btn-lg" >
-              <i class="fa-solid fa-arrow-right"></i>
-              Save &
-              Continue</button>
+                  var arr = @Html.Raw(@Json.Serialize(@arrayused));
 
-             </div>
-             </div>
-              <!-- /.col -->
-            </div>
-            <!-- /.row -->
-          </div>
-          <!-- /.card-body -->
-         
+                  $('#MaterialUsed1').val(arr);
+                  $('#MaterialUsed1').trigger('change');
+                })
+            </script>
+            }
+
+
+            <!-- /.card-body -->
         </div>
+        <input type="hidden" id="APIURI" name="APIURI" value="@Model.apiurl" />
+        <input type="hidden" id="Uploadlocation" name="Uploadlocation" value="@Model.uploadurl" />
+        <input type="hidden" id="serviceid" name="serviceid" value="@Model._ServiceId" />
 
-            </div>
-            
-        <!-- /.card -->
-
-
-        </div>
-
-
+        <input type="hidden" id="ServiceDetailsid1" name="ServiceDetailsid1" 
         
-        <!-- /.card-body -->
-      </div>
-       <input type="hidden" id="APIURI" name="APIURI" value="@Model.apiurl"/>
+        value="@(@Model._service.ServiceDetails.Count>0?@Model._service.ServiceDetails[0].CorrectiveServiceDetailsId:"")"/>
+     
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+
+</div>
+
+<!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Select2 -->
+<script src="plugins/select2/js/select2.full.min.js"></script>
+<!-- InputMask -->
 
 
-          <!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
 
-        </div>
+<script src="~/js/Corrective/corrective.js"></script>
+<!-- date-range-picker -->
 
-        <!-- jQuery -->
-        <script src="plugins/jquery/jquery.min.js"></script>
-        <!-- Bootstrap 4 -->
-        <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <!-- Tempusdominus Bootstrap 4 -->
-        <!-- Select2 -->
-        <script src="plugins/select2/js/select2.full.min.js"></script>
-        <!-- InputMask -->
-        <script src="plugins/moment/moment.min.js"></script>
-        <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-        <!-- date-range-picker -->
-        <script src="plugins/daterangepicker/daterangepicker.js"></script>
 
-   
 
-             <script src="~/js/Corrective/corrective.js"></script>
+<script src="plugins/moment/moment.min.js"></script>
+<script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 
-            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/tus-js-client@latest/dist/tus.min.js"></script>
 
-          
 
-            <script src="plugins/jquery-validation/jquery.validate.min.js"></script>
-            <script src="plugins/jquery-validation/additional-methods.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/tus-js-client@latest/dist/tus.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="~/plugins/fileInput/fileinput.css"/>
-    <script type="text/javascript" src="~/plugins/fileInput/fileinput.js"></script>
-            
+<script src="~/js/preventive/Equipments.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="~/plugins/fileInput/fileinput.css" />
+<script type="text/javascript" src="~/plugins/fileInput/fileinput.js"></script>
+
 <!-- default icons used in the plugin are from Bootstrap 5.x icon library (which can be enabled by loading CSS below) -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.min.css" crossorigin="anonymous">
 
-    <!-- piexif.min.js is needed for auto orienting image files OR when restoring exif data in resized images and when you
-    wish to resize images before upload. This must be loaded before fileinput.min.js -->
+<!-- piexif.min.js is needed for auto orienting image files OR when restoring exif data in resized images and when you
+wish to resize images before upload. This must be loaded before fileinput.min.js -->
 <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/plugins/piexif.min.js" type="text/javascript"></script>
- 
-<!-- sortable.min.js is only needed if you wish to sort / rearrange files in initial preview. 
+
+<!-- sortable.min.js is only needed if you wish to sort / rearrange files in initial preview.
     This must be loaded before fileinput.min.js -->
 <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/plugins/sortable.min.js" type="text/javascript"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+<script src="plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="plugins/jquery-validation/additional-methods.min.js"></script>
+
+
