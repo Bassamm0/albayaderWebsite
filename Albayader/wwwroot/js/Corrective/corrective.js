@@ -383,7 +383,7 @@
     function updateStatus(statusId) {
 
        
-        var remark = $('#serviceRemark').val()
+        var remark = $('#Remarks').val()
         var url = APIURL + 'service/updatestatus'
         var statusAfterId = $('#ddStatusAfter').val()
         var siteVistTypeId = $('#ddVistType').val()

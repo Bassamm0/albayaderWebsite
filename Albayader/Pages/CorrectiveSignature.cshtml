@@ -1,4 +1,356 @@
 ﻿@page
 @model AlbayaderWeb.Pages.CorrectiveSignatureModel
 @{
+
+    ViewData["Title"] = "Client Review";
+
 }
+
+<link rel="stylesheet" href="~/plugins/lightBox/touchTouch.css">
+<div class="content-wrapper">
+
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-left">
+                        <li class="breadcrumb-item"><a href="Dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item actifve">Peventive Service Supervisor Review</li>
+                    </ol>
+                </div>
+
+            </div>
+
+
+
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="col-sm">
+
+                        <div class="info-box-content">
+                            <div class="user-block">
+                                <img class="img-circle img-bordered-sm" src="@Model.uploadurl@Model._service.PictureFileName" alt="user image">
+                                <span class="username">
+                                    <a href="#">@Model._service.TechnicianName</a>
+                                </span>
+                                <span class="description">Technician</span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm">
+
+                        <div class="info-box-content">
+                            <div class="info-box-text text-center text-muted"><b>@Model._service.CompanyName - @Model._service.BranchName</b></div>
+                            <div class="info-box-number text-center text-muted mb-0"> <span class="RefNum"> Ref:#@Model._service.ServiceId</span></div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm">
+
+                        <div class="info-box-content" style="float: right;text-align: left;">
+                            <div class="info-box-text text-center text-muted">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                @Model._service.CreatedDate.ToShortDateString()
+                            </div>
+                            <div class="info-box-number text-muted mb-0"><i class="fa-solid fa-clock"></i> @Model._service.CreatedDate.ToString("HH:mm")</div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+
+        <!--body content-->
+        <section class="content">
+            <form method="post" id="ClientSignatureForm" name="ClientSignatureForm">
+
+                <!--view data-->
+
+
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title">Service Details </h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <i class="fa-solid fa-gears"></i><label class="ServiceViewHeaders">Visit Details</label>
+                                    <div class="row" style="padding-left:20px;">
+                                        <div class="col-sm">
+                                            Site Vist Type:@Model._service.VistTypeName
+                                        </div>
+                                         <div class="col-sm">
+                                             Call Reported By:<span style="font-weight:700;">@Model._service.ServiceDetails[0].ReportedBy</span>
+                                        </div>
+                                         <div class="col-sm">
+                                             Reported Date:<span style="font-weight:700;">@Model._service.ServiceDetails[0].ReportedDate</span>
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                         <div class="col-md-12">
+                                             Probelm Reported:<span>@Model._service.ServiceDetails[0].ProblemReported</span>
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                        <div class="col-sm">
+                                            Condition:<span>@Model._service.ServiceDetails[0].ConditionName</span>
+                                        </div>
+                                         <div class="col-sm">
+                                            Type:@Model._service.ServiceTypeName
+                                        </div>
+                                         
+                                    </div>
+                                    <div class="dropdown-divider"></div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-12" style="padding-left: 0px;">
+                                <div class="text-primary">
+                                    <i class="fa-solid fa-gear"></i> <label class="primary" style="font-size:30px;"> @Model._service.ServiceDetails[0].EquipmentName </label>
+                                    <label class=""> Serial No.  @Model._service.ServiceDetails[0].SerialNo</label>
+
+
+                                </div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <i class="fa-solid fa-camera"></i> <label class="ServiceViewHeaders">Picture Before</label>
+                                    <div class="">
+                                        @{
+                                            int counter = 0;
+                                        }
+                                        @if (@Model._service.ServiceDetails[0].servicePictures != null)
+                                        {
+                                            counter = counter + 1;
+                                            <div class="images-wrapper d-flex " id="gallery{@counter}">
+                                                @foreach (var picture in @Model._service.ServiceDetails[0].servicePictures)
+                                                {
+
+                                                    @if (picture.PictureTypeId == 1)
+                                                    {
+                                                        <a class="magnifier" href="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)"> <img src="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)" alt="" class="img-item mx-1"></a>
+
+                                                    }
+                                                }
+                                            </div>
+                                        }
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                           
+                            <div class="dropdown-divider"></div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <i class="fa-solid fa-boxes-stacked"></i> <label class="ServiceViewHeaders">Materials Used</label>
+
+                                    <ul>
+
+                                        @if (Model._service.ServiceDetails[0].MaterialsUsed != null)
+                                        {
+                                            @foreach (var mUsed in Model._service.ServiceDetails[0].MaterialsUsed)
+                                            {
+                                                <li>@Html.DisplayFor(modelItem => mUsed.MateriaUsedlName)</li>
+                                            }
+
+
+                                        }
+
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <i class="fa-solid fa-boxes-stacked"></i> <label class="ServiceViewHeaders">Required Materials</label>
+
+
+                                </div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <i class="fa-solid fa-camera"></i> <label class="ServiceViewHeaders">Picture After</label>
+                                    <div class="">
+
+                                        @if (@Model._service.ServiceDetails[0].servicePictures != null)
+                                        {
+                                            counter = counter + 1;
+                                            <div class="images-wrapper d-flex " id="gallery{@counter}">
+                                                @foreach (var picture in @Model._service.ServiceDetails[0].servicePictures)
+                                                {
+
+                                                    @if (picture.PictureTypeId == 1)
+                                                    {
+                                                        <a class="magnifier" href="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)"> <img src="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)" alt="" class="img-item mx-1"></a>
+
+                                                    }
+                                                }
+                                            </div>
+                                        }
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <div class="dropdown-divider"></div>
+                           
+
+
+                             <div class="col-md-12">
+                                <div class="form-group">
+                                    <i class="fa-solid fa-gears"></i><label class="ServiceViewHeaders">Service Details</label>
+                                    <div class="row" style="padding-left:20px;">
+                                    
+                                         <div class="col-md-12">
+                                             Remarks:<span>@Model._service.Remark</span>
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                       <div class="col-md-12">
+                                             Service Rendered:<span>@Model._service.ServiceDetails[0].ServiceRendered</span>
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                        <div class="col-md-12">
+                                             Status After Service:<span>@Model._service.StatusAfterName</span>
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                         
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- end view data-->
+
+
+                <div id="SignatureMainHodler">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <h3 class="card-title">Client Review </h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+
+                            </div>
+
+
+
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail">Client Name</label>
+                                        <input type="text" class="form-control " id="ClientName" name="ClientName" maxlength="50"
+                                               placeholder="Enter your name.">
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail">Client Feedback.</label>
+                                        <textarea class="form-control" id="clientFeedback" name="clientFeedback" rows="3"></textarea>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail">Signature </label>
+
+                                        <div style="width:80%" class='js-signature'></div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <button style="width:250px;" type="button" class="btn btn-block btn-default btn-lg" id="CleanSignature" name="CleanSignature" maxlength="250">
+
+                                            Clear
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-block btn-info btn-lg" id="SaveAndComplete" name="SaveAndComplete">
+                                            <i class="fa-solid fa-arrow-right"></i>
+                                            Submit
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <input type="hidden" id="APIURI" name="APIURI" value="@Model.apiurl" />
+                <input type="hidden" id="Uploadlocation" name="Uploadlocation" value="@Model.uploadurl" />
+                <input type="hidden" id="serviceid" name="serviceid" value="@Model._service.ServiceId" />
+
+
+            </form>
+
+            <!-- /.container-fluid -->
+        </section>
+
+
+    </div>
+
+    <!-- /.content -->
+
+</div>
+
+
+<!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="js/preventive/preventiveSignature.js"></script>
+<script src="plugins/Signature/jq-signature.min.js"></script>
+
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/tus-js-client@latest/dist/tus.min.js"></script>
+<script src="plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="plugins/jquery-validation/additional-methods.min.js"></script>
+
+
+
+
+<script src="~/plugins/lightBox/touchTouch.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>

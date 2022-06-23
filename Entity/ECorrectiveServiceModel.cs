@@ -45,6 +45,9 @@ namespace Entity
         public List<ECorrectiveServiceDetails> ServiceDetails { get; set; }
 
         public int? SiteVistTypeId { get; set; }
+        [NotMapped]
+        public string VistTypeName { get; set; }
+       
 
     }
 }

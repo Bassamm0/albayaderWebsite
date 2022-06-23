@@ -277,7 +277,7 @@
                                                         <div>
                                                             <div class="file-preview-frame krajee-default  kv-preview-thumb">
                                                                 <div><a href="@Model.uploadurl@item.FileName" target='_blank'><image src="@Model.uploadurl@item.FileName" style='width:100px;height:100px' /></a></div>
-                                                                <div><button type='button' class='btn btn-block btn-info deletImage' filename="@Model.uploadurl@item.FileName" data-toggle='modal' data-target='#modal-delete'>Delete</button></div>
+                                                                <div><button type='button' class='btn btn-block btn-info deletImage' filename="@item.FileName" data-toggle='modal' data-target='#modal-delete'>Delete</button></div>
                                                             </div>
                                                         </div>
                                                     }
@@ -359,7 +359,7 @@
                                                                 <div>
                                                                     <div class="file-preview-frame krajee-default  kv-preview-thumb">
                                                                         <div><a href="@Model.uploadurl@item.FileName" target='_blank'><image src="@Model.uploadurl@item.FileName" style='width:100px;height:100px' /></a></div>
-                                                                        <div><button type='button' class='btn btn-block btn-info deletImage' filename="@Model.uploadurl@item.FileName" data-toggle='modal' data-target='#modal-delete'>Delete</button></div>
+                                                                        <div><button type='button' class='btn btn-block btn-info deletImage' filename="@item.FileName" data-toggle='modal' data-target='#modal-delete'>Delete</button></div>
                                                                     </div>
                                                                 </div>
                                                             }
@@ -405,7 +405,7 @@
                                         </div>
 
                                         <div style="padding: 20px;float:left">
-                                            <button type="button" class="btn btn-block btn-info btn-lg">
+                                            <button type="button" class="btn btn-block btn-info btn-lg" id="SaveAndContinue">
                                                 <i class="fa-solid fa-arrow-right"></i>
                                                 Save &
                                                 Continue
@@ -429,12 +429,9 @@
                 @if (@Model._service.ServiceDetails.Count > 0)
                 {
                     
-                   
-                   
                     for (int u = 0; u < @Model._service.ServiceDetails[0].MaterialsUsed.Count; u++)
                     {
-                        arrayused[u] = @Model._service.ServiceDetails[0].MaterialsUsed[u].MaterialId;
-
+                        arrayused.Add(@Model._service.ServiceDetails[0].MaterialsUsed[u].MaterialId);
                     }
 
                 }
@@ -450,29 +447,27 @@
                 $(document).ready(function () {
 
 
-                 if(@Model._service.SiteVistTypeId==''){
-                     $("#ddVistType").val('').trigger('change');
-                 }else{
+                
                 $("#ddVistType").val(@Model._service.SiteVistTypeId).trigger('change');
 
-                 }
                  $("#ddStatusAfter").val(@Model._service.StatusAfterId).trigger('change');
                  $("#ddType").val(@Model._service.ServiceTypeId).trigger('change');
                 
                  if(@Model._service.ServiceDetails.Count>0){
-                 $("#ddCondition").val@(@Model._service.ServiceDetails.Count>0?@Model._service.ServiceDetails[0].ConditionId:"")).trigger('change');
+                 $("#ddCondition").val(@(@Model._service.ServiceDetails.Count>0?@Model._service.ServiceDetails[0].ConditionId:"")).trigger('change');
                  $("#Equipments1").val(@(@Model._service.ServiceDetails.Count>0?@Model._service.ServiceDetails[0].EquipmentId:"")).trigger('change');
                  }
                 
 
 
                   var arr = @Html.Raw(@Json.Serialize(@arrayused));
-
+                  console.log(arr)
                   $('#MaterialUsed1').val(arr);
                   $('#MaterialUsed1').trigger('change');
                 })
             </script>
             }
+
 
 
             <!-- /.card-body -->
@@ -490,6 +485,37 @@
     <!-- /.content -->
 
 </div>
+
+            
+        <div class="modal fade " id="modal-delete">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Delete Confirmation</h4>
+             <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+               
+            </div>
+            <div class="modal-body">
+              <div id="Deletetext">
+                  Are you sure you want to delete this picture
+                 
+                  <div class="deleteWarning" > Please note that this action can't be rolled back and the deleted data can't be retrived</div>
+              </div>
+            </div>
+          
+              <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger" fileName=""   id="DeleteImageBtn">Delete</button>
+
+            </div>
+      
+           
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
 
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>

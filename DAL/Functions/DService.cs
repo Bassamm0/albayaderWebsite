@@ -222,12 +222,13 @@ namespace DAL.Functions
 
                     StringBuilder sQuery = new StringBuilder();
                     sQuery.Append("select CONCAT_WS(' ',U.FirstName,U.Lastname) as CreaterName ,CONCAT_WS(' ',UT.FirstName,UT.Lastname) as TechnicianName,UT.PictureFileName, ");
-                    sQuery.Append(" BR.BranchName,CO.Name CompanyName,ST.ServiceTypeName ,SR.*,STF.StatusAfterName  from services SR ");
+                    sQuery.Append(" BR.BranchName,CO.Name CompanyName,ST.ServiceTypeName ,SVT.*,SR.*,STF.StatusAfterName  from services SR ");
                     sQuery.Append(" inner join  Branchs BR on BR.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
                     sQuery.Append(" inner join Users U on U.UserId=SR.CreatedBy ");
                     sQuery.Append(" inner join Users UT on UT.UserId=SR.TechnicianId ");
                     sQuery.Append(" inner join ServiceType ST on ST.ServiceTypeId=SR.ServiceTypeId ");
+                    sQuery.Append(" inner join SiteVistType SVT on SVT.SiteVistTypeId=CR.SiteVistTypeId ");
                     sQuery.Append(" left join StatusAfter STF on STF.StatusAfterId=SR.StatusAfterId ");
                     sQuery.AppendFormat(" where SR.ServiceId={0} ", ServiceId);
 
@@ -257,6 +258,7 @@ namespace DAL.Functions
                             if (dataReader["StatusAfterId"] != DBNull.Value) { oEServiceModel.StatusAfterId = (int)dataReader["StatusAfterId"]; }
                             if (dataReader["StatusAfterName"] != DBNull.Value) { oEServiceModel.StatusAfterName = (string)dataReader["StatusAfterName"]; }
                             if (dataReader["SiteVistTypeId"] != DBNull.Value) { oEServiceModel.SiteVistTypeId = (int)dataReader["SiteVistTypeId"]; }
+                            if (dataReader["VistTypeName"] != DBNull.Value) { oEServiceModel.VistTypeName = (string)dataReader["VistTypeName"]; }
                             oEServiceModel.ServiceDetails = getAllCorrectiveServiceDetails(oEServiceModel.ServiceId);
                         }
                     }
@@ -394,7 +396,7 @@ namespace DAL.Functions
             return eServices;
         }
 
-        public async Task<EServices> updateStatus(int serviceId, int statusId,string remark,int statusAfterId)
+        public async Task<EServices> updateStatus(int serviceId, int statusId,string remark,int statusAfterId,int siteVistTypeId)
         {
             EServices eServices = new EServices();
 
@@ -403,6 +405,7 @@ namespace DAL.Functions
             eServices.StatusId = statusId;
             eServices.Remark=remark;
             eServices.StatusAfterId=statusAfterId;
+            eServices.SiteVistTypeId= siteVistTypeId;
 
             if (eServices == null)
             {
@@ -414,6 +417,7 @@ namespace DAL.Functions
                 context.Entry(eServices).Property(x => x.StatusId).IsModified = true;
                 context.Entry(eServices).Property(x => x.Remark).IsModified = true;
                 context.Entry(eServices).Property(x => x.StatusAfterId).IsModified = true;
+                context.Entry(eServices).Property(x => x.SiteVistTypeId).IsModified = true;
 
                 await context.SaveChangesAsync();
             }

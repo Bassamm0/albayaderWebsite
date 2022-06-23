@@ -162,9 +162,10 @@ namespace API.Controllers
                 var statusId = objData.GetProperty("statusId").GetInt16();
                 var remark = objData.GetProperty("remark").GetString();
                 var statusAfterId = objData.GetProperty("statusAfterId").GetInt16();
+                var siteVistTypeId = objData.GetProperty("siteVistTypeId").GetInt16();
 
 
-                result = await serviceLogic.updateStatus(serviceId, statusId,remark, statusAfterId);
+                result = await serviceLogic.updateStatus(serviceId, statusId,remark, statusAfterId, siteVistTypeId);
             }
             catch (Exception ex)
             {

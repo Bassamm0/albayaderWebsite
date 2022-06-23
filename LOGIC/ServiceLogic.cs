@@ -80,10 +80,10 @@ namespace LOGIC
             }
 
         }
-        public async Task<Boolean> updateStatus(int serviceId,int statusId, string remark,int statusAfterId)
+        public async Task<Boolean> updateStatus(int serviceId,int statusId, string remark,int statusAfterId,int siteVistTypeId)
         {
 
-            var resul = await dservice.updateStatus(serviceId, statusId,remark, statusAfterId);
+            var resul = await dservice.updateStatus(serviceId, statusId,remark, statusAfterId, siteVistTypeId);
             if (resul != null && resul.ServiceId > 0)
             {
                 return true;
