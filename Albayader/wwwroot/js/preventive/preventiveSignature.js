@@ -66,7 +66,8 @@
             //$('#modal-delete').modal('hide');
             //$(".deletImage[filename='" + image + "']").parent('div').parent('div').remove();
             toastr["success"]("Service signed by client successfuly.")
-
+   
+            window.location.href = " serviceComplet?ServiceId=" + _ServiceId;
         });
 
     }

@@ -34,12 +34,14 @@ namespace API.Controllers
                 {
                     fileName = UtilityHelper.changeFilename(file.FileName);
                     string filePath = Path.Combine(directoryPath, fileName);
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        file.CopyTo(stream);
 
-                    }
+                   
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+
                 }
+            }
                 return Ok(fileName);
             }
 
@@ -61,15 +63,17 @@ namespace API.Controllers
             //string directoryPath = Path.Combine(AppContext.BaseDirectory, "/Albayader/Uploads");
             try
             {
+                bool StoreImage=false;
                 string directoryPath = Path.Combine(env.ContentRootPath, "Uploads");
                 foreach (var file in files)
                 {
                     fileName = UtilityHelper.changeFilename(file.FileName);
                     string filePath = Path.Combine(directoryPath, fileName);
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        file.CopyTo(stream);
-                    }
+                    //using (var stream = new FileStream(filePath, FileMode.Create))
+                    //{
+                    //    file.CopyTo(stream);
+                    //}
+                    StoreImage=UtilityHelper.comperssImage(file, filePath);
                     var result =await _uploadFileLogic.UploadServiceImages(fileName, serviceDetailsId, pictureTypeId);
                     if (result)
                     {

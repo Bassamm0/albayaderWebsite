@@ -168,3 +168,25 @@
 .removeForm{
     cursor:pointer;
 }
+.labelsView{
+
+    font-weight:700;
+}
+
+.thankyou h2 {
+    font-size: 100px;
+    font-weight: 300;
+}
+
+.thankyoucontent{
+
+}
+    .thankyoucontent h3 {
+        font-size: 1.75rem;
+    }
+
+
+.thankyouMain {
+    width: 100%;
+    text-align: center;
+}

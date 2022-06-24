@@ -43,8 +43,9 @@ namespace Entity
         public string CompanyName { get; set; }
         [NotMapped]
        public List<EServiceDetails> ServiceDetails { get; set; }
-        
-        
+        [NotMapped]
+        public string VistTypeName { get; set; }
+  
 
     }
 }

@@ -157,10 +157,10 @@
                                                             <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
                                                             <td>@Html.DisplayFor(modelItem => item.TechnicianName)</td>
                                                         @if(@item.ServiceTypeId==1){
-                                                            <td><a href="preventive?ServiceId=@item.ServiceId">Edit</a></td>
+                                                            <td><a href="preventive?ServiceId=@item.ServiceId">View</a></td>
 
                                                         }else{
-                                                            <td><a href="corrective?ServiceId=@item.ServiceId">Edit</a></td>
+                                                            <td><a href="corrective?ServiceId=@item.ServiceId">View</a></td>
 
                                                         }
                                                         </tr>

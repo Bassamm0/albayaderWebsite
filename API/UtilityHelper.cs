@@ -12,15 +12,13 @@ using System.Data.SqlClient;
 using System.Text;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
+
 using System.Linq;
 using System.Net;
 using System.Collections;
 using Microsoft.Web.Helpers;
-
-
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 
 namespace API
 {
@@ -78,11 +76,45 @@ namespace API
         //    }
         //    return filename;
         //}
+        public static bool comperssImage(IFormFile file,string fullPath)
+        {
+
+            if (file.Length > 0)
+            {
 
 
-       
+                using (var img = Image.Load(file.OpenReadStream()))
+                {
+                    string newSize = ResizeImage(img, 1200, 1080);
+                    string[] aSize = newSize.Split(',');
+                    img.Mutate(h => h.Resize(Convert.ToInt32(aSize[1]), Convert.ToInt32(aSize[0])));
+                    img.Save(fullPath);
 
-       
+
+
+                }
+            }
+                return true;
+        }
+
+        public static string ResizeImage(Image img, int maxWidth, int maxHeight)
+        {
+            if (img.Width > maxWidth || img.Height > maxHeight)
+            {
+                double widthRatio = (double)img.Width / (double)maxWidth;
+                double heightRatio = (double)img.Height / (double)maxHeight;
+                double ratio = Math.Max(widthRatio, heightRatio);
+                int newWidth = (int)(img.Width / ratio);
+                int newHeight = (int)(img.Height / ratio);
+                return newHeight.ToString() + "," + newWidth.ToString();
+            }
+            else
+            {
+                return img.Height.ToString() + "," + img.Width.ToString();
+            }
+        }
+
+
 
 
         public static string AppendDateTime(string filename, string fileExt)

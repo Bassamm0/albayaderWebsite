@@ -29,6 +29,13 @@ namespace LOGIC
 
             return services;
         }
+        public async Task<List<EServiceModel>> getAllCompletedService()
+        {
+
+            List<EServiceModel> services = dservice.getAllCompletedService();
+
+            return services;
+        }
         public async Task<EServiceModel> getSingleService(int ServiceId)
         {
 

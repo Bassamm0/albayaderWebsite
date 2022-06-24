@@ -36,7 +36,16 @@ namespace API.Controllers
 
             return services;
         }
+        [Route("completedservice")]
+        [HttpGet]
+        public async Task<List<EServiceModel>> getAllCompletedService()
+        {
+            
+            List<EServiceModel> services = new List<EServiceModel>();
+            services = await serviceLogic.getAllCompletedService();
 
+            return services;
+        }
         [Route("getservicebyid")]
         [HttpPost]
         public async Task<EServiceModel> getSingleService(JsonElement objData)

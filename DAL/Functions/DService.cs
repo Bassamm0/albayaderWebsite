@@ -140,8 +140,73 @@ namespace DAL.Functions
 
             return services;
         }
-            
 
+        public List<EServiceModel> getAllCompletedService()
+        {
+            List<EServiceModel> services = new List<EServiceModel>();
+
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.Append("select CONCAT_WS(' ',U.FirstName,U.Lastname) as CreaterName ,CONCAT_WS(' ',UT.FirstName,UT.Lastname) as TechnicianName, ");
+                    sQuery.Append(" BR.BranchName,CO.Name CompanyName,ST.ServiceTypeName, STF.StatusAfterName ,STV.VistTypeName ,SR.* from services SR ");
+                    sQuery.Append(" inner join  Branchs BR on BR.branchId=SR.BranchId ");
+                    sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
+                    sQuery.Append(" inner join Users U on U.UserId=SR.CreatedBy ");
+                    sQuery.Append(" inner join Users UT on UT.UserId=SR.TechnicianId ");
+                    sQuery.Append(" inner join ServiceType ST on ST.ServiceTypeId=SR.ServiceTypeId ");
+                    sQuery.Append(" inner join SiteVistType STV on STV.SiteVistTypeId=SR.SiteVistTypeId ");
+                    sQuery.Append(" left join StatusAfter STF on STF.StatusAfterId=SR.StatusAfterId ");
+                    sQuery.AppendFormat(" where SR.StatusId=5" );
+                    sQuery.Append(" order by SR.CreatedDate desc ");
+
+                    command.CommandText = sQuery.ToString();
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            EServiceModel oEServiceModel = new EServiceModel();
+                            if (dataReader["ServiceId"] != DBNull.Value) { oEServiceModel.ServiceId = (int)dataReader["ServiceId"]; }
+                            if (dataReader["ServiceTypeId"] != DBNull.Value) { oEServiceModel.ServiceTypeId = (int)dataReader["ServiceTypeId"]; }
+                            if (dataReader["StatusId"] != DBNull.Value) { oEServiceModel.StatusId = (int)dataReader["StatusId"]; }
+                            if (dataReader["TechnicianId"] != DBNull.Value) { oEServiceModel.TechnicianId = (int)dataReader["TechnicianId"]; }
+                            if (dataReader["BranchId"] != DBNull.Value) { oEServiceModel.BranchId = (int)dataReader["BranchId"]; }
+                            if (dataReader["CreatedDate"] != DBNull.Value) { oEServiceModel.CreatedDate = (DateTime)dataReader["CreatedDate"]; }
+                            if (dataReader["CompletionDate"] != DBNull.Value) { oEServiceModel.CompletionDate = (DateTime)dataReader["CompletionDate"]; }
+                            if (dataReader["CreaterName"] != DBNull.Value) { oEServiceModel.CreaterName = (string)dataReader["CreaterName"]; }
+                            if (dataReader["TechnicianName"] != DBNull.Value) { oEServiceModel.TechnicianName = (string)dataReader["TechnicianName"]; }
+                            if (dataReader["ServiceTypeName"] != DBNull.Value) { oEServiceModel.ServiceTypeName = (string)dataReader["ServiceTypeName"]; }
+                            if (dataReader["BranchName"] != DBNull.Value) { oEServiceModel.BranchName = (string)dataReader["BranchName"]; }
+                            if (dataReader["CompanyName"] != DBNull.Value) { oEServiceModel.CompanyName = (string)dataReader["CompanyName"]; }
+                            if (dataReader["StatusAfterId"] != DBNull.Value) { oEServiceModel.StatusAfterId = (int)dataReader["StatusAfterId"]; }
+                            if (dataReader["StatusAfterName"] != DBNull.Value) { oEServiceModel.StatusAfterName = (string)dataReader["StatusAfterName"]; }
+                            if (dataReader["SupervisourFeedback"] != DBNull.Value) { oEServiceModel.SupervisourFeedback = (string)dataReader["SupervisourFeedback"]; }
+                            if (dataReader["Remark"] != DBNull.Value) { oEServiceModel.Remark = (string)dataReader["Remark"]; }
+                            if (dataReader["CompletionDate"] != DBNull.Value) { oEServiceModel.CompletionDate = (DateTime)dataReader["CompletionDate"]; }
+                            if (dataReader["VistTypeName"] != DBNull.Value) { oEServiceModel.VistTypeName = (string)dataReader["VistTypeName"]; }
+                            // oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);
+
+                            services.Add(oEServiceModel);
+                        }
+                    }
+                    dataReader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return services;
+        }
         public EServiceModel getSingleService(int ServiceId)
         {
 
@@ -191,6 +256,9 @@ namespace DAL.Functions
                             if (dataReader["Remark"] != DBNull.Value) { oEServiceModel.Remark = (string)dataReader["Remark"]; }
                             if (dataReader["StatusAfterId"] != DBNull.Value) { oEServiceModel.StatusAfterId = (int)dataReader["StatusAfterId"]; }
                             if (dataReader["StatusAfterName"] != DBNull.Value) { oEServiceModel.StatusAfterName = (string)dataReader["StatusAfterName"]; }
+                            if (dataReader["SupervisourName"] != DBNull.Value) { oEServiceModel.SupervisourName = (string)dataReader["SupervisourName"]; }
+                            if (dataReader["SupervisourFeedback"] != DBNull.Value) { oEServiceModel.SupervisourFeedback = (string)dataReader["SupervisourFeedback"]; }
+                            if (dataReader["SupervisourSignature"] != DBNull.Value) { oEServiceModel.SupervisourSignature = (string)dataReader["SupervisourSignature"]; }
                             oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);                          
                         }
                     }
@@ -228,7 +296,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join Users U on U.UserId=SR.CreatedBy ");
                     sQuery.Append(" inner join Users UT on UT.UserId=SR.TechnicianId ");
                     sQuery.Append(" inner join ServiceType ST on ST.ServiceTypeId=SR.ServiceTypeId ");
-                    sQuery.Append(" inner join SiteVistType SVT on SVT.SiteVistTypeId=CR.SiteVistTypeId ");
+                    sQuery.Append(" inner join SiteVistType SVT on SVT.SiteVistTypeId=SR.SiteVistTypeId ");
                     sQuery.Append(" left join StatusAfter STF on STF.StatusAfterId=SR.StatusAfterId ");
                     sQuery.AppendFormat(" where SR.ServiceId={0} ", ServiceId);
 
@@ -259,6 +327,10 @@ namespace DAL.Functions
                             if (dataReader["StatusAfterName"] != DBNull.Value) { oEServiceModel.StatusAfterName = (string)dataReader["StatusAfterName"]; }
                             if (dataReader["SiteVistTypeId"] != DBNull.Value) { oEServiceModel.SiteVistTypeId = (int)dataReader["SiteVistTypeId"]; }
                             if (dataReader["VistTypeName"] != DBNull.Value) { oEServiceModel.VistTypeName = (string)dataReader["VistTypeName"]; }
+                            if (dataReader["SupervisourName"] != DBNull.Value) { oEServiceModel.SupervisourName = (string)dataReader["SupervisourName"]; }
+                            if (dataReader["SupervisourFeedback"] != DBNull.Value) { oEServiceModel.SupervisourFeedback = (string)dataReader["SupervisourFeedback"]; }
+                            if (dataReader["SupervisourSignature"] != DBNull.Value) { oEServiceModel.SupervisourSignature = (string)dataReader["SupervisourSignature"]; }
+
                             oEServiceModel.ServiceDetails = getAllCorrectiveServiceDetails(oEServiceModel.ServiceId);
                         }
                     }
