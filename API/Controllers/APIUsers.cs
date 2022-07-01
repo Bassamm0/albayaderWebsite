@@ -29,7 +29,7 @@ namespace API
 
         [Route("all")]
         [HttpGet]
-        [Authorize(Roles = "Administrator,Seller")]
+        [Authorize(Roles = "Administrator,Manager")]
         public async Task<List<UserViewModel>> getAllUsers()
         {
             List<UserViewModel> userList = new List<UserViewModel>();
@@ -69,6 +69,7 @@ namespace API
         }
 
         [Route("getCompanyUsers")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager")]
         [HttpPost]
         public async Task<List<UserViewModel>> getCompanyUsers([FromBody] JsonElement objData)
         {
@@ -113,6 +114,7 @@ namespace API
             return userList;
         }
         [Route("getBranchUsers")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager")]
         [HttpGet]
         public async Task<List<UserViewModel>> getBranchUsers([FromBody] JsonElement objData)
         {
@@ -158,6 +160,7 @@ namespace API
 
 
         [Route("getUserById")]
+        [Authorize]
         [HttpPost]
         public async Task<EUser> getUserById([FromBody] JsonElement objData )
         {
@@ -202,6 +205,7 @@ namespace API
             return result;
         }
         [Route("addwithbranch")]
+        [Authorize(Roles = "Administrator,Manager")]
         [HttpPost]
         public async Task<Boolean> AddUserWithBranch([FromBody] EUser user)
         {
@@ -236,6 +240,7 @@ namespace API
         }
 
         [Route("updatewithbranch")]
+        [Authorize(Roles = "Administrator,Manager")]
         [HttpPost]
         public async Task<Boolean> updateUserwithbranch([FromBody] EUser UpdatedUser)
 
@@ -267,6 +272,7 @@ namespace API
             return result;
         }
         [Route("updateprofile")]
+        [Authorize]
         [HttpPost]
         public async Task<Boolean> updateProfile([FromBody] EUser user)
 
@@ -300,6 +306,7 @@ namespace API
 
 
         [Route("isemailexist")]
+        [Authorize(Roles = "Administrator,Manager")]
         [HttpPost]
         public async Task<Boolean> IsEmailExist([FromBody] JsonElement objData)
         {
@@ -332,6 +339,7 @@ namespace API
         }
 
         [Route("update")]
+        [Authorize(Roles = "Administrator,Manager")]
         [HttpPost]
         public async Task<Boolean> updateUser([FromBody] EUser UpdatedUser)
       
@@ -377,6 +385,7 @@ namespace API
             return result;
         }
         [Route("remove")]
+        [Authorize(Roles = "Administrator,Manager")]
         [HttpPost]
         public async Task<Boolean> removeUser([FromBody] JsonElement objData)
         {
@@ -406,7 +415,7 @@ namespace API
 
         [Authorize]
         [Route("changepassword")]
-        [HttpPost]
+         [HttpPost]
         public async Task<Boolean> changePassword([FromBody] JsonElement objData)
         {
             bool result = false;
@@ -588,6 +597,7 @@ namespace API
 
         [Authorize]
         [Route("getLoginUser")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion,Client User")]
         [HttpGet]
         public async Task<EUser> getLoginUserDetails()
         {

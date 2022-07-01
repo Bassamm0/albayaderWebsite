@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using System.Text;
 using Entity;
+using System.Net.Http.Headers;
 
 namespace AlbayaderWeb.Pages
 {
@@ -23,19 +24,38 @@ namespace AlbayaderWeb.Pages
         public string errorMessage { get; set; }
 
         public int userid { get; set; }
+        public string role { get; set; }
 
-        public void OnGet(string serviceType,int companyId)
+        public async Task<IActionResult> OnGet(string serviceType,int companyId)
         {
-            userid=Convert.ToInt16(HttpContext.Session.GetString("userid"));
+
+
+            if (HttpContext.Session.GetString("token") == null)
+            {
+                return Redirect("Index");
+            }
+            else
+            {
+                token = HttpContext.Session.GetString("token");
+                role = HttpContext.Session.GetString("Role");
+
+            }
+            if (role.ToLower() != "administrator" && role.ToLower() != "manager" && role.ToLower() != "technicion")
+            {
+                return Redirect("Index");
+            }
+
+            userid = Convert.ToInt16(HttpContext.Session.GetString("userid"));
 
             string ServiceType=serviceType;
             apiurl = AppConfig.APIUrl;
             uploadurl = AppConfig.UploadURL;
+            return null;
         }
 
         public async Task<IActionResult> OnPost()
         {
-
+            token = HttpContext.Session.GetString("token");
 
             int BranchId=Convert.ToInt16(Request.Form["ddBranch"]);
             string type = Request.Form["serviceType"];
@@ -86,6 +106,7 @@ namespace AlbayaderWeb.Pages
 
             using (var httpClient = new HttpClient())
             {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 using (var response = await httpClient.PostAsync(apiurl+"service/add", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();

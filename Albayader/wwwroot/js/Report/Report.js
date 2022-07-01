@@ -2,12 +2,12 @@
 
 
 
-
+    const jtoken = $('#utoken').val();
     $('#startDate').datetimepicker({
-        format: 'L'
+        format: 'DD/MM/yyyy'
     });
     $('#EndtDate').datetimepicker({
-        format: 'L'
+        format: 'DD/MM/yyyy'
     });
 
 
@@ -16,8 +16,7 @@
     $('.select2').select2();
 
 
-    //Date range picker
-    $('#reservation').daterangepicker()
+
 
     var table = $("#DrasftTbl").DataTable({
         "responsive": true, "lengthChange": false, "autoWidth": false,
@@ -61,25 +60,29 @@
         }
 
     }
+
     $('body').on('click', '#DateSearch', function () {
         if (!$("#FilterDate").valid()) {
 
             return;
         }
-        var startDate = $('#startDate').val();
-        var endDate = $('#EndtDate').val();
-        minDate = new Date(startDate);
-        maxDate = new Date(endDate);
-        console.log(minDate)
-        dateFileter()
+        console.log($('#startDate').val())
+      
+         minDate = moment($('#startDate').val()).format('DD/MM/YYYY');
+         maxDate = moment($('#EndtDate').val()).format('DD/MM/YYYY');
         $("#DrasftTbl").DataTable().draw();
-    })
 
-    function dateFileter() {
+    
+    })
+    var minDate;
+    var maxDate;
+    //function dateFileter(minDate, maxDate) {
+      //  console.log(minDate, maxDate)
         $.fn.dataTable.ext.search.push(
             function (settings, data, dataIndex) {
 
-                var date = new Date(data[2]);
+                var date = moment(data[6]).format('DD/MM/YYYY');
+               // var date = new Date(data[6]);
 
                 if (
                     (minDate === null && maxDate === null) ||
@@ -92,16 +95,21 @@
                 return false;
             }
         );
-    }
+    //}
 
+   
 
 
 
     $('body').on('click', '#DateReset', function () {
-        minDate = new Date('01/01/2000');
-        maxDate = new Date('01/01/2900');
-        dateFileter()
+      
+
+        minDate = moment('01/06/2022').format('DD/MM/YYYY');
+         maxDate = moment('01/01/2042').format('DD/MM/YYYY');
+        console.log(minDate, maxDate)
         $("#DrasftTbl").DataTable().draw();
+        //dateFileter(minDate, maxDate);
+       
 
     })
 
@@ -117,7 +125,8 @@
             /* async: false,*/
             headers: {
                 RequestVerificationToken:
-                    $('input:hidden[name="__RequestVerificationToken"]').val()
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
             },
             success: function (data, textStatus, xhr) {
                 var arrUpdates = (typeof data) == 'string' ? eval('(' + data + ')') : data;
@@ -156,17 +165,7 @@
             EndtDate: { greaterThan: "#startDate" }
 
         },
-        //messages: {
-        //    LoginEmailName: {
-        //        required: "Please enter a email address",
-        //        email: "Please enter a valid email address"
-        //    },
-        //    LoginPasswordName: {
-        //        required: "Please provide a password",
-        //        minlength: "Your password must be at least 8 characters long"
-        //    },
-
-        //},
+   
         errorElement: 'span',
         errorPlacement: function (error, element) {
             error.addClass('invalid-feedback');

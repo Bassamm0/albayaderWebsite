@@ -17,6 +17,7 @@ namespace API.Controllers
         private UserAndBranchLogic UserAndBranchLogic = new UserAndBranchLogic();
 
         [Route("all")]
+        [Authorize(Roles = "Administrator,Manager")]
         [HttpGet]
         public async Task<List<EUserAndBranch>> getAllUserAndBranch()
         {
@@ -27,6 +28,7 @@ namespace API.Controllers
         }
 
         [Route("getUserAndBranchById")]
+        [Authorize(Roles = "Administrator,Manager")]
         [HttpGet]
         public async Task<EUserAndBranch> getUserAndBranchById([FromBody] JsonElement objData)
         {
@@ -41,6 +43,7 @@ namespace API.Controllers
         }
 
         [Route("add")]
+        [Authorize(Roles = "Administrator,Manager")]
         [HttpPost]
         public async Task<Boolean> addUserAndBranch([FromBody] JsonElement objData)
         {
@@ -78,6 +81,7 @@ namespace API.Controllers
         }
 
         [Route("update")]
+        [Authorize(Roles = "Administrator,Manager")]
         [HttpPost]
         public async Task<Boolean> updateUserAndBranch([FromBody] JsonElement objData)
         {
@@ -115,6 +119,7 @@ namespace API.Controllers
             return result;
         }
         [Route("delete")]
+        [Authorize(Roles = "Administrator,Manager")]
         [HttpPost]
         public async Task<Boolean> deleteUserAndBranch([FromBody] JsonElement objData)
 
@@ -127,6 +132,7 @@ namespace API.Controllers
             return result;
         }
         [Route("remove")]
+        [Authorize(Roles = "Administrator,Manager")]
         [HttpPost]
         public async Task<Boolean> removeUserAndBranch([FromBody] JsonElement objData)
         {

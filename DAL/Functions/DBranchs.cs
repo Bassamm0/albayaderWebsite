@@ -228,5 +228,44 @@ namespace DAL.Functions
 
             return eBranch;
         }
+
+
+        public int gettotalBranchCount()
+        {
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            int result;
+            conn.Open();
+            using (var command = conn.CreateCommand())
+            {
+
+                StringBuilder sQuery = new StringBuilder();
+                sQuery.AppendFormat(" select count(*)as branchCount from Branchs where EndDate is null ");
+                command.CommandText = sQuery.ToString();
+                result = (int)command.ExecuteScalar();
+            }
+
+            return result;
+        }
+
+        public int getCompanytotalBranchCount(int companyId)
+        {
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            int result;
+            conn.Open();
+            using (var command = conn.CreateCommand())
+            {
+
+                StringBuilder sQuery = new StringBuilder();
+                sQuery.Append(" select count(*)as branchCount from Branchs br ");
+                sQuery.Append(" inner join Companies C on C.CompanyID=BR.compnayId ");
+                sQuery.AppendFormat(" where BR.EndDate is null and C.CompanyID={0} ", companyId);
+                command.CommandText = sQuery.ToString();
+                result = (int)command.ExecuteScalar();
+            }
+
+            return result;
+        }
     }
 }

@@ -1,14 +1,15 @@
 ﻿$(document).ready(function (){
 
 
-
+    const jtoken = $('#utoken').val();
 
     $('#startDate').datetimepicker({
-        format: 'L'
+        format: 'DD/MM/yyyy'
     });
     $('#EndtDate').datetimepicker({
-        format: 'L'
+        format: 'DD/MM/yyyy'
     });
+
 
 
     const APIURL = $('#APIURI').val();
@@ -74,7 +75,7 @@
         $.fn.dataTable.ext.search.push(
             function (settings, data, dataIndex) {
 
-                var date = new Date(data[2]);
+                var date = new Date(data[3]);
 
                 if (
                     (minDate === null && maxDate === null) ||
@@ -112,7 +113,8 @@
            /* async: false,*/
             headers: {
                 RequestVerificationToken:
-                    $('input:hidden[name="__RequestVerificationToken"]').val()
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
             },
             success: function (data, textStatus, xhr) {
                 var arrUpdates = (typeof data) == 'string' ? eval('(' + data + ')') : data;

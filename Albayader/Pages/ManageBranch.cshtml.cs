@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using System.Text;
 using Entity;
+using System.Net.Http.Headers;
 
 namespace AlbayaderWeb.Pages
 {
@@ -23,14 +24,27 @@ namespace AlbayaderWeb.Pages
         public string CompanyName { get; set; }
         public int CompanyId { get; set; }
         public bool editMode { get; set; } = false;
-        public void OnGet()
-        {
-
-        }
+        public string role { get; set; }
+        
 
 
         public async Task<IActionResult> OnGetSmode(string Smode, int id,string companyname,int companyid)
         {
+            if (HttpContext.Session.GetString("token") == null)
+            {
+                return Redirect("Index");
+            }
+            else
+            {
+                token = HttpContext.Session.GetString("token");
+                role = HttpContext.Session.GetString("Role");
+
+            }
+            if (role.ToLower() != "administrator" && role.ToLower() != "manager")
+            {
+                return Redirect("Index");
+            }
+
             apiurl = AppConfig.APIUrl;
             uploadurl = AppConfig.UploadURL;
 
@@ -67,6 +81,7 @@ namespace AlbayaderWeb.Pages
 
             using (var httpClient = new HttpClient())
             {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 using (var response = await httpClient.PostAsync(apiurl+"Branch/getBranchById", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
@@ -97,7 +112,7 @@ namespace AlbayaderWeb.Pages
 
         public async Task<IActionResult> OnPost()
         {
-
+            token = HttpContext.Session.GetString("token");
             string statusCode = "";
             PageActionMode = Request.Form["Smode"];
             if (PageActionMode == "Add")
@@ -181,6 +196,7 @@ namespace AlbayaderWeb.Pages
 
             using (var httpClient = new HttpClient())
             {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 using (var response = await httpClient.PostAsync(apiurl+"branch/add", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
@@ -218,6 +234,7 @@ namespace AlbayaderWeb.Pages
 
             using (var httpClient = new HttpClient())
             {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 using (var response = await httpClient.PostAsync(apiurl+"branch/update", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();

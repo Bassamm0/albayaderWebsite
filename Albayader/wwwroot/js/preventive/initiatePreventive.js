@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
 
 
-
+    const jtoken = $('#utoken').val();
     var getUrlParameter = function getUrlParameter(sParam) {
         var sPageURL = window.location.search.substring(1),
             sURLVariables = sPageURL.split('&'),
@@ -33,7 +33,8 @@
             async: false,
             headers: {
                 RequestVerificationToken:
-                    $('input:hidden[name="__RequestVerificationToken"]').val()
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
             },
             success: function (data, textStatus, xhr) {
                 var arrUpdates = (typeof data) == 'string' ? eval('(' + data + ')') : data;
@@ -85,7 +86,8 @@
             async: false,
             headers: {
                 RequestVerificationToken:
-                    $('input:hidden[name="__RequestVerificationToken"]').val()
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
             },
             success: function (data, textStatus, xhr) {
                 var arrUpdates = (typeof data) == 'string' ? eval('(' + data + ')') : data;

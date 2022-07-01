@@ -1,0 +1,180 @@
+﻿@page
+@model AlbayaderWeb.Pages.ManageMaterialModel
+@{
+
+    ViewData["Title"] = "Manage Material";
+}
+
+ <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+<div class="content-wrapper">
+
+  <section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-left">
+                  <li class="breadcrumb-item"><a href="Dashboard">Dashboard</a></li>
+                  <li class="breadcrumb-item "><a href="materials">Material</a></li>
+                  <li class="breadcrumb-item active" id="currentLable">@Model.pageTitle </li>
+                </ol>
+              </div>
+          
+            </div>
+            
+          </div>
+          <!-- /.container-fluid -->
+        </section>
+
+
+        
+ <!-- Main content -->
+        <section class="content">
+          <div class="container-fluid">
+               <div class="card card-default">
+          <div class="card-header">
+            <h3 class="card-title">Material form</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <div class="row">
+                <form id="MaterialForm" method="post" style="width:90%;">
+            @if(Model.editMode)
+            {
+                
+                  <div class="col">
+                   <div class="form-group">
+                    <label for="companyname">Material Name</label>
+                    <input type="text" class="form-control" name="MaterialName" id="MaterialName" placeholder="Enter Material Name" value="@Model._material.MaterialName" />
+                  </div>
+             
+               
+                  
+
+                  <div class="form-group">
+                    <label for="long">Price</label>
+                    <input type="text" class="form-control" name="Price" id="Price" placeholder="Enter Price" value="@Model._material.Price"/>
+                  </div>
+
+                  
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Description</label>
+                      <textarea class="form-control" id="Description" name="Description" rows="3" maxlength="200">
+                          @Model._material.Description
+                      </textarea>
+                    </div>
+                  </div>
+              
+                 </div>
+
+
+                     
+                     <input type="hidden" id="hdMaterialId" name="hdBranchId" value="@Model._material.MaterialId"/>
+                    
+
+                        }
+                        else
+                        {
+                            
+
+                  <div class="col">
+                     <div class="form-group">
+                    <label for="companyname">Material Name</label>
+                    <input type="text" class="form-control" name="MaterialName" id="MaterialName" placeholder="Enter Material Name"  />
+                  </div>
+             
+               
+                  
+
+                  <div class="form-group">
+                    <label for="long">Price</label>
+                    <input type="text" class="form-control" name="Price" id="Price" placeholder="Enter Price" />
+                  </div>
+
+                  
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Description</label>
+                      <textarea class="form-control" id="Description" name="Description" rows="3" maxlength="200">
+                          
+                      </textarea>
+                    </div>
+                
+
+                   
+                     </div>
+                      
+                    </div>
+                   
+
+                
+                 <input type="hidden" id="Smode" name="Smode" value="@Model.PageActionMode"/>
+
+                   
+               
+             }
+                      
+
+            </form>
+                
+         </div>
+
+            
+ 
+            <!-- /.row -->
+        <div class="dropdown-divider" ></div>
+            
+            <div class="row" style="float: right;"> 
+                  <div class="col">
+              <div style="padding: 20px;float:left">
+            <a href='materials' class="btn btn-block btn-default btn-lg" style="width: 200px;">Cancel</a>
+
+             </div>
+
+           <div style="padding: 20px;float:left">
+            <button type="button" id="SaveMaterialh" class="btn btn-block btn-info btn-lg" style="width: 200px;">Save</button>
+
+             </div>
+             </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.card-body -->
+         
+        </div>
+        <!-- /.card -->
+
+
+           </div>
+        </section>
+        <!-- /.content -->
+
+        </div>
+
+
+           <!-- jQuery -->
+            <script src="plugins/jquery/jquery.min.js"></script>
+            <!-- Bootstrap 4 -->
+            <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Tempusdominus Bootstrap 4 -->
+            <!-- Select2 -->
+            <script src="plugins/select2/js/select2.full.min.js"></script>
+          <!-- InputMask -->
+        <script src="plugins/moment/moment.min.js"></script>
+        <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+        <!-- date-range-picker -->
+
+        
+            <script src="~/js/materials/ManageMaterial.js"></script>
+
+
+            <script src="plugins/jquery-validation/jquery.validate.min.js"></script>
+            <script src="plugins/jquery-validation/additional-methods.min.js"></script>

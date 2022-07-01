@@ -18,6 +18,7 @@ namespace API.Controllers
         private ServiceLogic serviceLogic = new ServiceLogic();
 
         [Route("all")]
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpGet]
         public async Task<List<EServiceModel>> getAllService()
         {
@@ -27,6 +28,7 @@ namespace API.Controllers
             return services;
         }
         [Route("allByStatus")]
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
         public async Task<List<EServiceModel>> getAllServiceByStatus(JsonElement objData)
         {
@@ -37,6 +39,7 @@ namespace API.Controllers
             return services;
         }
         [Route("completedservice")]
+        [Authorize(Roles = "Administrator,Manager")]
         [HttpGet]
         public async Task<List<EServiceModel>> getAllCompletedService()
         {
@@ -47,6 +50,7 @@ namespace API.Controllers
             return services;
         }
         [Route("getservicebyid")]
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
         public async Task<EServiceModel> getSingleService(JsonElement objData)
         {
@@ -58,6 +62,7 @@ namespace API.Controllers
             return services;
         }
         [Route("getcorrectiveservicebyid")]
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
         public async Task<ECorrectiveServiceModel> getCorrectiveSingleService(JsonElement objData)
         {
@@ -70,6 +75,7 @@ namespace API.Controllers
         }
 
         [Route("add")]
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
         public async Task<EServices> addService([FromBody] EServices service)
         {
@@ -97,6 +103,7 @@ namespace API.Controllers
 
 
         [Route("update")]
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
         public async Task<Boolean> updateService([FromBody] EServices updatedService)
 
@@ -129,6 +136,7 @@ namespace API.Controllers
         }
 
         [Route("remove")]
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
         public async Task<Boolean> removeService([FromBody] JsonElement objData)
         {
@@ -159,6 +167,7 @@ namespace API.Controllers
         }
 
         [Route("updatestatus")]
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
         public async Task<Boolean> updateStatus([FromBody] JsonElement objData)
         {
@@ -193,6 +202,7 @@ namespace API.Controllers
         }
 
         [Route("clientsignature")]
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
         public async Task<Boolean> clientSignature([FromBody] JsonElement objData)
         {

@@ -76,57 +76,13 @@ $(document).ready(function () {
 		}
 	}
 
-	formatJSONDate = function (dateAsFromServerSide) {
-		if (dateAsFromServerSide == '/Date(-62135596800000)/')
-			return;
-		var currentTime = new Date(parseInt(dateAsFromServerSide.substr(6)));
-		var month = currentTime.getMonth() + 1;
-		var day = currentTime.getDate();
-		var year = currentTime.getFullYear();
-		var date = addZero(month) + "-" + addZero(day) + "-" + addZero(year);
-		return date;
-	}
-	formatJSONDateTime = function (dateAsFromServerSide) {
-		if (dateAsFromServerSide == '/Date(-62135596800000)/')
-			return 'Not Started';
-		var currentTime = new Date(parseInt(dateAsFromServerSide.substr(6)));
-		var month = currentTime.getMonth() + 1;
-		var day = currentTime.getDate();
-		var year = currentTime.getFullYear();
-		var hours = currentTime.getHours();
-		var minute = currentTime.getMinutes();
-		var second = currentTime.getSeconds();
-		var date = addZero(month) + "-" + addZero(day) + "-" + year + " " + addZero(hours) + ":" + addZero(minute) + ":" + second;;
-		return date;
-	}
+	
 	// check if empty
 	isEmpty = function (str) {
 		return (!str || 0 === str.length);
 	}
 
-	formatJSONDateTimeAMPM = function (dateAsFromServerSide) {
-		if (dateAsFromServerSide == '/Date(-62135596800000)/')
-			return 'Not Started';
-		var currentTime = new Date(parseInt(dateAsFromServerSide.substr(6)));
-		var month = currentTime.getMonth() + 1;
-		var day = currentTime.getDate();
-		var year = currentTime.getFullYear();
-		var hours = currentTime.getHours();
-
-		var amPM = (hours > 11) ? "pm" : "am";
-		if (hours > 12) {
-			hours -= 12;
-		} else if (hours == 0) {
-			hours = "12";
-		}
-
-		var minute = currentTime.getMinutes();
-		var second = currentTime.getSeconds();
-		var date = addZero(month) + "-" + addZero(day) + "-" + year + " " + addZero(hours) + ":" + addZero(minute) + ":" + second + " " + amPM;
-
-		return date;
-	}
-
+	
 	function addZero(str) {
 
 
@@ -144,16 +100,7 @@ $(document).ready(function () {
 
 	}
 
-	ASPDate = function (datatine) {
-		
-		var currentTime = new Date(datatine);
-		var month = currentTime.getMonth() + 1;
-		var day = currentTime.getDate();
-		var year = currentTime.getFullYear();
-		var date = addZero(month) + "-" + addZero(day) + "-" + addZero(year);
-		return date;
-	}
-
+	
 	RestoreOriginalFileName = function (sFileName) {
 		if (!sFileName || 0 === sFileName.length) {
 			return '';

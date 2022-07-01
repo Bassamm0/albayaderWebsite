@@ -6,7 +6,7 @@
     const APIURL = $('#APIURI').val();
     const UploadUrl = $('#Uploadlocation').val();
     const _ServiceId = $('#serviceid').val()
-
+    const jtoken = $('#utoken').val();
 
 
 
@@ -51,7 +51,8 @@
            // async: false,
             headers: {
                 RequestVerificationToken:
-                    $('input:hidden[name="__RequestVerificationToken"]').val()
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
             },
             success: function (data, status, xhr) {   // success callback function
                 constract(data)
@@ -370,7 +371,8 @@
                 async: false,
                 headers: {
                     RequestVerificationToken:
-                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                        $('input:hidden[name="__RequestVerificationToken"]').val(),
+                    Authorization: 'Bearer ' + jtoken,
                 },
                 success: function (data, status, xhr) {   // success callback function
                     if (Operation == "add") {
@@ -410,8 +412,7 @@
         }
         formData.append("serviceDetailsId", ServiceDetailsId);
         formData.append("pictureTypeId", pictureTypeId);
-        console.log(formData)
-        console.log('type', pictureTypeId)
+
         $.ajax({
             url: APIURL + 'fileupload/UploadServiceImages',
             type: 'POST',
@@ -419,6 +420,12 @@
             cache: false,
             contentType: false,
             processData: false,
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
+
+            },
             success: function (data) {
                 var arrUpdates = (typeof data) == 'string' ? eval('(' + data + ')') : data;
                 if (arrUpdates.length > 0) {
@@ -505,7 +512,8 @@
             async: false,
             headers: {
                 RequestVerificationToken:
-                    $('input:hidden[name="__RequestVerificationToken"]').val()
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
             },
             success: function (data, status, xhr) {   // success callback function
                              
@@ -587,7 +595,8 @@
             data: data,
             headers: {
                 RequestVerificationToken:
-                    $('input:hidden[name="__RequestVerificationToken"]').val()
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
             },
             success: function (data, status, xhr) {   // success callback function
                 console.log('deleted')
@@ -654,7 +663,8 @@
             data: data,
             headers: {
                 RequestVerificationToken:
-                    $('input:hidden[name="__RequestVerificationToken"]').val()
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
             },
             success: function (data, status, xhr) {   // success callback function
                 console.log('deleted')
@@ -749,7 +759,8 @@
             async: false,
             headers: {
                 RequestVerificationToken:
-                    $('input:hidden[name="__RequestVerificationToken"]').val()
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
             },
             success: function (data, status, xhr) {   // success callback function
                 if (Operation == "add") {
@@ -797,7 +808,8 @@
             async: false,
             headers: {
                 RequestVerificationToken:
-                    $('input:hidden[name="__RequestVerificationToken"]').val()
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
             },
             success: function (data, status, xhr) {   // success callback function
                

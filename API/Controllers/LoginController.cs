@@ -52,13 +52,13 @@ namespace API.Controllers
                 new Claim(ClaimTypes.Sid, user.UserId.ToString()),
                 new Claim(ClaimTypes.MobilePhone, user.Mobile.ToString()),
                 new Claim(ClaimTypes.Actor, user.PositionId.ToString()),
-                new Claim(ClaimTypes.Country, user.NationalityName),
-                new Claim(ClaimTypes.Locality, user.ResidentContry),
+                new Claim(ClaimTypes.Country, user.NationalityName.ToString()),
+                new Claim(ClaimTypes.Locality, user.ResidentContry.ToString()),
                 new Claim(ClaimTypes.DateOfBirth, user.Birthday.ToString()),
                 new Claim(ClaimTypes.Thumbprint, user.PictureFileName.ToString()),
                 new Claim(ClaimTypes.StateOrProvince, user.City),
                 new Claim(ClaimTypes.PrimarySid, user.CompanyId.ToString()),
-                new Claim(ClaimTypes.GroupSid, user.BranchId.ToString()),
+                new Claim(ClaimTypes.GroupSid, user.CompanyTypeId.ToString()),
                 new Claim(ClaimTypes.PrimaryGroupSid, user.CompanyName.ToString()),
                 new Claim(ClaimTypes.DenyOnlySid, user.BranchName.ToString()),
 
@@ -67,7 +67,7 @@ namespace API.Controllers
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
               _config["Jwt:Audience"],
               claims,
-              expires: DateTime.Now.AddMinutes(15),
+              expires: DateTime.Now.AddHours(1),
               signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

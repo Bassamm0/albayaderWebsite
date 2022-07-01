@@ -1,7 +1,8 @@
 ﻿$(document).ready(function () {
 
     const APIURL = $('#APIURI').val();
-
+    const jtoken = $('#utoken').val();
+    const uploadurl = $('#UPLOADURL').val();
 
     $('body').on('click', '.deleteBtn', function () {
 
@@ -68,7 +69,8 @@
                 'Accept': 'application/json',
                 'Content-Type': 'application/json; charset=utf-8',
                 RequestVerificationToken:
-                 $('input:hidden[name="__RequestVerificationToken"]').val()
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
             },
             body: JSON.stringify({ 'id':parseInt(companyId)})
         })
@@ -77,9 +79,9 @@
                // trigger model
                 console.log(data)
                
-                html = ` <li class="list-group-item"><span class='ViewDetailsTit'><img class="logoView" 
+                html = ` <li class="list-group-item"><span class='ViewDetailsTit'><img class="" style='max-width: 300px;'
 
-                        src="uploads/${data.companyLogo}" /></li>`
+                        src="${uploadurl}${data.companyLogo}" /></li>`
                  + ` <li class="list-group-item"><span class='ViewDetailsTit'>Name:</span> ${data.name}</li>`
                  + ` <li class="list-group-item"><span class='ViewDetailsTit'>Country:</span> ${data.countryName}</li>`
                      + ` <li class="list-group-item"><span class='ViewDetailsTit'>Tel:</span> ${data.telephone}</li>`

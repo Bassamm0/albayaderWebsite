@@ -2,6 +2,8 @@
 
 
     const APIURL = $('#APIURI').val();
+    const jtoken = $('#utoken').val();
+
     $(".custom-file-input").on("change", function () {
        
         var fileName = $(this).val().split("\\").pop();
@@ -32,6 +34,12 @@
             cache: false,
             contentType: false,
             processData: false,
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
+
+            },
             success: function (data) {
                 $("#fileProgress").hide();
                 $("#lblMessage").html("<b>" + data + "</b> has been uploaded.");
@@ -72,7 +80,13 @@
             url: APIURL+"company/getcountries",
             type: 'GET',
             dataType: 'json',
-            async:false,
+            async: false,
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
+
+            },
             success: function (data, textStatus, xhr) {
                 var arrUpdates = (typeof data) == 'string' ? eval('(' + data + ')') : data;
                 console.log(arrUpdates)

@@ -1,0 +1,273 @@
+﻿@page
+@model AlbayaderWeb.Pages.materialsModel
+@{
+    ViewData["Title"] = "Materials";
+}
+
+
+<!-- daterange picker -->
+  <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+<!-- Tempusdominus Bootstrap 4 -->
+<link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+
+<!-- DataTables -->
+<link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-left">
+                  <li class="breadcrumb-item"><a href="Dashboard">Dashboard</a></li>
+                  <li class="breadcrumb-item active">Materia </li>
+                </ol>
+              </div>
+               <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <form method="post">
+                  <button type="submit" class="btn btn-default" asp-page-handler="AddMaterial" style="background-color: rgb(250, 245, 245);"><i class="fas fa-plus"></i></button>
+                  
+                    </form>
+              
+                </ol>
+              </div>
+            </div>
+            
+          </div>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="container-fluid">
+
+
+            <div class="card card-default">
+
+                <!-- /.card-header -->
+                <div class="card-body">
+
+
+
+                    <div class="col-md-12">
+
+                       
+
+                        <div class="dropdown-divider"></div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col">
+
+                                    <div class="card-body">
+                                        <table id="DrasftTbl" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    
+                                                    <th>Material Name</th>
+                                                     <th>Description</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                @if (Model.materials != null)
+                                                {
+                                                  
+                                                         @foreach (var item in Model.materials)
+                                                    {
+
+
+                                                        <tr>
+                                                            
+                                                            
+                                                            <td>@Html.DisplayFor(modelItem => item.MaterialName)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                                                           
+                                                 
+                                                           
+                                                           
+                                                           <td>
+
+                                                                    <div class="dropdown">
+                                                                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        Action
+                                                                      </button>
+                                                                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                  
+
+                                                                           <li class="ViewMaterial" materialId="@item.MaterialId"  data-toggle="modal" data-target="#modal-view"><a  class="dropdown-item " href="#"  >View Material</a></li>
+                                                                          <li class="EditMaterial" materialId="@item.MaterialId"><a  class="dropdown-item " href="ManageMaterial?Smode=edit&id=@item.MaterialId"  >Edit Material</a></li>
+                                                                          <li class="deleteMaterial" materialName="@item.MaterialName" materialId="@item.MaterialId" data-toggle="modal" data-target="#modal-delete"><a  class="dropdown-item " href="#"  >Delete Material</a></li>
+                                               
+                                                                      </ul>
+                                                                    </div>
+                                                          </td>
+
+                                                           
+
+                                                        </tr>
+                                                    }
+                                               
+                                                   
+                                                }
+                                                </tfoot>
+                                        </table>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.card-body -->
+
+                </div>
+                <!-- /.card -->
+
+
+            </div>
+
+
+
+
+ 
+      </div>
+
+
+      <div class="modal fade" id="modal-delete">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Delete Confirmation</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div id="Deletetext">
+                  Are you sure you want to delete the Material
+                  <span style="font-weight:bold;" id="MaterialToDeleteName">
+
+                  </span>
+                  <div class="deleteWarning" > Please note that this action can't be rolled back and the deleted data can't be retrived</div>
+              </div>
+            </div>
+            <form method="post" id="deleteForm" enctype="multipart/form-data">
+              <div class="modal-footer justify-content-between">
+              <button type="button" id="delClose" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger" asp-page-handler="DeleteMaterial" asp-route-id="" id="DeleteMaterial">Delete</button>
+              <input type="hidden" id="deletedMaterialId" />
+            </div>
+            </form>
+           
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+      <!-- /.modal -->
+        <div class="modal fade" id="modal-view">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Material Detials</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+          
+
+                <ul class="list-group list-group-flush" id="materialDetails">
+                
+               
+                </ul>
+
+            </div>
+           
+              <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+      
+           
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+             <input type="hidden" id="APIURI" name="APIURI" value="@Model.apiurl"/>
+             <input type="hidden" id="UPLOADURL" name="APIURI" value="@Model.uploadurl"/>
+             
+
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+
+    <input type="hidden" id="APIURI" name="APIURI" value="@Model.apiurl" />
+</div>
+
+
+<!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+
+<!-- InputMask -->
+<script src="plugins/moment/moment.min.js"></script>
+<script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+
+
+<script src="~/js/Materials/Materials.js"></script>
+
+
+<!-- DataTables  & Plugins -->
+
+<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="plugins/jszip/jszip.min.js"></script>
+<script src="plugins/pdfmake/pdfmake.min.js"></script>
+<script src="plugins/pdfmake/vfs_fonts.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
+
+
+
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/tus-js-client@latest/dist/tus.min.js"></script>
+
+<!-- default icons used in the plugin are from Bootstrap 5.x icon library (which can be enabled by loading CSS below) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.min.css" crossorigin="anonymous">
+
+<!-- piexif.min.js is needed for auto orienting image files OR when restoring exif data in resized images and when you
+wish to resize images before upload. This must be loaded before fileinput.min.js -->
+<script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/plugins/piexif.min.js" type="text/javascript"></script>
+
+<!-- sortable.min.js is only needed if you wish to sort / rearrange files in initial preview.
+    This must be loaded before fileinput.min.js -->
+<script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/plugins/sortable.min.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+
+
+<script src="plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="plugins/jquery-validation/additional-methods.min.js"></script>

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using System.Text;
 using Entity;
+using System.Net.Http.Headers;
 
 namespace AlbayaderWeb.Pages
 {
@@ -18,10 +19,26 @@ namespace AlbayaderWeb.Pages
         public int _BranchId { get; set; }
         public int _ServiceId { get; set; }
         public string errorMessage { get; set; }
+        public string role { get; set; }
 
         public EServiceModel _service = new EServiceModel();
         public async Task<IActionResult> OnGet(int BranchId, int ServiceId)
         {
+            if (HttpContext.Session.GetString("token") == null)
+            {
+                return Redirect("Index");
+            }
+            else
+            {
+                token = HttpContext.Session.GetString("token");
+                role = HttpContext.Session.GetString("Role");
+
+            }
+            if (role.ToLower() != "administrator" && role.ToLower() != "manager" && role.ToLower() != "technicion")
+            {
+                return Redirect("Index");
+            }
+
             apiurl = AppConfig.APIUrl;
             uploadurl = AppConfig.UploadURL;
 
@@ -49,6 +66,7 @@ namespace AlbayaderWeb.Pages
 
             using (var httpClient = new HttpClient())
             {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 using (var response = await httpClient.PostAsync(apiurl + "service/getservicebyid", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();

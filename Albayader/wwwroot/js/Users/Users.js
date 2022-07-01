@@ -2,6 +2,7 @@
 
     const APIURL = $('#APIURI').val();
 
+    const jtoken = $('#utoken').val();
 
     $('body').on('click', '.deleteBtn', function () {
 
@@ -70,7 +71,8 @@
                 'Accept': 'application/json',
                 'Content-Type': 'application/json; charset=utf-8',
                 RequestVerificationToken:
-                    $('input:hidden[name="__RequestVerificationToken"]').val()
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
             },
             body: JSON.stringify({ 'id': parseInt(UserId) })
         })

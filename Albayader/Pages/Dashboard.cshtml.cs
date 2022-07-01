@@ -11,6 +11,8 @@ namespace AlbayaderWeb.Pages
         public string token { get; set; }
         public string email { get; set; }
         public string password { get; set; }
+        public string role { get; set; }
+
         public IActionResult OnGet()
         {
             if(HttpContext.Session.GetString("token") == null)
@@ -22,6 +24,9 @@ namespace AlbayaderWeb.Pages
                 token = HttpContext.Session.GetString("token");
                 email = HttpContext.Session.GetString("email");
                 password = HttpContext.Session.GetString("password");
+                role = HttpContext.Session.GetString("Role");
+
+
             }
             apiurl = AppConfig.APIUrl;
             uploadurl = AppConfig.UploadURL;

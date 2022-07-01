@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using LOGIC;
 using static DAL.DALException;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
@@ -17,6 +18,7 @@ namespace API.Controllers
                 env = webHostEnvironment;
         }
         [Route("upload")]
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
         public IActionResult UploadFile(List<IFormFile> files)
             {
@@ -47,6 +49,7 @@ namespace API.Controllers
 
 
         [Route("uploadserviceimages")]
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
         public async Task<List<string>> UploadServiceImages(List<IFormFile> files, [FromForm] int serviceDetailsId, [FromForm]  int pictureTypeId)
         {
@@ -103,6 +106,7 @@ namespace API.Controllers
 
 
         [Route("uploadserviceimagescorrective")]
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
         public async Task<List<string>> UploadServiceImagesCorrective(List<IFormFile> files, [FromForm] int correctiveServiceDetailsId, [FromForm] int pictureTypeId)
         {

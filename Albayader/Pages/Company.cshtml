@@ -50,7 +50,7 @@
                                 {
                                    <div class="col-12 col-md-6 col-lg-3 companyHolder" companyid="@item.CompanyID" >
                                      <div class="small-box" style="text-align: center">
-                                      <div class="inner">
+                                      <div class="inner" style="min-height:170px">
                                         <div>
                                           @if(!string.IsNullOrEmpty(@item.CompanyLogo!)){
                                                 <img
@@ -147,7 +147,7 @@
             <div class="modal-body">
               <div id="Deletetext">
                   Are you sure you want to delete the company
-                  <span style="font-weight:bold;" id=companyToDeleteName>
+                  <span style="font-weight:bold;" id="companyToDeleteName">
 
                   </span>
                   <div class="deleteWarning" > Please note that this action can't be rolled back and the deleted data can't be retrived</div>
@@ -190,14 +190,17 @@
               <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
-             <input type="hidden" id="APIURI" name="APIURI" value="@Model.apiurl"/>
+            
+
            
           </div>
           <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
       </div>
-  
+   <input type="hidden" id="APIURI" name="APIURI" value="@Model.apiurl"/>
+             <input type="hidden" id="UPLOADURL" name="APIURI" value="@Model.uploadurl"/>
+             
     <!-- jQuery -->
     <script src="plugins/jquery/jquery.min.js"></script>
        <!-- Bootstrap 4 -->

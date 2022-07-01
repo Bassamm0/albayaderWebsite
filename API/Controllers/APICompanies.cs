@@ -17,6 +17,7 @@ namespace API.Controllers
         private CompanyLogic CompanyLogic=new CompanyLogic();
 
         [Route("all")]
+        [Authorize(Roles = "Administrator,Manager")]
         [HttpGet]
         public async Task<List<ECompanies>> getAllCompanies()
         {
@@ -27,6 +28,7 @@ namespace API.Controllers
         }
 
         [Route("getCompanyById")]
+        [Authorize(Roles = "Administrator,Manager")]
         [HttpPost]
         public async Task<ECompanies> getCompanyById([FromBody] JsonElement objData)
         {
@@ -41,6 +43,7 @@ namespace API.Controllers
         }
 
         [Route("add")]
+        [Authorize(Roles = "Administrator,Manager")]
         [HttpPost]
         public async Task<Boolean> addCompany([FromBody] JsonElement Company)
         {
@@ -97,6 +100,7 @@ namespace API.Controllers
         }
 
         [Route("update")]
+        [Authorize(Roles = "Administrator,Manager")]
         [HttpPost]
         public async Task<Boolean> updateCompany([FromBody] JsonElement Company)
         {
@@ -153,6 +157,7 @@ namespace API.Controllers
             return result;
         }
         [Route("delete")]
+        [Authorize(Roles = "Administrator,Manager")]
         [HttpPost]
         public async Task<Boolean> deleteCompany([FromBody] JsonElement objData)
 
@@ -165,6 +170,7 @@ namespace API.Controllers
             return result;
         }
         [Route("remove")]
+        [Authorize(Roles = "Administrator,Manager")]
         [HttpPost]
         public async Task<Boolean> removeCompany([FromBody] JsonElement objData)
         {
@@ -194,6 +200,7 @@ namespace API.Controllers
             return result;
         }
 
+        
         [Route("getcountries")]
         [HttpGet]
         public async Task<List<ECountries>> getCountries()

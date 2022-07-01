@@ -1,9 +1,10 @@
 ﻿$(document).ready(function () {
 
-
+    const jtoken = $('#utoken').val();
 
     $('body').on('click', '.deleteBtn', function () {
 
+       
         var branchName = $(this).attr('branchName')
         $('#branchToDeleteName').html(branchName)
         var branchid = $(this).attr('branchid')
@@ -24,7 +25,9 @@
             data: {},
             headers: {
                 RequestVerificationToken:
-                    $('input:hidden[name="__RequestVerificationToken"]').val()
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
+
             },
             success: function (data, status, xhr) {   // success callback function
 

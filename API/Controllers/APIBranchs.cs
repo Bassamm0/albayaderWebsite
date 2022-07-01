@@ -17,6 +17,7 @@ namespace API.Controllers
         private BranchLogic BranchLogic = new BranchLogic();
 
         [Route("all")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
         [HttpGet]
         public async Task<List<EBranchs>> getAllBranchs()
         {
@@ -27,17 +28,23 @@ namespace API.Controllers
         }
 
         [Route("companybranchs")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
         [HttpPost]
         public async Task<List<EBranchs>> getAllCompanyBranchs([FromBody] JsonElement objData)
         {
             int companyid = objData.GetProperty("companyid").GetInt16();
             List<EBranchs> branchs = new List<EBranchs>();
-            branchs = await BranchLogic.getAllCompanyBranchs(companyid);
+            if(companyid > 0)
+            {
+                branchs = await BranchLogic.getAllCompanyBranchs(companyid);
+
+            }
 
             return branchs;
         }
 
         [Route("getBranchById")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
         [HttpPost]
         public async Task<EBranchs> getBranchById([FromBody] JsonElement objData)
         {
@@ -52,6 +59,7 @@ namespace API.Controllers
         }
 
         [Route("add")]
+        [Authorize(Roles = "Administrator,Manager")]
         [HttpPost]
         public async Task<Boolean> addBranch([FromBody] JsonElement branch)
         {
@@ -96,6 +104,7 @@ namespace API.Controllers
         }
 
         [Route("update")]
+        [Authorize(Roles = "Administrator,Manager")]
         [HttpPost]
         public async Task<Boolean> updateBranch([FromBody] JsonElement branch)
         {
@@ -140,6 +149,7 @@ namespace API.Controllers
             return result;
         }
         [Route("delete")]
+        [Authorize(Roles = "Administrator,Manager")]
         [HttpPost]
         public async Task<Boolean> deleteBranch([FromBody] JsonElement objData)
 
@@ -152,6 +162,7 @@ namespace API.Controllers
             return result;
         }
         [Route("remove")]
+        [Authorize(Roles = "Administrator,Manager")]
         [HttpPost]
         public async Task<Boolean> removeBranch([FromBody] JsonElement objData)
         {

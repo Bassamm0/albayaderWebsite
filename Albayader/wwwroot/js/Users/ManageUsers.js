@@ -1,6 +1,9 @@
 ﻿$(document).ready(function () {
 
     const APIURL = $('#APIURI').val();
+    const jtoken = $('#utoken').val();
+    const sMode = $('#uMode').val();
+    console.log(sMode)
     //$('.select2').select2();
 
     $('#reservationdate').datetimepicker({
@@ -12,7 +15,7 @@
         if (!PasswordRequirement && $('#passwordHolder').length) {
 
             $('#pswd_info').css({
-                top: $('#passwordHolder').position().top + 80,
+                top: $('#passwordHoler').position().top + 80,
                 right: 40
             });
             $('#pswd_info').show();
@@ -30,7 +33,15 @@
                     e.preventDefault();
                     return;
                 } else {
-                    emailValidation()
+
+                    if (sMode == 'value') {
+                        $('#UserForm').submit();
+                    } else {
+                        emailValidation()
+                    }
+                   
+
+                   
                   
                 }
                 // email  exist
@@ -234,6 +245,12 @@
             cache: false,
             contentType: false,
             processData: false,
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
+
+            },
             success: function (data) {
                 $("#fileProgress").hide();
                 $("#lblMessage").html("<b>" + data + "</b> has been uploaded.");
@@ -344,7 +361,8 @@
             async: false,
             headers: {
                 RequestVerificationToken:
-                    $('input:hidden[name="__RequestVerificationToken"]').val()
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
             },
             success: function (data, textStatus, xhr) {
                 var arrUpdates = (typeof data) == 'string' ? eval('(' + data + ')') : data;
@@ -385,7 +403,8 @@
             async: false,
             headers: {
                 RequestVerificationToken:
-                    $('input:hidden[name="__RequestVerificationToken"]').val()
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
             },
             success: function (data, textStatus, xhr) {
                 console.log(data)
@@ -393,7 +412,7 @@
                     $("#emailErrorMessage").html('Sorry the email already exist, please use another email.');
                     toastr["warning"]("User already exist.")
                 } else {
-                    //$('#UserForm').submit();
+                    $('#UserForm').submit();
                 }
             },
             error: function (xhr, textStatus, errorThrown) {

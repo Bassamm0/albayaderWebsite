@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using System.Text;
 using Entity;
+using System.Net.Http.Headers;
 
 namespace AlbayaderWeb.Pages
 {
@@ -13,7 +14,7 @@ namespace AlbayaderWeb.Pages
         public string? uploadurl { get; set; }
         public string token { get; set; }
         public string email { get; set; }
-
+        public string role { get; set; }
 
         public EUser _User = new EUser();
       
@@ -51,6 +52,7 @@ namespace AlbayaderWeb.Pages
 
             using (var httpClient = new HttpClient())
             {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 using (var response = await httpClient.PostAsync(apiurl+"User/getUserById", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
@@ -76,6 +78,7 @@ namespace AlbayaderWeb.Pages
         public async Task<IActionResult> OnPost()
         {
 
+            token = HttpContext.Session.GetString("token");
 
             _User.FirstName = Request.Form["firstname"];
             _User.Lastname = Request.Form["lastname"];
@@ -112,6 +115,7 @@ namespace AlbayaderWeb.Pages
 
             using (var httpClient = new HttpClient())
             {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 using (var response = await httpClient.PostAsync(apiurl+"User/updateprofile", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();

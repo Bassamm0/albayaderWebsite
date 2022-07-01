@@ -2,6 +2,7 @@ using Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Text;
 
 
@@ -12,6 +13,7 @@ namespace AlbayaderWeb.Pages
         AppConfiguration AppConfig = new AppConfiguration();
         public string? apiurl { get; set; }
         public string? uploadurl { get; set; }
+        public string role { get; set; }
         public string token { get; set; }
         public string email { get; set; }
 
@@ -23,6 +25,21 @@ namespace AlbayaderWeb.Pages
         public string? title { get; set; }
         public async Task<IActionResult> OnGet(int companyid, string companyName)
         {
+
+            if (HttpContext.Session.GetString("token") == null)
+            {
+                return Redirect("Index");
+            }
+            else
+            {
+                token = HttpContext.Session.GetString("token");
+                role = HttpContext.Session.GetString("Role");
+
+            }
+            if (role.ToLower() != "administrator" && role.ToLower() != "manager" )
+            {
+                return Redirect("Index");
+            }
             apiurl = AppConfig.APIUrl;
             uploadurl = AppConfig.UploadURL;
 
@@ -46,6 +63,7 @@ namespace AlbayaderWeb.Pages
 
             using (var httpClient = new HttpClient())
             {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 using (var response = await httpClient.PostAsync(apiurl+"User/getCompanyUsers", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
@@ -86,6 +104,7 @@ namespace AlbayaderWeb.Pages
 
         public async Task<IActionResult> OnPost()
         {
+            token = HttpContext.Session.GetString("token");
             //delete 
             int id = Convert.ToInt16(Request.Form["deletedUserId"]);
 
@@ -123,6 +142,7 @@ namespace AlbayaderWeb.Pages
             var data = new StringContent(json, Encoding.UTF8, "application/json");
             using (var httpClient = new HttpClient())
             {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 using (var response = await httpClient.PostAsync(apiurl+"User/remove", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();

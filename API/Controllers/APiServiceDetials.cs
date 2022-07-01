@@ -17,6 +17,7 @@ namespace API.Controllers
 
 
         [Route("all")]
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpGet]
         public async Task<List<EServiceDetails>> getAllServiceDetails(JsonElement objData)
         {
@@ -28,6 +29,7 @@ namespace API.Controllers
         }
 
         [Route("getservicedetailsbyid")]
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
         public async Task<EServiceDetails> getSingleService(JsonElement objData)
         {
@@ -40,6 +42,8 @@ namespace API.Controllers
         }
 
         [Route("add")]
+
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
         public async Task<EServiceDetails> addServiceDetails([FromBody] EServiceDetails service)
         {
@@ -67,6 +71,7 @@ namespace API.Controllers
 
 
         [Route("update")]
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
         public async Task<Boolean> updateService([FromBody] EServiceDetails updatedServiceDetails)
 
@@ -100,6 +105,7 @@ namespace API.Controllers
         //corecctive
 
         [Route("addcorrective")]
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
         public async Task<ECorrectiveServiceDetails> addCorrectiveServiceDetails([FromBody] ECorrectiveServiceDetails service)
         {
@@ -127,6 +133,7 @@ namespace API.Controllers
 
 
         [Route("updatecorrective")]
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
         public async Task<Boolean> updateCorrecgiveService([FromBody] ECorrectiveServiceDetails updatedServiceDetails)
 
@@ -159,6 +166,7 @@ namespace API.Controllers
         }
 
         [Route("addMaterial")]
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
         public async Task<Boolean> addMaterials([FromBody] MaterialReqAndUse materialsUsed)
         {
@@ -185,6 +193,7 @@ namespace API.Controllers
             return result;
         }
         [Route("addCorrectiveMaterial")]
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
         public async Task<Boolean> addCorrectiveMaterials([FromBody] MaterialUsed materialsUsed)
         {
@@ -216,6 +225,8 @@ namespace API.Controllers
         }
 
         [Route("deleteimage")]
+
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
         public async Task<Boolean> deleteImage([FromBody] JsonElement objData)
 
@@ -249,6 +260,7 @@ namespace API.Controllers
             return result;
         }
         [Route("deleteservicedetails")]
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
         public async Task<Boolean> deleteServiceDetails([FromBody] JsonElement objData)
 

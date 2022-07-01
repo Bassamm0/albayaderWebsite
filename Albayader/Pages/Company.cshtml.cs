@@ -2,6 +2,7 @@ using Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Text;
 
 
@@ -16,10 +17,26 @@ namespace AlbayaderWeb.Pages
         public string? apiurl { get; set; }
         public string? uploadurl { get; set; }
 
+        public string token { get; set; }
 
+        public string role { get; set; }
 
         public async Task<IActionResult> OnGet()
         {
+            if (HttpContext.Session.GetString("token") == null)
+            {
+                return Redirect("Index");
+            }
+            else
+            {
+                token = HttpContext.Session.GetString("token");
+                role = HttpContext.Session.GetString("Role");
+
+            }
+            if (role.ToLower() != "administrator" && role.ToLower() != "manager")
+            {
+                return Redirect("Index");
+            }
             apiurl = AppConfig.APIUrl;
             uploadurl = AppConfig.UploadURL;
             companayList = await getAllCompanies();
@@ -49,6 +66,9 @@ namespace AlbayaderWeb.Pages
 
             using (var httpClient = new HttpClient())
             {
+                httpClient.DefaultRequestHeaders.Authorization =
+             new AuthenticationHeaderValue("Bearer", token);
+              
                 using (var response = await httpClient.GetAsync(apiurl+"company/all"))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
@@ -123,6 +143,9 @@ namespace AlbayaderWeb.Pages
 
             using (var httpClient = new HttpClient())
             {
+
+                httpClient.DefaultRequestHeaders.Authorization =
+             new AuthenticationHeaderValue("Bearer", token);
                 using (var response = await httpClient.PostAsync(apiurl+"company/remove", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();

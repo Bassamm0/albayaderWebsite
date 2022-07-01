@@ -4,13 +4,14 @@ using System.Text;
 using Newtonsoft.Json;
 using API;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Server.IISIntegration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-
-
 ConfigurationManager Configuration = builder.Configuration;
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                    .AddJwtBearer(options => {
@@ -24,19 +25,43 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                            ValidAudience = Configuration["Jwt:Audience"],
                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                        };
+                       options.Events = new JwtBearerEvents
+                       {
+                           OnAuthenticationFailed = context => {
+                               if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                               {
+                                   context.Response.Headers.Add("IS-TOKEN-EXPIRED", "true");
+                               }
+                               return Task.CompletedTask;
+                           }
+                       };
                    });
 
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      builder =>
+                      {
+                          builder.AllowAnyOrigin()
+                                .AllowAnyHeader()
+                                .AllowAnyMethod()
+                                ;
+                      });
+});
 
 // Add services to the container.
 builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddRazorPages();
- var app = builder.Build();
+
+
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -46,15 +71,16 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseStaticFiles();
 
 app.UseRouting();
-app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseAuthentication();
+app.UseCors(MyAllowSpecificOrigins);
+
+
+
 app.UseAuthorization();
-app.UseCors(builder => builder
-    .AllowAnyOrigin()
-    .AllowAnyMethod()
-    .AllowAnyHeader());
 
 app.UseEndpoints(endpoints =>
 {
@@ -66,7 +92,6 @@ app.UseEndpoints(endpoints =>
 });
 app.MapControllers();
 
-app.UseStaticFiles();// For the wwwroot folder
 
 app.UseStaticFiles(new StaticFileOptions
 {

@@ -2,6 +2,7 @@
     const APIURL = $('#APIURI').val();
     const UploadUrl = $('#Uploadlocation').val();
     const _ServiceId = $('#serviceid').val()
+    const jtoken = $('#utoken').val();
 
     for (var i = 1; i < parseInt($('#galleryCount').val())+1; i++) {
         var elemId = 'gallery{' + i + '}';
@@ -51,7 +52,8 @@
             data: data,
             headers: {
                 RequestVerificationToken:
-                    $('input:hidden[name="__RequestVerificationToken"]').val()
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
             },
             success: function (data, status, xhr) {   // success callback function
                

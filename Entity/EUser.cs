@@ -55,8 +55,8 @@ namespace Entity
         public string ?ResidentContry { get; set; }
         [NotMapped]
         public string ?NationalityName { get; set; }
-
-        
+        [NotMapped]
+        public int CompanyTypeId { get; set; }
         [NotMapped]
         public int UserAndBranchId { get; set; }
         [NotMapped]

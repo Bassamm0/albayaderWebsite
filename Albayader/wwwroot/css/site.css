@@ -190,3 +190,49 @@
     width: 100%;
     text-align: center;
 }
+
+
+.card-comments {
+    background-color: #f8f9fa;
+}
+
+    .card-comments .card-comment {
+        border-bottom: 1px solid #e9ecef;
+        padding: 8px 0;
+    }
+
+        .card-comments .card-comment::after {
+            display: block;
+            clear: both;
+            content: "";
+        }
+
+        .card-comments .card-comment:last-of-type {
+            border-bottom: 0;
+        }
+
+        .card-comments .card-comment:first-of-type {
+            padding-top: 0;
+        }
+
+        .card-comments .card-comment img {
+            height: 1.875rem;
+            width: 1.875rem;
+            float: left;
+        }
+
+    .card-comments .comment-text {
+        color: #78838e;
+        margin-left: 40px;
+    }
+
+    .card-comments .username {
+        color: #495057;
+        display: block;
+        font-weight: 600;
+    }
+
+    .card-comments .text-muted {
+        font-size: 12px;
+        font-weight: 400;
+    }

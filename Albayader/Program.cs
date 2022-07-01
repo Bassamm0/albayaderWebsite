@@ -1,3 +1,7 @@
+using System.Globalization;
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -39,7 +43,15 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-
+var cultures = new List<CultureInfo> {
+    new CultureInfo("en"),
+    new CultureInfo("fr")
+};
+app.UseRequestLocalization(options => {
+    options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en");
+    options.SupportedCultures = cultures;
+    options.SupportedUICultures = cultures;
+});
 app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {

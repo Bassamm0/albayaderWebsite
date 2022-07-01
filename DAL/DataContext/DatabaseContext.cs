@@ -42,6 +42,8 @@ namespace DAL.DataContext
         public DbSet<EServiceDetails> ServiceDetails { get; set; }
         public DbSet<ECorrectiveServiceDetails> CorrectiveServiceDetails { get; set; }
         public DbSet<EServicePictures> ServicePictures{ get; set; }
+        public DbSet<EServiceComment> ServiceComment{ get; set; }
+        public DbSet<EMaterials> materials{ get; set; }
 
 
     }
