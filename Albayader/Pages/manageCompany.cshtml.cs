@@ -191,7 +191,7 @@ namespace AlbayaderWeb.Pages
 
         public async Task<ECompanies> getCompanyById(int id)
         {
-
+            token = HttpContext.Session.GetString("token");
             string apiurl = AppConfig.APIUrl;
             var parameters = new Dictionary<string, int>();
             parameters["id"] = id;
@@ -202,9 +202,10 @@ namespace AlbayaderWeb.Pages
 
             using (var httpClient = new HttpClient())
             {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 using (var response = await httpClient.PostAsync(apiurl+"company/getCompanyById", data))
                 {
-                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                   
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")
                     {

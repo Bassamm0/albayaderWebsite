@@ -7,27 +7,27 @@
     // validation 
     $('#SaveBranch').click(function (e) {
 
-        if ($("#BranchForm").valid()) {
+        if ($("#MaterialForm").valid()) {
 
-            $('#BranchForm').submit();
+            $('#MaterialForm').submit();
         }
     })
 
 
-    $('#BranchForm').validate({
+    $('#MaterialForm').validate({
         rules: {
-            BranchName: {
+            MaterialName: {
                 required: true,
                 maxlength: 50,
             },
 
-            ddEmirates: {
+            Price: {
                 required: true,
 
             },
-            District: {
+            Description: {
 
-                maxlength: 150,
+                maxlength: 250,
             },
 
 

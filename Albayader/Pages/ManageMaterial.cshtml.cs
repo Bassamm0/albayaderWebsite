@@ -28,8 +28,9 @@ namespace AlbayaderWeb.Pages
 
 
 
-        public async Task<IActionResult> OnGetSmode(string Smode, int id, )
+        public async Task<IActionResult> OnGetSmode(string Smode, int id)
         {
+
             if (HttpContext.Session.GetString("token") == null)
             {
                 return Redirect("Index");
