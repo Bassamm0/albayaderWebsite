@@ -18,21 +18,41 @@ namespace Entity
         public int BranchId { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
-        public DateTime ?CompletionDate { get; set; }
-        public DateTime ?EndDate { get; set; }
+        public DateTime? CompletionDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
-    
-        public int ?StatusAfterId { get; set; }
 
-        public string ?Remark { get; set; }
+        public int? StatusAfterId { get; set; }
+
+        public string? Remark { get; set; }
+
+        public string? SupervisourName { get; set; }
+
+        public string? SupervisourSignature { get; set; }
+
+
+        public string? SupervisourFeedback { get; set; }
+        public int? SiteVistTypeId { get; set; }
+
+
+
+
+
+        [NotMapped]
+        public string CreaterName { get; set; }
+        [NotMapped]
+        public string StatusAfterName { get; set; }
+        [NotMapped]
+        public string TechnicianName { get; set; }
+        [NotMapped]
+        public string PictureFileName { get; set; }
+        [NotMapped]
+        public string ServiceTypeName { get; set; }
+        [NotMapped]
+        public string BranchName { get; set; }
+        [NotMapped]
+        public string CompanyName { get; set; }
    
-        public string ?SupervisourName { get; set; }
-       
-        public string ?SupervisourSignature { get; set; }
-
-       
-        public string ?SupervisourFeedback{ get; set; }
-        public int ?SiteVistTypeId { get; set; }
 
     }
 

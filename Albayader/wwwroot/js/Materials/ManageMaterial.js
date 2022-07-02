@@ -5,7 +5,7 @@
     $('.select2').select2();
 
     // validation 
-    $('#SaveBranch').click(function (e) {
+    $('#SaveMaterialh').click(function (e) {
 
         if ($("#MaterialForm").valid()) {
 
@@ -22,6 +22,7 @@
             },
 
             Price: {
+                decimal:true,
                 required: true,
 
             },

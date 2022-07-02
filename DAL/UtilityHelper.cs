@@ -8,6 +8,7 @@ using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
+using Entity;
 //using System.Net;
 //using System.Net.Mail;
 
@@ -60,7 +61,85 @@ namespace DAL
             return isSent;
         }
 
+        public async Task<bool> SendCompleteEmailAsyncToClient(List<EUser> toList, string subject, string body)
+        {
+            string smtpClient = AppConfig.smtpClient;
+            string emailFrom = AppConfig.emailFrom;
+            string pwd = AppConfig.ePassword;
 
+            InternetAddressList list = new InternetAddressList();
+           foreach(EUser user in toList)
+            {
+                list.Add(new MailboxAddress(user.FirstName + ' ' +user.Lastname, user.Email));
+
+            }
+           
+            bool isSent = false;
+            try
+            {
+                var email = new MimeMessage();
+                email.Sender = MailboxAddress.Parse(emailFrom);
+                email.To.AddRange(list);
+                email.Subject = subject;
+                var builder = new BodyBuilder();
+
+                builder.HtmlBody = body;
+                email.Body = builder.ToMessageBody();
+                using var smtp = new SmtpClient();
+
+                smtp.Connect(smtpClient, 587, SecureSocketOptions.None);
+                smtp.Authenticate(emailFrom, pwd);
+                await smtp.SendAsync(email);
+                smtp.Disconnect(true);
+                isSent = true;
+            }
+            catch (Exception ex)
+            {
+                isSent = false;
+
+            }
+            return isSent;
+        }
+
+        public async Task<bool> SendCompleteEmailAsyncToAdmin(List<EUser> toList, string subject, string body)
+        {
+            string smtpClient = AppConfig.smtpClient;
+            string emailFrom = AppConfig.emailFrom;
+            string pwd = AppConfig.ePassword;
+
+            InternetAddressList list = new InternetAddressList();
+            foreach (EUser user in toList)
+            {
+                list.Add(new MailboxAddress(user.FirstName + ' ' + user.Lastname, user.Email));
+
+            }
+
+            bool isSent = false;
+            try
+            {
+                var email = new MimeMessage();
+                email.Sender = MailboxAddress.Parse(emailFrom);
+                email.To.AddRange(list);
+                email.Subject = subject;
+                var builder = new BodyBuilder();
+
+                builder.HtmlBody = body;
+                email.Body = builder.ToMessageBody();
+                using var smtp = new SmtpClient();
+
+                smtp.Connect(smtpClient, 587, SecureSocketOptions.None);
+                smtp.Authenticate(emailFrom, pwd);
+                await smtp.SendAsync(email);
+                smtp.Disconnect(true);
+                isSent = true;
+            }
+            catch (Exception ex)
+            {
+                isSent = false;
+
+            }
+            return isSent;
+        }
         public async Task SendEmailAs(string from, string to, string subject, string body)
         {
 

@@ -73,7 +73,7 @@
 
 
                      
-                     <input type="hidden" id="hdMaterialId" name="hdBranchId" value="@Model._material.MaterialId"/>
+                     <input type="hidden" id="hdMaterialId" name="hdMaterialId" value="@Model._material.MaterialId"/>
                     
 
                         }
@@ -99,9 +99,7 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="exampleInputEmail1">Description</label>
-                      <textarea class="form-control" id="Description" name="Description" rows="3" maxlength="200">
-                          
-                      </textarea>
+                      <textarea class="form-control" id="Description" name="Description" rows="3" maxlength="200"></textarea>
                     </div>
                 
 
@@ -112,17 +110,16 @@
                    
 
                 
-                 <input type="hidden" id="Smode" name="Smode" value="@Model.PageActionMode"/>
 
-                   
-               
+                                  
              }
                       
-
+               <input type="hidden" id="Smode" name="Smode" value="@Model.PageActionMode"/>
             </form>
                 
          </div>
 
+               
             
  
             <!-- /.row -->

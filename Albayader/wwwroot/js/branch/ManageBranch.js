@@ -30,7 +30,14 @@
                 maxlength: 150,
             },
 
+            latitude: {
 
+                decimal: true,
+            },
+            longitude: {
+
+                decimal: true,
+            },
         },
 
         errorElement: 'span',

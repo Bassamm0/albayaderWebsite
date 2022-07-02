@@ -136,6 +136,12 @@
                                     <div class="form-group">
                                         <i class="fa-solid fa-gears"></i><label class="ServiceViewHeaders">Parts Checked</label>
                                         <div class="row" style="padding-left:20px;">
+                                         @if (item.Elect)
+                                            {
+                                                 <div class="col">
+                                                   <i class="fa-solid fa-circle-check" style="color:green"></i> Elect Parts
+                                                </div>
+                                            }
                                             @if (item.Moving)
                                             {
                                                  <div class="col">
@@ -189,7 +195,7 @@
                                              @if (item.TmpControl)
                                             {
                                                   <div class="col">
-                                                  <i class="fa-solid fa-circle-check" style="color:green"></i> Tmp. Contro 
+                                                  <i class="fa-solid fa-circle-check" style="color:green"></i> Tmp. Control
                                                 </div>
                                             }
                                                 </div>

@@ -167,8 +167,7 @@ namespace DAL.Functions
             using (var context = new DatabaseContext(DatabaseContext.ops.dbOptions))
             {
                 context.materials.Attach(Material);
-                context.Entry(Material).Property(x => x.MaterialId).IsModified = true;
-                context.Entry(Material).Property(x => x.Price).IsModified = true;
+                 context.Entry(Material).Property(x => x.Price).IsModified = true;
                  context.Entry(Material).Property(x => x.MaterialName).IsModified = true;
                  context.Entry(Material).Property(x => x.Description).IsModified = true;
 

@@ -55,12 +55,12 @@ namespace AlbayaderWeb.Pages
 
             if (PageActionMode == "Add")
             {
-                pageTitle = "Add Branch";
+                pageTitle = "Add Material";
                 editMode = false;
             }
             else if (PageActionMode == "Edit")
             {
-                pageTitle = "Edit Branch";
+                pageTitle = "Edit Material";
                 _material = await getmaterial(id);
                 editMode = true;
 

@@ -41,7 +41,7 @@
 
         <div class="container-fluid">
 
-
+            <form method="post">
             <div class="card card-default">
 
                 <!-- /.card-header -->
@@ -98,9 +98,18 @@
                                   
 
                                                                            <li class="ViewMaterial" materialId="@item.MaterialId"  data-toggle="modal" data-target="#modal-view"><a  class="dropdown-item " href="#"  >View Material</a></li>
-                                                                          <li class="EditMaterial" materialId="@item.MaterialId"><a  class="dropdown-item " href="ManageMaterial?Smode=edit&id=@item.MaterialId"  >Edit Material</a></li>
+                                                                          <li class="EditMaterial" materialId="@item.MaterialId">
+                                                                             @* <a  class="dropdown-item " href="ManageMaterial?Smode=edit&id=@item.MaterialId"  >Edit Material</a></li>*@
+                                                                          
+                                                                          <button type="submit" class="dropdown-item" asp-page-handler="EditMaterial"
+                                                                              asp-route-companyid="@item.MaterialId"
+                                                                             asp-route-id="@item.MaterialId" >
+                                                                                 Edit Material</button>
+                                             
+                                                                          
                                                                           <li class="deleteMaterial" materialName="@item.MaterialName" materialId="@item.MaterialId" data-toggle="modal" data-target="#modal-delete"><a  class="dropdown-item " href="#"  >Delete Material</a></li>
                                                
+
                                                                       </ul>
                                                                     </div>
                                                           </td>
@@ -135,7 +144,7 @@
 
 
             </div>
-
+          </form>
 
 
 

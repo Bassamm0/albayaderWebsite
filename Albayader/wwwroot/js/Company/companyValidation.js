@@ -47,7 +47,14 @@ $(document).ready(function () {
             street: {
                 maxlength: 50,
             },
-
+            latitude: {
+               
+                decimal: true,
+            },
+            longitude: {
+               
+                decimal: true,
+            },
         },
         //messages: {
         //    LoginEmailName: {
