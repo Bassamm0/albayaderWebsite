@@ -184,6 +184,7 @@
         if (preventiveBranchData == null && correctiveBranchData == null) {
             return;
         }
+
         let preBranch = []
       
         let corBranch = []
@@ -192,9 +193,8 @@
                 preBranch[i] = preventiveBranchData[i].branchName
 
             }
-
-
         }
+
         if (correctiveBranchData != null) {
 
             for (var i = 0; i < correctiveBranchData.length; i++) {
@@ -209,20 +209,24 @@
         let preBack = []
         let preBorder = []
         for (var i = 0; i < finalbranchs.length; i++) {
-
             for (var j = 0; j < preventiveBranchData.length; j++) {
-                if (finalbranchs[i] == preventiveBranchData[j].branchName) {
+                if (finalbranchs[i] === preventiveBranchData[j].branchName) {
                     prevFinal[i] = preventiveBranchData[j].value;
-                continue;
+                    
+                    preventiveBranchData.splice(j, 1)
                 } else {
                    prevFinal[i] = 0;
-
+                   
                 }
-                preBack[i] = 'rgba(255, 99, 132, 0.2)'
-                preBorder[i] = 'rgba(255, 99, 132, 1)'
-            }
+                
                
-            
+            }
+            preBack[i] = 'rgba(255, 99, 132, 0.2)'
+            preBorder[i] = 'rgba(255, 99, 132, 1)'
+            if (preventiveBranchData.length == 0) {
+                prevFinal[i] = 0;
+              
+            }
         }
 
         let corFinal = [];
@@ -233,16 +237,20 @@
             for (var j = 0; j < correctiveBranchData.length; j++) {
                 if (finalbranchs[i] == correctiveBranchData[j].branchName) {
                     corFinal[i] = correctiveBranchData[j].value;
-                    continue;
+                    correctiveBranchData.splice(j, 1)
                 } else {
                     corFinal[i] = 0;
-                    continue;
+
+
+
                 }
                 corBack[i] = 'rgba(54, 162, 235, 0.2)'
                 corBorder[i] = 'rgba(54, 162, 235, 1)'
-            }
-               
+                if (correctiveBranchData.length == 0) {
+                    corFinal[i] = 0;
 
+                }
+            }
         }
 
         console.log(prevFinal)

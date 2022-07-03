@@ -19,7 +19,7 @@
 
 
     var table = $("#DrasftTbl").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false,
+        "responsive": true, "lengthChange": false, "autoWidth": false, "ordering": false,
         "buttons": ["copy", "csv", "excel", "pdf", "print"]
     }).buttons().container().appendTo('#DrasftTbl_wrapper .col-md-6:eq(0)');
 

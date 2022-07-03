@@ -499,134 +499,12 @@ namespace DAL.Functions
 
                 await context.SaveChangesAsync();
             }
-            DUser dUser = new DUser();
-            List<EUser> ousers= new List<EUser>();
-            ousers = dUser.getAllAdminAndManager();
-
-            List<EUser> ousersManger = new List<EUser>();
-            ousersManger = dUser.getAllCompanyManager(eServices.ServiceId);
-
-            EServiceModel _serviceModel = new EServiceModel();
-            ECorrectiveServiceModel _ecorrectiveServiceModel = new ECorrectiveServiceModel();   
-            if (eServices.ServiceTypeId == 1)
-            {
-                _serviceModel = getSingleService(eServices.ServiceId);
-            }
-            else
-            {
-                _ecorrectiveServiceModel=getCorrectiveSingleService(eServices.ServiceId);
-            }
+            
           
             //complete
             if (eServices.StatusId == 5)
             {
-                // ***** send email your password been changed.
-
-                // get the recipaint admin manager client manager
-
-
-
-                StringBuilder Clientbody = new StringBuilder();
-                Clientbody.AppendFormat("Dear {0}  Manager",eServices.CompanyName);
-                Clientbody.AppendLine("  ");
-                Clientbody.AppendFormat(" Service in your branch {0} has be completed successfully", eServices.BranchName);
-                Clientbody.AppendLine("details as bellow");
-                if (eServices.ServiceTypeId == 1)
-                {
-                    foreach (EServiceDetails servicedetails in _serviceModel.ServiceDetails)
-                    {
-                        Clientbody.AppendFormat(" Equipment", servicedetails.EquipmentName);
-                        Clientbody.AppendFormat(" Serial No", servicedetails.SerialNo);
-                        Clientbody.AppendFormat(" Parts Checked");
-                        if(servicedetails.Elect)
-                        Clientbody.AppendFormat(" Elect Parts");
-                        if (servicedetails.Moving)
-                            Clientbody.AppendFormat(" Moving Parts");
-                        if (servicedetails.Bearings)
-                            Clientbody.AppendFormat(" Bearings");
-                        if (servicedetails.Bells)
-                            Clientbody.AppendFormat("Bells");
-                        if (servicedetails.Motor)
-                            Clientbody.AppendFormat(" Motor");
-                        if (servicedetails.Heater)
-                            Clientbody.AppendFormat(" EHeater");
-                        if (servicedetails.SafetySwitch)
-                            Clientbody.AppendFormat(" Safety Switchs");
-                        if (servicedetails.ControlBoard)
-                            Clientbody.AppendFormat(" Control Board");
-                        if (servicedetails.Compressor)
-                            Clientbody.AppendFormat(" Compressor");
-                        if (servicedetails.TmpControl)
-                            Clientbody.AppendFormat(" Tmp. Control");
-
-                        Clientbody.AppendFormat(" Material Used");
-                        foreach (EMaterialsUsed materuse in servicedetails.MaterialsUsed)
-                        {
-                           
-                            Clientbody.AppendFormat(" {0}", materuse.MateriaUsedlName);
-                        }
-                        Clientbody.AppendFormat(" Required Used");
-                        foreach (ERequiredMaterials mrateruse in servicedetails.requiredMaterials)
-                        {
-                            Clientbody.AppendFormat(" {0}", mrateruse.RequireMaterialName);
-                        }
-                    }
-
-
-                    Clientbody.AppendFormat("Remarks: {0}", _serviceModel.Remark);
-                    Clientbody.AppendFormat("Status After Service: {0}", _serviceModel.StatusAfterName);
-
-
-                    Clientbody.AppendFormat(" For more details about the service please <a href=\"{0}\" >Login to the service portal</a> ","http://www.albayader-me.com");
-
-                }
-                else
-                {
-
-                    
-                    Clientbody.AppendFormat(" Vist type", _ecorrectiveServiceModel.VistTypeName);
-                    foreach (ECorrectiveServiceDetails servicedetails in _ecorrectiveServiceModel.ServiceDetails)
-                    {
-                        Clientbody.AppendFormat(" Equipment", servicedetails.EquipmentName);
-                        Clientbody.AppendFormat(" Serial No", servicedetails.SerialNo);
-                       
-                        Clientbody.AppendFormat(" Request Details");
-                        Clientbody.AppendFormat("Reported by: {0}", servicedetails.ReportedBy);
-                        Clientbody.AppendFormat("Problem Reported: {0}", servicedetails.ProblemReported);
-                        Clientbody.AppendFormat("Condition: {0}", servicedetails.ConditionName);
-                       
-
-
-                        Clientbody.AppendFormat(" Material Used");
-                        foreach (EMaterialsUsed materuse in servicedetails.MaterialsUsed)
-                        {
-
-                            Clientbody.AppendFormat(" {0}", materuse.MateriaUsedlName);
-                        }
-                        Clientbody.AppendFormat("Service Render: {0}", servicedetails.ServiceRendered);
-
-                    }
-
-                    Clientbody.AppendFormat("Remarks: {0}", _ecorrectiveServiceModel.Remark);
-                    Clientbody.AppendFormat("Status After Service: {0}", _ecorrectiveServiceModel.StatusAfterName);
-
-                    Clientbody.AppendFormat(" For more details about the service please <a href=\"{0}\" >Login to the service portal</a> ", "http://www.albayader-me.com");
-
-                }
-
-
-                Clientbody.AppendLine("");
-                Clientbody.AppendLine("Regards ");
-                Clientbody.AppendLine("Al Bayader Team ");
-
-                string subject = "Service Completed";
-                UtilityHelper utilityHelper = new UtilityHelper();
-
-                bool result = false;
-                result = await utilityHelper.SendCompleteEmailAsyncToClient(ousersManger, subject, Clientbody.ToString());
-                result = await utilityHelper.SendCompleteEmailAsyncToAdmin(ousers, subject, Clientbody.ToString());
-
-
+              
             }
 
 
@@ -662,8 +540,168 @@ namespace DAL.Functions
 
                 await context.SaveChangesAsync();
             }
+            //send email
+            DUser dUser = new DUser();
+            List<EUser> ousers = new List<EUser>();
+            ousers = dUser.getAllAdminAndManager();
+
+            List<EUser> ousersManger = new List<EUser>();
+            ousersManger = dUser.getAllCompanyManager(eServices.ServiceId);
+
+            EServiceModel _serviceModel = new EServiceModel();
+            ECorrectiveServiceModel _ecorrectiveServiceModel = new ECorrectiveServiceModel();
+
+            if (eServices.ServiceTypeId == 1)
+            {
+                _serviceModel = getSingleService(eServices.ServiceId);
+            }
+            else
+            {
+                _ecorrectiveServiceModel = getCorrectiveSingleService(eServices.ServiceId);
+            }
+
+            string subject = "Service Completed";
+            UtilityHelper utilityHelper = new UtilityHelper();
+
+
+            string body = buildEmailboday(eServices, _serviceModel, _ecorrectiveServiceModel, "client");
+            string adminboday = buildEmailboday(eServices, _serviceModel, _ecorrectiveServiceModel, "admin");
+
+            bool result = false;
+                
+            if (ousersManger != null)
+            {
+                result = await utilityHelper.SendCompleteEmailAsyncToClient(ousersManger, subject, body.ToString());
+
+            }
+            result = await utilityHelper.SendCompleteEmailAsyncToAdmin(ousers, subject, adminboday.ToString());
+
+
+
+
 
             return eServices;
+        }
+
+        private string buildEmailboday(EServices eServices,EServiceModel _serviceModel, ECorrectiveServiceModel _ecorrectiveServiceModel,string to)
+        {
+
+            StringBuilder Clientbody = new StringBuilder();
+            if (to == "admin")
+            {
+                Clientbody.AppendFormat("<p>Al Bayader  Admin </p>", eServices.CompanyName);
+            }
+            else
+            {
+                Clientbody.AppendFormat("<p>Dear {0}  Manager </p>", eServices.CompanyName);
+            }
+           
+
+            Clientbody.AppendFormat("<div>Service in your branch <span style=\"font - weight: 400;\">{0}</span> has be completed successfully</div> ", eServices.BranchName);
+
+            Clientbody.AppendFormat("<p>Service Refrence number :{0}</p>", eServices.ServiceId);
+            Clientbody.AppendLine("<p style=\"font-weight:bold; \">Details as bellow</p>");
+
+            if (eServices.ServiceTypeId == 1)
+            {
+                foreach (EServiceDetails servicedetails in _serviceModel.ServiceDetails)
+                {
+                    Clientbody.AppendFormat("<p> Equipment Name:{0}</p>", servicedetails.EquipmentName);
+                    Clientbody.AppendFormat("<p> Serial No:{0}</p>", servicedetails.SerialNo);
+                    Clientbody.AppendFormat(" <p style=\"font-weight: bold; \">Parts Checked</p>");
+                    Clientbody.AppendLine("<ul>");
+                    if (servicedetails.Elect)
+                        Clientbody.AppendFormat("<li>Elect Parts</li>");
+                    if (servicedetails.Moving)
+                        Clientbody.AppendFormat(" <li>Moving Parts</li>");
+                    if (servicedetails.Bearings)
+                        Clientbody.AppendFormat("<li> Bearings</li>");
+                    if (servicedetails.Bells)
+                        Clientbody.AppendFormat("<li>Bells</li>");
+                    if (servicedetails.Motor)
+                        Clientbody.AppendFormat(" <li>Motor</li>");
+                    if (servicedetails.Heater)
+                        Clientbody.AppendFormat("<li> EHeater</li>");
+                    if (servicedetails.SafetySwitch)
+                        Clientbody.AppendFormat(" <li>Safety Switchs</li>");
+                    if (servicedetails.ControlBoard)
+                        Clientbody.AppendFormat(" <li>Control Board</li>");
+                    if (servicedetails.Compressor)
+                        Clientbody.AppendFormat(" <li>Compressor</li>");
+                    if (servicedetails.TmpControl)
+                        Clientbody.AppendFormat("<li> Tmp. Control</li>");
+                    Clientbody.AppendFormat(" </ul>");
+                    Clientbody.AppendFormat(" <p style=\"font-weight:bold; \">Used Materials</p>");
+                    Clientbody.Append("<ul>");
+                    foreach (EMaterialsUsed materuse in servicedetails.MaterialsUsed)
+                    {
+
+                        Clientbody.AppendFormat("<li> {0}</li>", materuse.MateriaUsedlName);
+                    }
+                    Clientbody.Append("</ul>");
+
+                    Clientbody.AppendFormat(" <p style=\"font-weight:bold; \">Required Materials</p>");
+                    Clientbody.Append("<ul>");
+                    foreach (ERequiredMaterials mrateruse in servicedetails.requiredMaterials)
+                    {
+                        Clientbody.AppendFormat("<li> {0}</li>", mrateruse.RequireMaterialName);
+                    }
+                    Clientbody.Append("</ul>");
+                }
+
+
+                Clientbody.AppendFormat("<p>Remarks: {0}</p>", _serviceModel.Remark);
+                Clientbody.AppendFormat("<p>Status After Service: {0}</p>", _serviceModel.StatusAfterName);
+
+
+                Clientbody.AppendFormat(" <p>For more details about the service please <a href=\"{0}\"> Login to the service portal</a></p> ", "http://www.albayader-me.com");
+
+            }
+            else
+            {
+
+
+                Clientbody.AppendFormat("<p> Vist type:{0}</p>", _ecorrectiveServiceModel.VistTypeName);
+                foreach (ECorrectiveServiceDetails servicedetails in _ecorrectiveServiceModel.ServiceDetails)
+                {
+                    Clientbody.AppendFormat(" <p>Equipment Name :{0}</p>", servicedetails.EquipmentName);
+                    Clientbody.AppendFormat(" Serial No:", servicedetails.SerialNo);
+
+                    Clientbody.AppendFormat("<p style=\"font-weight:bold; \">Request Details</p>");
+                    Clientbody.AppendFormat("<p>Reported by: {0}</p>", servicedetails.ReportedBy);
+                    Clientbody.AppendFormat("<p>Problem Reported: {0}</p>", servicedetails.ProblemReported);
+                    Clientbody.AppendFormat("<p>Condition: {0}</p>", servicedetails.ConditionName);
+
+
+
+                    Clientbody.AppendFormat(" <p style=\"font-weight:bold; \">Used Materials</p>");
+                    Clientbody.Append("<ul>");
+                    foreach (EMaterialsUsed materuse in servicedetails.MaterialsUsed)
+                    {
+
+                        Clientbody.AppendFormat("<li> {0}</li>", materuse.MateriaUsedlName);
+                    }
+                    Clientbody.Append("</ul>");
+                    Clientbody.AppendFormat("<p>Service Render: {0}</p>", servicedetails.ServiceRendered);
+
+                }
+
+                Clientbody.AppendFormat("<p>Remarks: {0}</p>", _ecorrectiveServiceModel.Remark);
+                Clientbody.AppendFormat("<p>Status After Service: {0}</p>", _ecorrectiveServiceModel.StatusAfterName);
+
+                Clientbody.AppendFormat("<p> For more details about the service please <a href=\"{0}\" >Login to the service portal</a></p> ", "http://www.albayader-me.com");
+
+            }
+
+
+            Clientbody.AppendLine("");
+            Clientbody.AppendLine("<p>Regards</p> ");
+            Clientbody.AppendLine("<p>Al Bayader Team</p> ");
+
+
+
+            return Clientbody.ToString();
+
         }
         public List<EServiceDetails> getAllServiceDetails(int serviceId)
         {

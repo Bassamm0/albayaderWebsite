@@ -119,15 +119,16 @@
 
 
             //$('#mySelect2').val(['1', '2']);
+  
             var arrayused=[]
             for (var u = 0; u < ServiceObject.serviceDetails[i].materialsUsed.length; u++) {
                 arrayused[u] = ServiceObject.serviceDetails[i].materialsUsed[u].materialId
             }
             var arrayReq = []
             for (var r = 0; r < ServiceObject.serviceDetails[i].requiredMaterials.length; r++) {
-                arrayReq[r] = ServiceObject.serviceDetails[i].materialsUsed[r].materialId
+                arrayReq[r] = ServiceObject.serviceDetails[i].requiredMaterials[r].materialId
             }
-
+            console.log(i,arrayused)
             $('#MaterialUsed' + (i + 1)).val(arrayused);
             $('#Rquiredmaterials' + (i + 1)).val(arrayReq);
             $('#MaterialUsed' + (i + 1)).trigger('change');
@@ -135,8 +136,9 @@
             $('#ServiceDetailsid' + (i + 1)).val(ServiceObject.serviceDetails[i].serviceDetailId)
 
         }
-            
-        $("#ddStatusAfter").val(ServiceObject.statusAfterId).trigger('change');
+ 
+        $("#ddStatusAfter").val(ServiceObject.statusAfterId)
+        $("#ddStatusAfter").trigger('change');
         $("#serviceRemark").val(ServiceObject.remark);
         //ServiceDetailsid1
         toastr["success"]("Service loaded successfuly.")
@@ -798,8 +800,9 @@
         var remark = $('#serviceRemark').val()
         var url = APIURL + 'service/updatestatus'
         var statusAfterId = $('#ddStatusAfter').val()
+        var siteVistTypeId = 1;
 
-        var senddata = '{"serviceId":' + _ServiceId + ',"statusId":' + statusId + ',"remark":"' + remark + '","statusAfterId":' + statusAfterId + '}'
+        var senddata = '{"serviceId":' + _ServiceId + ',"statusId":' + statusId + ',"remark":"' + remark + '","statusAfterId":' + statusAfterId + ',"siteVistTypeId":' + siteVistTypeId + '}'
         $.ajax({
             type: "POST",
             url: url,

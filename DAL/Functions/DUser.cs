@@ -914,7 +914,9 @@ namespace DAL.Functions
 
                     StringBuilder sQuery = new StringBuilder();
                     sQuery.Append(" select distinct U.* from Users U  ");
-                    sQuery.Append(" where U.EndDate is null and U.AuthLevelRefId in (1,3)  ");
+                    sQuery.Append(" inner join UserAndBranch UB on UB.UserId=U.UserId  ");
+                    sQuery.Append(" inner join Branchs B on B.branchId=UB.BranchId  ");
+                    sQuery.Append(" where U.EndDate is null and U.AuthLevelRefId in (1,3)  and compnayId=2  ");
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -940,7 +942,6 @@ namespace DAL.Functions
                             if (dataReader["Telephone"] != DBNull.Value) { oEUsers.Telephone = (string)dataReader["Telephone"]; }
                             if (dataReader["AuthLevelRefId"] != DBNull.Value) { oEUsers.AuthLevelRefId = (int)dataReader["AuthLevelRefId"]; }
                             if (dataReader["PictureFileName"] != DBNull.Value) { oEUsers.PictureFileName = (string)dataReader["PictureFileName"]; }
-                            if (dataReader["UserRole"] != DBNull.Value) { oEUsers.UserRole = (string)dataReader["UserRole"]; }
                             users.Add(oEUsers);
                         }
                     }
@@ -1005,7 +1006,6 @@ namespace DAL.Functions
                             if (dataReader["Telephone"] != DBNull.Value) { oEUsers.Telephone = (string)dataReader["Telephone"]; }
                             if (dataReader["AuthLevelRefId"] != DBNull.Value) { oEUsers.AuthLevelRefId = (int)dataReader["AuthLevelRefId"]; }
                             if (dataReader["PictureFileName"] != DBNull.Value) { oEUsers.PictureFileName = (string)dataReader["PictureFileName"]; }
-                            if (dataReader["UserRole"] != DBNull.Value) { oEUsers.UserRole = (string)dataReader["UserRole"]; }
                             users.Add(oEUsers);
                         }
                     }

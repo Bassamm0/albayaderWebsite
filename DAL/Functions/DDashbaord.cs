@@ -61,6 +61,7 @@ namespace DAL.Functions
 
                             OEDashboard.preventiveBranch = getServiceBranch(1);
                             OEDashboard.correctiveBranch = getServiceBranch(2);
+
                             OEDashboard.allServiceBranch = getServiceBranch(0);
 
                             OEDashboard.branchCount = odbranch.gettotalBranchCount();
