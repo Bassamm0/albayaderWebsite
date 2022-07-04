@@ -13,11 +13,11 @@ namespace Entity
         public int ServiceDetailId { get; set; }
         public int MaterialId { get; set; }
         [NotMapped]
-        public int CorrectiveServiceDetailsId { get; set; }
+        public int? CorrectiveServiceDetailsId { get; set; }
         
 
         [NotMapped]
-        public string MateriaUsedlName { get; set; }
+        public string? MateriaUsedlName { get; set; }
 
     }
 }

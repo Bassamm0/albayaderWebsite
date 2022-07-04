@@ -200,7 +200,6 @@ namespace AlbayaderWeb.Pages
 
             string apiurl = AppConfig.APIUrl;
             var json = JsonConvert.SerializeObject(User);
-
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
             using (var httpClient = new HttpClient())

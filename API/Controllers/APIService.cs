@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Text.Json;
 using static DAL.DALException;
 using System.Globalization;
-
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -39,13 +39,15 @@ namespace API.Controllers
             return services;
         }
         [Route("completedservice")]
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager")]
         [HttpGet]
         public async Task<List<EServiceModel>> getAllCompletedService()
         {
-            
+
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            EUser logeduser = claimHellper.GetCurrentUser(identity);
             List<EServiceModel> services = new List<EServiceModel>();
-            services = await serviceLogic.getAllCompletedService();
+            services = await serviceLogic.getAllCompletedService(logeduser);
 
             return services;
         }

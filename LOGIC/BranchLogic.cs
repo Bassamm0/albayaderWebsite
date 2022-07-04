@@ -13,10 +13,19 @@ namespace LOGIC
     public class BranchLogic
     {
         DBranchs dBranchs = new DBranchs();
-        public async Task<List<EBranchs>> getAllBranchs()
+        public async Task<List<EBranchs>> getAllBranchs(EUser logeduser)
         {
 
-            List<EBranchs> Branchs = dBranchs.getAllBranchs();
+            List<EBranchs> Branchs = new List<EBranchs>();
+            if (logeduser.CompanyTypeId == 1 && (logeduser.UserRole.ToLower() == "administrator" || logeduser.UserRole.ToLower() == "manager" || logeduser.UserRole.ToLower() == "Technicion"))
+            {
+                Branchs = dBranchs.getAllBranchs();
+            }
+            else if (logeduser.CompanyTypeId != 1 && logeduser.UserRole.ToLower() == "client manager")
+            {
+                Branchs = dBranchs.getAllCompanyBranchs(logeduser.CompanyId);
+            }
+            
 
             return Branchs;
         }

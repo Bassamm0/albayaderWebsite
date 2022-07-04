@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Text.Json;
 using static DAL.DALException;
 using System.Globalization;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -21,8 +22,11 @@ namespace API.Controllers
         [HttpGet]
         public async Task<List<EBranchs>> getAllBranchs()
         {
+
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            EUser logeduser = claimHellper.GetCurrentUser(identity);
             List<EBranchs> branchs = new List<EBranchs>();
-            branchs = await BranchLogic.getAllBranchs();
+            branchs = await BranchLogic.getAllBranchs(logeduser);
 
             return branchs;
         }

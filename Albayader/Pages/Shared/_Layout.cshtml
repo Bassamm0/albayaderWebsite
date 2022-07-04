@@ -79,7 +79,7 @@
                                         @if (!string.IsNullOrEmpty(@Context.Session.GetString("PictureFileName")))
                                         {
                                             <img class="img-circle elevation-2"
-                                             src="https://localhost:7174/uploads/@Context.Session.GetString("PictureFileName")"
+                                             src="@Context.Session.GetString("apiurl")@Context.Session.GetString("PictureFileName")"
                                              style="width: 40px;height: 40px;"
                                              alt="User Avatar" />
                                         }

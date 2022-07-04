@@ -21,7 +21,9 @@ namespace Core_3Tire.Pages
         public bool Authenticated { get; set; }=false;
         private string url= "/Dashboard";
 
-       
+        public string? apiurl { get; set; }
+        public string? uploadurl { get; set; }
+
 
         public string token { get; set; }
         public string errorMessage { get; set; }
@@ -35,13 +37,18 @@ namespace Core_3Tire.Pages
 
         public IActionResult OnGet()
         {
-            
+            apiurl = AppConfig.APIUrl;
+            uploadurl = AppConfig.UploadURL;
             return null ;
         }
       
 
         public async  Task<IActionResult> OnPost()
         {
+            apiurl = AppConfig.APIUrl;
+            uploadurl = AppConfig.UploadURL;
+
+
 
             string statusCode = "";
             email = Request.Form["LoginEmailName"];
@@ -72,6 +79,7 @@ namespace Core_3Tire.Pages
                     HttpContext.Session.SetString("CompanyName", userdetails.CompanyName.ToString());
                     HttpContext.Session.SetString("BranchName", userdetails.BranchName.ToString());
 
+                    HttpContext.Session.SetString("apiurl", apiurl);
 
                     return Redirect(url);
                 }
@@ -99,21 +107,7 @@ namespace Core_3Tire.Pages
             return null;
         }
             
-        public void OnPostDelete()
-        {
-            Message = "Delete handler fired";
-        }
-
-        public void OnPostEdit(int id)
-        {
-            Message = "Edit handler fired";
-        }
-
-        public void OnPostView(int id)
-        {
-            Message = "View handler fired";
-        }
-
+       
 
         private async Task<string> GetLogindetails(string email,string password)
         {
@@ -164,14 +158,12 @@ namespace Core_3Tire.Pages
 
         public async Task<EUser> getLoginUserDetails(string token)
         {
-           
-
-
+            string apiurl = AppConfig.APIUrl;
             using (var httpClient = new HttpClient())
             {
                 httpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", token);
-                using (var response = await httpClient.GetAsync("https://localhost:7174/api/User/getLoginUser"))
+                using (var response = await httpClient.GetAsync(apiurl + "User/getLoginUser"))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")

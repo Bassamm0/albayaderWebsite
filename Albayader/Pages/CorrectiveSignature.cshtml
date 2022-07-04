@@ -194,7 +194,7 @@
                                                 @foreach (var picture in @Model._service.ServiceDetails[0].servicePictures)
                                                 {
 
-                                                    @if (picture.PictureTypeId == 1)
+                                                    @if (picture.PictureTypeId == 2)
                                                     {
                                                         <a class="magnifier" href="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)"> <img src="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)" alt="" class="img-item mx-1"></a>
 

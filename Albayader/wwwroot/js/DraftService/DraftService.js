@@ -108,7 +108,7 @@
         $("#ddBranch").html('')
         $.ajax({
             type: "GET",
-            url: "https://localhost:7174/api/branch/all",
+            url: APIURL +"branch/all",
             contentType: "application/json; charset=utf-8",
            /* async: false,*/
             headers: {

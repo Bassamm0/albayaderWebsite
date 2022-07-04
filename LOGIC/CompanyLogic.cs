@@ -40,6 +40,7 @@ namespace LOGIC
                 EBranchs ebranchs = new EBranchs();
                 ebranchs.BranchName = newCompany.Name;
                 ebranchs.CompnayId = newCompany.CompanyID;
+           
                 ebranchs.Latitude = newCompany.Latitude;
                 ebranchs.Longitude = newCompany.Longitude;
                 var addbranch=await dbranchs.addBranch(ebranchs);

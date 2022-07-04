@@ -39,19 +39,19 @@ namespace Entity
 
 
         [NotMapped]
-        public string CreaterName { get; set; }
+        public string? CreaterName { get; set; }
         [NotMapped]
-        public string StatusAfterName { get; set; }
+        public string? StatusAfterName { get; set; }
         [NotMapped]
-        public string TechnicianName { get; set; }
+        public string? TechnicianName { get; set; }
         [NotMapped]
-        public string PictureFileName { get; set; }
+        public string? PictureFileName { get; set; }
         [NotMapped]
-        public string ServiceTypeName { get; set; }
+        public string? ServiceTypeName { get; set; }
         [NotMapped]
-        public string BranchName { get; set; }
+        public string? BranchName { get; set; }
         [NotMapped]
-        public string CompanyName { get; set; }
+        public string? CompanyName { get; set; }
    
 
     }

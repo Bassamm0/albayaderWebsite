@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
 
+    const APIURL = $('#APIURI').val();
 
     const jtoken = $('#utoken').val();
     var getUrlParameter = function getUrlParameter(sParam) {
@@ -27,7 +28,7 @@
         $("#ddCompanies").html()
         $.ajax({
             type: "GET",
-            url: "https://localhost:7174/api/company/all",
+            url: APIURL +"company/all",
             contentType: "application/json; charset=utf-8",
             data: {},
             async: false,
@@ -80,7 +81,7 @@
         $("#ddBranch").html('')
         $.ajax({
             type: "POST",
-            url: "https://localhost:7174/api/branch/companybranchs",
+            url: APIURL +"branch/companybranchs",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({ 'companyid':parseInt(_companyId) }),
             async: false,

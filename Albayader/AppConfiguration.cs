@@ -20,7 +20,6 @@ namespace AlbayaderWeb
             UploadURL = Upload.Value;
        
 
-            // sqlConnectionString = "Server=DESKTOP-BLE8A7R\\SQLEXPRESS;Database=Tire-f77f71eb-2c79-4b0b-ad3e-4c3afa314ed7;Trusted_Connection=True;MultipleActiveResultSets=true;trustServerCertificate=true";
         }
         public string APIUrl { get; set; }
         public string UploadURL { get; set; }

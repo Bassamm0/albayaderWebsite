@@ -18,7 +18,7 @@ namespace Entity
         public DateTime CompletionDate { get; set; }
 
         public string ?Remark { get; set; }
-        public int StatusAfterId { get; set; }
+        public int? StatusAfterId { get; set; }
 
         public string? SupervisourName { get; set; }
         [NotMapped]
@@ -28,23 +28,23 @@ namespace Entity
         public string? SupervisourFeedback { get; set; }
 
         [NotMapped]
-        public string CreaterName { get; set; }
+        public string? CreaterName { get; set; }
         [NotMapped]
-        public string StatusAfterName { get; set; }
+        public string? StatusAfterName { get; set; }
         [NotMapped]
-        public string TechnicianName { get; set; }
+        public string? TechnicianName { get; set; }
         [NotMapped]
-        public string PictureFileName { get; set; }
+        public string? PictureFileName { get; set; }
         [NotMapped]
-        public string ServiceTypeName { get; set; }
+        public string? ServiceTypeName { get; set; }
         [NotMapped]
-        public string BranchName { get; set; }
+        public string? BranchName { get; set; }
         [NotMapped]
-        public string CompanyName { get; set; }
+        public string? CompanyName { get; set; }
         [NotMapped]
-       public List<EServiceDetails> ServiceDetails { get; set; }
+       public List<EServiceDetails>? ServiceDetails { get; set; }
         [NotMapped]
-        public string VistTypeName { get; set; }
+        public string? VistTypeName { get; set; }
   
 
     }

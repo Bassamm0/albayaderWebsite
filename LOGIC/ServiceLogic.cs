@@ -25,14 +25,24 @@ namespace LOGIC
         public async Task<List<EServiceModel>> getAllServiceByStatus(int StatusId)
         {
 
+            //if admin
             List<EServiceModel> services = dservice.getAllServiceByStatus(StatusId);
 
             return services;
         }
-        public async Task<List<EServiceModel>> getAllCompletedService()
+        public async Task<List<EServiceModel>> getAllCompletedService(EUser logeduser)
         {
+            List<EServiceModel> services = new List<EServiceModel>();
+            if (logeduser.CompanyTypeId == 1 && (logeduser.UserRole.ToLower() == "administrator" || logeduser.UserRole.ToLower() == "manager"))
+            {
+                services = dservice.getAllCompletedService();
+            }
+            else if (logeduser.CompanyTypeId != 1 && logeduser.UserRole.ToLower() == "client manager")
+            {
+                services = dservice.getAllCompletedServiceCompany(logeduser.CompanyId);
+            }
 
-            List<EServiceModel> services = dservice.getAllCompletedService();
+           // if manager
 
             return services;
         }

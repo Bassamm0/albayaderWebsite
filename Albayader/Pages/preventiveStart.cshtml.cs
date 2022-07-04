@@ -85,7 +85,7 @@ namespace AlbayaderWeb.Pages
             {
                 return null;
             }
-            string url = url = type+ "?ServiceId=" + _eServices.ServiceId; ;
+            string url = type+ "?ServiceId=" + _eServices.ServiceId; ;
 
             
             return Redirect(url);
@@ -98,8 +98,9 @@ namespace AlbayaderWeb.Pages
         {
              apiurl = AppConfig.APIUrl;
             var json = JsonConvert.SerializeObject(Service);
-
             var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+
 
 
             EServices returnService=new EServices();
