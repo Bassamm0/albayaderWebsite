@@ -1,0 +1,253 @@
+﻿@page
+@model AlbayaderWeb.Pages.ManageQuoteModel
+@{
+    ViewData["Title"] = "Manage Quote";
+}
+
+<link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+<div class="content-wrapper">
+
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-left">
+                        <li class="breadcrumb-item"><a href="Dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item "><a href="quote">Quote</a></li>
+                        <li class="breadcrumb-item active" id="currentLable">@Model.pageTitle </li>
+                    </ol>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+
+
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card card-default">
+                <div class="card-header">
+                    <h3 class="card-title">Qoute form</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row">
+                        <form id="quoteForm" method="post" style="width:90%;">
+                            @if (Model.editMode)
+                            {
+
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="companyname"> Company: </label><span> @Model._Quote.CompanyName</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="companyname"> Branc: </label><span> @Model._Quote.BranchName</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="companyname"> Service Ref#</label>
+                                        <input type="text" class="form-control" name="serviceid" id="serviceid" placeholder="Enter Company Name" value="@Model._Quote.ServiceId" />
+                                    </div>
+                                    @if (@Model._Quote.QouteDetails.Count > 0)
+                                    {
+
+
+
+                                        <label><h3>Material Details</h3></label>
+                                        <div id="allElementHolder">
+                                           
+                                            @for (int i = 0; i < @Model._Quote.QouteDetails.Count; i++)
+                                            {
+
+                                              
+
+                                                <div class="row" id="@("item"+i)" qoutedetialsid="@Model._Quote.QouteDetails[i].QuotationDetailsId" elemno="@(i)" >
+                                                    <fieldset class="form-group border p-3">
+
+                                                        <div class="row">
+
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label>-Material</label>
+                                                                    <select name="@("Material"+i)" id="@("Material"+i)" class="form-control select2 materialLoad" style="width: 100%;" required>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label for="lat">Price</label>
+                                                                    <input type="text" class="form-control priceClass" name="@("price"+i)" id="@("Price"+i)" placeholder="Enter Price" required value="@Model._Quote.QouteDetails[i].QuotationPrice" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label for="lat">Qty</label>
+                                                                    <input type="text" class="form-control qtyClass" name="@("qty"+i)" id="@("qty"+i)" placeholder="Enter Qty" value="@Model._Quote.QouteDetails[i].Qty" required />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div style="padding: 20px;float:right">
+                                                                    <button type="button" class="btn btn-default removeitem" elemno="@(i)"  qoutedetialsid="@Model._Quote.QouteDetails[i].QuotationDetailsId" style="background-color: rgb(250, 245, 245);"><i class="fa-solid fa-xmark"></i></button>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label for="exampleInputEmail1">Description</label>
+                                                                <textarea class="form-control descClass" id="@("description"+i)" name="@("description"+i)" rows="3">@Model._Quote.QouteDetails[i].Description
+                                                                                    </textarea>
+                                                            </div>
+                                                        </div>
+
+                                                    </fieldset>
+                                                </div>
+                                            }
+                                        </div>
+
+
+
+                                    }
+
+                                    <div style="padding: 20px;float:right">
+                                        <button type="button" id="addItem" class="btn btn-info addItem">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </button>
+
+                                    </div>
+
+
+                                </div>
+
+
+                                <input type="hidden" id="hdServiceQuoteId" name="hdServiceQuoteId" value="@Model._Quote.ServiceQuoteId" />
+                                <input type="hidden" id="hdServiceId" name="hdServiceId" value="@Model._Quote.ServiceId" />
+                                <input type="hidden" id="materialcount" name="materialcount" value="@Model._Quote.QouteDetails.Count" />
+                                <input type="hidden" id="itemsids" name="itemsids" value="" />
+
+
+
+
+                                    List<int> arrayused =new List<int>();
+                                    @if (@Model._Quote.QouteDetails.Count > 0)
+                                    {
+                    
+                                        for (int u = 0; u <@Model._Quote.QouteDetails.Count; u++)
+                                        {
+                                            arrayused.Add(Convert.ToInt16(@Model._Quote.QouteDetails[u].MaterialId));
+                                        }
+
+                                    }
+                                    else
+                                    {
+                    
+                                    }
+                                @section Scripts{
+                                        <script type="text/javascript">
+                                                $(document).ready(function () {
+                                                     var arr = @Html.Raw(@Json.Serialize(@arrayused));
+                                                    var items=[];
+                                                var count =0;
+                                                if (@Model._Quote.QouteDetails.Count > 0)
+                                                    {
+                                                      count = @Model._Quote.QouteDetails.Count;
+
+                                                         for(var i=0;i<count;i++){
+                                                            
+                                                            $('#Material'+(i)).select2();
+                                                            $('#Material'+(i)).val(arr[i]).trigger('change');
+                                                            items.push(i);
+                                                        }
+                                                    
+                                                    }
+                                                    
+
+                                                    $('#itemsids').val(items)
+                                     
+                                                })
+                                        </script>
+                                        }
+
+                                        }
+                                        else
+                                        {
+
+
+
+                                        }
+
+                            <input type="hidden" id="Smode" name="Smode" value="@Model.PageActionMode" />
+
+                        </form>
+
+
+
+
+
+
+                    </div>
+
+                    <input type="hidden" id="APIURI" name="APIURI" value="@Model.apiurl" />
+
+
+                    <!-- /.row -->
+                    <div class="dropdown-divider"></div>
+
+                    <div class="row" style="float: right;">
+                        <div class="col">
+                            <div style="padding: 20px;float:left">
+                                <a href='quote' class="btn btn-block btn-default btn-lg" style="width: 200px;">Cancel</a>
+
+                            </div>
+
+                            <div style="padding: 20px;float:left">
+                                <button type="button" id="Savequote" class="btn btn-block btn-info btn-lg" style="width: 200px;">Save</button>
+
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.card-body -->
+
+            </div>
+            <!-- /.card -->
+
+
+        </div>
+    </section>
+    <!-- /.content -->
+
+</div>
+
+
+<!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<!-- Select2 -->
+<script src="plugins/select2/js/select2.full.min.js"></script>
+<!-- InputMask -->
+<script src="plugins/moment/moment.min.js"></script>
+<script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- date-range-picker -->
+
+
+<script src="~/js/quote/quoteManegment.js"></script>
+
+
+<script src="plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="plugins/jquery-validation/additional-methods.min.js"></script>
+

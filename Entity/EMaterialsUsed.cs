@@ -12,6 +12,7 @@ namespace Entity
         public int MaterialsUsedId { get; set; }
         public int ServiceDetailId { get; set; }
         public int MaterialId { get; set; }
+
         [NotMapped]
         public int? CorrectiveServiceDetailsId { get; set; }
         

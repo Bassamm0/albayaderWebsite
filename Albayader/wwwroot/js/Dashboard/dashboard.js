@@ -185,79 +185,73 @@
             return;
         }
 
+       
         let preBranch = []
       
         let corBranch = []
         if (preventiveBranchData != null) {
             for (var i = 0; i < preventiveBranchData.length; i++) {
                 preBranch[i] = preventiveBranchData[i].branchName
-
             }
         }
 
         if (correctiveBranchData != null) {
-
             for (var i = 0; i < correctiveBranchData.length; i++) {
                 corBranch[i] = correctiveBranchData[i].branchName
             }
         }
 
         let finalbranchs = preBranch.concat(corBranch.filter((item) => preBranch.indexOf(item) < 0));
-
+       
+        console.log(finalbranchs.length)
   
         let prevFinal = [];
         let preBack = []
         let preBorder = []
+        isExist = false;
+
         for (var i = 0; i < finalbranchs.length; i++) {
+            isExist = false;
             for (var j = 0; j < preventiveBranchData.length; j++) {
-                if (finalbranchs[i] === preventiveBranchData[j].branchName) {
-                    prevFinal[i] = preventiveBranchData[j].value;
-                    
-                    preventiveBranchData.splice(j, 1)
-                } else {
-                   prevFinal[i] = 0;
-                   
+            
+                if (finalbranchs[i] == preventiveBranchData[j].branchName) {
+                    console.log(isExist)
+                    prevFinal.push(preventiveBranchData[j].value);
+                    isExist = true;
                 }
-                
-               
+            }
+            if (!isExist) {
+                prevFinal.push(0);
+                isExist = false;
             }
             preBack[i] = 'rgba(255, 99, 132, 0.2)'
             preBorder[i] = 'rgba(255, 99, 132, 1)'
-            if (preventiveBranchData.length == 0) {
-                prevFinal[i] = 0;
-              
-            }
         }
 
         let corFinal = [];
      
         let corBack = []
         let corBorder = []
+
+       
         for (var i = 0; i < finalbranchs.length; i++) {
+            isExist = false;
             for (var j = 0; j < correctiveBranchData.length; j++) {
                 if (finalbranchs[i] == correctiveBranchData[j].branchName) {
-                    corFinal[i] = correctiveBranchData[j].value;
-                    correctiveBranchData.splice(j, 1)
-                } else {
-                    corFinal[i] = 0;
-
-
-
-                }
-                corBack[i] = 'rgba(54, 162, 235, 0.2)'
-                corBorder[i] = 'rgba(54, 162, 235, 1)'
-                if (correctiveBranchData.length == 0) {
-                    corFinal[i] = 0;
-
+                    console.log(isExist)
+                    corFinal.push(correctiveBranchData[j].value);
+                    isExist = true;
                 }
             }
+            if (!isExist) {
+                corFinal.push(0);
+                isExist = false;
+            }
+            corBack[i] = 'rgba(54, 162, 235, 0.2)'
+            corBorder[i] = 'rgba(54, 162, 235, 1)'
         }
 
-        console.log(prevFinal)
-        console.log(corFinal)
-
-
-         
+       
         const data = {
             labels: finalbranchs,
             datasets: [{

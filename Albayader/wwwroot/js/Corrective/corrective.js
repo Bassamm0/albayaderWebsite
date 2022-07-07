@@ -29,7 +29,7 @@
         placeholder: 'Select  Materials Used  ...'
     });
     $('#reportedDate').datetimepicker({
-        format: 'L',
+        format: 'DD/MM/yyyy'
       
     });
 

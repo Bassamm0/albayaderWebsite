@@ -13,7 +13,7 @@ namespace Entity
         [Key]
         public int ServiceDetailId { get; set; }
         public int ServiceId { get; set; }
-        public int ?EquipmentId { get; set; }
+        public int EquipmentId { get; set; }
         public bool Elect { get; set; }
         public bool Moving { get; set; }
         public bool Bearings { get; set; }

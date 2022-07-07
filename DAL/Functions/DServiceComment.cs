@@ -29,7 +29,7 @@ namespace DAL.Functions
                     StringBuilder sQuery = new StringBuilder();
                     sQuery.Append(" Select *,CONCAT(U.FirstName,U.Lastname) as FullName from ServiceComment C ");
                     sQuery.Append(" inner join Users u On U.UserId=C.CommentBy ");
-                    sQuery.AppendFormat(" where C.ServiceId=1 and C.EndDate is null ", ServiceId);
+                    sQuery.AppendFormat(" where C.ServiceId={0} and C.EndDate is null order by C.CommentDate desc", ServiceId);
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -75,7 +75,7 @@ namespace DAL.Functions
 
                     StringBuilder sQuery = new StringBuilder();
                     sQuery.Append(" Select * from ServiceComment C ");
-                    sQuery.AppendFormat(" where C.commentId={0}  ", commentId);
+                    sQuery.AppendFormat(" where C.commentId={0} ", commentId);
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();

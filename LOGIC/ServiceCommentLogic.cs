@@ -30,10 +30,10 @@ namespace LOGIC
 
             return serviceComment;
         }
-        public async Task<Boolean> addServiceComment(EServiceComment newServiceComment)
+        public async Task<Boolean> addServiceComment(EServiceComment newServiceComment,EUser logeduser)
         {
             // get loged user
-            newServiceComment.CommentBy = 1;
+            newServiceComment.CommentBy = logeduser.UserId;
             var resul = await dserviceComment.addComment(newServiceComment);
             if (resul.ServiceCommentId > 0)
             {

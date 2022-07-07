@@ -51,8 +51,24 @@ namespace API.Controllers
 
             return services;
         }
+
+        [Route("completedservicedate")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager")]
+        [HttpPost]
+        public async Task<List<EServiceModel>> getAllCompletedServiceByDate(JsonElement objData)
+        {
+
+            string startDate = objData.GetProperty("startDate").GetString();
+            string endDate = objData.GetProperty("endDate").GetString();
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            EUser logeduser = claimHellper.GetCurrentUser(identity);
+            List<EServiceModel> services = new List<EServiceModel>();
+            services = await serviceLogic.getAllCompletedServiceByDate(logeduser,startDate,endDate);
+
+            return services;
+        }
         [Route("getservicebyid")]
-        [Authorize(Roles = "Administrator,Manager,Technicion")]
+        [Authorize(Roles = "Administrator,Manager,Technicion,Client Manager")]
         [HttpPost]
         public async Task<EServiceModel> getSingleService(JsonElement objData)
         {
@@ -64,7 +80,7 @@ namespace API.Controllers
             return services;
         }
         [Route("getcorrectiveservicebyid")]
-        [Authorize(Roles = "Administrator,Manager,Technicion")]
+        [Authorize(Roles = "Administrator,Manager,Technicion,Client Manager")]
         [HttpPost]
         public async Task<ECorrectiveServiceModel> getCorrectiveSingleService(JsonElement objData)
         {

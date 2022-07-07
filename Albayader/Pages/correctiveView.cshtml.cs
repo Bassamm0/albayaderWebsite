@@ -34,7 +34,7 @@ namespace AlbayaderWeb.Pages
                 role = HttpContext.Session.GetString("Role");
 
             }
-            if (role.ToLower() != "administrator" && role.ToLower() != "manager" && role.ToLower() != "client Manager")
+            if (role.ToLower() != "administrator" && role.ToLower() != "manager" && role.ToLower() != "client manager")
             {
                 return Redirect("Index");
             }

@@ -46,6 +46,25 @@ namespace LOGIC
 
             return services;
         }
+
+        public async Task<List<EServiceModel>> getAllCompletedServiceByDate(EUser logeduser,string startDate,string endDate)
+        {
+            List<EServiceModel> services = new List<EServiceModel>();
+            if (logeduser.CompanyTypeId == 1 && (logeduser.UserRole.ToLower() == "administrator" || logeduser.UserRole.ToLower() == "manager"))
+            {
+                services = dservice.getAllCompletedServiceDate(startDate,endDate);
+            }
+            else if (logeduser.CompanyTypeId != 1 && logeduser.UserRole.ToLower() == "client manager")
+            {
+                services = dservice.getAllCompletedServiceCompanydate(logeduser.CompanyId,startDate,endDate);
+            }
+
+            // if manager
+
+            return services;
+        }
+
+
         public async Task<EServiceModel> getSingleService(int ServiceId)
         {
 

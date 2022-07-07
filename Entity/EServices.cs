@@ -22,7 +22,7 @@ namespace Entity
         public DateTime? EndDate { get; set; }
 
 
-        public int? StatusAfterId { get; set; }
+        public int StatusAfterId { get; set; }
 
         public string? Remark { get; set; }
 
@@ -32,7 +32,7 @@ namespace Entity
 
 
         public string? SupervisourFeedback { get; set; }
-        public int? SiteVistTypeId { get; set; }
+        public int SiteVistTypeId { get; set; }
 
 
 

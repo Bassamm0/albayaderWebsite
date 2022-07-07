@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
 
-
+    const jtoken = $('#utoken').val();
     const APIURL = $('#APIURI').val();
 
     $('body').on('click', '.viewComment', function () {

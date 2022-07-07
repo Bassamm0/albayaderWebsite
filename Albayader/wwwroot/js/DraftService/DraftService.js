@@ -57,49 +57,10 @@
         }
        
     }
-    $('body').on('click', '#DateSearch', function () {
-        if (!$("#FilterDate").valid()) {
-
-            return;
-        }
-        var startDate = $('#startDate').val();
-        var endDate = $('#EndtDate').val();
-        minDate = new Date(startDate);
-        maxDate = new Date(endDate);
-        console.log(minDate)
-        dateFileter()
-        $("#DrasftTbl").DataTable().draw();
-    })
-
-    function dateFileter() {
-        $.fn.dataTable.ext.search.push(
-            function (settings, data, dataIndex) {
-
-                var date = new Date(data[3]);
-
-                if (
-                    (minDate === null && maxDate === null) ||
-                    (minDate === null && date <= maxDate) ||
-                    (minDate <= date && maxDate === null) ||
-                    (minDate <= date && date <= maxDate)
-                ) {
-                    return true;
-                }
-                return false;
-            }
-        );
-    }
-    
+   
 
 
 
-    $('body').on('click', '#DateReset', function () {
-        minDate = new Date('01/01/2000');
-        maxDate = new Date('01/01/2900');
-        dateFileter()
-        $("#DrasftTbl").DataTable().draw();
-          
-    })
 
     getBranches()
 

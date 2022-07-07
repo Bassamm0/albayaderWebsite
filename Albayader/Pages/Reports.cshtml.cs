@@ -15,7 +15,7 @@ namespace AlbayaderWeb.Pages
         public string token { get; set; }
         public string role { get; set; }
         public string email { get; set; }
-        public List<EServiceModel> _services = new List<EServiceModel>();
+       // public List<EServiceModel> _services = new List<EServiceModel>();
         public string errorMessage { get; set; }
 
         public async Task<IActionResult> OnGet()
@@ -37,7 +37,7 @@ namespace AlbayaderWeb.Pages
             apiurl = AppConfig.APIUrl;
             uploadurl = AppConfig.UploadURL;
 
-            _services = await getAllCompletedservices();
+            //_services = await getAllCompletedservices();
 
 
             return null;
@@ -45,45 +45,46 @@ namespace AlbayaderWeb.Pages
 
 
 
-        public async Task<List<EServiceModel>> getAllCompletedservices()
-        {
-            apiurl = AppConfig.APIUrl;
-            // if user admin
-         
-          ;
+        //public async Task<List<EServiceModel>> getAllCompletedservices()
+        //{
+        //    apiurl = AppConfig.APIUrl;
+        //    // if user admin
+        
+        //    using (var httpClient = new HttpClient())
+        //    {
+        //        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        //        using (var response = await httpClient.GetAsync(apiurl + "service/completedservice"))
+        //        {
+
+        //            // string apiResponse = await response.Content.ReadAsStringAsync();
+        //            if (response.StatusCode.ToString() == "OK")
+        //            {
+        //                string responseJson = response.Content.ReadAsStringAsync().Result;
+
+        //                _services = JsonConvert.DeserializeObject<List<EServiceModel>>(responseJson);
+        //                //return response.StatusCode.ToString();
+        //            }
+        //            else
+        //            {
+
+        //                errorMessage = response.Content.ReadAsStringAsync().Result;
+        //                //  return response.StatusCode.ToString();
+        //            }
 
 
 
-            using (var httpClient = new HttpClient())
-            {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-                using (var response = await httpClient.GetAsync(apiurl + "service/completedservice"))
-                {
-
-                    // string apiResponse = await response.Content.ReadAsStringAsync();
-                    if (response.StatusCode.ToString() == "OK")
-                    {
-                        string responseJson = response.Content.ReadAsStringAsync().Result;
-
-                        _services = JsonConvert.DeserializeObject<List<EServiceModel>>(responseJson);
-                        //return response.StatusCode.ToString();
-                    }
-                    else
-                    {
-
-                        errorMessage = response.Content.ReadAsStringAsync().Result;
-                        //  return response.StatusCode.ToString();
-                    }
+        //        }
+        //    }
 
 
+        //    return _services;
+        //}
 
-                }
-            }
+       
 
+      
 
-            return _services;
-        }
-
+     
     }
 }

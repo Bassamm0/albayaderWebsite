@@ -7,7 +7,7 @@
     //$('.select2').select2();
 
     $('#reservationdate').datetimepicker({
-        format: 'L'
+        format: 'DD/MM/yyyy'
     });
 
     // validation 

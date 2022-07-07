@@ -15,10 +15,10 @@ namespace Entity
         public int TechnicianId { get; set; }
         public int BranchId { get; set; }
         public DateTime CreatedDate { get; set; }
-        public DateTime CompletionDate { get; set; }
+        public string? CompletionDate { get; set; }
 
         public string ?Remark { get; set; }
-        public int? StatusAfterId { get; set; }
+        public int StatusAfterId { get; set; }
 
         public string? SupervisourName { get; set; }
         [NotMapped]

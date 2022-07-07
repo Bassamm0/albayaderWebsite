@@ -18,7 +18,7 @@ namespace Entity
         public DateTime? CompletionDate { get; set; }
 
         public string? Remark { get; set; }
-        public int? StatusAfterId { get; set; }
+        public int StatusAfterId { get; set; }
 
         public string? SupervisourName { get; set; }
         [NotMapped]
@@ -44,7 +44,7 @@ namespace Entity
         [NotMapped]
         public List<ECorrectiveServiceDetails>? ServiceDetails { get; set; }
 
-        public int? SiteVistTypeId { get; set; }
+        public int SiteVistTypeId { get; set; }
         [NotMapped]
         public string? VistTypeName { get; set; }
        

@@ -96,7 +96,7 @@
                             <div class="info-box-content" style="float: right;text-align: left;">
                                 <div class="info-box-text text-center text-muted">
                                     <i class="fa-solid fa-calendar-days"></i>
-                                    @Model._service.CreatedDate.ToShortDateString()
+                                    @Model._service.CreatedDate.ToString("dd/MM/yyyy")
                                 </div>
                                 <div class="info-box-number text-muted mb-0"><i class="fa-solid fa-clock"></i> @Model._service.CreatedDate.ToString("HH:mm")</div>
                             </div>
@@ -461,7 +461,7 @@
 
 
                   var arr = @Html.Raw(@Json.Serialize(@arrayused));
-                  console.log(arr)
+                
                   $('#MaterialUsed1').val(arr);
                   $('#MaterialUsed1').trigger('change');
                 })

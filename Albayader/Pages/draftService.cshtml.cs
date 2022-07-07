@@ -20,7 +20,6 @@ namespace AlbayaderWeb.Pages
 
         public async Task<IActionResult> OnGet()
         {
-
             if (HttpContext.Session.GetString("token") == null)
             {
                 return Redirect("Index");

@@ -57,7 +57,7 @@
                         <div class="info-box-content" style="float: right;text-align: left;">
                             <div class="info-box-text text-center text-muted">
                                 <i class="fa-solid fa-calendar-days"></i>
-                                @Model._service.CreatedDate.ToShortDateString()
+                                @Model._service.CreatedDate.ToString("dd/MM/yyyy")
                             </div>
                             <div class="info-box-number text-muted mb-0"><i class="fa-solid fa-clock"></i> @Model._service.CreatedDate.ToString("HH:mm")</div>
                         </div>
@@ -102,7 +102,7 @@
                                             <span class="labelsView"> Call Reported By: </span>@Model._service.ServiceDetails[0].ReportedBy
                                         </div>
                                          <div class="col-sm">
-                                           <span class="labelsView">  Reported Date: </span>@Model._service.ServiceDetails[0].ReportedDate
+                                           <span class="labelsView">  Reported Date: </span>@Convert.ToDateTime(@Model._service.ServiceDetails[0].ReportedDate).ToString("dd/MM/yyyy");
                                         </div>
                                         <div class="dropdown-divider"></div>
                                          <div class="col-md-12">
@@ -230,7 +230,10 @@
                                             <span class="labelsView"> Status After Service:</span>@Model._service.StatusAfterName
                                         </div>
                                         <div class="dropdown-divider"></div>
-                                         
+                                         <div class="col-md-12">
+                                            <span class="labelsView"> Status After Service:</span>@Convert.ToDateTime(@Model._service.CompletionDate).ToString("dd/MM/yyyy hh:mm")
+                                        </div>
+                                        <div class="dropdown-divider"></div>
                                     </div>
                                 </div>
 

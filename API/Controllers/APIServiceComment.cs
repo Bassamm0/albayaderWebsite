@@ -6,11 +6,12 @@ using Microsoft.AspNetCore.Authorization;
 using System.Text.Json;
 using static DAL.DALException;
 using System.Globalization;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
     [Route("api/servicecomment")]
-    [Authorize(Roles = "Administrator,Manager,Client Manager")]
+    
     [ApiController]
     public class APIServiceComment : ControllerBase
     {
@@ -20,6 +21,7 @@ namespace API.Controllers
         
 
         [Route("all")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager")]
         [HttpPost]
         public async Task<List<EServiceComment>> getAllServiceComment([FromBody] JsonElement objData)
         {
@@ -35,6 +37,7 @@ namespace API.Controllers
         }
 
         [Route("single")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager")]
         [HttpPost]
         public async Task<EServiceComment> getSingleComment([FromBody] JsonElement objData)
         {
@@ -49,16 +52,20 @@ namespace API.Controllers
         }
 
         [Route("add")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager")]
         [HttpPost]
         public async Task<Boolean> addServiceComment([FromBody] EServiceComment newServiceComment)
         {
+
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            EUser logeduser = claimHellper.GetCurrentUser(identity);
 
             bool result = false;
             try
             {
                 if(newServiceComment != null)
                 {
-                    result = await serviceCommentLogic.addServiceComment(newServiceComment);
+                    result = await serviceCommentLogic.addServiceComment(newServiceComment, logeduser);
 
                 }
 
@@ -79,6 +86,7 @@ namespace API.Controllers
         }
 
         [Route("update")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager")]
         [HttpPost]
         public async Task<Boolean> updateServiceComment([FromBody] EServiceComment newServiceComment)
         {

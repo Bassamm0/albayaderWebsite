@@ -47,7 +47,7 @@
 
                     <div class="col-md-12">
 
-                        <form id="FilterDate">
+                        <form id="FilterDate" method="post">
 
                       
 
@@ -72,8 +72,8 @@
                                 <div class="form-group">
                                  
                                      <div class="input-group date" id="EndDateHolder" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#EndtDate" id="EndtDate" name="EndtDate" placeholder="Select End Date"/>
-                                        <div class="input-group-append" data-target="#EndtDate" data-toggle="datetimepicker">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#endDate" id="endDate" name="endDate" placeholder="Select End Date"/>
+                                        <div class="input-group-append" data-target="#endDate" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
                                     </div>
@@ -85,7 +85,7 @@
                             </div>
                            <div class="col">
                                 <div style="float:left;padding-right:10px;">
-                                    <button type="button" class="btn btn-block btn-info"  id="DateSearch">Apply</button>
+                                    <button type="button" class="btn btn-block btn-info"  id="DateSearch" >Apply</button>
 
                                 </div>
                        
@@ -114,7 +114,7 @@
                                     <option value="1">Planned</option>
                                     <option value="2">Warranty</option>
                                     <option value="3">Repairing</option>
-                                    <option value="4 and Startup">Commissioning and Startup</option>
+                                    <option value="4">Commissioning and Startup</option>
                                     <option value="5">Installation</option>
                                     <option value="6">AMC</option>
                                     <option value="7">Emergency</option>
@@ -160,81 +160,9 @@
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="TabelData" >
 
-                                                @if (Model._services != null)
-                                                {
-                                                  
-                                                         @foreach (var item in Model._services)
-                                                    {
-
-
-                                                        <tr>
-                                                            
-                                                                 @if(@item.ServiceTypeId==1){
-                                                                    <td><a href="PreventiveView?ServiceId=@item.ServiceId">#@Html.DisplayFor(modelItem => item.ServiceId)</a></td>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <td><a href="correctiveView?ServiceId=@item.ServiceId">#@Html.DisplayFor(modelItem => item.ServiceId)</a></td>
-                                                                    
-                                                                }
-                                                            
-                                                            <td>@Html.DisplayFor(modelItem => item.BranchName)</td>
-                                                            <td>@Html.DisplayFor(modelItem => item.ServiceTypeName)</td>
-                                                            <td> @item.CreatedDate.ToString("dd/MM/yyyy hh:mm")</td>
-                                                            <td>@Html.DisplayFor(modelItem => item.VistTypeName)</td>
-                                                            <td>@Html.DisplayFor(modelItem => item.TechnicianName)</td>
-                                                            <td>@item.CompletionDate.ToString("dd/MM/yyyy hh:mm")</td>
-                                                            <td>@Html.DisplayFor(modelItem => item.Remark)</td>
-                                                            <td>@Html.DisplayFor(modelItem => item.SupervisourFeedback)</td>
-                                                        
-                                                           
-                                                           
-                                                           <td>
-
-                                                                    <div class="dropdown">
-                                                                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                        Action
-                                                                      </button>
-                                                                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                                       
-                                                                             
-
-                                                                      <li class="adddCommentlnk" serviceid="@item.ServiceId"><a  class="dropdown-item " href="#"  data-toggle="modal" data-target="#modal-Add">Add Comment</a></li>
-                                                                           
-                                                                    
-                                                                          <li class="viewComment" serviceid="@item.ServiceId"><a  class="dropdown-item " href="#"  data-toggle="modal" data-target="#modal-view">View Comments</a></li>
-
-                                                                          <li>
-
-                                                                               @if(@item.ServiceTypeId==1){
-
-                                                                                    <a class="dropdown-item" href="PreventiveView?ServiceId=@item.ServiceId">View Details</a>
-
-                                                                                }
-                                                                                else
-                                                                                {
-
-                                                                                   <a class="dropdown-item" href="correctiveView?ServiceId=@item.ServiceId">View Details</a>
-                                                                    
-                                                                                }
-
-
-                                                                          </li>
-                                               
-                                                                      </ul>
-                                                                    </div>
-                                                          </td>
-
-                                                           
-
-                                                        </tr>
-                                                    }
-                                               
-                                                   
-                                                }
-                                                </tfoot>
+                                                </tbody>
                                         </table>
                                     </div>
 

@@ -80,6 +80,7 @@ namespace Core_3Tire.Pages
                     HttpContext.Session.SetString("BranchName", userdetails.BranchName.ToString());
 
                     HttpContext.Session.SetString("apiurl", apiurl);
+                    HttpContext.Session.SetString("uploadurl", uploadurl);
 
                     return Redirect(url);
                 }

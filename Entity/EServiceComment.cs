@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.Design;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity
 {
@@ -14,7 +15,8 @@ namespace Entity
         public int ServiceCommentId { get; set; }
         public int ServiceId { get; set; }
         public string? Comment { get; set; }
-        [Notmaped]
+     
+        [NotMapped]
         public string? FullName { get; set; }
         public int CommentBy { get; set; }
         public DateTime CommentDate { get; set; }

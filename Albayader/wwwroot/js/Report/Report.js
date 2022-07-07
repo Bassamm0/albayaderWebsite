@@ -4,10 +4,10 @@
 
     const jtoken = $('#utoken').val();
     $('#startDate').datetimepicker({
-        format: 'DD/MM/yyyy'
+        format: 'DD-MM-yyyy'
     });
-    $('#EndtDate').datetimepicker({
-        format: 'DD/MM/yyyy'
+    $('#endDate').datetimepicker({
+        format: 'DD-MM-yyyy'
     });
 
 
@@ -40,7 +40,7 @@
     });
 
     function filterColumn(text, val, column) {
-        console.log(val);
+   
         if (val != '') {
             $('#DrasftTbl')
                 .DataTable()
@@ -61,59 +61,164 @@
 
     }
 
+    intTable()
+    function intTable() {
+
+        var url = APIURL + 'service/completedservice'
+        $.ajax({
+            type: "GET",
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            data: {},
+            async: false,
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
+            },
+            success: function (data, status, xhr) {   // success callback function
+
+              
+                $("#DrasftTbl").DataTable().clear().draw();
+                for (i = 0; i < data.length; i++) {
+                    if (data[i].serviceTypeId == 1) {
+                        var c1 = '<td><a href="PreventiveView?ServiceId="' + data[i].serviceId + '">#' + data[i].serviceId + '<td>';
+                    } else {
+                        var c1 = '<td><a href="correctiveView?ServiceId="' + data[i].serviceId + '">#' + data[i].serviceId + '<td>';
+                    }
+                    let dataload = "";
+                    dataload += '<td><div class="dropdown"><td>';
+                    dataload += '<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Action';
+                    dataload += '</button><ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">';
+                    dataload += '<li class="adddCommentlnk" serviceid="' + data[i].serviceId + '"><a  class="dropdown-item " href="#"  data-toggle="modal" data-target="#modal-Add">Add Comment</a></li>';
+                    dataload += '<li class="viewComment" serviceid="' + data[i].serviceId + '"><a  class="dropdown-item " href="#"  data-toggle="modal" data-target="#modal-view">View Comments</a></li>';
+                    dataload += '<li>';
+                    if (data[i].serviceTypeId == 1) {
+                        dataload += '<a class="dropdown-item" href="PreventiveView?ServiceId="' + data[i].serviceId + '">View Details</a>';
+                    } else {
+                        dataload += '<a class="dropdown-item" href="correctiveView?ServiceId="' + data[i].serviceId + '">View Details</a>';
+                    }
+                    dataload += '</li>';
+
+                    $("#DrasftTbl").DataTable().row.add([
+                        c1,
+                        data[i].branchName,
+                        data[i].serviceTypeName,
+                        data[i].createdDate,
+                        data[i].vistTypeName,
+                        data[i].technicianName,
+                        data[i].completionDate,
+                        data[i].remark,
+                        data[i].supervisourFeedback,
+                        dataload
+                    ]).draw();
+
+                }
+
+            },
+            error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                alert('Error: something went wronge please try again later');
+            }
+
+        }).done(function () {
+
+            console.log('done')
+            $("#startDate").val('');
+            $("#endDate").val('')
+
+        });
+    }
+
     $('body').on('click', '#DateSearch', function () {
         if (!$("#FilterDate").valid()) {
 
             return;
+
+
         }
-        console.log($('#startDate').val())
-      
-         minDate = moment($('#startDate').val()).format('DD/MM/YYYY');
-         maxDate = moment($('#EndtDate').val()).format('DD/MM/YYYY');
-        $("#DrasftTbl").DataTable().draw();
+       
+        var _startDate = moment(moment($("#startDate").val(), 'DD-MM-YYYY')).format('MM-DD-YYYY');
+        var _endDate = moment(moment($("#endDate").val(), 'DD-MM-YYYY')).format('MM-DD-YYYY');
+
+        var senddata = '{"startDate":"' + _startDate + '","endDate":"' + _endDate + '"} '
+        
+        var url = APIURL + 'service/completedservicedate'
+        $.ajax({
+            type: "POST",
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            data: senddata,
+            async: false,
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
+            },
+            success: function (data, status, xhr) {   // success callback function
+                
+                console.log(data)
+                $("#DrasftTbl").DataTable().clear().draw();
+                for (i = 0; i < data.length; i++) {
+                    if (data[i].serviceTypeId == 1) {
+                        var c1 = '<td><a href="PreventiveView?ServiceId="' + data[i].serviceId + '">#' + data[i].serviceId + '<td>';
+                    } else {
+                       var c1 = '<td><a href="correctiveView?ServiceId="' + data[i].serviceId + '">#' + data[i].serviceId + '<td>';
+                    }
+                    let dataload = "";
+                    dataload += '<td><div class="dropdown"><td>';
+                    dataload += '<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Action';
+                    dataload += '</button><ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">';
+                    dataload += '<li class="adddCommentlnk" serviceid="@item.ServiceId"><a  class="dropdown-item " href="#"  data-toggle="modal" data-target="#modal-Add">Add Comment</a></li>';
+                    dataload += '<li class="viewComment" serviceid="@item.ServiceId"><a  class="dropdown-item " href="#"  data-toggle="modal" data-target="#modal-view">View Comments</a></li>';
+                    dataload += '<li>';
+                    if (data[i].serviceTypeId == 1) {
+                        dataload += '<a class="dropdown-item" href="PreventiveView?ServiceId="' + data[i].serviceId + '">View Details</a>';
+                    } else {
+                        dataload += '<a class="dropdown-item" href="correctiveView?ServiceId="' + data[i].serviceId + '">View Details</a>';
+                    }
+                    dataload += '</li>';
+
+                    $("#DrasftTbl").DataTable().row.add([
+                       c1,
+                        data[i].branchName,
+                        data[i].serviceTypeName,
+                        data[i].createdDate,
+                        data[i].vistTypeName,
+                        data[i].technicianName,
+                        data[i].completionDate,
+                        data[i].remark,
+                        data[i].supervisourFeedback,
+                        dataload
+                    ]).draw();
+
+                }
+
+
+                
+            },
+            error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                alert('Error: something went wronge please try again later');
+            }
+
+        }).done(function () {
+
+            console.log('done')
+
+        });
+
+    })
 
     
-    })
-    var minDate;
-    var maxDate;
-    //function dateFileter(minDate, maxDate) {
-      //  console.log(minDate, maxDate)
-        $.fn.dataTable.ext.search.push(
-            function (settings, data, dataIndex) {
-
-                var date = moment(data[6]).format('DD/MM/YYYY');
-               // var date = new Date(data[6]);
-
-                if (
-                    (minDate === null && maxDate === null) ||
-                    (minDate === null && date <= maxDate) ||
-                    (minDate <= date && maxDate === null) ||
-                    (minDate <= date && date <= maxDate)
-                ) {
-                    return true;
-                }
-                return false;
-            }
-        );
-    //}
-
-   
 
 
 
     $('body').on('click', '#DateReset', function () {
+        intTable()
       
-
-        minDate = moment('01/06/2022').format('DD/MM/YYYY');
-         maxDate = moment('01/01/2042').format('DD/MM/YYYY');
-        console.log(minDate, maxDate)
-        $("#DrasftTbl").DataTable().draw();
-        //dateFileter(minDate, maxDate);
-       
-
     })
 
-    getBranches()
+
+    getBranches();
 
     function getBranches() {
 
@@ -130,7 +235,7 @@
             },
             success: function (data, textStatus, xhr) {
                 var arrUpdates = (typeof data) == 'string' ? eval('(' + data + ')') : data;
-                console.log(arrUpdates)
+               
                 $('#ddBranch').append('<option value="">All Branch  ...</option>')
                 for (var i = 0; i < arrUpdates.length; i++) {
                     text = $.trim(arrUpdates[i].branchName);
@@ -159,10 +264,8 @@
 
     $('#FilterDate').validate({
 
-
-
         rules: {
-            EndtDate: { greaterThan: "#startDate" }
+            endDate: { greaterThan: "#startDate" }
 
         },
    

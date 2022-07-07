@@ -35,7 +35,6 @@
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
                 alert('Error: something went wronge please try again later');
             }
-
         }).done(function () {
 
             $('#modal-delete').modal('hide');
@@ -44,8 +43,6 @@
 
             toastr["success"]("User delete successfuly.")
         });
-
-
 
     })
 

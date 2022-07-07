@@ -41,8 +41,7 @@ namespace AlbayaderWeb.Pages
             apiurl = AppConfig.APIUrl;
             uploadurl = AppConfig.UploadURL;
 
-            int _BranchId = BranchId;
-            int _ServiceId = ServiceId;
+            
 
             _service = await getService(ServiceId);
             int statusId = _service.StatusId;
