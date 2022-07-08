@@ -52,6 +52,20 @@ namespace API.Controllers
             return services;
         }
 
+        [Route("completedservicebyBranch")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager")]
+        [HttpPost]
+        public async Task<List<EServiceModel>> getAllCompletedServiceByBranch(JsonElement objData)
+        {
+
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            EUser logeduser = claimHellper.GetCurrentUser(identity);
+            int barnchId = objData.GetProperty("barnchId").GetInt16();
+            List<EServiceModel> services = new List<EServiceModel>();
+            services = await serviceLogic.getAllCompletedServiceBranch(logeduser, barnchId);
+
+            return services;
+        }
         [Route("completedservicedate")]
         [Authorize(Roles = "Administrator,Manager,Client Manager")]
         [HttpPost]
@@ -79,6 +93,8 @@ namespace API.Controllers
 
             return services;
         }
+
+        
         [Route("getcorrectiveservicebyid")]
         [Authorize(Roles = "Administrator,Manager,Technicion,Client Manager")]
         [HttpPost]

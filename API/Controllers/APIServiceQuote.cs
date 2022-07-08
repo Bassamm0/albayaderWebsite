@@ -88,12 +88,15 @@ namespace API.Controllers
         public async Task<Boolean> addServiceComment([FromBody] EServiceQuote newEServiceQuote)
         {
 
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            EUser logeduser = claimHellper.GetCurrentUser(identity);
             bool result = false;
+
             try
             {
                 if (newEServiceQuote != null)
                 {
-                    result = await ServiceQuoteLogic.addServiceQuote(newEServiceQuote);
+                    result = await ServiceQuoteLogic.addServiceQuote(newEServiceQuote,logeduser);
 
                 }
 
@@ -118,7 +121,8 @@ namespace API.Controllers
         [HttpPost]
         public async Task<Boolean> updateServiceQuote([FromBody] EServiceQuote newEServiceQuote)
         {
-
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            EUser logeduser = claimHellper.GetCurrentUser(identity);
             bool result = false;
 
             try
@@ -126,7 +130,7 @@ namespace API.Controllers
 
                 if (newEServiceQuote != null)
                 {
-                    result = await ServiceQuoteLogic.updateServiceQuote(newEServiceQuote);
+                    result = await ServiceQuoteLogic.updateServiceQuote(newEServiceQuote, logeduser);
 
                 }
 

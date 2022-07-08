@@ -46,6 +46,17 @@ namespace LOGIC
 
             return services;
         }
+        public async Task<List<EServiceModel>> getAllCompletedServiceBranch(EUser logeduser,int BranchId)
+        {
+            List<EServiceModel> services = new List<EServiceModel>();
+           
+                services = dservice.getAllCompletedServiceBranch(BranchId);
+           
+
+            // if manager
+
+            return services;
+        }
 
         public async Task<List<EServiceModel>> getAllCompletedServiceByDate(EUser logeduser,string startDate,string endDate)
         {
@@ -72,7 +83,7 @@ namespace LOGIC
 
             return services;
         }
-
+        
         public async Task<ECorrectiveServiceModel> getCorrectiveSingleService(int ServiceId)
         {
 

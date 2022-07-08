@@ -23,7 +23,10 @@ namespace Entity
          public string? BranchName { get; set; }
         [NotMapped]
         public string? CompanyName { get; set; }
-
+        [NotMapped]
+        public int? CompanyId { get; set; }
+        [NotMapped]
+        public int? BranchId { get; set; }
 
     }
 }

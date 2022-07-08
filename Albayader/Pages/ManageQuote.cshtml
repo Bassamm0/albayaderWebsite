@@ -48,24 +48,45 @@
                             {
 
                                 <div class="col">
-                                    <div class="form-group">
-                                        <label for="companyname"> Company: </label><span> @Model._Quote.CompanyName</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="companyname"> Branc: </label><span> @Model._Quote.BranchName</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="companyname"> Service Ref#</label>
-                                        <input type="text" class="form-control" name="serviceid" id="serviceid" placeholder="Enter Company Name" value="@Model._Quote.ServiceId" />
-                                    </div>
+                                        <div class="col-md-12">
+                                             <div class="form-group">
+                           
+                                            <label>Clients</label>
+                                            <select name="ddCompanies" id="ddCompanies" class="form-control select2" style="width: 100%;" >
+                 
+    
+                                            </select>
+                                          </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                             <div class="form-group">
+                           
+                                            <label>Client Branch</label>
+                                            <select name="ddBranch" id="ddBranch" class="form-control select2" style="width: 100%;" >
+                 
+    
+                                            </select>
+                                          </div>
+                                        </div>
+                                    <div class="col-md-12">
+                                                 <div class="form-group">
+                           
+                                                <label>Branch Servcies #Ref</label>
+                                                <select name="ddService" id="ddService" class="form-control select2" style="width: 100%;" >
+                 
+    
+                                                </select>
+                                              </div>
+                                            </div>
+                                     <label><h3>Material Details</h3></label>
+                                        <div id="allElementHolder">
                                     @if (@Model._Quote.QouteDetails.Count > 0)
                                     {
 
 
 
-                                        <label><h3>Material Details</h3></label>
-                                        <div id="allElementHolder">
-                                           
+                                       
+                                             <span id="AddItemMessage">Get Started by adding items</span>
                                             @for (int i = 0; i < @Model._Quote.QouteDetails.Count; i++)
                                             {
 
@@ -105,20 +126,19 @@
                                                         <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <label for="exampleInputEmail1">Description</label>
-                                                                <textarea class="form-control descClass" id="@("description"+i)" name="@("description"+i)" rows="3">@Model._Quote.QouteDetails[i].Description
-                                                                                    </textarea>
+                                                                <textarea class="form-control descClass" id="@("description"+i)" name="@("description"+i)" rows="3">@Model._Quote.QouteDetails[i].Description.Trim()</textarea>
                                                             </div>
                                                         </div>
 
                                                     </fieldset>
                                                 </div>
                                             }
-                                        </div>
+                                       
 
 
 
                                     }
-
+                                     </div>
                                     <div style="padding: 20px;float:right">
                                         <button type="button" id="addItem" class="btn btn-info addItem">
                                             <i class="fa-solid fa-plus"></i>
@@ -171,7 +191,9 @@
                                                     
                                                     }
                                                     
-
+                                                    $('#ddCompanies').val(@Model._Quote.CompanyId).trigger('change');
+                                                    $('#ddBranch').val(@Model._Quote.BranchId).trigger('change');
+                                                    $('#ddService').val(@Model._Quote.ServiceId).trigger('change');
                                                     $('#itemsids').val(items)
                                      
                                                 })
@@ -184,6 +206,69 @@
 
 
 
+
+                                       <div class="col">
+                                             <div class="col-md-12">
+                                                 <div class="form-group">
+                           
+                                                <label>Clients</label>
+                                                <select name="ddCompanies" id="ddCompanies" class="form-control select2" style="width: 100%;" >
+                 
+    
+                                                </select>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                 <div class="form-group">
+                           
+                                                <label>Branch</label>
+                                                <select name="ddBranch" id="ddBranch" class="form-control select2" style="width: 100%;" >
+                 
+    
+                                                </select>
+                                              </div>
+                                            </div>
+                                             <div class="col-md-12">
+                                                 <div class="form-group">
+                           
+                                                <label>Branch Servcies #Ref</label>
+                                                <select name="ddService" id="ddService" class="form-control select2" style="width: 100%;" required>
+                 
+    
+                                                </select>
+                                              </div>
+                                            </div>
+                                   
+
+
+                                        <label><h3>Material Details</h3></label>
+                                        <div id="allElementHolder">
+                                           <span id="AddItemMessage">Get Started by adding items</span>
+                                              
+
+                                                
+                                             
+                                        </div>
+
+
+
+
+                                    <div style="padding: 20px;float:right">
+                                        <button type="button" id="addItem" class="btn btn-info addItem">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </button>
+
+                                    </div>
+
+
+                                </div>
+
+
+                                 <input type="hidden" id="materialcount" name="materialcount" value="0" />
+                                <input type="hidden" id="itemsids" name="itemsids" value="" />
+
+
+
                                         }
 
                             <input type="hidden" id="Smode" name="Smode" value="@Model.PageActionMode" />
@@ -192,7 +277,7 @@
 
 
 
-
+                        <span class="errorMessage" id="errorMessage">@Model.errorMessage</span>
 
 
                     </div>

@@ -28,7 +28,7 @@ namespace AlbayaderWeb.Pages
 
         public async Task<IActionResult> OnGet(string Smode, int qid)
         {
-            if (HttpContext.Session.GetString("token") == null)
+            if (HttpContext.Session.GetString("token") == null || HttpContext.Session.GetString("token") == "")
             {
                 return Redirect("Index");
             }
@@ -112,11 +112,42 @@ namespace AlbayaderWeb.Pages
             {
                 try
                 {
-                   // statusCode = await addBranchy(_Postbranch);
-                    //if (statusCode == "OK")
-                    //{
-                    //    return RedirectToPage("branchs", new { companyid = _Postbranch.companyid, companyname = companyNamefield });
-                    //}
+                    //_postQuote.ServiceQuoteId = Convert.ToInt16(Request.Form["hdServiceQuoteId"]);
+                    _postQuote.ServiceQuoteDate = DateTime.Now.ToString();
+
+                    string materialCount = Request.Form["itemsids"];
+                   
+
+                    int[] nums = Array.ConvertAll(materialCount.Split(','), int.Parse);
+
+
+                    if(nums.Length == 0)
+                    {
+                        errorMessage = "Please add at least one Item";
+                        return null;
+                    }
+                    List<EQuotationDetails> lQdetails = new List<EQuotationDetails>();
+                    for (int i = 0; i < nums.Length; i++)
+                    {
+                        EQuotationDetails _qdetails = new EQuotationDetails();
+                        _qdetails.MaterialId = Convert.ToInt16(Request.Form["Material" + nums[i]].ToString());
+                        _qdetails.QuotationPrice = Convert.ToInt16(Request.Form["price" + nums[i]].ToString());
+                        _qdetails.Qty = Convert.ToInt16(Request.Form["qty" + nums[i]].ToString());
+                        _qdetails.Description = Request.Form["description" + nums[i]].ToString();
+                        
+                        lQdetails.Add(_qdetails);
+
+                    }
+                    _postQuote.ServiceId = Convert.ToInt16(Request.Form["ddService"]);
+                    _postQuote.QouteDetails = lQdetails;
+
+
+                    statusCode = await addQuote(_postQuote);
+                    if (statusCode == "OK")
+                    {
+
+                        return RedirectToPage("quote");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -129,16 +160,18 @@ namespace AlbayaderWeb.Pages
                 try
                 {
                     _postQuote.ServiceQuoteId = Convert.ToInt16(Request.Form["hdServiceQuoteId"]);
-                    _postQuote.ServiceId = Convert.ToInt16(Request.Form["hdServiceId"]);
-
+                    _postQuote.ServiceQuoteDate = DateTime.Now.ToString();
+ 
                     string materialCount = Request.Form["itemsids"];
-                    if (materialCount == "")
+                    
+
+                    int[] nums = Array.ConvertAll(materialCount.Split(','), int.Parse);
+
+                    if (nums.Length == 0)
                     {
                         errorMessage = "Please add at least one Item";
                         return null;
                     }
-
-                    int[] nums = Array.ConvertAll(materialCount.Split(','), int.Parse);
                     List<EQuotationDetails> lQdetails=new List<EQuotationDetails>();
                     for (int i = 0; i < nums.Length; i++)
                     {
@@ -147,18 +180,21 @@ namespace AlbayaderWeb.Pages
                         _qdetails.QuotationPrice = Convert.ToInt16(Request.Form["price" + nums[i]].ToString());
                         _qdetails.Qty = Convert.ToInt16(Request.Form["qty" + nums[i]].ToString());
                         _qdetails.Description =Request.Form["description" + nums[i]].ToString();
+                        _qdetails.OpId = 1;
+                        _qdetails.ServiceQuoteId= Convert.ToInt16(Request.Form["hdServiceQuoteId"]);
                         lQdetails.Add(_qdetails);
 
                     }
-                    _postQuote.ServiceId = Convert.ToInt16(Request.Form["hdServiceId"]);
+                    _postQuote.ServiceId = Convert.ToInt16(Request.Form["ddService"]);
                     _postQuote.QouteDetails = lQdetails;
-
+                    _postQuote.EndDate = DateTime.Now;
+                    _postQuote.OpId = 1;
 
                         statusCode = await updateQuote(_postQuote);
                     if (statusCode == "OK")
                     {
 
-                        return RedirectToPage("qoute", null);
+                        return RedirectToPage("quote");
                     }
                 }
                 catch (Exception ex)
@@ -224,7 +260,7 @@ namespace AlbayaderWeb.Pages
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 using (var response = await httpClient.PostAsync(apiurl + "servicequote/update", data))
-                {
+                    {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")
                     {

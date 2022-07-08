@@ -47,7 +47,7 @@ namespace DAL.Functions
                             if (dataReader["ServiceQuoteFile"] != DBNull.Value) { oEServiceQuote.ServiceQuoteFile = (string)dataReader["ServiceQuoteFile"]; }
                             if (dataReader["CompanyName"] != DBNull.Value) { oEServiceQuote.CompanyName = (string)dataReader["CompanyName"]; }
                             if (dataReader["BranchName"] != DBNull.Value) { oEServiceQuote.BranchName = (string)dataReader["BranchName"]; }
-                     
+
                             if (dataReader["OpId"] != DBNull.Value) { oEServiceQuote.OpId = (int)dataReader["OpId"]; }
                             oEServiceQuote.QouteDetails = getAllQuotationDetailse(oEServiceQuote.ServiceQuoteId);
 
@@ -64,7 +64,7 @@ namespace DAL.Functions
 
             return users;
         }
-        public List<EServiceQuote> getAllServiceQuoteByDate(string startDate,string endDate)
+        public List<EServiceQuote> getAllServiceQuoteByDate(string startDate, string endDate)
         {
             List<EServiceQuote> users = new List<EServiceQuote>();
 
@@ -81,7 +81,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join Services SR on SR.ServiceId=SQ.ServiceId ");
                     sQuery.Append(" inner join Branchs b on b.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=B.compnayId ");
-                    sQuery.AppendFormat(" where SQ.Enddate is null  and SQ.ServiceQuoteDate between '{0}' and '{1}'  order by SQ.ServiceQuoteId ", startDate,  endDate);
+                    sQuery.AppendFormat(" where SQ.Enddate is null  and SQ.ServiceQuoteDate between '{0}' and '{1}'  order by SQ.ServiceQuoteId ", startDate, endDate);
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -163,7 +163,7 @@ namespace DAL.Functions
 
             return users;
         }
-        public List<EServiceQuote> getAllCompanyServiceQuoteDate(int companyid,string startDate,string endDate)
+        public List<EServiceQuote> getAllCompanyServiceQuoteDate(int companyid, string startDate, string endDate)
         {
             List<EServiceQuote> users = new List<EServiceQuote>();
 
@@ -180,7 +180,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join Services SR on SR.ServiceId=SQ.ServiceId ");
                     sQuery.Append(" inner join Branchs b on b.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=B.compnayId ");
-                    sQuery.AppendFormat(" where CO.CompanyID={0} SQ.Enddate is null and SQ.ServiceQuoteDate between '{1}' and '{2}' order by SQ.ServiceQuoteId ", companyid,startDate,endDate);
+                    sQuery.AppendFormat(" where CO.CompanyID={0} SQ.Enddate is null and SQ.ServiceQuoteDate between '{1}' and '{2}' order by SQ.ServiceQuoteId ", companyid, startDate, endDate);
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
 
@@ -225,7 +225,7 @@ namespace DAL.Functions
                 using (var command = conn.CreateCommand())
                 {
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" Select B.BranchName,CO.Name CompanyName,SQ.*,SR.* from ServiceQuotes SQ ");
+                    sQuery.Append(" Select B.BranchName,CO.Name CompanyName,CO.CompanyID,b.branchId,SQ.*,SR.* from ServiceQuotes SQ ");
                     sQuery.Append(" inner join Services SR on SR.ServiceId=SQ.ServiceId ");
                     sQuery.Append(" inner join Branchs b on b.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=B.compnayId ");
@@ -247,6 +247,8 @@ namespace DAL.Functions
                             if (dataReader["ServiceQuoteFile"] != DBNull.Value) { oEServiceQuote.ServiceQuoteFile = (string)dataReader["ServiceQuoteFile"]; }
                             if (dataReader["CompanyName"] != DBNull.Value) { oEServiceQuote.CompanyName = (string)dataReader["CompanyName"]; }
                             if (dataReader["BranchName"] != DBNull.Value) { oEServiceQuote.BranchName = (string)dataReader["BranchName"]; }
+                            if (dataReader["CompanyID"] != DBNull.Value) { oEServiceQuote.CompanyId = (int)dataReader["CompanyID"]; }
+                            if (dataReader["branchId"] != DBNull.Value) { oEServiceQuote.BranchId = (int)dataReader["branchId"]; }
 
                             if (dataReader["OpId"] != DBNull.Value) { oEServiceQuote.OpId = (int)dataReader["OpId"]; }
                             oEServiceQuote.QouteDetails = getAllQuotationDetailse(oEServiceQuote.ServiceQuoteId);
@@ -286,7 +288,7 @@ namespace DAL.Functions
                 context.ServiceQuotes.Attach(ServiceQuote);
                 context.Entry(ServiceQuote).Property(x => x.ServiceId).IsModified = true;
                 context.Entry(ServiceQuote).Property(x => x.ServiceQuoteFile).IsModified = true;
-          
+
 
                 await context.SaveChangesAsync();
             }
@@ -408,7 +410,7 @@ namespace DAL.Functions
             return quotationDetails;
         }
 
-        public List<EQuotationDetails> getAllQuotationDetailse(int ServiceQuoteId )
+        public List<EQuotationDetails> getAllQuotationDetailse(int ServiceQuoteId)
         {
             List<EQuotationDetails> users = new List<EQuotationDetails>();
 
@@ -459,7 +461,7 @@ namespace DAL.Functions
 
 
         // delete all quote details
-        public bool deleteAllQuoteDetails(int serviceId)
+        public bool deleteAllQuoteDetails(int ServiceQuoteId)
         {
             var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
             var conn = context.Database.GetDbConnection();
@@ -469,10 +471,10 @@ namespace DAL.Functions
             {
 
                 StringBuilder sQuery = new StringBuilder();
-                sQuery.AppendFormat(" delete QuotationDetails where ServiceId={0} ",serviceId);
+                sQuery.AppendFormat(" delete QuotationDetails where ServiceQuoteId={0} ", ServiceQuoteId);
 
 
-                
+
                 command.CommandText = sQuery.ToString();
                 // for select only to retrive value ExecuteScalar()
                 return (command.ExecuteNonQuery() > 0);
@@ -482,5 +484,43 @@ namespace DAL.Functions
             return result;
         }
 
+        public bool insertBuldQuoteMaterials(int ServiceQuoteId, List<EQuotationDetails> lQuoteDetials,int OpId)
+        {
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            bool result = false;
+            conn.Open();
+            using (var command = conn.CreateCommand())
+            {
+
+                StringBuilder sQuery = new StringBuilder();
+                sQuery.AppendFormat(" insert into QuotationDetails values ");
+
+
+                for (int i = 0; i < lQuoteDetials.Count; i++)
+                {
+                    if (i == lQuoteDetials.Count - 1)
+                    {
+                        sQuery.AppendFormat(" ( {0}, {1},{2},{3},'{4}',{5}) ",ServiceQuoteId, lQuoteDetials[i].MaterialId, lQuoteDetials[i].QuotationPrice, lQuoteDetials[i].Qty, lQuoteDetials[i].Description, OpId);
+
+                    }
+                    else
+                    {
+                        sQuery.AppendFormat(" ( {0}, {1},{2},{3},'{4}',{5}), ", ServiceQuoteId, lQuoteDetials[i].MaterialId, lQuoteDetials[i].QuotationPrice, lQuoteDetials[i].Qty, lQuoteDetials[i].Description, OpId);
+
+                    }
+
+                }
+
+                command.CommandText = sQuery.ToString();
+                // for select only to retrive value ExecuteScalar()
+                return (command.ExecuteNonQuery() > 0);
+
+            }
+
+            return result;
+        }
     }
+
 }
+

@@ -30,7 +30,7 @@ namespace AlbayaderWeb.Pages
 
         public async Task<IActionResult> OnGetSmode(string Smode, int id,string companyname,int companyid)
         {
-            if (HttpContext.Session.GetString("token") == null)
+            if (HttpContext.Session.GetString("token") == null || HttpContext.Session.GetString("token") == "")
             {
                 return Redirect("Index");
             }

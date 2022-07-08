@@ -36,7 +36,7 @@ namespace AlbayaderWeb.Pages
         {
 
 
-            if (HttpContext.Session.GetString("token") == null)
+            if (HttpContext.Session.GetString("token") == null || HttpContext.Session.GetString("token") == "")
             {
                 return Redirect("Index");
             }

@@ -21,7 +21,7 @@ namespace AlbayaderWeb.Pages
 
         public async Task<IActionResult> OnGet(int companyid,string companyName)
         {
-            if (HttpContext.Session.GetString("token") == null)
+            if (HttpContext.Session.GetString("token") == null || HttpContext.Session.GetString("token") == "")
             {
                 return Redirect("Index");
             }

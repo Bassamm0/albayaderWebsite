@@ -24,7 +24,7 @@ namespace AlbayaderWeb.Pages
         public EServiceModel _service = new EServiceModel();
         public async Task<IActionResult> OnGet(int BranchId, int ServiceId)
         {
-            if (HttpContext.Session.GetString("token") == null)
+            if (HttpContext.Session.GetString("token") == null || HttpContext.Session.GetString("token") == "")
             {
                 return Redirect("Index");
             }

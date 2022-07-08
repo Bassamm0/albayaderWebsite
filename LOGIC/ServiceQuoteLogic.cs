@@ -59,10 +59,12 @@ namespace LOGIC
 
             return ServiceQuote;
         }
-        public async Task<Boolean> addServiceQuote(EServiceQuote newServiceQuote)
+        public async Task<Boolean> addServiceQuote(EServiceQuote newServiceQuote, EUser logeduser)
         {
-
+            newServiceQuote.OpId = logeduser.UserId;
             var resul = await dServiceQuote.addServiceQuote(newServiceQuote);
+
+             var reusltDetails = dServiceQuote.insertBuldQuoteMaterials(resul.ServiceQuoteId,newServiceQuote.QouteDetails,logeduser.UserId);
             if (resul.ServiceQuoteId > 0)
             {
                 return true;
@@ -72,7 +74,7 @@ namespace LOGIC
                 return false;
             }
         }
-        public async Task<Boolean> updateServiceQuote(EServiceQuote ServiceQuote)
+        public async Task<Boolean> updateServiceQuote(EServiceQuote ServiceQuote,EUser logeduser)
         {
 
             var resul = await dServiceQuote.updateServiceQuote(ServiceQuote);
@@ -81,9 +83,9 @@ namespace LOGIC
             {
                 // delete update service quote details
 
-                reusltDetails =  dServiceQuote.deleteAllQuoteDetails(ServiceQuote.ServiceId);
+                reusltDetails =  dServiceQuote.deleteAllQuoteDetails(ServiceQuote.ServiceQuoteId);
                 // add details
-
+                reusltDetails = dServiceQuote.insertBuldQuoteMaterials(resul.ServiceQuoteId,ServiceQuote.QouteDetails,logeduser.OpId);
 
 
                 return true;

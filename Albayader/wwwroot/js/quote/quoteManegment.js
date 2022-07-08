@@ -2,6 +2,7 @@
 
 
     const APIURL = $('#APIURI').val();
+    const jtoken = $('#utoken').val();
     let loadedmaterialCount = $('#materialcount').val();
   
     let removedElem;
@@ -13,6 +14,119 @@
         items.push(i);
     }
     console.log(items)
+
+
+
+    getCompanies()
+    function getCompanies() {
+
+        $("#ddCompanies").html()
+        $.ajax({
+            type: "GET",
+            url: APIURL + "company/all",
+            contentType: "application/json; charset=utf-8",
+            data: {},
+            async: false,
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
+            },
+            success: function (data, textStatus, xhr) {
+                var arrUpdates = (typeof data) == 'string' ? eval('(' + data + ')') : data;
+                console.log(arrUpdates)
+                $('#ddCompanies').append('<option value="">Select Client Company  ...</option>')
+                for (var i = 0; i < arrUpdates.length; i++) {
+                    text = $.trim(arrUpdates[i].name);
+                    val = arrUpdates[i].companyID;
+                    populate(text, val, '#ddCompanies');
+
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                $('#ddCompanies').append('<option value="">Data Not Loaded  ...</option>')
+                console.log('Error in Operation');
+            }
+        });
+
+    }
+
+    $('body').on("change", "#ddCompanies", function () {
+        companyId = $('#ddCompanies').val()
+        getCompanyBranch(companyId);
+    });
+    function getCompanyBranch(_companyId) {
+
+        $("#ddBranch").html('')
+        $.ajax({
+            type: "POST",
+            url: APIURL + "branch/companybranchs",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ 'companyid': parseInt(_companyId) }),
+            async: false,
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
+            },
+            success: function (data, textStatus, xhr) {
+                var arrUpdates = (typeof data) == 'string' ? eval('(' + data + ')') : data;
+                console.log(arrUpdates)
+                $('#ddBranch').append('<option value="">Select  Branch  ...</option>')
+                for (var i = 0; i < arrUpdates.length; i++) {
+                    text = $.trim(arrUpdates[i].branchName);
+                    val = arrUpdates[i].branchId;
+                    populate(text, val, '#ddBranch');
+
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                $('#ddBranch').append('<option value="">Data Not Loaded  ...</option>')
+                console.log('Error in Operation');
+            }
+        });
+
+    }
+
+    $('body').on("change", "#ddBranch", function () {
+        branchId = $('#ddBranch').val()
+        getBranchServices(branchId);
+    });
+
+    function getBranchServices(branchId) {
+
+        $("#ddService").html('')
+        $.ajax({
+            type: "POST",
+            url: APIURL + "service/completedservicebyBranch",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ 'barnchId': parseInt(branchId) }),
+            async: false,
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
+            },
+            success: function (data, textStatus, xhr) {
+                var arrUpdates = (typeof data) == 'string' ? eval('(' + data + ')') : data;
+                console.log(arrUpdates)
+                $('#ddService').append('<option value="">Select  Service  ...</option>')
+                for (var i = 0; i < arrUpdates.length; i++) {
+                    text = $.trim(arrUpdates[i].serviceId);
+                    val = arrUpdates[i].serviceId;
+                    populate(text, val, '#ddService');
+
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                $('#ddService').append('<option value="">Data Not Loaded  ...</option>')
+                console.log('Error in Operation');
+            }
+        });
+
+    }
+
+
 
     $('body').on('click', '.removeitem', function () {
 
@@ -29,6 +143,10 @@
         if (myIndex !== -1) {
             items.splice(myIndex, 1);
             $('#itemsids').val(items)
+        }
+
+        if (items.length == 0) {
+            $('#AddItemMessage').text('Get Started by adding items')
         }
         console.log("after", items)
 
@@ -55,6 +173,12 @@
         $('#itemsids').val(items)
         createElement(loadedmaterialCount)
         console.log("after", items)
+        if (items.length > 0) {
+            $('#AddItemMessage').text('')
+            $('#errorMessage').text('')
+
+            
+        }
 
     }
 
@@ -91,7 +215,7 @@
             ' <div class="col-md-12">' +
             ' <div class="form-group">' +
             '<label for="exampleInputEmail1">Description</label>' +
-            '<textarea class="form-control descClass" id="description' + loadedmaterialCount + '" rows="3">' +
+            '<textarea class="form-control descClass" name="description' + loadedmaterialCount + '"id="description' + loadedmaterialCount + '" rows="3">' +
             ' </textarea>' +
             '</div>' +
             ' </div>' +
@@ -140,6 +264,11 @@
 
     $('#Savequote').click(function (e) {
 
+        if (items.length == 0) {
+            $('#errorMessage').text("Please add at least one Item");
+            return;
+        }
+
         if ($("#quoteForm").valid()) {
 
             $('#quoteForm').submit();
@@ -166,9 +295,9 @@
 
     $('#quoteForm').validate({
         rules: {
-            serviceid: {
+            ddService: {
                 required: true,
-                digits: true,
+               
             },
         },
 
