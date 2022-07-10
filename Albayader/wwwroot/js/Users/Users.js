@@ -36,6 +36,9 @@
 
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                if (xhr.status == 401) {
+                    window.location.href = 'Index';
+                }
                 alert('Error: something went wronge please try again later');
             }
 

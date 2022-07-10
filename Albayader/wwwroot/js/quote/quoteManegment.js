@@ -44,6 +44,9 @@
                 }
             },
             error: function (xhr, textStatus, errorThrown) {
+                if (xhr.status == 401) {
+                    window.location.href = 'Index';
+                }
                 $('#ddCompanies').append('<option value="">Data Not Loaded  ...</option>')
                 console.log('Error in Operation');
             }
@@ -81,6 +84,9 @@
                 }
             },
             error: function (xhr, textStatus, errorThrown) {
+                if (xhr.status == 401) {
+                    window.location.href = 'Index';
+                }
                 $('#ddBranch').append('<option value="">Data Not Loaded  ...</option>')
                 console.log('Error in Operation');
             }
@@ -112,7 +118,7 @@
                 console.log(arrUpdates)
                 $('#ddService').append('<option value="">Select  Service  ...</option>')
                 for (var i = 0; i < arrUpdates.length; i++) {
-                    text = $.trim(arrUpdates[i].serviceId);
+                    text = $.trim('# Ref: '+ arrUpdates[i].serviceId) + ' - Completed On: ' + $.trim(arrUpdates[i].completionDate);
                     val = arrUpdates[i].serviceId;
                     populate(text, val, '#ddService');
 

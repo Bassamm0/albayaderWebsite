@@ -90,6 +90,9 @@
             },
             error: function (xhr, textStatus, errorThrown) {
                 $('#ddBranch').append('<option value="">Data Not Loaded  ...</option>')
+                if (xhr.status == 401) {
+                    window.location.href = 'Index';
+                }
                 console.log('Error in Operation');
             }
         });

@@ -49,6 +49,11 @@
                 $('#RemoveLogobtn').hide();
                 $('#UploadLogobtn').hide();
             },
+            error: function (xhr, textStatus, errorThrown) {
+                if (xhr.status == 401) {
+                    window.location.href = 'Index';
+                }
+            },
             xhr: function () {
                 var fileXhr = $.ajaxSettings.xhr();
                 if (fileXhr.upload) {

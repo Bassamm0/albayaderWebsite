@@ -94,11 +94,13 @@ namespace AlbayaderWeb.Pages
             
             _User.PictureFileName = Request.Form["uploadedfile"];
             _User.UserId = Convert.ToInt16(HttpContext.Session.GetString("userid"));
+           
+            HttpContext.Session.SetString("PictureFileName", _User.PictureFileName.ToString());
 
             string statusCode = "";
             statusCode = await updateUser(_User);
 
-            return null;
+            return Redirect("profile");
         }
 
 

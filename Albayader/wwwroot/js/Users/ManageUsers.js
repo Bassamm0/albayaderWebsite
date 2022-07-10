@@ -312,6 +312,9 @@
                 }
             },
             error: function (xhr, textStatus, errorThrown) {
+                if (xhr.status == 401) {
+                    window.location.href = 'Index';
+                }
                 $('#ddCountry').append('<option value="">Data Not Loaded  ...</option>')
                 $('#ddNationality').append('<option value="">Data Not Loaded  ...</option>')
                 console.log('Error in Operation');

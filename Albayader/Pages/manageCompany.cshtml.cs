@@ -95,6 +95,7 @@ namespace AlbayaderWeb.Pages
                         _company.longitude = Convert.ToDecimal(Request.Form["longitude"]);
                     }
                     _company.companylogo = Request.Form["uploadedfile"];
+
                     _company.companytypeid = 2;
 
                     statusCode = await addCompany(_company);

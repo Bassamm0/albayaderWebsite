@@ -15,9 +15,9 @@
 
     function initDashbaord() {
 
-      
-        var year = '2022';
 
+        var year = new Date().getFullYear().toString();
+        console.log(year)
         $.ajax({
             type: "POST",
             url: APIURL + "dashboard/dashboarddata",
@@ -27,12 +27,13 @@
            
             headers: {
                 RequestVerificationToken:
-                    $('input:hidden[name="__RequestVerificationToken"]').val(),
-                Authorization: 'Bearer '+ jtoken,
+                    $('input:hidden[name="__RequestVerificationToken"]').val()
+              , Authorization: 'Bearer '+ jtoken,
               
             },
             success: function (data, textStatus, xhr) {
-                console.log(data)
+                console.log(xhr.status);
+        
                 PreventiveCorectivePie(data.preventiveCount, data.correctiveCount)
                 preventiveCoreectivePerMonth(data.preventMonth, data.correctiveMonth)
 
@@ -51,6 +52,13 @@
             error: function (xhr, textStatus, errorThrown) {
 
                 console.log('Error in Operation');
+    
+                if (xhr.status == 401) {
+                    window.location.href = 'Index';
+                }
+            },
+             complete: function (xhr, textStatus) {
+                console.log(xhr.status);
             }
         });
     }

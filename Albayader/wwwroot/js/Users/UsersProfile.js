@@ -3,6 +3,7 @@
 
     //$('.select2').select2();
     const APIURL = $('#APIURI').val();
+    const jtoken = $('#utoken').val();
 
     $('#reservationdate').datetimepicker({
         format: 'L'
@@ -136,6 +137,12 @@
             cache: false,
             contentType: false,
             processData: false,
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
+
+            },
             success: function (data) {
                 $("#fileProgress").hide();
                 $("#lblMessage").html("<b>" + data + "</b> has been uploaded.");

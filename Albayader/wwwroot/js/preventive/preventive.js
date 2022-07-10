@@ -58,6 +58,9 @@
                 constract(data)
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                if (xhr.status == 401) {
+                    window.location.href = 'Index';
+                }
                 alert('Error: something went wronge please try again later');
             }
 
@@ -389,6 +392,9 @@
                    
                 },
                 error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                    if (xhr.status == 401) {
+                        window.location.href = 'Index';
+                    }
                     alert('Error: something went wronge please try again later');
                 }
 
@@ -415,6 +421,10 @@
         formData.append("serviceDetailsId", ServiceDetailsId);
         formData.append("pictureTypeId", pictureTypeId);
 
+
+        // disable save
+        $('#SaveDraft').attr('disabled', true);
+        $('#SaveAndContinue').attr('disabled', true);
         $.ajax({
             url: APIURL + 'fileupload/UploadServiceImages',
             type: 'POST',
@@ -451,12 +461,14 @@
                     $(validationElem).children(".thumbHolder").append(uploadedFiles)
                     console.log(uploadedFiles)
                     toastr["success"]("Picture uploaded successfuly.")
+
                 } else {
 
                     $(validationElem).children('.uploadError').html('Some Thing went wrong, please contact the administrator')
                 }
 
-
+                $('#SaveDraft').attr('disabled', false);
+                $('#SaveAndContinue').attr('disabled', false);
             },
             xhr: function () {
                 var fileXhr = $.ajaxSettings.xhr();
@@ -521,6 +533,9 @@
                              
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                if (xhr.status == 401) {
+                    window.location.href = 'Index';
+                }
                 alert('Error: something went wronge please try again later');
             }
         }).done(function () {
@@ -779,7 +794,10 @@
                 }
 
             },
-            error: function (jqXhr, textStatus, errorMessage) { // error callback 
+            error: function (jqXhr, textStatus, errorMessage) { // error callback
+                if (xhr.status == 401) {
+                    window.location.href = 'Index';
+                }
                 alert('Error: something went wronge please try again later');
             }
 

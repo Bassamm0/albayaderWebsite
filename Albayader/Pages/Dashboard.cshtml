@@ -54,7 +54,12 @@
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="preventiveStart?serviceType=preventive&companyId=0" class="small-box-footer">Start New <i class="fas fa-arrow-circle-right"></i></a>
+                         @if (@Model.role.ToLower() == "administrator" || @Model.role.ToLower() == "manager" || @Model.role.ToLower() == "technicion")
+                            {
+                            <a href="preventiveStart?serviceType=preventive&companyId=0" class="small-box-footer">Start New <i class="fas fa-arrow-circle-right"></i></a>
+                            
+                            }
+
                     </div>
                 </div>
                 <!-- ./col -->
@@ -69,8 +74,10 @@
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="preventiveStart?serviceType=corrective&companyId=0" class="small-box-footer">Start New  <i class="fas fa-arrow-circle-right"></i></a>
-
+                         @if (@Model.role.ToLower() == "administrator" || @Model.role.ToLower() == "manager" || @Model.role.ToLower() == "technicion")
+                            {
+                            <a href="preventiveStart?serviceType=corrective&companyId=0" class="small-box-footer">Start New  <i class="fas fa-arrow-circle-right"></i></a>
+                            }
                     </div>
                 </div>
                 <!-- ./col -->
@@ -86,7 +93,10 @@
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="preventiveStart?serviceType=other&companyId=0" class="small-box-footer">Start New  <i class="fas fa-arrow-circle-right"></i></a>
+                         @if (@Model.role.ToLower() == "administrator" || @Model.role.ToLower() == "manager" || @Model.role.ToLower() == "technicion")
+                            {
+                             <a href="preventiveStart?serviceType=other&companyId=0" class="small-box-footer">Start New  <i class="fas fa-arrow-circle-right"></i></a>
+                            }
                     </div>
                 </div>
                 <!-- ./col -->
@@ -101,7 +111,10 @@
                         <div class="icon">
                             <i class="ion ion-pie-graph"></i>
                         </div>
+                           @if (@Model.role.ToLower() == "administrator" || @Model.role.ToLower() == "manager" || @Model.role.ToLower() == "technicion")
+                            {
                         <div class="small-box-footer"><p></p></div>
+                            }
                     </div>
                 </div>
                 <!-- ./col -->

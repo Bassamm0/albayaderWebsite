@@ -118,6 +118,9 @@
 
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                if (xhr.status == 401) {
+                    window.location.href = 'Index';
+                }
                 alert('Error: something went wronge please try again later');
             }
 
@@ -141,6 +144,9 @@
             formData.append("files", file);
 
         }
+        $('#SaveDraft').attr('disabled', true);
+        $('#SaveAndContinue').attr('disabled', true);
+
         formData.append("correctiveServiceDetailsId", ServiceDetailsId);
         formData.append("pictureTypeId", pictureTypeId);
         console.log(formData)
@@ -185,7 +191,8 @@
 
                     $(validationElem).children('.uploadError').html('Some Thing went wrong, please contact the administrator')
                 }
-
+                $('#SaveDraft').attr('disabled', false);
+                $('#SaveAndContinue').attr('disabled', false);
 
             },
             xhr: function () {
@@ -241,6 +248,9 @@
 
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                if (xhr.status == 401) {
+                    window.location.href = 'Index';
+                }
                 alert('Error: something went wronge please try again later');
             }
         }).done(function () {
@@ -289,6 +299,9 @@
 
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                if (xhr.status == 401) {
+                    window.location.href = 'Index';
+                }
                 alert('Error: something went wronge please try again later');
             }
 
@@ -419,6 +432,9 @@
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
                 alert('Error: something went wronge please try again later');
+                if (xhr.status == 401) {
+                    window.location.href = 'Index';
+                }
             }
 
         }).done(function () {

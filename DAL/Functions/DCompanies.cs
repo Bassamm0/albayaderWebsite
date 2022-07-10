@@ -161,7 +161,6 @@ namespace DAL.Functions
                 context.Entry(company).Property(x => x.Latitude).IsModified = true;
                 context.Entry(company).Property(x => x.Longitude).IsModified = true;
                 context.Entry(company).Property(x => x.CompanyLogo).IsModified = true;
-                context.Entry(company).Property(x => x.CompanyTypeId).IsModified = true;
                 await context.SaveChangesAsync();
             }
 
