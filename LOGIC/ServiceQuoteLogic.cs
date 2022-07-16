@@ -15,7 +15,7 @@ namespace LOGIC
         {
 
             List<EServiceQuote> ServiceQuote = new List<EServiceQuote>();
-            if (logeduser.CompanyTypeId == 1 && (logeduser.UserRole.ToLower() == "administrator" || logeduser.UserRole.ToLower() == "manager" || logeduser.UserRole.ToLower() == "Technicion"))
+            if (logeduser.CompanyTypeId == 1 && (logeduser.UserRole.ToLower() == "administrator" || logeduser.UserRole.ToLower() == "manager" || logeduser.UserRole.ToLower() == "technicion"))
             {
                 ServiceQuote = dServiceQuote.getAllServiceQuote();
             }
@@ -32,7 +32,7 @@ namespace LOGIC
         {
 
             List<EServiceQuote> ServiceQuote = new List<EServiceQuote>();
-            if (logeduser.CompanyTypeId == 1 && (logeduser.UserRole.ToLower() == "administrator" || logeduser.UserRole.ToLower() == "manager" || logeduser.UserRole.ToLower() == "Technicion"))
+            if (logeduser.CompanyTypeId == 1 && (logeduser.UserRole.ToLower() == "administrator" || logeduser.UserRole.ToLower() == "manager" || logeduser.UserRole.ToLower() == "technicion"))
             {
                 ServiceQuote = dServiceQuote.getAllServiceQuoteByDate(startDate,  endDate);
             }

@@ -212,7 +212,7 @@ namespace DAL.Functions
 
 
             eBranch = getSingleBranch(id);
-            eBranch.EndDate = DateTime.Now;
+            eBranch.EndDate = DateTime.UtcNow;
 
             if (eBranch == null)
             {

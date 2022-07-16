@@ -59,7 +59,7 @@
                                 <i class="fa-solid fa-calendar-days"></i>
                                 @Model._service.CreatedDate.ToString("dd/MM/yyyy")
                             </div>
-                            <div class="info-box-number text-muted mb-0"><i class="fa-solid fa-clock"></i> @Model._service.CreatedDate.ToString("HH:mm")</div>
+                            <div class="info-box-number text-muted mb-0"><i class="fa-solid fa-clock"></i> @Model._service.CreatedDate.ToString("HH:mm tt")</div>
                         </div>
 
                     </div>
@@ -102,7 +102,7 @@
                                             <span class="labelsView"> Call Reported By: </span>@Model._service.ServiceDetails[0].ReportedBy
                                         </div>
                                          <div class="col-sm">
-                                           <span class="labelsView">  Reported Date: </span>@Convert.ToDateTime(@Model._service.ServiceDetails[0].ReportedDate).ToString("dd/MM/yyyy");
+                                           <span class="labelsView">  Reported Date: </span>@Convert.ToDateTime(@Model._service.ServiceDetails[0].ReportedDate).ToString("dd/MM/yyyy")
                                         </div>
                                         <div class="dropdown-divider"></div>
                                          <div class="col-md-12">
@@ -194,7 +194,7 @@
                                                 @foreach (var picture in @Model._service.ServiceDetails[0].servicePictures)
                                                 {
 
-                                                    @if (picture.PictureTypeId == 1)
+                                                    @if (picture.PictureTypeId == 2)
                                                     {
                                                         <a class="magnifier" href="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)"> <img src="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)" alt="" class="img-item mx-1"></a>
 
@@ -231,7 +231,7 @@
                                         </div>
                                         <div class="dropdown-divider"></div>
                                          <div class="col-md-12">
-                                            <span class="labelsView"> Status After Service:</span>@Convert.ToDateTime(@Model._service.CompletionDate).ToString("dd/MM/yyyy hh:mm")
+                                            <span class="labelsView"> Completion Date:</span>@Convert.ToDateTime(@Model._service.CompletionDate).ToString("dd/MM/yyyy HH:mm tt")
                                         </div>
                                         <div class="dropdown-divider"></div>
                                     </div>

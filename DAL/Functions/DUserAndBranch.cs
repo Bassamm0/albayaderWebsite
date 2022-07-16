@@ -153,7 +153,7 @@ namespace DAL.Functions
 
 
             eBranch = getSingleUserAndBranch(id);
-            eBranch.EndDate = DateTime.Now;
+            eBranch.EndDate =  DateTime.UtcNow;
 
             if (eBranch == null)
             {

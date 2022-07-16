@@ -63,6 +63,13 @@ namespace LOGIC.UserLogic
 
             return users;
         }
+
+        public async Task<List<EUser>> getAllTechnicain()
+        {
+            List<EUser> users = _DUser.getAllTechnicain();
+
+            return users;
+        }
         public async Task<List<EUser>> getBranchUsers(int branchId)
         {
             List<EUser> users = _DUser.getBranchUsers(branchId);

@@ -128,7 +128,7 @@
                             <!-- Add icons to the links using the .nav-icon class
                              with font-awesome or any other icon font library -->
                             <li class="nav-item">
-                                <a href="Dashboard" class="nav-link">
+                                <a href="Dashboard" class="nav-link" id="dashboardMenu">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p style="padding-left: 7px;">
                                         Dashboard
@@ -137,7 +137,17 @@
                                 </a>
 
                             </li>
-                          
+                             <li class="nav-item">
+                                <a href="Calendar" class="nav-link" id="calenderMenu"">
+                                    <i class="nav-icon far fa-calendar-alt"></i>
+                                    <p style="padding-left: 7px;">
+                                        Calender
+
+                                    </p>
+                                </a>
+
+                            </li>
+
 
 
 
@@ -146,7 +156,7 @@
 
 
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="#" class="nav-link" id="serviceStartMenu">
                                         <i class="fa-solid fa-play"></i>
                                         <p style="padding-left: 15px;">
                                            Start Services
@@ -157,13 +167,13 @@
 
                                     <ul class="nav nav-treeview" style="padding-left: 10px;">
                                         <li class="nav-item">
-                                            <a href="preventiveStart?serviceType=preventive&companyId=0" class="nav-link">
+                                            <a href="preventiveStart?serviceType=preventive&companyId=0" class="nav-link" id="startPreveMenu">
                                                 <i class="fa-solid fa-hands-holding-circle"></i>
                                                 <p>Start Preventive </p>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="preventiveStart?serviceType=corrective&companyId=0" class="nav-link">
+                                            <a href="preventiveStart?serviceType=corrective&companyId=0" class="nav-link" id="startcorrectMenu">
                                                 <i class="fas fa-wrench"></i>
                                                 <p>Start Corrective</p>
                                             </a>
@@ -173,7 +183,7 @@
                                 </li>
                                
                                  <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="#" class="nav-link" id="servcieMenu">
                                         <i class="fa-solid fa-hands-holding"></i>
                                         <p style="padding-left: 15px;">
                                             Services
@@ -185,20 +195,20 @@
                                     <ul class="nav nav-treeview" style="padding-left: 10px;">
                                        
 
-                                        <li class="nav-item">
+                                        <li class="nav-item" id="newMenu">
                                             <a href="newService" class="nav-link">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                                 <p>new  </p>
                                             </a>
                                         </li>
 
-                                        <li class="nav-item">
+                                        <li class="nav-item" id=draftMenu>
                                             <a href="draftService" class="nav-link">
                                                 <i class="fa-solid fa-pen-nib"></i>
                                                 <p>Draft  </p>
                                             </a>
                                         </li>
-                                        <li class="nav-item">
+                                        <li class="nav-item" id="waitMenu">
                                             <a href="waitingService" class="nav-link">
                                                 <i class="fa-solid fa-signature"></i>
                                                 <p>Waiting for Signature  </p>
@@ -206,8 +216,13 @@
                                         </li>
                                     </ul>
                                 </li>
-                                 <li class="nav-item">
-                                    <a href="quote" class="nav-link">
+                                 
+
+                            }
+                             @if (@Context.Session.GetString("Role").ToLower() == "administrator" || @Context.Session.GetString("Role").ToLower() == "manager" )
+                            {
+                                <li class="nav-item">
+                                    <a href="quote" class="nav-link" id=QuoteMenu>
                                         <i class="fa-solid fa-file-lines"></i>
                                         <p style="padding-left: 10px;">
                                             Quotes
@@ -215,15 +230,13 @@
                                     </a>
 
                                 </li>
-
                             }
-
 
                             
                             @if (@Context.Session.GetString("Role").ToLower() == "administrator" || @Context.Session.GetString("Role").ToLower() == "manager" || @Context.Session.GetString("Role").ToLower() == "client manager")
                             {
                                 <li class="nav-item">
-                                    <a href="Reports" class="nav-link">
+                                    <a href="Reports" class="nav-link" id="reportMenu">
                                         <i class="fa-solid fa-chart-pie"></i>
                                         <p style="padding-left: 10px;">
                                             Reports
@@ -237,7 +250,7 @@
                              @if (@Context.Session.GetString("Role").ToLower() == "administrator" || @Context.Session.GetString("Role").ToLower() == "manager")
                             {
                                 <li class="nav-item">
-                                    <a href="Company" class="nav-link">
+                                    <a href="Company" class="nav-link" id="clientMenu">
                                         <i class="nav-icon fa-solid fa-handshake"></i>
                                         <p style="padding-left: 10px;">
                                             Clients
@@ -249,7 +262,7 @@
                           
 
                             <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="#" class="nav-link" id="settingMenu">
                                        <i class="nav-icon fas fa-gear"></i>
                                         <p style="padding-left: 15px;">
                                              Settings
@@ -260,25 +273,21 @@
 
                                     <ul class="nav nav-treeview" style="padding-left: 10px;">
                                         <li class="nav-item">
-                                            <a href="materials" class="nav-link">
+                                            <a href="materials" class="nav-link" id="materialMenu">
                                                 <i class="fa-solid fa-boxes-stacked"></i>
                                                 <p>Material </p>
                                             </a>
                                         </li>
+                                         <li class="nav-item">
+                                            <a href="event" class="nav-link" id="materialMenu">
+                                               <i class="fa-solid fa-calendar-check"></i>
+                                                <p>Events </p>
+                                            </a>
+                                        </li>
                                         </ul>
                                     </li>
-@*
-                               <li class="nav-item">
-                                <a href="Calendar" class="nav-link">
-                                    <i class="nav-icon far fa-calendar-alt"></i>
-                                    <p style="padding-left: 7px;">
-                                        Calender
 
-                                    </p>
-                                </a>
-
-                            </li>*@
-
+                            
                             }
 
 

@@ -20,8 +20,47 @@ $(document).ready(function () {
 		"hideMethod": "fadeOut"
 	}
 
-	
+	var path = window.location.pathname;
+	var page = path.split("/").pop();
+	console.log("page:", page);
 
+	switch (page) {
+		case "Dashboard":
+			$("#dashboardMenu").addClass("active");
+			break;
+		case "preventiveStart":
+			$("#serviceStartMenu").addClass("active");
+			break;
+		case "newService":
+			$("#servcieMenu").addClass("active");
+			break;
+		case "draftService":
+			$("#servcieMenu").addClass("active");
+			break;
+		case "waitingService":
+			$("#servcieMenu").addClass("active");
+			break;
+		case "quote":
+			$("#QuoteMenu").addClass("active");
+			break;
+		case "Reports":
+			$("#reportMenu").addClass("active");
+			break;
+		case "Company":
+			$("#clientMenu").addClass("active");
+			break;
+		case "materials":
+			$("#settingMenu").addClass("active");
+			break;
+		case "event":
+			$("#settingMenu").addClass("active");
+			break;
+		case "Calendar":
+			$("#calenderMenu").addClass("active");
+			break;
+		default:
+		// code block
+	}
 	var getUrlParameter = function getUrlParameter(sParam) {
 		var sPageURL = window.location.search.substring(1),
 			sURLVariables = sPageURL.split('&'),

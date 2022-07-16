@@ -191,7 +191,7 @@ namespace DAL.Functions
            
 
             eCompany = getSingleCompany(id);
-            eCompany.EndDate = DateTime.Now;
+            eCompany.EndDate =  DateTime.UtcNow;
 
             if (eCompany == null)
             {

@@ -16,6 +16,12 @@
     $('.select2').select2();
 
 
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    function toTimeZone(DateTime) {
+        var format = 'DD-MM-YYYY hh:mm:ss a';
+        return moment.utc(DateTime, format).tz(timezone).format(format);
+    }
+
 
 
     var table = $("#DrasftTbl").DataTable({
@@ -73,7 +79,7 @@
                 $("#DrasftTbl").DataTable().clear().draw();
                 for (i = 0; i < data.length; i++) {
                   
-                    var c1 = '<td><a href="quoteManage?serviceQuoteId=' + data[i].serviceQuoteId  + '">#' + data[i].serviceQuoteId + '<td>';
+                    var c1 ='# '+  data[i].serviceQuoteId ;
                    
                     let dataload = "";
                     dataload += '<td><div class="dropdown"><td>';
@@ -89,7 +95,7 @@
                         data[i].serviceId,
                         data[i].branchName,
                         data[i].companyName,
-                        data[i].serviceQuoteDate,
+                        toTimeZone(moment(moment(data[i].serviceQuoteDate, 'MM/DD/YYYY hh:mm:ss a')).format('DD-MM-YYYY hh:mm:ss a')),
                         dataload
                     ]).draw();
 
@@ -159,7 +165,7 @@
                         data[i].serviceId,
                         data[i].branchName,
                         data[i].companyName,
-                        data[i].serviceQuoteDate,
+                        toTimeZone(moment(moment(data[i].serviceQuoteDate, 'MM/DD/YYYY hh:mm:ss a')).format('DD-MM-YYYY hh:mm:ss a')),
                         dataload
                     ]).draw();
 
@@ -331,7 +337,7 @@
                htmlel += ' <span class="labelsView">Service #Ref: </span>' + data.serviceId
                htmlel += '</div>'
                htmlel += ' <div class="col-md-12">'
-               htmlel += '<span class="labelsView">Quote Date : </span>' + data.serviceQuoteDate
+               htmlel += '<span class="labelsView">Quote Date : </span>' + toTimeZone(moment(moment(data.serviceQuoteDate, 'MM/DD/YYYY hh:mm:ss a')).format('DD-MM-YYYY hh:mm:ss a'))
                htmlel += '</div>'
                htmlel += '<div class="row" style="padding-left:20px;">'
                htmlel += '<label class="ServiceViewHeaders">Quote Details</label>'

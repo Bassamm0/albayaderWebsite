@@ -17,7 +17,7 @@ namespace API.Controllers
         private CompanyLogic CompanyLogic=new CompanyLogic();
 
         [Route("all")]
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpGet]
         public async Task<List<ECompanies>> getAllCompanies()
         {
@@ -28,7 +28,7 @@ namespace API.Controllers
         }
 
         [Route("getCompanyById")]
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
         public async Task<ECompanies> getCompanyById([FromBody] JsonElement objData)
         {

@@ -19,6 +19,7 @@ namespace AlbayaderWeb.Pages
         public int _BranchId { get; set; }
         public int _ServiceId { get; set; }
         public string errorMessage { get; set; }
+        public string timezone { get; set; }
 
         public EServiceModel _service = new EServiceModel();
         public async Task<IActionResult> OnGet(int BranchId, int ServiceId)
@@ -31,6 +32,7 @@ namespace AlbayaderWeb.Pages
             {
                 token = HttpContext.Session.GetString("token");
                 role = HttpContext.Session.GetString("Role");
+                timezone = HttpContext.Session.GetString("timezone");
 
             }
             if (role.ToLower() != "administrator" && role.ToLower() != "manager" && role.ToLower() != "client manager")
@@ -44,6 +46,14 @@ namespace AlbayaderWeb.Pages
             
 
             _service = await getService(ServiceId);
+            //convert datetime to timezone          
+            _service.CreatedDate = UtilityHelper.convertUTCtoTimeZone(_service.CreatedDate, timezone);
+            if (_service.CompletionDate != null)
+            {         
+                _service.CompletionDate = UtilityHelper.convertUTCtoTimeZone(DateTime.Parse(_service.CompletionDate), timezone).ToString();
+            }
+
+
             int statusId = _service.StatusId;
             if (statusId != 5)
             {

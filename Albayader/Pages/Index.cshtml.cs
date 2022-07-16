@@ -37,6 +37,8 @@ namespace Core_3Tire.Pages
 
         public IActionResult OnGet()
         {
+
+
             apiurl = AppConfig.APIUrl;
             uploadurl = AppConfig.UploadURL;
             return null ;
@@ -47,7 +49,7 @@ namespace Core_3Tire.Pages
         {
             apiurl = AppConfig.APIUrl;
             uploadurl = AppConfig.UploadURL;
-
+            string timezone = Request.Form["timezoneclient"];
 
 
             string statusCode = "";
@@ -65,6 +67,7 @@ namespace Core_3Tire.Pages
                     userdetails = await getLoginUserDetails(token);
 
                     Authenticated = true;
+                    HttpContext.Session.SetString("timezone", timezone);//set tme one
                     HttpContext.Session.SetString("token",token);
                     HttpContext.Session.SetString("email", userdetails.Email);
                     HttpContext.Session.SetString("FullName", userdetails.FirstName +" "+ userdetails.Lastname);
@@ -183,6 +186,15 @@ namespace Core_3Tire.Pages
                 }
             }
             return _userView;
+        }
+
+
+        public ActionResult SetVariable(string key, string value)
+        {
+
+            HttpContext.Session.SetString(key, value);
+         
+            return null;
         }
     }
 }

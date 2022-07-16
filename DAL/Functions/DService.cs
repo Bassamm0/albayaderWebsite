@@ -27,7 +27,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select CONCAT(' ',U.FirstName,U.Lastname) as CreaterName ,CONCAT(' ',UT.FirstName,UT.Lastname) as TechnicianName, ");
+                    sQuery.Append(" select CONCAT(U.FirstName,' ',U.Lastname) as CreaterName ,CONCAT(UT.FirstName,' ',UT.Lastname) as TechnicianName, ");
                     sQuery.Append(" BR.BranchName,CO.Name CompanyName,ST.ServiceTypeName ,STF.StatusAfterName ,SR.* from services SR ");
                     sQuery.Append(" inner join  Branchs BR on BR.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
@@ -61,9 +61,11 @@ namespace DAL.Functions
                             if (dataReader["StatusAfterId"] != DBNull.Value) { oEServiceModel.StatusAfterId = (int)dataReader["StatusAfterId"]; }
                             if (dataReader["StatusAfterName"] != DBNull.Value) { oEServiceModel.StatusAfterName = (string)dataReader["StatusAfterName"]; }
                             oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);
+                           
+                                services.Add(oEServiceModel);
+                        
 
-
-                            services.Add(oEServiceModel);
+                           
                         }
                     }
                     dataReader.Dispose();
@@ -92,7 +94,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append("select CONCAT(' ',U.FirstName,U.Lastname) as CreaterName ,CONCAT(' ',UT.FirstName,UT.Lastname) as TechnicianName, ");
+                    sQuery.Append("select CONCAT(U.FirstName,' ',U.Lastname) as CreaterName ,CONCAT(UT.FirstName,' ',UT.Lastname) as TechnicianName, ");
                     sQuery.Append(" BR.BranchName,CO.Name CompanyName,ST.ServiceTypeName, STF.StatusAfterName ,SR.* from services SR ");
                     sQuery.Append(" inner join  Branchs BR on BR.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
@@ -125,9 +127,25 @@ namespace DAL.Functions
                             if (dataReader["CompanyName"] != DBNull.Value) { oEServiceModel.CompanyName = (string)dataReader["CompanyName"]; }
                             if (dataReader["StatusAfterId"] != DBNull.Value) { oEServiceModel.StatusAfterId = (int)dataReader["StatusAfterId"]; }
                             if (dataReader["StatusAfterName"] != DBNull.Value) { oEServiceModel.StatusAfterName = (string)dataReader["StatusAfterName"]; }
-                           // oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);
+                           if (oEServiceModel.ServiceTypeId == 1)
+                            {
+                                oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);
+                            }
+                            else
+                            {
+                                oEServiceModel.CorrectiveServiceDetails = getAllCorrectiveServiceDetails(oEServiceModel.ServiceId);
+                            }
+                           
+                            if (oEServiceModel.ServiceDetails != null && oEServiceModel.ServiceDetails.Count>0)
+                            {
+                                services.Add(oEServiceModel);
+                            }
+                            if (oEServiceModel.CorrectiveServiceDetails != null && oEServiceModel.CorrectiveServiceDetails.Count>0)
+                            {
+                                services.Add(oEServiceModel);
+                            }
 
-                            services.Add(oEServiceModel);
+
                         }
                     }
                     dataReader.Dispose();
@@ -153,7 +171,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append("select CONCAT(' ',U.FirstName,U.Lastname) as CreaterName ,CONCAT(' ',UT.FirstName,UT.Lastname) as TechnicianName, ");
+                    sQuery.Append("select CONCAT(U.FirstName,' ',U.Lastname) as CreaterName ,CONCAT(UT.FirstName,' ',UT.Lastname) as TechnicianName, ");
                     sQuery.Append(" BR.BranchName,CO.Name CompanyName,ST.ServiceTypeName, STF.StatusAfterName ,SR.* from services SR ");
                     sQuery.Append(" inner join  Branchs BR on BR.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
@@ -215,7 +233,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append("select CONCAT(' ',U.FirstName,U.Lastname) as CreaterName ,CONCAT(' ',UT.FirstName,UT.Lastname) as TechnicianName, ");
+                    sQuery.Append("select CONCAT(U.FirstName,' ',U.Lastname) as CreaterName ,CONCAT(UT.FirstName,' ',UT.Lastname) as TechnicianName, ");
                     sQuery.Append(" BR.BranchName,CO.Name CompanyName,ST.ServiceTypeName, STF.StatusAfterName ,STV.VistTypeName ,SR.* from services SR ");
                     sQuery.Append(" inner join  Branchs BR on BR.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
@@ -281,7 +299,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append("select CONCAT(' ',U.FirstName,U.Lastname) as CreaterName ,CONCAT(' ',UT.FirstName,UT.Lastname) as TechnicianName, ");
+                    sQuery.Append("select CONCAT(U.FirstName,' ',U.Lastname) as CreaterName ,CONCAT(UT.FirstName,' ',UT.Lastname) as TechnicianName, ");
                     sQuery.Append(" BR.BranchName,CO.Name CompanyName,ST.ServiceTypeName, STF.StatusAfterName ,STV.VistTypeName ,SR.* from services SR ");
                     sQuery.Append(" inner join  Branchs BR on BR.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
@@ -346,7 +364,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append("select CONCAT(' ',U.FirstName,U.Lastname) as CreaterName ,CONCAT(' ',UT.FirstName,UT.Lastname) as TechnicianName, ");
+                    sQuery.Append("select CONCAT(U.FirstName,' ',U.Lastname) as CreaterName ,CONCAT(UT.FirstName,' ',UT.Lastname) as TechnicianName, ");
                     sQuery.Append(" BR.BranchName,CO.Name CompanyName,ST.ServiceTypeName, STF.StatusAfterName ,STV.VistTypeName ,SR.* from services SR ");
                     sQuery.Append(" inner join  Branchs BR on BR.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
@@ -411,7 +429,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append("select CONCAT(' ',U.FirstName,U.Lastname) as CreaterName ,CONCAT(' ',UT.FirstName,UT.Lastname) as TechnicianName, ");
+                    sQuery.Append("select CONCAT(U.FirstName,' ',U.Lastname) as CreaterName ,CONCAT(UT.FirstName,' ',UT.Lastname) as TechnicianName, ");
                     sQuery.Append(" BR.BranchName,CO.Name CompanyName,ST.ServiceTypeName, STF.StatusAfterName ,STV.VistTypeName ,SR.* from services SR ");
                     sQuery.Append(" inner join  Branchs BR on BR.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
@@ -477,7 +495,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append("select CONCAT(' ',U.FirstName,U.Lastname) as CreaterName ,CONCAT(' ',UT.FirstName,UT.Lastname) as TechnicianName, ");
+                    sQuery.Append("select CONCAT(U.FirstName,' ',U.Lastname) as CreaterName ,CONCAT(UT.FirstName,' ',UT.Lastname) as TechnicianName, ");
                     sQuery.Append(" BR.BranchName,CO.Name CompanyName,ST.ServiceTypeName, STF.StatusAfterName ,STV.VistTypeName ,SR.* from services SR ");
                     sQuery.Append(" inner join  Branchs BR on BR.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
@@ -544,7 +562,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append("select CONCAT(' ',U.FirstName,U.Lastname) as CreaterName ,CONCAT(' ',UT.FirstName,UT.Lastname) as TechnicianName,UT.PictureFileName, ");
+                    sQuery.Append("select CONCAT(U.FirstName,' ',U.Lastname) as CreaterName ,CONCAT(UT.FirstName,' ',UT.Lastname) as TechnicianName,UT.PictureFileName, ");
                     sQuery.Append(" BR.BranchName,CO.Name CompanyName,ST.ServiceTypeName ,SR.*,STF.StatusAfterName  from services SR ");
                     sQuery.Append(" inner join  Branchs BR on BR.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
@@ -611,7 +629,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append("select CONCAT(' ',U.FirstName,U.Lastname) as CreaterName ,CONCAT(' ',UT.FirstName,UT.Lastname) as TechnicianName,UT.PictureFileName, ");
+                    sQuery.Append("select CONCAT(U.FirstName,' ',U.Lastname) as CreaterName ,CONCAT(UT.FirstName,' ',UT.Lastname) as TechnicianName,UT.PictureFileName, ");
                     sQuery.Append(" BR.BranchName,CO.Name CompanyName,ST.ServiceTypeName ,SVT.*,SR.*,STF.StatusAfterName  from services SR ");
                     sQuery.Append(" inner join  Branchs BR on BR.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
@@ -682,7 +700,7 @@ namespace DAL.Functions
 
                     StringBuilder sQuery = new StringBuilder();
 
-                    sQuery.Append("select CONCAT(' ',U.FirstName,U.Lastname) as CreaterName ,CONCAT(' ',UT.FirstName,UT.Lastname) as TechnicianName, ");
+                    sQuery.Append("select CONCAT(U.FirstName,' ',U.Lastname) as CreaterName ,CONCAT(UT.FirstName,' ',UT.Lastname) as TechnicianName, ");
                     sQuery.Append(" BR.BranchName,CO.Name CompanyName,ST.ServiceTypeName ,SR.* from services SR ");
                     sQuery.Append(" inner join  Branchs BR on BR.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
@@ -743,6 +761,7 @@ namespace DAL.Functions
             newService.SupervisourFeedback = null;
             newService.StatusAfterId = 2;
             newService.SiteVistTypeId = 1;
+            newService.CreatedDate=DateTime.UtcNow;
 
             using (var context = new DatabaseContext(DatabaseContext.ops.dbOptions))
             {
@@ -779,7 +798,7 @@ namespace DAL.Functions
 
 
             eServices = getSingleServiceOnly(id);
-            eServices.EndDate = DateTime.Now;
+            eServices.EndDate = DateTime.UtcNow;
 
             if (eServices == null)
             {
@@ -844,8 +863,7 @@ namespace DAL.Functions
             eServices.SupervisourSignature = SupervisourSignature;
             eServices.SupervisourName = SupervisourName;
             eServices.SupervisourFeedback = SupervisourFeedback;
-            eServices.CompletionDate = DateTime.Now;
-       
+            eServices.CompletionDate = DateTime.UtcNow;
 
             if (eServices == null)
             {
@@ -873,16 +891,21 @@ namespace DAL.Functions
             EServiceModel _serviceModel = new EServiceModel();
             ECorrectiveServiceModel _ecorrectiveServiceModel = new ECorrectiveServiceModel();
 
+
+            string subject = "Service Completed";
             if (eServices.ServiceTypeId == 1)
             {
                 _serviceModel = getSingleService(eServices.ServiceId);
+                subject = "Preventive Service Completed at "+ eServices.BranchName + " by Albayader Team";
             }
             else
             {
+              
                 _ecorrectiveServiceModel = getCorrectiveSingleService(eServices.ServiceId);
+                subject = "Corrective Service Completed at " + eServices.BranchName + " by Albayader Team";
             }
 
-            string subject = "Service Completed";
+        
             UtilityHelper utilityHelper = new UtilityHelper();
 
 
@@ -890,15 +913,26 @@ namespace DAL.Functions
             string adminboday = buildEmailboday(eServices, _serviceModel, _ecorrectiveServiceModel, "admin");
 
             bool result = false;
-                
-            if (ousersManger != null)
+            Thread T1 = new Thread(delegate ()
             {
-                result = await utilityHelper.SendCompleteEmailAsyncToClient(ousersManger, subject, body.ToString());
+                if (ousersManger != null)
+            {
+                utilityHelper.SendCompleteEmailAsyncToClient(ousersManger, subject, body.ToString());
 
             }
-            result = await utilityHelper.SendCompleteEmailAsyncToAdmin(ousers, subject, adminboday.ToString());
+
+            });
+
+            T1.Start();
 
 
+            Thread T2 = new Thread(delegate ()
+            {
+                utilityHelper.SendCompleteEmailAsyncToAdmin(ousers, subject, adminboday.ToString());
+
+            });
+
+            T2.Start();
 
 
 
@@ -909,17 +943,28 @@ namespace DAL.Functions
         {
 
             StringBuilder Clientbody = new StringBuilder();
+
+            Clientbody.Append(" <div style=\"background-color:rgb(236, 236, 236); margin: 0px; font-family: 'Courier New', Courier, monospace; \">  ");
+            Clientbody.Append("<div style=\"width: 800px; margin-left: auto; margin-right: auto; background-color: rgb(247 247 247); padding: 30px; text-align: center; \">");
+            Clientbody.Append("<img src=\"http://albayader-me.com/wp-content/uploads/2021/11/logo-albyader.png\" />");
+            Clientbody.Append("</div>");
+            Clientbody.Append("<div style=\"width: 800px; margin-left: auto; margin-right: auto; background-color: white; padding: 30px;border: 1px solid rgb(217, 217, 217); \">");
+            Clientbody.Append("");
+            Clientbody.Append("");
             if (to == "admin")
             {
-                Clientbody.AppendFormat("<p>Al Bayader  Admin </p>", eServices.CompanyName);
+                Clientbody.AppendFormat("<p style=\"font-weight:bold; font-size:22px; \">Al Bayader  Admin </p>");
+                Clientbody.AppendFormat("<div>Service for {0} in  branch <span style=\"font - weight: 400;\">{1}</span> has be completed successfully</div> ", eServices.CompanyName, eServices.BranchName);
+
             }
             else
             {
-                Clientbody.AppendFormat("<p>Dear {0}  Manager </p>", eServices.CompanyName);
-            }
-           
+                Clientbody.AppendFormat("<p style=\"font-weight:bold; font-size:22px; \">Dear {0}  Manager </p>", eServices.CompanyName);
+                Clientbody.AppendFormat("<div>Service in your branch <span style=\"font - weight: 400;\">{0}</span> has be completed successfully</div> ", eServices.BranchName);
 
-            Clientbody.AppendFormat("<div>Service in your branch <span style=\"font - weight: 400;\">{0}</span> has be completed successfully</div> ", eServices.BranchName);
+            }
+
+
 
             Clientbody.AppendFormat("<p>Service Refrence number :{0}</p>", eServices.ServiceId);
             Clientbody.AppendLine("<p style=\"font-weight:bold; \">Details as bellow</p>");
@@ -974,9 +1019,12 @@ namespace DAL.Functions
 
                 Clientbody.AppendFormat("<p>Remarks: {0}</p>", _serviceModel.Remark);
                 Clientbody.AppendFormat("<p>Status After Service: {0}</p>", _serviceModel.StatusAfterName);
+                Clientbody.AppendFormat("<p>Supervisor Name: {0}</p>", _serviceModel.SupervisourName);
+                Clientbody.AppendFormat("<p>Supervisor Feedback: {0}</p>", _serviceModel.SupervisourFeedback);
 
 
-                Clientbody.AppendFormat(" <p>For more details about the service please <a href=\"{0}\"> Login to the service portal</a></p> ", "http://www.albayader-me.com");
+                Clientbody.AppendFormat(" <p>For more details about the service please <a href=\"{0}\"> Login to the service portal</a></p> ", "http://services.albayader-me.com");
+               
 
             }
             else
@@ -1010,15 +1058,25 @@ namespace DAL.Functions
 
                 Clientbody.AppendFormat("<p>Remarks: {0}</p>", _ecorrectiveServiceModel.Remark);
                 Clientbody.AppendFormat("<p>Status After Service: {0}</p>", _ecorrectiveServiceModel.StatusAfterName);
+                Clientbody.AppendFormat("<p>Supervisor Name: {0}</p>", _serviceModel.SupervisourName);
+                Clientbody.AppendFormat("<p>Supervisor Feedback: {0}</p>", _serviceModel.SupervisourFeedback);
+
 
                 Clientbody.AppendFormat("<p> For more details about the service please <a href=\"{0}\" >Login to the service portal</a></p> ", "http://www.albayader-me.com");
 
             }
 
-
-            Clientbody.AppendLine("");
-            Clientbody.AppendLine("<p>Regards</p> ");
-            Clientbody.AppendLine("<p>Al Bayader Team</p> ");
+            Clientbody.Append("</div>");
+            Clientbody.AppendLine("<div style=\"width: 800px;margin-left: auto; margin-right: auto; background-color: rgb(247 247 247); padding: 30px;font-size: 12px \">");
+            Clientbody.Append(" <div>");
+        
+           
+            Clientbody.AppendLine(" <div>Regards </div>");
+            Clientbody.AppendLine("<div>Al Bayader Team</div>");
+            Clientbody.AppendLine("<div>OUR CLIENT IS OUR PARTNER</div>");
+            Clientbody.Append("</div>");
+            Clientbody.Append("</div>");
+            Clientbody.Append("</div>");
 
 
 

@@ -85,7 +85,7 @@
                     <div class="info-box-text text-center text-muted"><i class="fa-solid fa-calendar-days"></i>
                      @Model._service.CreatedDate.ToString("dd/MM/yyyy")
                        </div>
-                    <div class="info-box-number text-muted mb-0"><i class="fa-solid fa-clock"></i> @Model._service.CreatedDate.ToString("HH:mm")</div>
+                    <div class="info-box-number text-muted mb-0"><i class="fa-solid fa-clock"></i> @Model._service.CreatedDate.ToString("HH:mm tt")</div>
                   </div>
 
                 </div>
@@ -358,7 +358,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title">Delete Confirmation</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="Closedelete">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>

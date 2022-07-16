@@ -137,7 +137,62 @@ namespace DAL.Functions
 
             return users;
         }
+        public List<EUser> getAllTechnicain()
+        {
+            List<EUser> users = new List<EUser>();
 
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.Append(" select U.* from Users U ");
+                    sQuery.Append(" inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
+                    sQuery.Append(" inner join Branchs B on B.branchId=UAB.BranchId ");
+                    sQuery.Append(" where U.EndDate is null and U.AuthLevelRefId=2 and B.compnayId=2 ");
+                 
+                    command.CommandText = sQuery.ToString();
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            EUser oEUsers = new EUser();
+                            if (dataReader["UserId"] != DBNull.Value) { oEUsers.UserId = (int)dataReader["UserId"]; }
+                            if (dataReader["Nationality"] != DBNull.Value) { oEUsers.Nationality = (int)dataReader["Nationality"]; }
+                            if (dataReader["CountryId"] != DBNull.Value) { oEUsers.CountryId = (int)dataReader["CountryId"]; }
+                            if (dataReader["PositionId"] != DBNull.Value) { oEUsers.PositionId = (int)dataReader["PositionId"]; }
+                            if (dataReader["Title"] != DBNull.Value) { oEUsers.Title = (string)dataReader["Title"]; }
+                            if (dataReader["Username"] != DBNull.Value) { oEUsers.Username = (string)dataReader["Username"]; }
+                            if (dataReader["FirstName"] != DBNull.Value) { oEUsers.FirstName = (string)dataReader["FirstName"]; }
+                            if (dataReader["LastName"] != DBNull.Value) { oEUsers.Lastname = (string)dataReader["LastName"]; }
+                            if (dataReader["City"] != DBNull.Value) { oEUsers.City = (string)dataReader["City"]; }
+                            if (dataReader["Birthday"] != DBNull.Value) { oEUsers.Birthday = (DateTime)dataReader["Birthday"]; }
+                            if (dataReader["Email"] != DBNull.Value) { oEUsers.Email = (string)dataReader["Email"]; }
+                            if (dataReader["Mobile"] != DBNull.Value) { oEUsers.Mobile = (string)dataReader["Mobile"]; }
+                            if (dataReader["Telephone"] != DBNull.Value) { oEUsers.Telephone = (string)dataReader["Telephone"]; }
+                            if (dataReader["AuthLevelRefId"] != DBNull.Value) { oEUsers.AuthLevelRefId = (int)dataReader["AuthLevelRefId"]; }
+                            if (dataReader["PictureFileName"] != DBNull.Value) { oEUsers.PictureFileName = (string)dataReader["PictureFileName"]; }
+
+                         
+                            users.Add(oEUsers);
+                        }
+                    }
+                    dataReader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return users;
+        }
         public List<EUser> getBranchUsers(int branchId)
         {
             List<EUser> users = new List<EUser>();
@@ -508,7 +563,10 @@ namespace DAL.Functions
         public async Task<EUser> addUser(EUser newUser)
         {
             newUser.Password = m_oEncrption.Encrypt(newUser.Password);
-
+            if (string.IsNullOrEmpty(newUser.PictureFileName))
+            {
+                newUser.PictureFileName = "";
+            }
             newUser.EndDate = null;
 
             using (var context = new DatabaseContext(DatabaseContext.ops.dbOptions))
@@ -600,7 +658,7 @@ namespace DAL.Functions
             
 
             eUser = getSingleUser(id);
-            eUser.EndDate = DateTime.Now;
+            eUser.EndDate =  DateTime.UtcNow;
             eUser.IsDeleted=true;
 
             if (eUser == null)
@@ -639,18 +697,27 @@ namespace DAL.Functions
 
                 await context.SaveChangesAsync();
             }
-            // send email
+            // change email
 
             // ***** send email your password been changed.
             StringBuilder body = new StringBuilder();
-            body.AppendFormat("Hello {0}", eUser.FirstName + ' ' + eUser.Lastname);
-            body.AppendLine("Your password changed successfuly  ");
+            body.Append(" <div style=\"background-color:rgb(236, 236, 236); margin: 0px; font-family: 'Courier New', Courier, monospace; \">  ");
+            body.Append("<div style=\"width: 800px; margin-left: auto; margin-right: auto; background-color: rgb(247 247 247); padding: 30px; text-align: center; \">");
+            body.Append("<img src=\"http://albayader-me.com/wp-content/uploads/2021/11/logo-albyader.png\" />");
+            body.Append("</div>");
+            body.Append("<div style=\"width: 800px; margin-left: auto; margin-right: auto; background-color: white; padding: 30px;border: 1px solid rgb(217, 217, 217); \">");
+            body.Append("");
+            body.AppendFormat("<p style=\"font-weight:bold; font-size:22px; \">Dear  {0} </p>", eUser.FirstName + ' ' + eUser.Lastname);
+
+            body.AppendLine("<p>Your password changed successfuly  </p>");
 
 
-            body.AppendLine("");
-            body.AppendLine("Regards ");
-            body.AppendLine("Al Bayader Team ");
-
+            body.AppendLine(" <div>Regards </div>");
+            body.AppendLine("<div>Al Bayader Team</div>");
+            body.AppendLine("<div>OUR CLIENT IS OUR PARTNER</div>");
+            body.Append("</div>");
+            body.Append("</div>");
+            body.Append("</div>");
             string subject = "Password Recovered AL Bayader";
             UtilityHelper utilityHelper = new UtilityHelper();
 
@@ -764,14 +831,22 @@ namespace DAL.Functions
 
             // ***** send email your password been changed.
             StringBuilder body = new StringBuilder();
-            body.AppendFormat("Hello {0}", eUser.FirstName + ' ' + eUser.Lastname);
-            body.AppendLine("Your password changed successfuly  ");
- 
-           
-            body.AppendLine("");
-            body.AppendLine("Regards ");
-            body.AppendLine("Al Bayader Team ");
+            body.Append(" <div style=\"background-color:rgb(236, 236, 236); margin: 0px; font-family: 'Courier New', Courier, monospace; \">  ");
+            body.Append("<div style=\"width: 800px; margin-left: auto; margin-right: auto; background-color: rgb(247 247 247); padding: 30px; text-align: center; \">");
+            body.Append("<img src=\"http://albayader-me.com/wp-content/uploads/2021/11/logo-albyader.png\" />");
+            body.Append("</div>");
+            body.Append("<div style=\"width: 800px; margin-left: auto; margin-right: auto; background-color: white; padding: 30px;border: 1px solid rgb(217, 217, 217); \">");
+            body.Append("");
+            body.AppendFormat("<p>Hello {0}</p>", eUser.FirstName + ' ' + eUser.Lastname);
+            body.AppendLine("<p>Your password changed successfuly </p> ");
 
+
+            body.AppendLine(" <div>Regards </div>");
+            body.AppendLine("<div>Al Bayader Team</div>");
+            body.AppendLine("<div>OUR CLIENT IS OUR PARTNER</div>");
+            body.Append("</div>");
+            body.Append("</div>");
+            body.Append("</div>");
             string subject = "Password Recovered AL Bayader";
             UtilityHelper utilityHelper = new UtilityHelper();
 
@@ -809,13 +884,26 @@ namespace DAL.Functions
             // send email with token
 
             StringBuilder body= new StringBuilder();
-            body.AppendFormat("Hello {0} you requested to change your password",eUser.FirstName + ' '+ eUser.Lastname);
-            body.AppendLine("To change your password please click the link below ");
-            body.AppendLine("");
-            body.AppendFormat("<a href='http://www.albayader-me.com/recoverpassword?token={0}'>Change Password</a>", eRecoverPassword.token);
-            body.AppendLine("if you didn't requested to change the password please ignore the email");
-            body.AppendLine("Regards ");
-            body.AppendLine("Al Bayader Team ");
+            body.Append(" <div style=\"background-color:rgb(236, 236, 236); margin: 0px; font-family: 'Courier New', Courier, monospace; \">  ");
+            body.Append("<div style=\"width: 800px; margin-left: auto; margin-right: auto; background-color: rgb(247 247 247); padding: 30px; text-align: center; \">");
+            body.Append("<img src=\"http://albayader-me.com/wp-content/uploads/2021/11/logo-albyader.png\" />");
+            body.Append("</div>");
+            body.Append("<div style=\"width: 800px; margin-left: auto; margin-right: auto; background-color: white; padding: 30px;border: 1px solid rgb(217, 217, 217); \">");
+            body.Append("");
+
+            body.AppendFormat("<p style=\"font-weight:bold; font-size:22px; \">Dear  {0} </p>", eUser.FirstName + ' ' + eUser.Lastname);
+            body.AppendFormat("<p>You requested to change your password</p>");
+            body.AppendLine("<p>Please click on the following link  ");
+
+            body.AppendFormat("<a href='http://service.albayader-me.com/recoverpasswprd?token={0}'>Change Password</a> to complete your request<p>", eRecoverPassword.token);
+            body.AppendLine("<p>if you didn't requested to change the password please ignore this email</p>");
+
+            body.AppendLine(" <div>Regards </div>");
+            body.AppendLine("<div>Al Bayader Team</div>");
+            body.AppendLine("<div>OUR CLIENT IS OUR PARTNER</div>");
+            body.Append("</div>");
+            body.Append("</div>");
+            body.Append("</div>");
 
             string subject = "forget password from AL Bayader";
             UtilityHelper utilityHelper = new UtilityHelper();

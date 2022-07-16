@@ -113,7 +113,7 @@ namespace AlbayaderWeb.Pages
                 try
                 {
                     //_postQuote.ServiceQuoteId = Convert.ToInt16(Request.Form["hdServiceQuoteId"]);
-                    _postQuote.ServiceQuoteDate = DateTime.Now.ToString();
+                    _postQuote.ServiceQuoteDate = DateTime.UtcNow.ToString();
 
                     string materialCount = Request.Form["itemsids"];
                    

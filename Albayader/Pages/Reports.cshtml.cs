@@ -17,6 +17,7 @@ namespace AlbayaderWeb.Pages
         public string email { get; set; }
        // public List<EServiceModel> _services = new List<EServiceModel>();
         public string errorMessage { get; set; }
+        public string timezone { get; set; }
 
         public async Task<IActionResult> OnGet()
         {
@@ -28,6 +29,7 @@ namespace AlbayaderWeb.Pages
             {
                 token = HttpContext.Session.GetString("token");
                 role = HttpContext.Session.GetString("Role");
+                timezone = HttpContext.Session.GetString("timezone");
 
             }
             if (role.ToLower() != "administrator" && role.ToLower() != "manager" && role.ToLower() != "client manager")

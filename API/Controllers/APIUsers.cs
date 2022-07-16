@@ -113,6 +113,19 @@ namespace API
             }
             return userList;
         }
+
+
+        [Route("getalltechnicain")]
+        [Authorize(Roles = "Administrator,Manager")]
+        [HttpGet]
+        public async Task<List<EUser>> getAllTechnicain()
+        {
+
+         
+            var users = await userLogic.getAllTechnicain();
+           
+            return users;
+        }
         [Route("getBranchUsers")]
         [Authorize(Roles = "Administrator,Manager,Client Manager")]
         [HttpGet]

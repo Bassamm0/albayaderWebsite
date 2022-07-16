@@ -2,6 +2,9 @@
  
 $(document).ready(function () {
 
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    $('#timezoneclient').val(timezone)
 
     $('#lognBtn').click(function () {
        

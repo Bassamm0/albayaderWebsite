@@ -3,6 +3,15 @@
     const jtoken = $('#utoken').val();
     const APIURL = $('#APIURI').val();
 
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    function toTimeZone(DateTime) {
+        var format = 'DD-MM-YYYY hh:mm:ss a';
+        return moment.utc(DateTime, format).tz(timezone).format(format);
+    }
+
+
+
+
     $('body').on('click', '.viewComment', function () {
 
         ServiceId = $(this).attr('serviceid');
@@ -36,7 +45,7 @@
                     html += ' <div class="card-comment">'
                         + '  <div class="comment-text">'
                         + '<span class="username">' + data[i].fullName
-                        + '<span class="text-muted float-right">' + moment(data[i].commentDate).format('DD-MM-YYYY hh:mm:ss')+'</span>'
+                        + '<span class="text-muted float-right">' + toTimeZone(moment(data[i].commentDate).format('DD-MM-YYYY hh:mm:ss'))+'</span>'
                         + '</span>'
                         + data[i].comment
                         + ' </div>'
@@ -52,7 +61,7 @@
     }
 
     $('body').on('click', '.adddCommentlnk', function () {
-        $('#serviceComment').val('');
+       
         ServiceId = $(this).attr('serviceid');
         $('#addComment').attr('commentserviceid', ServiceId)
         $('#servicetextId').text(ServiceId)
@@ -95,7 +104,7 @@
                 console.log(data)
                 toastr["success"]("comment added successfuly.")
                 $("#closeaddCom").click();
-
+                $('#serviceComment').val('');
                
             })
             .catch(error => console.error('Unable to add item.', error));

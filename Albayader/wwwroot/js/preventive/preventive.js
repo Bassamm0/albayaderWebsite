@@ -625,7 +625,7 @@
             }
 
         }).done(function () {
-            $('#modal-delete').modal('hide');
+            $('#Closedelete').click();
             $(".deletImage[filename='" + image + "']").parent('div').parent('div').remove();
             toastr["success"]("Image deleted successfuly.")
          

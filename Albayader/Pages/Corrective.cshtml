@@ -98,7 +98,7 @@
                                     <i class="fa-solid fa-calendar-days"></i>
                                     @Model._service.CreatedDate.ToString("dd/MM/yyyy")
                                 </div>
-                                <div class="info-box-number text-muted mb-0"><i class="fa-solid fa-clock"></i> @Model._service.CreatedDate.ToString("HH:mm")</div>
+                                <div class="info-box-number text-muted mb-0"><i class="fa-solid fa-clock"></i> @Model._service.CreatedDate.ToString("HH:mm tt")</div>
                             </div>
 
                         </div>
@@ -138,7 +138,7 @@
                                     <option value="1">Planned</option>
                                     <option value="2">Warranty</option>
                                     <option value="3">Repairing</option>
-                                    <option value="4 and Startup">Commissioning and Startup</option>
+                                    <option value="4">Commissioning and Startup</option>
                                     <option value="5">Installation</option>
                                     <option value="6">AMC</option>
                                     <option value="7">Emergency</option>
@@ -492,7 +492,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title">Delete Confirmation</h4>
-             <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+             <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" id="Closedelete"></button>
                
             </div>
             <div class="modal-body">

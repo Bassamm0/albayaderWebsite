@@ -409,7 +409,7 @@ namespace DAL.Functions
             using (var command = conn.CreateCommand())
             {
                 StringBuilder sQuery = new StringBuilder();
-                sQuery.AppendFormat(" update ServiceDetails set  EndDate='{0}' where ServiceDetailId={1} ", DateTime.Now, serviceDetailsId);
+                sQuery.AppendFormat(" update ServiceDetails set  EndDate='{0}' where ServiceDetailId={1} ",  DateTime.UtcNow, serviceDetailsId);
 
                 command.CommandText = sQuery.ToString();
 

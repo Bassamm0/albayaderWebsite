@@ -18,7 +18,7 @@ namespace API.Controllers
                 env = webHostEnvironment;
         }
         [Route("upload")]
-        [Authorize(Roles = "Administrator,Manager,Technicion")]
+        [Authorize(Roles = "Administrator,Manager,Technicion,Client Manager,Client User")]
         [HttpPost]
         public IActionResult UploadFile(List<IFormFile> files)
             {

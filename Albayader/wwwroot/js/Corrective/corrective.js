@@ -29,7 +29,7 @@
         placeholder: 'Select  Materials Used  ...'
     });
     $('#reportedDate').datetimepicker({
-        format: 'DD/MM/yyyy'
+        format: 'DD-MM-yyyy'
       
     });
 
@@ -59,7 +59,9 @@
 
 
     function saveDetailsOnUpload(InputElmentid, validationElem, pictureType,WithUpload) {
-
+       
+       
+        
         var obj = $('body').find('#ServiceDetailsid1');
         var Operation = ""
         if ($(obj).val() == '') {
@@ -82,7 +84,8 @@
         var problemReported = $("#problemReported").val();
         var conditionId = $("#ddCondition").val();
         var equipmentTypeId = $("#ddType").val();
-        var reportedDate = $("#reportedDate").data('date');
+        var reportedDate = moment($("#reportedDate").data('date'), 'D-mm-yyyy').format('yyyy-mm-D');
+       
         var reportedBy = $("#reportedBy" ).val();
         var model = $("#Model" ).val();
         var serviceRendered = $("#Rendered" ).val();
@@ -306,7 +309,7 @@
             }
 
         }).done(function () {
-            $('#modal-delete').modal('hide');
+            $('#Closedelete').click();
             $(".deletImage[filename='" + image + "']").parent('div').parent('div').remove();
             toastr["success"]("Image deleted successfuly.")
 

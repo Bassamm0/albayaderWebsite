@@ -1,0 +1,362 @@
+﻿@page
+@model AlbayaderWeb.Pages.ManageEventModel
+@{
+    ViewData["Title"] = "Manage Calender Events";
+}
+<link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+<div class="content-wrapper">
+
+  <section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-left">
+                  <li class="breadcrumb-item"><a href="Dashboard">Dashboard</a></li>
+                  <li class="breadcrumb-item "><a href="event">events</a></li>
+                  <li class="breadcrumb-item active" id="currentLable">@Model.pageTitle </li>
+                </ol>
+              </div>
+          
+            </div>
+            
+          </div>
+          <!-- /.container-fluid -->
+        </section>
+
+
+        
+ <!-- Main content -->
+        <section class="content">
+          <div class="container-fluid">
+               <div class="card card-default">
+          <div class="card-header">
+            <h3 class="card-title">Event form</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <div class="row">
+                <form id="EventForm" method="post" style="width:90%;">
+            @if(Model.editMode)
+            {
+                
+
+
+
+                  <div class="col">
+                      <div class="form-group">
+                                <label>Event Type</label>
+                                <select name="ddType" id="ddType" class="form-control select2" style="width: 100%;">
+                                    <option value="">Select Type</option>
+                                    <option value="1">preventive Fix</option>
+                                    <option value="2">Corrective Fix</option>
+                                    <option value="3">Genral Event</option>
+                                    <option value="4 ">Internal Event</option>
+                        
+
+
+                                </select>
+                    </div>
+
+
+                           <div id="eventFixHolder">
+                                <div class="col-md-12">
+                                 <div class="form-group">
+                           
+                                <label>Clients</label>
+                                <select name="ddCompanies" id="ddCompanies" class="form-control select2" style="width: 100%;" >
+                 
+    
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                                 <div class="form-group">
+                           
+                                <label>Client Branch</label>
+                                <select name="ddBranch" id="ddBranch" class="form-control select2" style="width: 100%;" >
+                 
+    
+                                </select>
+                              </div>
+                            </div>
+
+                              <div class="col-md-12">
+                                 <div class="form-group">
+                           
+                                <label>Technicain Assigned</label>
+                                <select name="ddTechnicain" id="ddTechnicain" class="form-control select2" style="width: 100%;" >
+                 
+    
+                                </select>
+                              </div>
+                            </div>
+
+                    </div>
+                    <div class="row">
+                         
+                    <div class="col-md-6">
+                     <div class="form-group">
+                                 <label>Start Date </label>
+                                <div class="input-group date" id="startDateHolder" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" 
+                                data-target="#startDate" id="startDate" name="startDate" placeholder="Select Start Date" value="@Model._event.eventStartDate"/>
+                                <div class="input-group-append" data-target="#startDate" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                  </div>
+
+                   <div class="col-md-6">
+                         <div class="form-group">
+                                   <label>End Date </label>
+                                     <div class="input-group date" id="EndDateHolder" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#endDate"
+                                        id="endDate" name="endDate" placeholder="Select End Date" value="@Model._event.eventEndDate"/>
+                                        <div class="input-group-append" data-target="#endDate" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                       </div>
+                       </div>
+
+                   <div class="form-group">
+                    <label for="companyname">Title</label>
+                    <input type="text" class="form-control" name="title" id="title" placeholder="Enter event title" value="@Model._event.title" />
+                  </div>
+
+
+
+                  <div class="form-group">
+                    <label for="long">URL</label>
+                    <input type="text" class="form-control" name="url" id="url" placeholder="Enter URL" value="@Model._event.url"/>
+                  </div>
+
+                  
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Description</label>
+                      <textarea class="form-control" id="description" name="description" rows="3" maxlength="200">@Model._event.description </textarea>
+                    </div>
+                  </div>
+               
+
+                 </div>
+
+
+                     
+                     <input type="hidden" id="hdEventId" name="hdEventId" value="@Model._event.EventId"/>
+                     <input type="hidden" id="hdEventTypeId" name="hdEventTypeId" value="@Model._event.eventTypeId"/>
+                    
+
+
+                       @section Scripts{
+                        <script type="text/javascript">
+                        $(document).ready(function () {
+                        $('.select2').select2();
+                        console.log('type',$('#hdEventTypeId').val())
+                            if($('#hdEventTypeId').val() == 1 || $('#hdEventTypeId').val() == 2){
+                                $('#eventFixHolder').css('display', 'block')
+                                $("#ddType").val(@Model._event.eventTypeId).trigger('change');
+                                $("#ddCompanies").val(@Model._event.compnayId).trigger('change');
+                                $("#ddBranch").val(@Model._event.branchId).trigger('change');
+                                $("#ddTechnicain").val(@Model._event.TechnicanId).trigger('change');
+                            }
+                     
+                        })
+                         </script>
+                       }
+
+
+                        }
+                        else
+                        {
+                            
+
+                 
+                  <div class="col">
+                      <div class="form-group">
+                                <label>Event Type</label>
+                                <select name="ddType" id="ddType" class="form-control select2" style="width: 100%;">
+                                    <option value="">Select Type</option>
+                                    <option value="1">preventive Fix</option>
+                                    <option value="2">Corrective Fix</option>
+                                    <option value="3">Genral Event</option>
+                                    <option value="4 ">Internal Event</option>
+                        
+
+
+                                </select>
+                    </div>
+
+
+                           <div id="eventFixHolder">
+                                <div class="col-md-12">
+                                 <div class="form-group">
+                           
+                                <label>Clients</label>
+                                <select name="ddCompanies" id="ddCompanies" class="form-control select2 dropreq" style="width: 100%;" >
+                 
+    
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                                 <div class="form-group">
+                           
+                                <label>Client Branch</label>
+                                <select name="ddBranch" id="ddBranch" class="form-control select2 dropreq" style="width: 100%;" >
+                 
+    
+                                </select>
+                              </div>
+                            </div>
+
+                              <div class="col-md-12">
+                                 <div class="form-group">
+                           
+                                <label>Technicain Assigned</label>
+                                <select name="ddTechnicain" id="ddTechnicain" class="form-control select2 dropreq" style="width: 100%;" >
+                 
+    
+                                </select>
+                              </div>
+                            </div>
+
+                    </div>
+                    <div class="row">
+                         
+                    <div class="col-md-6">
+                     <div class="form-group">
+                                 <label>Start Date </label>
+                                <div class="input-group date" id="startDateHolder" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" 
+                                data-target="#startDate" id="startDate" name="startDate" placeholder="Select Start Date" />
+                                <div class="input-group-append" data-target="#startDate" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                  </div>
+
+                   <div class="col-md-6">
+                         <div class="form-group">
+                                   <label>End Date </label>
+                                     <div class="input-group date" id="EndDateHolder" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#endDate"
+                                        id="endDate" name="endDate" placeholder="Select End Date" />
+                                        <div class="input-group-append" data-target="#endDate" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                       </div>
+                       </div>
+
+                   <div class="form-group">
+                    <label for="companyname">Title</label>
+                    <input type="text" class="form-control" name="title" id="title" placeholder="Enter event title" value="" />
+                  </div>
+
+
+
+                  <div class="form-group">
+                    <label for="long">URL</label>
+                    <input type="text" class="form-control" name="url" id="url" placeholder="Enter URL" value=""/>
+                  </div>
+
+                  
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Description</label>
+                      <textarea class="form-control" id="description" name="description" rows="3" maxlength="200"></textarea>
+                    </div>
+                  </div>
+               
+
+                 </div>
+                   
+
+                
+
+                                  
+             }
+                      
+               <input type="hidden" id="Smode" name="Smode" value="@Model.PageActionMode"/>
+            </form>
+                
+         </div>
+
+               
+            <input type="hidden" id="APIURL" name="APIURL" value="@Model.apiurl" />
+            <input type="hidden" id="utoken" name="utoken"  value="@Model.token" />
+ 
+
+            <!-- /.row -->
+        <div class="dropdown-divider" ></div>
+            
+            <div class="row" style="float: right;"> 
+                  <div class="col">
+              <div style="padding: 20px;float:left">
+            <a href='event' class="btn btn-block btn-default btn-lg" style="width: 200px;">Cancel</a>
+
+             </div>
+
+           <div style="padding: 20px;float:left">
+            <button type="button" id="SaveEvent" class="btn btn-block btn-info btn-lg" style="width: 200px;">Save</button>
+
+             </div>
+             </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.card-body -->
+         
+        </div>
+        <!-- /.card -->
+
+
+           </div>
+        </section>
+        <!-- /.content -->
+
+        </div>
+
+
+           <!-- jQuery -->
+            <script src="plugins/jquery/jquery.min.js"></script>
+            <!-- Bootstrap 4 -->
+            <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Tempusdominus Bootstrap 4 -->
+            <!-- Select2 -->
+            <script src="plugins/select2/js/select2.full.min.js"></script>
+          <!-- InputMask -->
+        <script src="plugins/moment/moment.min.js"></script>
+        <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+        <!-- date-range-picker -->
+
+        
+            <script src="~/js/Calendar//manageEvent.js"></script>
+
+
+            <script src="plugins/jquery-validation/jquery.validate.min.js"></script>
+            <script src="plugins/jquery-validation/additional-methods.min.js"></script>

@@ -31,7 +31,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join Services SR on SR.ServiceId=SQ.ServiceId ");
                     sQuery.Append(" inner join Branchs b on b.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=B.compnayId ");
-                    sQuery.Append(" where SQ.Enddate is null  order by SQ.ServiceQuoteId ");
+                    sQuery.Append(" where SQ.Enddate is null  order by SQ.ServiceQuoteId desc ");
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -81,7 +81,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join Services SR on SR.ServiceId=SQ.ServiceId ");
                     sQuery.Append(" inner join Branchs b on b.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=B.compnayId ");
-                    sQuery.AppendFormat(" where SQ.Enddate is null  and SQ.ServiceQuoteDate between '{0}' and '{1}'  order by SQ.ServiceQuoteId ", startDate, endDate);
+                    sQuery.AppendFormat(" where SQ.Enddate is null  and SQ.ServiceQuoteDate between '{0}' and '{1}'  order by SQ.ServiceQuoteId desc", startDate, endDate);
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -132,7 +132,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join Services SR on SR.ServiceId=SQ.ServiceId ");
                     sQuery.Append(" inner join Branchs b on b.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=B.compnayId ");
-                    sQuery.AppendFormat(" where CO.CompanyID={0} SQ.Enddate is null  order by SQ.ServiceQuoteId ", companyid);
+                    sQuery.AppendFormat(" where CO.CompanyID={0} SQ.Enddate is null  order by SQ.ServiceQuoteId desc", companyid);
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
 
@@ -180,7 +180,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join Services SR on SR.ServiceId=SQ.ServiceId ");
                     sQuery.Append(" inner join Branchs b on b.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=B.compnayId ");
-                    sQuery.AppendFormat(" where CO.CompanyID={0} SQ.Enddate is null and SQ.ServiceQuoteDate between '{1}' and '{2}' order by SQ.ServiceQuoteId ", companyid, startDate, endDate);
+                    sQuery.AppendFormat(" where CO.CompanyID={0} SQ.Enddate is null and SQ.ServiceQuoteDate between '{1}' and '{2}' order by SQ.ServiceQuoteId desc", companyid, startDate, endDate);
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
 
@@ -267,6 +267,8 @@ namespace DAL.Functions
 
         public async Task<EServiceQuote> addServiceQuote(EServiceQuote newServiceQuote)
         {
+
+            newServiceQuote.ServiceQuoteDate = DateTime.UtcNow.ToString();
             using (var context = new DatabaseContext(DatabaseContext.ops.dbOptions))
             {
                 await context.ServiceQuotes.AddAsync(newServiceQuote);
@@ -322,7 +324,7 @@ namespace DAL.Functions
 
 
             eServiceQuote = getSingleServiceQuote(id);
-            eServiceQuote.EndDate = DateTime.Now;
+            eServiceQuote.EndDate =  DateTime.UtcNow;
 
             if (eServiceQuote == null)
             {

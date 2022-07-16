@@ -15,7 +15,7 @@ namespace API.Controllers
     {
 
         [Route("send")]
-        [Authorize]
+        [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
         public async Task<Boolean> sendEmail()
         {

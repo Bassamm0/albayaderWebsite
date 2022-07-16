@@ -19,6 +19,7 @@ namespace AlbayaderWeb.Pages
         public int _BranchId { get; set; }
         public int _ServiceId { get; set; }
         public string errorMessage { get; set; }
+        public string timezone { get; set; }
         public string role { get; set; }
 
         public EServiceModel _service = new EServiceModel();
@@ -32,6 +33,7 @@ namespace AlbayaderWeb.Pages
             {
                 token = HttpContext.Session.GetString("token");
                 role = HttpContext.Session.GetString("Role");
+               timezone = HttpContext.Session.GetString("timezone");
 
             }
             if (role.ToLower() != "administrator" && role.ToLower() != "manager" && role.ToLower() != "technicion")
@@ -42,10 +44,11 @@ namespace AlbayaderWeb.Pages
             apiurl = AppConfig.APIUrl;
             uploadurl = AppConfig.UploadURL;
 
-            int _BranchId = BranchId;
-            int _ServiceId = ServiceId;
+
 
             _service = await getService(ServiceId);
+            //convert datetime to timezone          
+            _service.CreatedDate = UtilityHelper.convertUTCtoTimeZone(_service.CreatedDate, timezone);
             int statusId = _service.StatusId;
             if(statusId != 4)
             {

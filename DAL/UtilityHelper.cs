@@ -61,7 +61,7 @@ namespace DAL
             return isSent;
         }
 
-        public async Task<bool> SendCompleteEmailAsyncToClient(List<EUser> toList, string subject, string body)
+        public async void SendCompleteEmailAsyncToClient(List<EUser> toList, string subject, string body)
         {
             string smtpClient = AppConfig.smtpClient;
             string emailFrom = AppConfig.emailFrom;
@@ -98,10 +98,10 @@ namespace DAL
                 isSent = false;
 
             }
-            return isSent;
+           
         }
 
-        public async Task<bool> SendCompleteEmailAsyncToAdmin(List<EUser> toList, string subject, string body)
+        public async void SendCompleteEmailAsyncToAdmin(List<EUser> toList, string subject, string body)
         {
             string smtpClient = AppConfig.smtpClient;
             string emailFrom = AppConfig.emailFrom;
@@ -138,7 +138,7 @@ namespace DAL
                 isSent = false;
 
             }
-            return isSent;
+           
         }
         public async Task SendEmailAs(string from, string to, string subject, string body)
         {

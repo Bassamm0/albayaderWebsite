@@ -17,7 +17,7 @@ namespace LOGIC
         {
 
             List<EBranchs> Branchs = new List<EBranchs>();
-            if (logeduser.CompanyTypeId == 1 && (logeduser.UserRole.ToLower() == "administrator" || logeduser.UserRole.ToLower() == "manager" || logeduser.UserRole.ToLower() == "Technicion"))
+            if (logeduser.CompanyTypeId == 1 && (logeduser.UserRole.ToLower() == "administrator" || logeduser.UserRole.ToLower() == "manager" || logeduser.UserRole.ToLower() == "technicion"))
             {
                 Branchs = dBranchs.getAllBranchs();
             }

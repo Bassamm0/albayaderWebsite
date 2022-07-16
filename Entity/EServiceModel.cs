@@ -44,6 +44,8 @@ namespace Entity
         [NotMapped]
        public List<EServiceDetails>? ServiceDetails { get; set; }
         [NotMapped]
+        public List<ECorrectiveServiceDetails>? CorrectiveServiceDetails { get; set; }
+        [NotMapped]
         public string? VistTypeName { get; set; }
   
 

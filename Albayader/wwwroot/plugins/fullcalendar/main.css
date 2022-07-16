@@ -592,6 +592,7 @@ A HORIZONTAL event
     max-width: 100%; /* clip overflow on this element */
     overflow: hidden;
   }
+
 .fc-h-event .fc-event-title-container { /* serves as a container for the sticky cushion */
     flex-grow: 1;
     flex-shrink: 1;

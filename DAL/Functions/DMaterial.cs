@@ -201,7 +201,7 @@ namespace DAL.Functions
 
 
             eMaterial = getSingleMaterial(id);
-            eMaterial.EndDate = DateTime.Now;
+            eMaterial.EndDate =  DateTime.UtcNow;
 
             if (eMaterial == null)
             {

@@ -109,7 +109,7 @@ namespace DAL.Functions
         public async Task<EServiceComment> addComment(EServiceComment newComment)
         {
 
-            newComment.CommentDate= DateTime.Now;
+            newComment.CommentDate=  DateTime.UtcNow;
 
             using (var context = new DatabaseContext(DatabaseContext.ops.dbOptions))
             {
@@ -141,7 +141,7 @@ namespace DAL.Functions
 
             eBranch=getSingleServiceComment(id);
   
-            eBranch.EndDate = DateTime.Now;
+            eBranch.EndDate =  DateTime.UtcNow;
 
             if (eBranch == null)
             {

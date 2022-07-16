@@ -17,7 +17,7 @@ namespace API.Controllers
         private ServiceQuoteLogic ServiceQuoteLogic = new ServiceQuoteLogic();
 
         [Route("all")]
-        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager")]
         [HttpGet]
         public async Task<List<EServiceQuote>> getAllServiceQuote()
         {
@@ -30,7 +30,7 @@ namespace API.Controllers
             return ServiceQuote;
         }
         [Route("allbydate")]
-        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager")]
         [HttpPost]
         public async Task<List<EServiceQuote>> getAllServiceQuoteByDate(JsonElement objData)
         {
@@ -49,7 +49,7 @@ namespace API.Controllers
 
 
         [Route("companyServiceQuote")]
-        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager")]
         [HttpPost]
         public async Task<List<EServiceQuote>> getAllCompanyServiceQuote([FromBody] JsonElement objData)
         {
@@ -65,7 +65,7 @@ namespace API.Controllers
         }
 
         [Route("getservicequotebyid")]
-        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager")]
         [HttpPost]
         public async Task<EServiceQuote> getServiceQuoteById([FromBody] JsonElement objData)
         {

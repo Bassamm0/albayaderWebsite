@@ -157,12 +157,18 @@
 
                      <select name="ddAuth" id="ddAuth" class="form-control " style="width: 100%;">
                       <option value="">Select The Role</option>
-                        <option value="1">Administrator</option>
+                                    @if (@Model.CompanyId == 2)
+                                    {
+                       <option value="1">Administrator</option>
                        <option value="2">Techniction </option>
                        <option value="3">Manager </option>
-                       <option value="4">Client Manager </option>
+                                    }else{
+                        <option value="4">Client Manager </option>
                        <option value="5">Client User </option>
                     
+                                    }
+                                   
+                       
     
                     </select>
                    
@@ -310,12 +316,16 @@
                    
                      <select name="ddAuth" id="ddAuth" class="form-control " style="width: 100%;">
                        <option value="">Select The Role</option>
+                      @if (@Model.CompanyId == 2)
+                                    {
                        <option value="1">Administrator</option>
                        <option value="2">Techniction </option>
                        <option value="3">Manager </option>
-                       <option value="4">Client Manager </option>
+                                    }else{
+                        <option value="4">Client Manager </option>
                        <option value="5">Client User </option>
                     
+                                    }
     
                     </select>
 

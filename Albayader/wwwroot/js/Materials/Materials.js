@@ -52,7 +52,7 @@
             // datatable redraw
             obj.remove()
             table.clear().draw();
-            toastr["success"]("Company delete successfuly.")
+            toastr["success"]("Material delete successfuly.")
         });
 
 
