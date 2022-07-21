@@ -34,7 +34,7 @@ namespace LOGIC
         {
 
             List<ECalenderEvents> CalenderEvents = new List<ECalenderEvents>();
-            if (logeduser.CompanyTypeId == 1 && (logeduser.UserRole.ToLower() == "administrator" || logeduser.UserRole.ToLower() == "manager" ))
+            if (logeduser.CompanyTypeId == 1 && (logeduser.UserRole.ToLower() == "administrator" || logeduser.UserRole.ToLower() == "manager" || logeduser.UserRole.ToLower() == "technicion"))
             {
                 CalenderEvents = dCalenderEvents.getAllCalenderEvents();
             }
@@ -42,9 +42,9 @@ namespace LOGIC
             {
                 CalenderEvents = dCalenderEvents.getAllBranchCalenderEvents(logeduser.CompanyId);
             }
-            else if (logeduser.UserRole.ToLower() == "technicion")
+            else 
             {
-                CalenderEvents = dCalenderEvents.getUserCalenderEvents(logeduser.UserId);
+                //CalenderEvents = dCalenderEvents.getUserCalenderEvents(logeduser.UserId);
             }
 
             return CalenderEvents;

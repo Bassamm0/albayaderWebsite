@@ -85,9 +85,37 @@
             },
             success: function (data, status, xhr) {   // success callback function
 
+                console.log(data)
+                
+
 
                 $("#DrasftTbl").DataTable().clear().draw();
                 for (i = 0; i < data.length; i++) {
+
+                    var serials = '';
+                    if (data[i].serviceTypeId == 1) {
+
+                        serials = '';
+                        if (data[i].serviceDetails != null && data[i].serviceDetails.length > 0) {
+                            for (var j = 0; j < data[i].serviceDetails.length; j++) {
+                                if (j != data[i].serviceDetails.length - 1) {
+                                    serials += data[i].serviceDetails[j].serialNo + ','
+                                } else {
+                                    serials += data[i].serviceDetails[j].serialNo;
+                                }
+                            }
+                        }
+
+
+
+
+                    } else if (data[i].serviceTypeId == 2) {
+                        if (data[i].correctiveServiceDetails != null && data[i].correctiveServiceDetails.length > 0) {
+                            serials = data[i].correctiveServiceDetails[0].serialNo;
+                        }
+                    }
+
+
                     if (data[i].serviceTypeId == 1) {
                         var c1 = '<td><a href="PreventiveView?ServiceId=' + data[i].serviceId + '">#' + data[i].serviceId + '<td>';
                     } else {
@@ -112,13 +140,15 @@
                         c1,
                         data[i].branchName,
                         data[i].serviceTypeName,
-                        toTimeZone(moment(moment(data[i].createdDate)).format('DD-MM-YYYY hh:mm:ss a')),
+                     
                         data[i].vistTypeName,
-                        data[i].technicianName,
-                        toTimeZone(moment(moment(data[i].completionDate, 'MM/DD/YYYY hh:mm:ss a')).format('DD-MM-YYYY hh:mm:ss a')),
+                        serials,
+                        toTimeZone(moment(moment(data[i].completionDate, 'MM/DD/YYYY hh:mm:ss')).format('DD-MM-YYYY hh:mm:ss a')),
                         remark,
-                        data[i].supervisourFeedback,
+                   
                         dataload
+                        
+
                     ]).draw();
 
                 }
@@ -167,9 +197,35 @@
             },
             success: function (data, status, xhr) {   // success callback function
 
-                console.log(data)
+               
+                console.log(data);
                 $("#DrasftTbl").DataTable().clear().draw();
                 for (i = 0; i < data.length; i++) {
+
+                    var serials = '';
+                    if (data[i].serviceTypeId == 1) {
+
+                        serials = '';
+                        if (data[i].serviceDetails != null && data[i].serviceDetails.length > 0) {
+                            for (var j = 0; j < data[i].serviceDetails.length; j++) {
+                                if (j != data[i].serviceDetails.length - 1) {
+                                    serials += data[i].serviceDetails[j].serialNo + ','
+                                } else {
+                                    serials += data[i].serviceDetails[j].serialNo;
+                                }
+                            }
+                        }
+                      
+
+
+
+                    } else if (data[i].serviceTypeId == 2) {
+                        if (data[i].correctiveServiceDetails != null && data[i].correctiveServiceDetails.length > 0) {
+                            serials = data[i].correctiveServiceDetails[0].serialNo;
+                        }
+                    }
+
+
                     if (data[i].serviceTypeId == 1) {
                         var c1 = '<td><a href="PreventiveView?ServiceId=' + data[i].serviceId + '">#' + data[i].serviceId + '<td>';
                     } else {
@@ -189,19 +245,20 @@
                     }
                     dataload += '</li>';
 
-
                     var remark = '<span class="Remak">' + data[i].remark + '</span>'
                     $("#DrasftTbl").DataTable().row.add([
                         c1,
                         data[i].branchName,
                         data[i].serviceTypeName,
-                        toTimeZone(moment(moment(data[i].createdDate)).format('DD-MM-YYYY hh:mm:ss a')),
+
                         data[i].vistTypeName,
-                        data[i].technicianName,
-                        toTimeZone(moment(moment(data[i].completionDate, 'MM/DD/YYYY hh:mm:ss a')).format('DD-MM-YYYY hh:mm:ss a')),
+                        serials,
+                        toTimeZone(moment(moment(data[i].completionDate, 'MM/DD/YYYY hh:mm:ss')).format('DD-MM-YYYY hh:mm:ss a')),
                         remark,
-                        data[i].supervisourFeedback,
+
                         dataload
+
+
                     ]).draw();
 
                 }

@@ -27,9 +27,7 @@
         </div>
         <!-- /.container-fluid -->
     </section>
-
-
-
+   
 
     <!-- Main content -->
     <section class="content">
@@ -125,10 +123,70 @@
 
 
 
-                <div class="row">
-                    <div class="col-md-6">
+             
+                   
+  
+                    <div class="row">
+                   <div class="col-md-12" style="padding:10px 5px; ">
+                          <select name="ddyear" id="ddyear" class="form-select" >
+                                 <option value="2022">2022</option>
+                                 <option value="2023">2023</option>
+                                 <option value="2025">2024</option>
+                                 <option value="2026">2025</option>
+                                 <option value="2027">2026</option>
+    
+                       </select>
+                    </div>
                         <!-- AREA CHART -->
-                    <div class="card">
+                          <div class="col">
+                         <div class="card card">
+                            <div class="card-header">
+                                <h3 class="card-title">Service by Month </h3>
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+
+                                </div>
+                            </div>
+                            <div class="card-body">
+
+                                <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                            </div>
+                            <!-- /.card-body -->
+                    </div>
+                    </div>
+                     <div class="col">
+                     <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Service Per Month By Type</h3>
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart">
+                                    <canvas id="lineChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                </div>
+                            </div>
+                           
+                    </div>
+                   
+                      
+
+                </div>
+
+                 </div>
+              
+                    <div class="row">
+                        <!-- LINE CHART -->
+                        <div class="col">
+                   <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Preventive  vs Corrective</h3>
 
@@ -146,57 +204,19 @@
                             </div>
                             <!-- /.card-body -->
                     </div>
-                        <!-- /.card -->
-                        <!-- DONUT CHART -->
-                    <div class="card card">
-                            <div class="card-header">
-                                <h3 class="card-title">Service by Month </h3>
-
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-
-                                </div>
-                            </div>
-                            <div class="card-body">
-
-                                <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                            </div>
-                            <!-- /.card-body -->
-                    </div>
-                        <!-- /.card -->
-                        <!-- /.card -->
-
-                </div>
-                    <!-- /.col (LEFT) -->
-                <div class="col-md-6">
-                        <!-- LINE CHART -->
-                    <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Service Per Month By Type</h3>
-
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart">
-                                    <canvas id="lineChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                                </div>
-                            </div>
-                            <!-- /.card-body -->
                     </div>
                         <!-- /.card -->
                         <!-- BAR CHART -->
+                        <div class="col">
                     <div class="card ">
                             <div class="card-header">
-                                <h3 class="card-title">Bar Chart</h3>
+                                <h3 class="card-title">Service Per Branch</h3>
 
                                 <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+
                                 </div>
                             </div>
                             <div class="card-body">
@@ -207,13 +227,58 @@
                             </div>
                             <!-- /.card-body -->
                     </div>
+                    </div>
                         <!-- /.card -->
+                    </div>
 
 
 
-                </div>
+                     <div class="col-md-12">
+                        <div class="card ">
+                            <div class="card-header">
+                                <h3 class="card-title">Corrective Type Per Month </h3>
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart">
+                                    <canvas id="CorrectiveTypePerMonth" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                    </div>
+                    </div>
+                     <div class="col-md-12">
+                     <div class="card card ">
+                            <div class="card-header">
+                                <h3 class="card-title">Corrective Type Per Branch </h3>
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart">
+                                    <canvas id="CorrectiveTypePerBranch" style="min-height: 250px; height: 250px; max-width: 100%;"></canvas>
+
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                    </div>
+
+                   </div>
+         
                     <!-- /.col (RIGHT) -->
-            </div>
+      
                 <!-- /.row -->
             }else  @if (@Model.role.ToLower() == "technicion" ){
 

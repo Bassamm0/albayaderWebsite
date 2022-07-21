@@ -22,7 +22,6 @@ $(document).ready(function () {
 
 	var path = window.location.pathname;
 	var page = path.split("/").pop();
-	console.log("page:", page);
 
 	switch (page) {
 		case "Dashboard":
@@ -50,6 +49,9 @@ $(document).ready(function () {
 			$("#clientMenu").addClass("active");
 			break;
 		case "materials":
+			$("#settingMenu").addClass("active");
+			break;
+		case "Equipments":
 			$("#settingMenu").addClass("active");
 			break;
 		case "event":

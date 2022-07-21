@@ -28,7 +28,7 @@ namespace DAL.Functions
 
                     StringBuilder sQuery = new StringBuilder();
                     sQuery.Append(" Select * from Materials C ");
-                    sQuery.Append(" where C.EndDate is null order by C.MaterialName");
+                    sQuery.Append(" where C.EndDate is null order by C.MaterialId desc");
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -72,7 +72,7 @@ namespace DAL.Functions
 
                     StringBuilder sQuery = new StringBuilder();
                     sQuery.Append(" Select * from Materials C ");
-                    sQuery.AppendFormat(" where C.MaterialId={0} and C.EndDate is null order by C.MaterialName", companyid);
+                    sQuery.AppendFormat(" where C.MaterialId={0} and C.EndDate is null order C.MaterialId desc", companyid);
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();

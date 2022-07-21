@@ -1,7 +1,7 @@
 ﻿@page
-@model AlbayaderWeb.Pages.materialsModel
+@model AlbayaderWeb.Pages.EquipmentsModel
 @{
-    ViewData["Title"] = "Materials";
+     ViewData["Title"] = "Equipments";
 }
 
 
@@ -20,13 +20,13 @@
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-left">
                   <li class="breadcrumb-item"><a href="Dashboard">Dashboard</a></li>
-                  <li class="breadcrumb-item active">Materials </li>
+                  <li class="breadcrumb-item active">Equipments </li>
                 </ol>
               </div>
                <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <form method="post">
-                  <button type="submit" class="btn btn-default" asp-page-handler="AddMaterial" style="background-color: rgb(250, 245, 245);"><i class="fas fa-plus"></i></button>
+                  <button type="submit" class="btn btn-default" asp-page-handler="Addequipment" style="background-color: rgb(250, 245, 245);"><i class="fas fa-plus"></i></button>
                   
                     </form>
               
@@ -63,30 +63,26 @@
                                             <thead>
                                                 <tr>
                                                     
-                                                    <th>Material Name</th>
-                                                     <th>Description</th>
-                                                    <th>Price</th>
+                                                    <th>equipment Name</th>
+                                                 
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
 
-                                                @if (Model.materials != null)
+                                                @if (Model.equipments != null)
                                                 {
                                                   
-                                                         @foreach (var item in Model.materials)
+                                                         @foreach (var item in Model.equipments)
                                                     {
 
 
                                                         <tr>
                                                             
                                                             
-                                                            <td>@Html.DisplayFor(modelItem => item.MaterialName)</td>
-                                                            <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                                                            <td>@Html.DisplayFor(modelItem => item.Price)</td>
-                                                           
+                                                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                                       
                                                  
-                                                           
                                                            
                                                            <td>
 
@@ -97,17 +93,15 @@
                                                                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                   
 
-                                                                           <li class="ViewMaterial" materialId="@item.MaterialId"  data-toggle="modal" data-target="#modal-view"><a  class="dropdown-item " href="#"  >View Material</a></li>
-                                                                          <li class="EditMaterial" materialId="@item.MaterialId">
-                                                                             @* <a  class="dropdown-item " href="ManageMaterial?Smode=edit&id=@item.MaterialId"  >Edit Material</a></li>*@
+                                                                          <li class="Editequipment" equipmentId="@item.EquipmentId">
                                                                           
-                                                                          <button type="submit" class="dropdown-item" asp-page-handler="EditMaterial"
-                                                                              asp-route-companyid="@item.MaterialId"
-                                                                             asp-route-id="@item.MaterialId" >
-                                                                                 Edit Material</button>
+                                                                          <button type="submit" class="dropdown-item" asp-page-handler="Editequipment"
+                                                                              asp-route-companyid="@item.EquipmentId"
+                                                                             asp-route-id="@item.EquipmentId" >
+                                                                                 Edit equipment</button>
                                              
                                                                           
-                                                                          <li class="deleteMaterial" materialName="@item.MaterialName" materialId="@item.MaterialId" data-toggle="modal" data-target="#modal-delete"><a  class="dropdown-item " href="#"  >Delete Material</a></li>
+                                                                          <li class="deleteequipment" equipmentName="@item.Name" equipmentId="@item.EquipmentId" data-toggle="modal" data-target="#modal-delete"><a  class="dropdown-item " href="#"  >Delete equipment</a></li>
                                                
 
                                                                       </ul>
@@ -163,8 +157,8 @@
             </div>
             <div class="modal-body">
               <div id="Deletetext">
-                  Are you sure you want to delete the Material
-                  <span style="font-weight:bold;" id="MaterialToDeleteName">
+                  Are you sure you want to delete the equipment
+                  <span style="font-weight:bold;" id="equipmentToDeleteName">
 
                   </span>
                   <div class="deleteWarning" > Please note that this action can't be rolled back and the deleted data can't be retrived</div>
@@ -173,8 +167,8 @@
             <form method="post" id="deleteForm" enctype="multipart/form-data">
               <div class="modal-footer justify-content-between">
               <button type="button" id="delClose" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-danger" asp-page-handler="DeleteMaterial" asp-route-id="" id="DeleteMaterial">Delete</button>
-              <input type="hidden" id="deletedMaterialId" />
+              <button type="button" class="btn btn-danger" asp-page-handler="Deleteequipment" asp-route-id="" id="Deleteequipment">Delete</button>
+              <input type="hidden" id="deletedequipmentId" />
             </div>
             </form>
            
@@ -184,36 +178,7 @@
         <!-- /.modal-dialog -->
       </div>
 
-      <!-- /.modal -->
-        <div class="modal fade" id="modal-view">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Material Detials</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-          
-
-                <ul class="list-group list-group-flush" id="materialDetails">
-                
-               
-                </ul>
-
-            </div>
-           
-              <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-      
-           
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
+   
 
              <input type="hidden" id="APIURI" name="APIURI" value="@Model.apiurl"/>
              <input type="hidden" id="UPLOADURL" name="APIURI" value="@Model.uploadurl"/>
@@ -238,7 +203,7 @@
 <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 
 
-<script src="~/js/Materials/Materials.js"></script>
+<script src="~/js/equipments/Equipmentd.js"></script>
 
 
 <!-- DataTables  & Plugins -->

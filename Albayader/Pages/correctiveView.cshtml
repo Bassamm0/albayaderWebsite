@@ -59,7 +59,7 @@
                                 <i class="fa-solid fa-calendar-days"></i>
                                 @Model._service.CreatedDate.ToString("dd/MM/yyyy")
                             </div>
-                            <div class="info-box-number text-muted mb-0"><i class="fa-solid fa-clock"></i> @Model._service.CreatedDate.ToString("HH:mm tt")</div>
+                            <div class="info-box-number text-muted mb-0"><i class="fa-solid fa-clock"></i> @Model._service.CreatedDate.ToString("hh:mm tt")</div>
                         </div>
 
                     </div>
@@ -136,9 +136,10 @@
                                     <div class="">
                                         @{
                                             int counter = 0;
-                                        }
+                                      
                                         @if (@Model._service.ServiceDetails[0].servicePictures != null)
                                         {
+
                                             counter = counter + 1;
                                             <div class="images-wrapper d-flex " id="gallery{@counter}">
                                                 @foreach (var picture in @Model._service.ServiceDetails[0].servicePictures)
@@ -152,6 +153,7 @@
                                                 }
                                             </div>
                                         }
+                                          }
 
 
                                     </div>
@@ -201,6 +203,7 @@
                                                     }
                                                 }
                                             </div>
+                                             <input type="hidden" value="@counter" id="galleryCount" />
                                         }
 
 
@@ -231,7 +234,7 @@
                                         </div>
                                         <div class="dropdown-divider"></div>
                                          <div class="col-md-12">
-                                            <span class="labelsView"> Completion Date:</span>@Convert.ToDateTime(@Model._service.CompletionDate).ToString("dd/MM/yyyy HH:mm tt")
+                                            <span class="labelsView"> Completion Date:</span>@Convert.ToDateTime(@Model._service.CompletionDate).ToString("dd/MM/yyyy hh:mm tt")
                                         </div>
                                         <div class="dropdown-divider"></div>
                                     </div>

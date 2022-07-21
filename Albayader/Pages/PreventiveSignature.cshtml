@@ -59,7 +59,7 @@ ViewData["Title"] = "Client Review";
                             <div class="info-box-text text-center text-muted"><i class="fa-solid fa-calendar-days"></i>
                              @Model._service.CreatedDate.ToShortDateString()
                                </div>
-                            <div class="info-box-number text-muted mb-0"><i class="fa-solid fa-clock"></i> @Model._service.CreatedDate.ToString("HH:mm tt")</div>
+                            <div class="info-box-number text-muted mb-0"><i class="fa-solid fa-clock"></i> @Model._service.CreatedDate.ToString("hh:mm tt")</div>
                           </div>
 
                              </div>
@@ -265,6 +265,12 @@ ViewData["Title"] = "Client Review";
                                                     </div>
                                               </div>
                                         </div>
+                                        
+                                         
+                                        }
+                                        <input type="hidden" value="@counter" id="galleryCount" />
+
+
                                          <div class="dropdown-divider" ></div>
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -289,9 +295,6 @@ ViewData["Title"] = "Client Review";
                                                 </div>
 
                                             </div>
-                                         
-                                        }
-                                        <input type="hidden" value="@counter" id="galleryCount" />
                                         }
 
                                 </div>

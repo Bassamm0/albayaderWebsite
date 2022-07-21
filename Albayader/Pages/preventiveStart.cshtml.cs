@@ -25,7 +25,7 @@ namespace AlbayaderWeb.Pages
 
         public int userid { get; set; }
         public string role { get; set; }
-
+        public string pageTitle { get; set; }
         public async Task<IActionResult> OnGet(string serviceType,int companyId)
         {
 
@@ -45,9 +45,25 @@ namespace AlbayaderWeb.Pages
                 return Redirect("Index");
             }
 
+            if (serviceType == "preventive")
+            {
+              
+                pageTitle = "Preventive Service Initiation";
+            }
+            else if (serviceType == "corrective")
+            {
+               
+                pageTitle = "Corrective Service Initiation";
+            }
+            else
+            {
+                pageTitle = "Other Service Initiation";
+               
+            }
+
             userid = Convert.ToInt16(HttpContext.Session.GetString("userid"));
 
-            string ServiceType=serviceType;
+          
             apiurl = AppConfig.APIUrl;
             uploadurl = AppConfig.UploadURL;
             return null;
@@ -63,13 +79,16 @@ namespace AlbayaderWeb.Pages
             if (type == "preventive")
             {
                 serviceTypeId = 1;
+                pageTitle = "Preventive Service Initiation";
             }
             else if (type == "corrective")
             {
                 serviceTypeId = 2;
+                pageTitle = "Corrective Service Initiation";
             }
             else
             {
+                pageTitle = "Other Service Initiation";
                 serviceTypeId = 3;
             }
             postedService.TechnicianId = Convert.ToInt16(HttpContext.Session.GetString("userid"));
@@ -84,6 +103,10 @@ namespace AlbayaderWeb.Pages
             if (_eServices == null)
             {
                 return null;
+            }
+            if(type == "other")
+            {
+                type = "corrective";
             }
             string url = type+ "?ServiceId=" + _eServices.ServiceId; ;
 

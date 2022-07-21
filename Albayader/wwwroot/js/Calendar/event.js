@@ -101,7 +101,7 @@
                     + techname
                     + branchName
                     + ` <li class="list-group-item"><span class='ViewDetailsTit'>Description:</span> ${data.description}</li>`
-                    + ` <li class="list-group-item"><span class='ViewDetailsTit'>url:</span> ${data.url}</li>`
+                    + ` <li class="list-group-item"><span class='ViewDetailsTit'>url:</span><a style="word-break: break-word;" target="_blank" href="${data.url}"> ${data.url}</a></li>`
 
                 $('#EventDetails').html(html)
             })

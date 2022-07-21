@@ -45,7 +45,7 @@
                     html += ' <div class="card-comment">'
                         + '  <div class="comment-text">'
                         + '<span class="username">' + data[i].fullName
-                        + '<span class="text-muted float-right">' + toTimeZone(moment(data[i].commentDate).format('DD-MM-YYYY hh:mm:ss'))+'</span>'
+                        + '<span class="text-muted float-right">' + toTimeZone(moment(data[i].commentDate).format('DD-MM-YYYY hh:mm:ss a'))+'</span>'
                         + '</span>'
                         + data[i].comment
                         + ' </div>'

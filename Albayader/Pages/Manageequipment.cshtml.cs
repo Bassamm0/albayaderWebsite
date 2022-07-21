@@ -1,23 +1,24 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Entity;
-using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Text;
+using Entity;
+using System.Net.Http.Headers;
 
 namespace AlbayaderWeb.Pages
 {
-    public class ManageQuoteModel : PageModel
-    {
 
+    public class ManageequipmentModel : PageModel
+    {
         AppConfiguration AppConfig = new AppConfiguration();
         public string? apiurl { get; set; }
         public string? uploadurl { get; set; }
         public string token { get; set; }
         public string email { get; set; }
 
-         public EServiceQuote? _Quote = null;
-        public EServiceQuote? _postQuote = new EServiceQuote();
+
+        public EEquipments? _Equipment = new EEquipments();
+        public EEquipments? postEquipment = new EEquipments();
         public string errorMessage { get; set; }
         public string pageTitle { get; set; }
         public string PageActionMode { get; set; }
@@ -26,8 +27,11 @@ namespace AlbayaderWeb.Pages
         public bool editMode { get; set; } = false;
         public string role { get; set; }
 
-        public async Task<IActionResult> OnGet(string Smode, int qid)
+
+
+        public async Task<IActionResult> OnGetSmode(string Smode, int id)
         {
+
             if (HttpContext.Session.GetString("token") == null || HttpContext.Session.GetString("token") == "")
             {
                 return Redirect("Index");
@@ -44,24 +48,29 @@ namespace AlbayaderWeb.Pages
             }
 
             apiurl = AppConfig.APIUrl;
-            uploadurl = AppConfig.UploadURL;       
+            uploadurl = AppConfig.UploadURL;
+
+
             PageActionMode = Smode;
+
+
             if (PageActionMode == "Add")
             {
-                pageTitle = "Add Quote";
+                pageTitle = "Add Equipment";
                 editMode = false;
             }
             else if (PageActionMode == "Edit")
             {
-                pageTitle = "Edit Quote";
-                _Quote = await getSingleQuote(qid);
+                pageTitle = "Edit Equipment";
+                _Equipment = await getEquipment(id);
                 editMode = true;
 
             }
             return null;
         }
 
-        public async Task<EServiceQuote> getSingleQuote(int id)
+
+        public async Task<EEquipments> getEquipment(int id)
         {
 
             apiurl = AppConfig.APIUrl;
@@ -75,14 +84,14 @@ namespace AlbayaderWeb.Pages
             using (var httpClient = new HttpClient())
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                using (var response = await httpClient.PostAsync(apiurl + "servicequote/getservicequotebyid", data))
+                using (var response = await httpClient.PostAsync(apiurl + "data/getEquipmentbyid", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")
                     {
                         string responseJson = response.Content.ReadAsStringAsync().Result;
 
-                        _Quote = JsonConvert.DeserializeObject<EServiceQuote>(responseJson);
+                        _Equipment = JsonConvert.DeserializeObject<EEquipments>(responseJson);
                         //return response.StatusCode.ToString();
                     }
                     else
@@ -98,7 +107,7 @@ namespace AlbayaderWeb.Pages
             }
 
 
-            return _Quote;
+            return _Equipment;
         }
 
 
@@ -112,44 +121,14 @@ namespace AlbayaderWeb.Pages
             {
                 try
                 {
-                    //_postQuote.ServiceQuoteId = Convert.ToInt16(Request.Form["hdServiceQuoteId"]);
-                    _postQuote.ServiceQuoteDate = DateTime.UtcNow.ToString();
+                    postEquipment.Name = Request.Form["EquipmentName"];
 
-                    string materialCount = Request.Form["itemsids"];
-                   
-
-                    int[] nums = Array.ConvertAll(materialCount.Split(','), int.Parse);
-
-
-                    if(nums.Length == 0)
-                    {
-                        errorMessage = "Please add at least one Item";
-                        return null;
-                    }
-                    List<EQuotationDetails> lQdetails = new List<EQuotationDetails>();
-                    for (int i = 0; i < nums.Length; i++)
-                    {
-                        EQuotationDetails _qdetails = new EQuotationDetails();
-                        _qdetails.MaterialId = Convert.ToInt16(Request.Form["Material" + nums[i]].ToString());
-                        _qdetails.QuotationPrice = Convert.ToInt16(Request.Form["price" + nums[i]].ToString());
-                        _qdetails.Qty = Convert.ToInt16(Request.Form["qty" + nums[i]].ToString());
-                        _qdetails.Description = Request.Form["description" + nums[i]].ToString();
-                        
-                        lQdetails.Add(_qdetails);
-
-                    }
-                    _postQuote.BranchId = Convert.ToInt16(Request.Form["ddBranch"]);
-                    _postQuote.ServiceId = Convert.ToInt16(Request.Form["ddService"]);
-                    _postQuote.ReferenceId = Request.Form["ReferenceId"];
-                    _postQuote.ServiceQuoteFile = Request.Form["uploadedfile"];
-                    _postQuote.QouteDetails = lQdetails;
-
-
-                    statusCode = await addQuote(_postQuote);
+                    
+                    postEquipment.EquipmentId = Convert.ToInt16(Request.Form["hdEquipmentId"]);
+                    statusCode = await addEquipment(postEquipment);
                     if (statusCode == "OK")
                     {
-
-                        return RedirectToPage("quote");
+                        return RedirectToPage("Equipments", null);
                     }
                 }
                 catch (Exception ex)
@@ -162,45 +141,14 @@ namespace AlbayaderWeb.Pages
             {
                 try
                 {
-                    _postQuote.ServiceQuoteId = Convert.ToInt16(Request.Form["hdServiceQuoteId"]);
-                    _postQuote.ServiceQuoteDate = DateTime.Now.ToString();
- 
-                    string materialCount = Request.Form["itemsids"];
-                    
+                    postEquipment.Name = Request.Form["EquipmentName"];
 
-                    int[] nums = Array.ConvertAll(materialCount.Split(','), int.Parse);
-
-                    if (nums.Length == 0)
-                    {
-                        errorMessage = "Please add at least one Item";
-                        return null;
-                    }
-                    List<EQuotationDetails> lQdetails=new List<EQuotationDetails>();
-                    for (int i = 0; i < nums.Length; i++)
-                    {
-                        EQuotationDetails _qdetails = new EQuotationDetails();
-                        _qdetails.MaterialId = Convert.ToInt16(Request.Form["Material"+ nums[i]].ToString());
-                        _qdetails.QuotationPrice = Convert.ToInt16(Request.Form["price" + nums[i]].ToString());
-                        _qdetails.Qty = Convert.ToInt16(Request.Form["qty" + nums[i]].ToString());
-                        _qdetails.Description =Request.Form["description" + nums[i]].ToString();
-                        _qdetails.OpId = 1;
-                        _qdetails.ServiceQuoteId= Convert.ToInt16(Request.Form["hdServiceQuoteId"]);
-                        lQdetails.Add(_qdetails);
-
-                    }
-                    _postQuote.BranchId = Convert.ToInt16(Request.Form["ddBranch"]);
-                    _postQuote.ServiceId = Convert.ToInt16(Request.Form["ddService"]);
-                    _postQuote.ReferenceId = Request.Form["ReferenceId"];
-                    _postQuote.ServiceQuoteFile = Request.Form["uploadedfile"];
-                    _postQuote.QouteDetails = lQdetails;
-                    _postQuote.EndDate = DateTime.Now;
-                    _postQuote.OpId = 1;
-
-                        statusCode = await updateQuote(_postQuote);
+                   
+                    postEquipment.EquipmentId = Convert.ToInt16(Request.Form["hdEquipmentId"]);
+                    statusCode = await updateEquipment(postEquipment);
                     if (statusCode == "OK")
                     {
-
-                        return RedirectToPage("quote");
+                        return RedirectToPage("Equipments", null);
                     }
                 }
                 catch (Exception ex)
@@ -215,19 +163,19 @@ namespace AlbayaderWeb.Pages
 
 
 
-        private async Task<string> addQuote(EServiceQuote serviceQuote)
+        private async Task<string> addEquipment(EEquipments Equipment)
         {
 
             string apiurl = AppConfig.APIUrl;
 
-            var json = JsonConvert.SerializeObject(serviceQuote);
+            var json = JsonConvert.SerializeObject(Equipment);
 
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
             using (var httpClient = new HttpClient())
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                using (var response = await httpClient.PostAsync(apiurl + "servicequote/add", data))
+                using (var response = await httpClient.PostAsync(apiurl + "data/addequipment", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")
@@ -248,26 +196,25 @@ namespace AlbayaderWeb.Pages
 
 
 
-        //// edit company
+        // edit company
 
 
 
 
 
-        private async Task<string> updateQuote(EServiceQuote serviceQuote)
+        private async Task<string> updateEquipment(EEquipments Equipment)
         {
 
             string apiurl = AppConfig.APIUrl;
-            var json = JsonConvert.SerializeObject(serviceQuote);
+            var json = JsonConvert.SerializeObject(Equipment);
 
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
             using (var httpClient = new HttpClient())
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                using (var response = await httpClient.PostAsync(apiurl + "servicequote/update", data))
-                    {
-                    // string apiResponse = await response.Content.ReadAsStringAsync();
+                using (var response = await httpClient.PostAsync(apiurl + "data/updateequipment", data))
+                {
                     if (response.StatusCode.ToString() == "OK")
                     {
                         string responseMssage = response.Content.ReadAsStringAsync().Result;
@@ -283,7 +230,5 @@ namespace AlbayaderWeb.Pages
             }
             return errorMessage;
         }
-
-
     }
 }

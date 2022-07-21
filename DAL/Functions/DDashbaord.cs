@@ -31,15 +31,15 @@ namespace DAL.Functions
                     StringBuilder sQuery = new StringBuilder();
                     sQuery.Append("SELECT  ( ");
                     sQuery.Append(" SELECT COUNT(serviceId) ");
-                    sQuery.Append(" from services where ServiceTypeId =1 and EndDate is null and StatusId=5 ");
+                    sQuery.AppendFormat(" from services where ServiceTypeId =1 and EndDate is null and StatusId=5 and  YEAR(CompletionDate) ='{0}' ",year);
                     sQuery.Append(" ) AS Preventive, ");
                     sQuery.Append(" ( ");
                     sQuery.Append(" SELECT COUNT(serviceId) ");
-                    sQuery.Append(" from services where ServiceTypeId =2 and EndDate is null and StatusId=5 ");
+                    sQuery.AppendFormat(" from services where ServiceTypeId =2 and EndDate is null and StatusId=5 and  YEAR(CompletionDate) ='{0}' ", year);
                     sQuery.Append(" ) AS Corrective, ");
                     sQuery.Append(" ( ");
                     sQuery.Append(" SELECT COUNT(serviceId) ");
-                    sQuery.Append(" from services where ServiceTypeId =3 and EndDate is null and StatusId=5 ");
+                    sQuery.AppendFormat(" from services where ServiceTypeId =3 and EndDate is null and StatusId=5 and  YEAR(CompletionDate) ='{0}' ", year);
                     sQuery.Append(" ) AS Other ");
 
 
@@ -59,13 +59,14 @@ namespace DAL.Functions
                             OEDashboard.correctiveMonth = getMonthServiceBytypeAndYear(2, year);
                             OEDashboard.allServiceMonth = getMonthServiceBytypeAndYear(0, year);
 
-                            OEDashboard.preventiveBranch = getServiceBranch(1);
-                            OEDashboard.correctiveBranch = getServiceBranch(2);
+                            OEDashboard.preventiveBranch = getServiceBranch(1, year);
+                            OEDashboard.correctiveBranch = getServiceBranch(2, year);
 
-                            OEDashboard.allServiceBranch = getServiceBranch(0);
+                            OEDashboard.allServiceBranch = getServiceBranch(0, year);
 
                             OEDashboard.branchCount = odbranch.gettotalBranchCount();
-
+                            OEDashboard.lsservicePerMonthVist = getMonthServiceByVisitTypeAndYear(year);
+                            OEDashboard.lsservicePerBranchVisit = getServiceByVisitTypeAndBranch(year);
 
 
 
@@ -155,7 +156,7 @@ namespace DAL.Functions
                     sQuery.Append(" FROM services SR ");
                     sQuery.Append(" inner join Branchs BR on BR.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
-                    sQuery.AppendFormat(" where SR.StatusId=5 and SR.ServiceTypeId=1 and SR.EndDate is null and CO.CompanyID={0} ",companyId);
+                    sQuery.AppendFormat(" where SR.StatusId=5 and SR.ServiceTypeId=1 and SR.EndDate is null and CO.CompanyID={0} and  YEAR(CompletionDate) ='{1}' ", companyId,year);
                     sQuery.Append(" ) AS Preventive, ");
                     sQuery.Append(" ( ");
                     sQuery.Append(" SELECT COUNT(serviceId) ");
@@ -179,12 +180,14 @@ namespace DAL.Functions
                             OEDashboard.allServiceMonth = getMonthServiceBytypeAndYearCompany(0, year, companyId);
 
 
-                            OEDashboard.preventiveBranch = getServiceBranchCompany(1, companyId);
-                            OEDashboard.correctiveBranch = getServiceBranchCompany(2, companyId);
-                            OEDashboard.allServiceBranch = getServiceBranchCompany(0, companyId);
+                            OEDashboard.preventiveBranch = getServiceBranchCompany(1, companyId,year);
+                            OEDashboard.correctiveBranch = getServiceBranchCompany(2, companyId, year);
+                            OEDashboard.allServiceBranch = getServiceBranchCompany(0, companyId, year);
 
                             OEDashboard.branchCount = odbranch.getCompanytotalBranchCount(companyId);
 
+                            OEDashboard.lsservicePerMonthVist = getMonthServiceByVisitTypeAndYearCompany(year,companyId);
+                            OEDashboard.lsservicePerBranchVisit = getServiceByVisitTypeAndBranchCompany(companyId, year);
 
 
 
@@ -259,7 +262,7 @@ namespace DAL.Functions
         }
 
 
-        public List<ServicePerBranch> getServiceBranch(int type)
+        public List<ServicePerBranch> getServiceBranch(int type,string year)
         {
             List<ServicePerBranch> lServicePerMonth = new List<ServicePerBranch>();
 
@@ -277,11 +280,11 @@ namespace DAL.Functions
                     sQuery.Append(" inner join Branchs BR on BR.branchId=SR.BranchId  ");
                      if (type == 0)
                     {
-                        sQuery.AppendFormat(" where SR.EndDate is null and SR.StatusId=5 ");
+                        sQuery.AppendFormat(" where SR.EndDate is null and SR.StatusId=5 and YEAR(SR.CompletionDate) ='{0}' ", year);
                     }
                     else
                     {
-                        sQuery.AppendFormat(" where SR.ServiceTypeId ={0} and SR.EndDate is null and SR.StatusId=5 ", type);
+                        sQuery.AppendFormat(" where SR.ServiceTypeId ={0} and SR.EndDate is null and SR.StatusId=5 and YEAR(SR.CompletionDate) ='{1}' ", type, year);
                     }
                     sQuery.Append("  Group by BR.BranchName ");
                   
@@ -311,7 +314,7 @@ namespace DAL.Functions
 
             return lServicePerMonth;
         }
-        public List<ServicePerBranch> getServiceBranchCompany(int type,int companyId)
+        public List<ServicePerBranch> getServiceBranchCompany(int type,int companyId,string year)
         {
             List<ServicePerBranch> lServicePerMonth = new List<ServicePerBranch>();
 
@@ -329,11 +332,11 @@ namespace DAL.Functions
                     sQuery.Append(" inner join Branchs BR on BR.branchId=SR.BranchId  ");
                     if (type == 0)
                     {
-                        sQuery.AppendFormat(" where SR.EndDate is null and SR.StatusId=5 and BR.compnayId={0}",companyId);
+                        sQuery.AppendFormat(" where SR.EndDate is null and SR.StatusId=5 and BR.compnayId={0}  and YEAR(SR.CompletionDate) = '{1}'", companyId,year);
                     }
                     else
                     {
-                        sQuery.AppendFormat(" where SR.ServiceTypeId ={0} and SR.EndDate is null and SR.StatusId=5  and BR.compnayId={1} ", type,companyId);
+                        sQuery.AppendFormat(" where SR.ServiceTypeId ={0} and SR.EndDate is null and SR.StatusId=5  and BR.compnayId={1} and YEAR(SR.CompletionDate) = '{2}' ", type,companyId,year);
                     }
                     sQuery.Append("  Group by BR.BranchName ");
 
@@ -364,5 +367,195 @@ namespace DAL.Functions
             return lServicePerMonth;
         }
 
+
+
+        public List<ServicePerMonthVist> getMonthServiceByVisitTypeAndYear(string year)
+        {
+            List<ServicePerMonthVist> lServicePerMonth = new List<ServicePerMonthVist>();
+
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.Append("SELECT COUNT(*) as ServiceCount,SV.VistTypeName,( ");
+                    sQuery.Append(" Select Convert(char(3),DateName( month , DateAdd( month , MONTH(SR.CompletionDate) , 0 ) - 1 ), 0) )as Mon ");
+                    sQuery.Append(" FROM services SR  ");
+                    sQuery.Append(" inner join Branchs BR on BR.branchId=SR.BranchId  ");
+                    sQuery.Append(" inner join SiteVistType SV on SV.SiteVistTypeId=SR.SiteVistTypeId  ");
+                    sQuery.AppendFormat(" WHERE YEAR(SR.CompletionDate) = '{0}' and SR.StatusId=5 and SR.ServiceTypeId =2 and SR.EndDate is null ", year);               
+                    sQuery.Append(" GROUP BY  MONTH(SR.CompletionDate), SV.VistTypeName ");
+                    sQuery.Append(" Order by MONTH(SR.CompletionDate) ");
+
+                    command.CommandText = sQuery.ToString();
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            ServicePerMonthVist oServicePerMonth = new ServicePerMonthVist();
+                            if (dataReader["ServiceCount"] != DBNull.Value) { oServicePerMonth.value = (int)dataReader["ServiceCount"]; }
+                            if (dataReader["Mon"] != DBNull.Value) { oServicePerMonth.monthName = (string)dataReader["Mon"]; }
+                             if (dataReader["VistTypeName"] != DBNull.Value) { oServicePerMonth.VistTypeName = (string)dataReader["VistTypeName"]; }
+ 
+                            lServicePerMonth.Add(oServicePerMonth);
+                        }
+                    }
+                    dataReader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return lServicePerMonth;
+        }
+
+        public List<ServicePerMonthVist> getMonthServiceByVisitTypeAndYearCompany(string year,int companyId)
+        {
+            List<ServicePerMonthVist> lServicePerMonth = new List<ServicePerMonthVist>();
+
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.Append("SELECT COUNT(*) as ServiceCount,SV.VistTypeName,( ");
+                    sQuery.Append(" Select Convert(char(3),DateName( month , DateAdd( month , MONTH(SR.CompletionDate) , 0 ) - 1 ), 0) )as Mon ");
+                    sQuery.Append(" FROM services SR  ");
+                    sQuery.Append(" inner join Branchs BR on BR.branchId=SR.BranchId  ");
+                    sQuery.Append(" inner join SiteVistType SV on SV.SiteVistTypeId=SR.SiteVistTypeId  ");
+                    sQuery.AppendFormat(" WHERE YEAR(SR.CompletionDate) = '{0}' and SR.StatusId=5 and SR.ServiceTypeId =2 and SR.EndDate is null and  BR.compnayId={1} ", year,companyId);
+                    sQuery.Append(" GROUP BY  MONTH(SR.CompletionDate), SV.VistTypeName ");
+                    sQuery.Append(" Order by MONTH(SR.CompletionDate) ");
+
+                    command.CommandText = sQuery.ToString();
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            ServicePerMonthVist oServicePerMonth = new ServicePerMonthVist();
+                            if (dataReader["ServiceCount"] != DBNull.Value) { oServicePerMonth.value = (int)dataReader["ServiceCount"]; }
+                            if (dataReader["Mon"] != DBNull.Value) { oServicePerMonth.monthName = (string)dataReader["Mon"]; }
+                            if (dataReader["VistTypeName"] != DBNull.Value) { oServicePerMonth.VistTypeName = (string)dataReader["VistTypeName"]; }
+
+                            lServicePerMonth.Add(oServicePerMonth);
+                        }
+                    }
+                    dataReader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return lServicePerMonth;
+        }
+        public List<ServicePerBranchVisit> getServiceByVisitTypeAndBranch(string year)
+        {
+            List<ServicePerBranchVisit> lServicePerMonth = new List<ServicePerBranchVisit>();
+
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.Append(" SELECT COUNT(serviceId)AS ServiceCount,BR.BranchName,BR.branchId,SV.VistTypeName ");
+                    sQuery.Append(" FROM services SR  ");
+                    sQuery.Append(" inner join Branchs BR on BR.branchId=SR.BranchId  ");
+                    sQuery.Append(" inner join SiteVistType SV on SV.SiteVistTypeId=SR.SiteVistTypeId  ");
+                    sQuery.AppendFormat("  where SR.ServiceTypeId =2 and SR.EndDate is null and SR.StatusId=5 and YEAR(SR.CompletionDate) = '{0}' ",year); 
+                    sQuery.Append(" Group by SV.VistTypeName,BR.BranchName,BR.branchId ");
+ 
+                    command.CommandText = sQuery.ToString();
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            ServicePerBranchVisit oServicePerMonth = new ServicePerBranchVisit();
+                            if (dataReader["ServiceCount"] != DBNull.Value) { oServicePerMonth.value = (int)dataReader["ServiceCount"]; }
+                             if (dataReader["BranchName"] != DBNull.Value) { oServicePerMonth.BranchName = (string)dataReader["BranchName"]; }
+                            if (dataReader["VistTypeName"] != DBNull.Value) { oServicePerMonth.VistTypeName = (string)dataReader["VistTypeName"]; }
+                            if (dataReader["branchId"] != DBNull.Value) { oServicePerMonth.branchId = (int)dataReader["branchId"]; }
+
+                            lServicePerMonth.Add(oServicePerMonth);
+                        }
+                    }
+                    dataReader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return lServicePerMonth;
+        }
+
+        public List<ServicePerBranchVisit> getServiceByVisitTypeAndBranchCompany(int companyId,string year)
+        {
+            List<ServicePerBranchVisit> lServicePerMonth = new List<ServicePerBranchVisit>();
+
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.Append(" SELECT COUNT(serviceId)AS ServiceCount,BR.BranchName,BR.branchId,SV.VistTypeName ");
+                    sQuery.Append(" FROM services SR  ");
+                    sQuery.Append(" inner join Branchs BR on BR.branchId=SR.BranchId  ");
+                    sQuery.Append(" inner join SiteVistType SV on SV.SiteVistTypeId=SR.SiteVistTypeId  ");
+                    sQuery.AppendFormat("  where SR.ServiceTypeId =2 and SR.EndDate is null and SR.StatusId=5 and BR.compnayId={0}  and YEAR(SR.CompletionDate) = '{1}' ", companyId,year);
+                    sQuery.Append(" Group by SV.VistTypeName,BR.BranchName,BR.branchId ");
+
+                    command.CommandText = sQuery.ToString();
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            ServicePerBranchVisit oServicePerMonth = new ServicePerBranchVisit();
+                            if (dataReader["ServiceCount"] != DBNull.Value) { oServicePerMonth.value = (int)dataReader["ServiceCount"]; }
+                            if (dataReader["BranchName"] != DBNull.Value) { oServicePerMonth.BranchName = (string)dataReader["BranchName"]; }
+                            if (dataReader["VistTypeName"] != DBNull.Value) { oServicePerMonth.VistTypeName = (string)dataReader["VistTypeName"]; }
+                            if (dataReader["branchId"] != DBNull.Value) { oServicePerMonth.branchId = (int)dataReader["branchId"]; }
+
+                            lServicePerMonth.Add(oServicePerMonth);
+                        }
+                    }
+                    dataReader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return lServicePerMonth;
+        }
     }
 }

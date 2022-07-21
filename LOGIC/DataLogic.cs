@@ -28,6 +28,59 @@ namespace LOGIC
             return materials;
         }
 
+
+       
+       
+        public async Task<EEquipments> getEquipmentById(int id)
+        {
+
+            EEquipments equipment = ddata.getSingleEquipment(id);
+
+            return equipment;
+        }
+        public async Task<EEquipments> addEquipment(EEquipments newEquipment)
+        {
+
+            var resul = await ddata.addEquipment(newEquipment);
+            if (resul.EquipmentId > 0)
+            {
+                return resul;
+            }
+            else
+            {
+                return resul;
+            }
+
+        }
+        public async Task<Boolean> updateEquipment(EEquipments equipment)
+        {
+
+            var resul = await ddata.updateEquipment(equipment);
+            if (resul != null && resul.EquipmentId > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+       
+        public async Task<Boolean> removeEquipmentl(int id)
+        {
+
+            var resul = await ddata.removeEquipment(id);
+            if (resul != null && resul.EquipmentId > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
     }
 
 }

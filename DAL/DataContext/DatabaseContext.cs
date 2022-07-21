@@ -47,6 +47,7 @@ namespace DAL.DataContext
         public DbSet<EServiceQuote> ServiceQuotes { get; set; }
         public DbSet<EQuotationDetails> quotationDetails { get; set; }
         public DbSet<ECalenderEvents> CalenderEvents { get; set; }
+        public DbSet<EEquipments> Equipments { get; set; }
 
 
 

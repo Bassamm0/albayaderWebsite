@@ -12,7 +12,8 @@
     var obj;
 
     const APIURL = $('#APIURI').val();
-
+    const uploadurl = $('#UPLOADURL').val();
+    const userRole = $('#role').val();
     $('.select2').select2();
 
 
@@ -79,20 +80,23 @@
                 $("#DrasftTbl").DataTable().clear().draw();
                 for (i = 0; i < data.length; i++) {
                   
-                    var c1 ='# '+  data[i].serviceQuoteId ;
                    
                     let dataload = "";
                     dataload += '<td><div class="dropdown"><td>';
                     dataload += '<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Action';
                     dataload += '</button><ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">';
-                    dataload += '<li class="ViewQ" serviceQuoteId="' + data[i].serviceQuoteId + '"><a  class="dropdown-item " href="#"  data-toggle="modal" data-target="#modal-view">View</a></li>';
-                    dataload += '<li class="EditQ" serviceQuoteId="' + data[i].serviceQuoteId + '"><a  class="dropdown-item " href="ManageQuote?Smode=Edit&qid=' + data[i].serviceQuoteId + '"  >Edit </a></li>';
-                    dataload += '<li class="DeleteQ" serviceQuoteId="' + data[i].serviceQuoteId + '"><a  class="dropdown-item DeleteLinkQ" href="#"  data-toggle="modal" data-target="#modal-delete">Delete </a></li>';
+                    dataload += '<li class="ViewPDF" serviceQuoteId="' + data[i].serviceQuoteId + '"><a  class="dropdown-item " target="_blank" href="' + uploadurl + data[i].serviceQuoteFile + '"  >View PDF</a></li>';
+                    if (userRole != 'Client Manager') {
+                        dataload += '<li class="ViewQ" serviceQuoteId="' + data[i].serviceQuoteId + '"><a  class="dropdown-item " href="#"  data-toggle="modal" data-target="#modal-view">View</a></li>';
+                        dataload += '<li class="EditQ" serviceQuoteId="' + data[i].serviceQuoteId + '"><a  class="dropdown-item " href="ManageQuote?Smode=Edit&qid=' + data[i].serviceQuoteId + '"  >Edit </a></li>';
+                        dataload += '<li class="DeleteQ" serviceQuoteId="' + data[i].serviceQuoteId + '"><a  class="dropdown-item DeleteLinkQ" href="#"  data-toggle="modal" data-target="#modal-delete">Delete </a></li>';
 
+                    }
+                   
                     dataload += '</li>';
                     $("#DrasftTbl").DataTable().row.add([
-                       c1,
-                        data[i].serviceId,
+                        data[i].referenceId,
+                       
                         data[i].branchName,
                         data[i].companyName,
                         toTimeZone(moment(moment(data[i].serviceQuoteDate, 'MM/DD/YYYY hh:mm:ss a')).format('DD-MM-YYYY hh:mm:ss a')),
@@ -149,20 +153,24 @@
                 $("#DrasftTbl").DataTable().clear().draw();
                 for (i = 0; i < data.length; i++) {
 
-                    var c1 = '<td><a href="quoteManage?serviceQuoteId=' + data[i].serviceQuoteId + '">#' + data[i].serviceQuoteId + '<td>';
 
                     let dataload = "";
                     dataload += '<td><div class="dropdown"><td>';
                     dataload += '<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Action';
                     dataload += '</button><ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">';
-                    dataload += '<li class="ViewQ" serviceQuoteId="' + data[i].serviceQuoteId + '"><a  class="dropdown-item " href="#"  data-toggle="modal" data-target="#modal-view">View</a></li>';
-                    dataload += '<li class="EditQ" serviceQuoteId="' + data[i].serviceQuoteId + '"><a  class="dropdown-item " href="ManageQuote?qid=' + data[i].serviceQuoteId + '"  >Edit </a></li>';
-                    dataload += '<li class="DeleteQ" serviceQuoteId="' + data[i].serviceQuoteId + '"><a  class="dropdown-item DeleteLinkQ" href="#"  data-toggle="modal" data-target="#modal-delete">Delete </a></li>';
+                    dataload += '<li class="ViewPDF" serviceQuoteId="' + data[i].serviceQuoteId + '"><a  class="dropdown-item " target="_blank" href="' + uploadurl + data[i].serviceQuoteFile + '"  >View PDF</a></li>';
 
+
+                    if (userRole != 'Client Manager') {
+                        dataload += '<li class="ViewQ" serviceQuoteId="' + data[i].serviceQuoteId + '"><a  class="dropdown-item " href="#"  data-toggle="modal" data-target="#modal-view">View</a></li>';
+                        dataload += '<li class="EditQ" serviceQuoteId="' + data[i].serviceQuoteId + '"><a  class="dropdown-item " href="ManageQuote?Smode=Edit&qid=' + data[i].serviceQuoteId + '"  >Edit </a></li>';
+                        dataload += '<li class="DeleteQ" serviceQuoteId="' + data[i].serviceQuoteId + '"><a  class="dropdown-item DeleteLinkQ" href="#"  data-toggle="modal" data-target="#modal-delete">Delete </a></li>';
+
+                    }
                     dataload += '</li>';
                     $("#DrasftTbl").DataTable().row.add([
-                        c1,
-                        data[i].serviceId,
+                        data[i].referenceId,
+
                         data[i].branchName,
                         data[i].companyName,
                         toTimeZone(moment(moment(data[i].serviceQuoteDate, 'MM/DD/YYYY hh:mm:ss a')).format('DD-MM-YYYY hh:mm:ss a')),
@@ -232,7 +240,7 @@
         });
 
     }
-
+    //
 
     function populate(text, val, controlId) {
         $(controlId).append('<option value=' + val + '>' + text + '</option>');
@@ -355,8 +363,11 @@
                    htmlel += ' <div class="col-md-12">'
                    htmlel += '<span class="labelsView">description : </span>' + data.qouteDetails[i].description
                    htmlel += '</div>'
+                  
                 }
-
+                htmlel += ' <div class="col-md-12">'
+                htmlel += '<a  target="_blank" href="' + uploadurl + data.serviceQuoteFile + '"   > View PDF</a>'
+                htmlel += '</div>'
                htmlel += ' </div>'
                htmlel += '</div>'
                htmlel += '</div>'

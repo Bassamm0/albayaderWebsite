@@ -270,7 +270,16 @@ namespace DAL.Functions
                             if (dataReader["SupervisourFeedback"] != DBNull.Value) { oEServiceModel.SupervisourFeedback = (string)dataReader["SupervisourFeedback"]; }
                             if (dataReader["Remark"] != DBNull.Value) { oEServiceModel.Remark = (string)dataReader["Remark"]; }
                             if (dataReader["VistTypeName"] != DBNull.Value) { oEServiceModel.VistTypeName = (string)dataReader["VistTypeName"]; }
-                            // oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);
+
+                            if (oEServiceModel.ServiceTypeId == 1)
+                            {
+                                oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);
+
+                            }
+                            else
+                            {
+                                oEServiceModel.CorrectiveServiceDetails = getAllCorrectiveServiceDetails(oEServiceModel.ServiceId);
+                            }
 
                             services.Add(oEServiceModel);
                         }
@@ -466,7 +475,15 @@ namespace DAL.Functions
                             if (dataReader["SupervisourFeedback"] != DBNull.Value) { oEServiceModel.SupervisourFeedback = (string)dataReader["SupervisourFeedback"]; }
                             if (dataReader["Remark"] != DBNull.Value) { oEServiceModel.Remark = (string)dataReader["Remark"]; }
                              if (dataReader["VistTypeName"] != DBNull.Value) { oEServiceModel.VistTypeName = (string)dataReader["VistTypeName"]; }
-                            // oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);
+                            if (oEServiceModel.ServiceTypeId == 1)
+                            {
+                                oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);
+
+                            }
+                            else
+                            {
+                                oEServiceModel.CorrectiveServiceDetails=getAllCorrectiveServiceDetails(oEServiceModel.ServiceId);
+                            }
 
                             services.Add(oEServiceModel);
                         }

@@ -219,13 +219,13 @@
                                  
 
                             }
-                             @if (@Context.Session.GetString("Role").ToLower() == "administrator" || @Context.Session.GetString("Role").ToLower() == "manager" )
+                             @if (@Context.Session.GetString("Role").ToLower() == "administrator" || @Context.Session.GetString("Role").ToLower() == "manager" || @Context.Session.GetString("Role").ToLower() == "client manager")
                             {
                                 <li class="nav-item">
                                     <a href="quote" class="nav-link" id=QuoteMenu>
                                         <i class="fa-solid fa-file-lines"></i>
                                         <p style="padding-left: 10px;">
-                                            Quotes
+                                            Quotations
                                         </p>
                                     </a>
 
@@ -276,6 +276,12 @@
                                             <a href="materials" class="nav-link" id="materialMenu">
                                                 <i class="fa-solid fa-boxes-stacked"></i>
                                                 <p>Material </p>
+                                            </a>
+                                        </li>
+                                         <li class="nav-item">
+                                            <a href="Equipments" class="nav-link" id="EquipmentMenu">
+                                               <i class="fa-solid fa-radiation"></i>
+                                                <p>Equipment </p>
                                             </a>
                                         </li>
                                          <li class="nav-item">

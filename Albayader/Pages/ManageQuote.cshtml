@@ -71,13 +71,39 @@
                                     <div class="col-md-12">
                                                  <div class="form-group">
                            
-                                                <label>Branch Servcies #Ref</label>
+                                                 <label>Servcies Ref </label>
                                                 <select name="ddService" id="ddService" class="form-control select2" style="width: 100%;" >
                  
     
                                                 </select>
                                               </div>
                                             </div>
+
+
+                                             <div class="form-group">
+                                                <label for="firstname">Quotation Ref.</label>
+                                                <input type="text" class="form-control" name="ReferenceId" id="ReferenceId" placeholder="Quotation Ref" value="@Model._Quote.ReferenceId" />
+                                              </div>
+                                             <div class="form-group">
+                                                <label for="logo">PDF Quotation</label>
+                                                <div class="input-group">
+                                                  <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="logoFile" accept="application/pdf">
+                                                    <label class="custom-file-label" for="exampleInputFile" id="logoFile">Choose file</label>
+                                                  </div>
+                                                    <div class="input-group-append">
+                                                    <div class="btn btn-block btn-info remove" id="UploadLogobtn">Upload</div>
+                                                     <div class="btn btn-warning remove" id="RemoveLogobtn" >Remove</div>
+                                                  </div>
+                                                </div>
+                                            </div>
+                                            <div id="pictureHolder">
+                                              <a href="@Model.uploadurl@Model._Quote.ServiceQuoteFile" target="_blank" >@Model._Quote.ServiceQuoteFile</a>
+                                              <span id="uploadError" class="errorMessage" ></span>
+                                              <progress id="fileProgress" style="display: none"></progress>
+                                              <span id="lblMessage" style="color: Green"></span>
+                                            </div>
+                                              <input type="hidden" id="uploadedfile" name="uploadedfile" value="@Model._Quote.ServiceQuoteFile"/>
                                      <label><h3>Material Details</h3></label>
                                         <div id="allElementHolder">
                                     @if (@Model._Quote.QouteDetails.Count > 0)
@@ -231,16 +257,42 @@
                                              <div class="col-md-12">
                                                  <div class="form-group">
                            
-                                                <label>Branch Servcies #Ref</label>
-                                                <select name="ddService" id="ddService" class="form-control select2" style="width: 100%;" required>
+                                                <label>Servcies Ref </label>
+                                                <select name="ddService" id="ddService" class="form-control select2" style="width: 100%;">
                  
     
                                                 </select>
                                               </div>
                                             </div>
                                    
+                                            
+                                        <div class="form-group">
+                                            <label for="firstname">Quotation Ref.</label>
+                                            <input type="text" class="form-control" name="ReferenceId" id="ReferenceId" placeholder="Enter Quotation Ref" value="" />
+                                        </div>
 
 
+                                          <div class="form-group">
+                                                <label for="logo">PDF Quotation</label>
+                                                <div class="input-group">
+                                                  <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="logoFile" accept="application/pdf">
+                                                    <label class="custom-file-label" for="exampleInputFile" id="logoFile">Choose file</label>
+                                                  </div>
+                                                    <div class="input-group-append">
+                                                    <div class="btn btn-block btn-info remove" id="UploadLogobtn">Upload</div>
+                                                     <div class="btn btn-warning remove" id="RemoveLogobtn" >Remove</div>
+                                                  </div>
+                                                </div>
+                                            </div>
+                                            <div id="pictureHolder">
+                                              <a href="" target="_blank" ></a>
+                                              <span id="uploadError" class="errorMessage" ></span>
+                                              <progress id="fileProgress" style="display: none"></progress>
+                                              <span id="lblMessage" style="color: Green"></span>
+                                            </div>
+                                             <input type="hidden" id="uploadedfile" name="uploadedfile" value=""/>
+                                            
                                         <label><h3>Material Details</h3></label>
                                         <div id="allElementHolder">
                                            <span id="AddItemMessage">Get Started by adding items</span>
@@ -283,6 +335,7 @@
                     </div>
 
                     <input type="hidden" id="APIURI" name="APIURI" value="@Model.apiurl" />
+                    <input type="hidden" id="UPLOADURL" name="APIURI" value="@Model.uploadurl"/>
 
 
                     <!-- /.row -->

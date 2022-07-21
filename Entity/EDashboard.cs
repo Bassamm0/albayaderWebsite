@@ -20,6 +20,8 @@ namespace Entity
         public List<ServicePerBranch> preventiveBranch { get; set; }
         public List<ServicePerBranch> correctiveBranch { get; set; }
         public List<ServicePerBranch> allServiceBranch { get; set; }
+        public List<ServicePerMonthVist> lsservicePerMonthVist { get; set; }   
+        public List<ServicePerBranchVisit> lsservicePerBranchVisit { get; set; }
 
     }
 
@@ -35,6 +37,22 @@ namespace Entity
     {
         public string branchName { get; set; }
         public int value { get; set; }
+
+    }
+    public class ServicePerMonthVist
+    {
+        public string monthName { get; set; }
+        public int value { get; set; }
+         public string VistTypeName { get; set; }
+
+    }
+    public class ServicePerBranchVisit
+    {
+        public string BranchName { get; set; }
+        public string Type { get; set; }
+        public int value { get; set; }
+        public int branchId { get; set; }
+         public string VistTypeName { get; set; }
 
     }
 }

@@ -25,8 +25,9 @@ namespace Entity
         public string? CompanyName { get; set; }
         [NotMapped]
         public int? CompanyId { get; set; }
-        [NotMapped]
+      
         public int? BranchId { get; set; }
+        public string? ReferenceId { get; set; }
 
     }
 }

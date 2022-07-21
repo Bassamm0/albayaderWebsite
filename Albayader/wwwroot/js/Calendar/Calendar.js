@@ -204,7 +204,7 @@ $(document).ready(function () {
 
                 var techname='', branchName='';
                 if (data.eventTypeId == 1 || data.eventTypeId == 2) {
-                    techname = ` <li class="list-group-item"><span class='ViewDetailsTit'>Technicain:</span> ${data.technicainName}</li>`
+                    techname = ` <li class="list-group-item"><span class='ViewDetailsTit'>Technician:</span> ${data.technicainName}</li>`
                     branchName = ` <li class="list-group-item"><span class='ViewDetailsTit'>Branch:</span> ${data.branchName}</li>`
 
                 }
@@ -215,7 +215,7 @@ $(document).ready(function () {
                     + techname
                     + branchName
                     + ` <li class="list-group-item"><span class='ViewDetailsTit'>Description:</span> ${data.description}</li>`
-                    + ` <li class="list-group-item"><span class='ViewDetailsTit'>url:</span> ${data.url}</li>`
+                    + ` <li class="list-group-item"><span class='ViewDetailsTit'>url:</span><a style="word-break: break-word;" target="_blank" href="${data.url}"> ${data.url}</a></li>`
 
                 $('#EventDetails').html(html);
 

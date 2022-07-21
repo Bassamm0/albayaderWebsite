@@ -67,7 +67,7 @@
             success: function (data, textStatus, xhr) {
                 var arrUpdates = (typeof data) == 'string' ? eval('(' + data + ')') : data;
                 console.log(arrUpdates)
-                $('#ddTechnicain').append('<option value="">Select Client Company  ...</option>')
+                $('#ddTechnicain').append('<option value="0">Select Technicain  ...</option>')
                 for (var i = 0; i < arrUpdates.length; i++) {
                     text = $.trim(arrUpdates[i].firstName + ' '+arrUpdates[i].lastname);
                     val = arrUpdates[i].userId;
@@ -222,6 +222,10 @@
             title: {
                 required: true,
                 maxlength: 50,
+            },
+            url: {
+      
+                maxlength:250,
             },
             description: {
 

@@ -58,7 +58,7 @@
                             <div class="info-box-text text-center text-muted"><i class="fa-solid fa-calendar-days"></i>
                              @Model._service.CreatedDate.ToString("dd/MM/yyyy")
                                </div>
-                            <div class="info-box-number text-muted mb-0"><i class="fa-solid fa-clock"></i> @Model._service.CreatedDate.ToString("HH:mm tt")</div>
+                            <div class="info-box-number text-muted mb-0"><i class="fa-solid fa-clock"></i> @Model._service.CreatedDate.ToString("hh:mm tt")</div>
                           </div>
 
                              </div>
@@ -283,7 +283,7 @@
                                             <div class="form-group">
                                                 <i class="fa-solid fa-calendar-check"></i> <label class="ServiceViewHeaders">Completion Date:</label>
                    
-                                              <label style="font-size:20px;font-weight:bold">@Convert.ToDateTime(@Model._service.CompletionDate).ToString("dd/MM/yyyy HH:mm tt")</label>
+                                              <label style="font-size:20px;font-weight:bold">@Convert.ToDateTime(@Model._service.CompletionDate).ToString("dd/MM/yyyy hh:mm tt")</label>
                         
                                             </div>
 

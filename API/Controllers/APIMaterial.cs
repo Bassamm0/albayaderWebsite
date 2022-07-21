@@ -19,7 +19,7 @@ namespace API.Controllers
         [Route("all")]
         [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpGet]
-        public async Task<List<EMaterials>> getAllService()
+        public async Task<List<EMaterials>> getMaterials()
         {
             List<EMaterials> material = new List<EMaterials>();
             material = await _materialLogic.getMaterials();
@@ -72,7 +72,7 @@ namespace API.Controllers
         [Route("update")]
         [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
-        public async Task<Boolean> updateService([FromBody] EMaterials updatedMaterial)
+        public async Task<Boolean> updateMaterial([FromBody] EMaterials updatedMaterial)
 
         {
 
@@ -105,7 +105,7 @@ namespace API.Controllers
         [Route("remove")]
         [Authorize(Roles = "Administrator,Manager,Technicion")]
         [HttpPost]
-        public async Task<Boolean> removeService([FromBody] JsonElement objData)
+        public async Task<Boolean> removeMaterial([FromBody] JsonElement objData)
         {
             
             bool result = false;

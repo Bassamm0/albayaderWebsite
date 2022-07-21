@@ -113,7 +113,7 @@
                                                             <td>#@Html.DisplayFor(modelItem => item.ServiceId)</td>
                                                             <td>@Html.DisplayFor(modelItem => item.BranchName)</td>
                                                             <td>@Html.DisplayFor(modelItem => item.ServiceTypeName)</td>
-                                                             <td> @item.CreatedDate.ToString("dd/MM/yyyy HH:mm tt")</td>
+                                                             <td> @item.CreatedDate.ToString("dd/MM/yyyy hh:mm tt")</td>
                                                             <td>@Html.DisplayFor(modelItem => item.TechnicianName)</td>
                                                         @if(@item.ServiceTypeId==1){
                                                             <td><a href="preventive?ServiceId=@item.ServiceId">View</a></td>

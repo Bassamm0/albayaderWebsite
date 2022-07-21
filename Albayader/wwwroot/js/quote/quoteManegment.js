@@ -3,6 +3,7 @@
 
     const APIURL = $('#APIURI').val();
     const jtoken = $('#utoken').val();
+    const uploadurl = $('#UPLOADURL').val();
     let loadedmaterialCount = $('#materialcount').val();
   
     let removedElem;
@@ -116,7 +117,7 @@
             success: function (data, textStatus, xhr) {
                 var arrUpdates = (typeof data) == 'string' ? eval('(' + data + ')') : data;
                 console.log(arrUpdates)
-                $('#ddService').append('<option value="">Select  Service  ...</option>')
+                $('#ddService').append('<option value="0">Select  Service  ...</option>')
                 for (var i = 0; i < arrUpdates.length; i++) {
                     text = $.trim('# Ref: '+ arrUpdates[i].serviceId) + ' - Completed On: ' + $.trim(arrUpdates[i].completionDate);
                     val = arrUpdates[i].serviceId;
@@ -274,11 +275,19 @@
             $('#errorMessage').text("Please add at least one Item");
             return;
         }
-
         if ($("#quoteForm").valid()) {
 
-            $('#quoteForm').submit();
+            if ($("#logoFile")[0].files[0] != null) {
+
+                $('#uploadError').html('Please upload or remove the selected file before save')
+                e.preventDefault();
+                return;
+            } else {
+                $('#quoteForm').submit();
+            }
         }
+
+      
     })
 
 
@@ -301,9 +310,13 @@
 
     $('#quoteForm').validate({
         rules: {
-            ddService: {
+            ddBranch: {
                 required: true,
                
+            },
+            ddCompanies: {
+                required: true,
+
             },
         },
 
@@ -319,5 +332,80 @@
             $(element).removeClass('is-invalid');
         }
     });
+
+
+
+
+    $(".custom-file-input").on("change", function () {
+
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        if (fileName != '') {
+            $('#RemoveLogobtn').show();
+            $('#UploadLogobtn').show();
+        } else {
+            $('#RemoveLogobtn').hide();
+            $('#UploadLogobtn').hide();
+        }
+
+    });
+    $("body").on("click", "#UploadLogobtn", function () {
+        if ($("#logoFile")[0].files[0] == null) {
+            $('#uploadError').html('Please select a file to upload.')
+            return;
+
+        }
+
+        var formData = new FormData();
+
+        formData.append("files", $("#logoFile")[0].files[0]);
+        $.ajax({
+            url: APIURL + 'fileupload/upload',
+            type: 'POST',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
+
+            },
+            success: function (data) {
+                $("#fileProgress").hide();
+                $("#lblMessage").html("<b>" + data + "</b> has been uploaded.");
+                $("#uploadedfile").val(data);
+                $('#uploadError').html('')
+                $('#logoFile').val('')
+                $('#RemoveLogobtn').hide();
+                $('#UploadLogobtn').hide();
+            },
+            xhr: function () {
+                var fileXhr = $.ajaxSettings.xhr();
+                if (fileXhr.upload) {
+                    $("progress").show();
+                    fileXhr.upload.addEventListener("progress", function (e) {
+                        if (e.lengthComputable) {
+                            $("#fileProgress").attr({
+                                value: e.loaded,
+                                max: e.total
+                            });
+                        }
+                    }, false);
+                }
+                return fileXhr;
+            }
+        });
+    });
+
+
+
+    $("body").on("click", "#RemoveLogobtn", function () {
+        $('#logoFile').next('label').html('Select a file');
+        $('#logoFile').val('')
+        $('#RemoveLogobtn').hide();
+        $('#UploadLogobtn').hide();
+    })
 
 })
