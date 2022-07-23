@@ -58,7 +58,7 @@
                 constract(data)
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
-                if (xhr.status == 401) {
+                if (jqXhr.status == 401) {
                     window.location.href = 'Index';
                 }
                 alert('Error: something went wronge please try again later');
@@ -392,7 +392,7 @@
                    
                 },
                 error: function (jqXhr, textStatus, errorMessage) { // error callback 
-                    if (xhr.status == 401) {
+                    if (jqXhr.status == 401) {
                         window.location.href = 'Index';
                     }
                     alert('Error: something went wronge please try again later');
@@ -533,7 +533,7 @@
                              
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
-                if (xhr.status == 401) {
+                if (jqXhr.status == 401) {
                     window.location.href = 'Index';
                 }
                 alert('Error: something went wronge please try again later');
@@ -621,6 +621,9 @@
               
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                if (jqXhr.status == 401) {
+                    window.location.href = 'Index';
+                }
                 alert('Error: something went wronge please try again later');
             }
 
@@ -795,7 +798,7 @@
 
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback
-                if (xhr.status == 401) {
+                if (jqXhr.status == 401) {
                     window.location.href = 'Index';
                 }
                 alert('Error: something went wronge please try again later');
@@ -840,6 +843,9 @@
                 }
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                if (jqXhr.status == 401) {
+                    window.location.href = 'Index';
+                }
                 alert('Error: something went wronge please try again later');
             }
 

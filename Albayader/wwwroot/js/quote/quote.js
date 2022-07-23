@@ -79,13 +79,17 @@
                 console.log(data)
                 $("#DrasftTbl").DataTable().clear().draw();
                 for (i = 0; i < data.length; i++) {
-                  
                    
                     let dataload = "";
                     dataload += '<td><div class="dropdown"><td>';
                     dataload += '<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Action';
                     dataload += '</button><ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">';
-                    dataload += '<li class="ViewPDF" serviceQuoteId="' + data[i].serviceQuoteId + '"><a  class="dropdown-item " target="_blank" href="' + uploadurl + data[i].serviceQuoteFile + '"  >View PDF</a></li>';
+
+                    if (data[i].serviceQuoteFile != null) {
+                      
+                        dataload += '<li class="ViewPDF" serviceQuoteId="' + data[i].serviceQuoteId + '"><a  class="dropdown-item " target="_blank" href="' + uploadurl + data[i].serviceQuoteFile + '"  >View PDF</a></li>';
+                    }
+
                     if (userRole != 'Client Manager') {
                         dataload += '<li class="ViewQ" serviceQuoteId="' + data[i].serviceQuoteId + '"><a  class="dropdown-item " href="#"  data-toggle="modal" data-target="#modal-view">View</a></li>';
                         dataload += '<li class="EditQ" serviceQuoteId="' + data[i].serviceQuoteId + '"><a  class="dropdown-item " href="ManageQuote?Smode=Edit&qid=' + data[i].serviceQuoteId + '"  >Edit </a></li>';
@@ -107,7 +111,7 @@
 
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
-                if (xhr.status == 401) {
+                if (jqXhr.status == 401) {
                     window.location.href = 'Index';
                 }
                 alert('Error: something went wronge please try again later');
@@ -158,8 +162,11 @@
                     dataload += '<td><div class="dropdown"><td>';
                     dataload += '<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Action';
                     dataload += '</button><ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">';
-                    dataload += '<li class="ViewPDF" serviceQuoteId="' + data[i].serviceQuoteId + '"><a  class="dropdown-item " target="_blank" href="' + uploadurl + data[i].serviceQuoteFile + '"  >View PDF</a></li>';
 
+                    if (data[i].serviceQuoteFile != null) {
+
+                        dataload += '<li class="ViewPDF" serviceQuoteId="' + data[i].serviceQuoteId + '"><a  class="dropdown-item " target="_blank" href="' + uploadurl + data[i].serviceQuoteFile + '"  >View PDF</a></li>';
+                    }
 
                     if (userRole != 'Client Manager') {
                         dataload += '<li class="ViewQ" serviceQuoteId="' + data[i].serviceQuoteId + '"><a  class="dropdown-item " href="#"  data-toggle="modal" data-target="#modal-view">View</a></li>';
@@ -183,7 +190,7 @@
 
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
-                if (xhr.status == 401) {
+                if (jqXhr.status == 401) {
                     window.location.href = 'Index';
                 }
                 alert('Error: something went wronge please try again later');
@@ -296,6 +303,9 @@
                 $('#closedelete').click();
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                if (jqXhr.status == 401) {
+                    window.location.href = 'Index';
+                }
                 alert('Error: something went wronge please try again later');
             }
 
@@ -365,9 +375,11 @@
                    htmlel += '</div>'
                   
                 }
-                htmlel += ' <div class="col-md-12">'
-                htmlel += '<a  target="_blank" href="' + uploadurl + data.serviceQuoteFile + '"   > View PDF</a>'
-                htmlel += '</div>'
+                if (data.serviceQuoteFile != null) {
+                    htmlel += ' <div class="col-md-12">'
+                    htmlel += '<a  target="_blank" href="' + uploadurl + data.serviceQuoteFile + '"   > View PDF</a>'
+                    htmlel += '</div>'
+                }
                htmlel += ' </div>'
                htmlel += '</div>'
                htmlel += '</div>'

@@ -256,6 +256,9 @@
                 }
             },
             error: function (xhr, textStatus, errorThrown) {
+                if (xhr.status == 401) {
+                    window.location.href = 'Index';
+                }
                 $('.materialLoad').append('<option value="">Data Not Loaded  ...</option>')
                 
                 console.log('Error in Operation');
@@ -270,7 +273,12 @@
     }
 
     $('#Savequote').click(function (e) {
-
+        console.log($('#uploadedfile').val())
+        if ($('#uploadedfile').val() == '') {
+            $('#uploadError').html('file PDF Quotation is required please upload the PDF quotation before save!')
+            e.preventDefault();
+            return;
+        }
         if (items.length == 0) {
             $('#errorMessage').text("Please add at least one Item");
             return;
@@ -318,6 +326,7 @@
                 required: true,
 
             },
+           
         },
 
         errorElement: 'span',
@@ -340,6 +349,11 @@
 
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        if (fileName.length > 120) {
+            alert("file name can't be more than 100 character please select another file");
+            return;
+        }
+
         if (fileName != '') {
             $('#RemoveLogobtn').show();
             $('#UploadLogobtn').show();
