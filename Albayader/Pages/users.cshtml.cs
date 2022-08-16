@@ -123,7 +123,7 @@ namespace AlbayaderWeb.Pages
         public async Task<IActionResult> OnPostDeleteUser(int id)
         {
 
-
+            token = HttpContext.Session.GetString("token");
             if (id == 0)
             {
                 return Page();

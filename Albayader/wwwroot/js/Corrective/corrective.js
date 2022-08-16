@@ -12,7 +12,7 @@
 
     $(".fileImage").fileinput({
         initialPreviewAsData: true,
-        allowedFileExtensions: ['jpg', 'png', 'gif', 'jpeg'],
+        allowedFileExtensions: ['jpg', 'png', 'gif', 'jpeg','pdf'],
         showUpload: true,
         showCaption: false,
         maxFileSize: 4000,
@@ -81,14 +81,14 @@
         // create new
         var serviceId = _ServiceId;
         var equipmentId = $("#Equipments1" ).val();
-        var problemReported = $("#problemReported").val();
+        var problemReported = $("#problemReported").val().replace(/\n/g, '<br>');
         var conditionId = $("#ddCondition").val();
         var equipmentTypeId = $("#ddType").val();
         var reportedDate = moment($("#reportedDate").data('date'), 'D-mm-yyyy').format('yyyy-mm-D');
        
         var reportedBy = $("#reportedBy" ).val();
         var model = $("#Model" ).val();
-        var serviceRendered = $("#Rendered" ).val();
+        var serviceRendered = $("#Rendered").val().replace(/\n/g, '<br>');
         var serialNo = $("#Serial").val();
         
         var senddata = '{"serviceId":' + serviceId + ',"correctiveServiceDetailsId":' + ServiceDetailsId + ',"equipmentId":' + equipmentId + ',"problemReported":"' + problemReported + '","conditionId":' + conditionId + ' ,"equipmentTypeId": ' + equipmentTypeId + ', "reportedDate": "' + reportedDate + '", "reportedBy": "' + reportedBy + '", "model": "' + model + '", "serviceRendered": "' + serviceRendered + '", "serialNo": "' + serialNo + '"} '
@@ -123,6 +123,8 @@
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
                 if (jqXhr.status == 401) {
                     window.location.href = 'Index';
+                    alert(' Your login session expired, Please login again.');
+                    return;
                 }
                 alert('Error: something went wronge please try again later');
             }
@@ -253,6 +255,8 @@
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
                 if (jqXhr.status == 401) {
                     window.location.href = 'Index';
+                    alert(' Your login session expired, Please login again.');
+                    return;
                 }
                 alert('Error: something went wronge please try again later');
             }
@@ -304,6 +308,8 @@
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
                 if (jqXhr.status == 401) {
                     window.location.href = 'Index';
+                    alert(' Your login session expired, Please login again.');
+                    return;
                 }
                 alert('Error: something went wronge please try again later');
             }
@@ -408,7 +414,7 @@
     function updateStatus(statusId) {
 
        
-        var remark = $('#Remarks').val()
+        var remark = $('#Remarks').val().replace(/\n/g, '<br>')
         var url = APIURL + 'service/updatestatus'
         var statusAfterId = $('#ddStatusAfter').val()
         var siteVistTypeId = $('#ddVistType').val()
@@ -434,9 +440,14 @@
                 }
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
-                alert('Error: something went wronge please try again later');
+               
                 if (jqXhr.status == 401) {
                     window.location.href = 'Index';
+                    alert(' Your login session expired, Please login again.');
+                    return;
+                } else {
+                    alert('Error: something went wronge please try again later');
+
                 }
             }
 
@@ -454,10 +465,6 @@
             ddVistType: {
                 required: true,
       
-            },
-
-            problemReported: {
-                maxlength: 250,
             },
             ddCondition: {
                 required: true,
@@ -489,13 +496,7 @@
                 minlength: 10,
                 maxlength: 15
             },
-            Remarks: {
-                maxlength: 250,
-            },
-            Rendered: {
-                maxlength: 250,
-            },
-
+           
         },
 
         errorElement: 'span',

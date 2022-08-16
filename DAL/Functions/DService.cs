@@ -984,7 +984,7 @@ namespace DAL.Functions
 
 
             Clientbody.AppendFormat("<p>Service Refrence number :{0}</p>", eServices.ServiceId);
-            Clientbody.AppendLine("<p style=\"font-weight:bold; \">Details as bellow</p>");
+            Clientbody.AppendLine("<p style=\"font-weight:bold; \">Details as below</p>");
 
             if (eServices.ServiceTypeId == 1)
             {
@@ -1453,7 +1453,28 @@ namespace DAL.Functions
         }
 
 
+        public bool updateServiceDate(int serviceId, string  newDate)
+        {
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            bool result = false;
+            conn.Open();
+            using (var command = conn.CreateCommand())
+            {
 
+                StringBuilder sQuery = new StringBuilder();
+                sQuery.Append("UPDATE Services SET ");
+                sQuery.AppendFormat(" CompletionDate = DATEADD(day, DATEDIFF(day, CompletionDate,'{0}'), CompletionDate), ", newDate);
+                sQuery.AppendFormat(" CreatedDate = DATEADD(day, DATEDIFF(day, CreatedDate, '{0}'), CreatedDate) ", newDate);
+                sQuery.AppendFormat(" where ServiceId={0}", serviceId);
+                command.CommandText = sQuery.ToString();
+                // for select only to retrive value ExecuteScalar()
+                return (command.ExecuteNonQuery() > 0);
+
+            }
+
+            return result;
+        }
 
     }
 }

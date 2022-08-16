@@ -268,5 +268,37 @@ namespace API.Controllers
 
             return result;
         }
+        [Route("updateservicedate")]
+        [Authorize(Roles = "Administrator")]
+        [HttpPost]
+        public async Task<Boolean> updateServiceDate([FromBody] JsonElement objData)
+        {
+
+            bool result = false;
+
+            try
+            {
+                var serviceId = objData.GetProperty("serviceId").GetString();
+                var newDate = objData.GetProperty("newDate").GetString();
+
+
+
+                result = await serviceLogic.updateServiceDate(Convert.ToInt16(serviceId), newDate);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "The given key was not present in the dictionary.")
+                {
+                    throw new DomainValidationFundException("Validation : One or more paramter are missing in the request,Error could be becuase of case sensetive");
+                }
+                if (ex.InnerException.ToString().Contains("Cannot insert the value NULL into column"))
+                {
+                    throw new DomainValidationFundException("Validation : null value not allowed to one of the parameters");
+                }
+                return false;
+            }
+
+            return result;
+        }
     }
 }

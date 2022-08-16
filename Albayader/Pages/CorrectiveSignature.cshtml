@@ -98,24 +98,24 @@
                                         <div class="col-sm">
                                             <span class="labelsView">Site Vist Type: </span>@Model._service.VistTypeName
                                         </div>
-                                         <div class="col-sm">
+                                        <div class="col-sm">
                                             <span class="labelsView"> Call Reported By: </span>@Model._service.ServiceDetails[0].ReportedBy
                                         </div>
-                                         <div class="col-sm">
-                                           <span class="labelsView">  Reported Date: </span>@Model._service.ServiceDetails[0].ReportedDate
+                                        <div class="col-sm">
+                                            <span class="labelsView">  Reported Date: </span>@Model._service.ServiceDetails[0].ReportedDate
                                         </div>
                                         <div class="dropdown-divider"></div>
-                                         <div class="col-md-12">
-                                            <span class="labelsView"> Probelm Reported: </span>@Model._service.ServiceDetails[0].ProblemReported
+                                        <div class="col-md-12">
+                                            <span class="labelsView"> Probelm Reported: </span>@Html.Raw(@Model._service.ServiceDetails[0].ProblemReported)
                                         </div>
                                         <div class="dropdown-divider"></div>
                                         <div class="col-sm">
                                             <span class="labelsView">Condition: </span>@Model._service.ServiceDetails[0].ConditionName
                                         </div>
-                                         <div class="col-sm">
-                                           <span class="labelsView"> Type: </span>@Model._service.ServiceTypeName
+                                        <div class="col-sm">
+                                            <span class="labelsView"> Type: </span>@Model._service.ServiceTypeName
                                         </div>
-                                         
+
                                     </div>
                                     <div class="dropdown-divider"></div>
                                 </div>
@@ -146,7 +146,16 @@
 
                                                     @if (picture.PictureTypeId == 1)
                                                     {
-                                                        <a class="magnifier" href="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)"> <img src="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)" alt="" class="img-item mx-1"></a>
+                                                        @if (@System.IO.Path.GetExtension(picture.FileName) != ".pdf")
+                                                        {
+                                                            <a class="magnifier" href="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)"> <img src="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)" alt="" class="img-item mx-1"></a>
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <a target="_blank" class="magnifier" href="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)">@picture.FileName </a>
+
+                                                        }
 
                                                     }
                                                 }
@@ -158,7 +167,7 @@
                                 </div>
                             </div>
 
-                           
+
                             <div class="dropdown-divider"></div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -196,8 +205,16 @@
 
                                                     @if (picture.PictureTypeId == 2)
                                                     {
-                                                        <a class="magnifier" href="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)"> <img src="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)" alt="" class="img-item mx-1"></a>
+                                                        @if (@System.IO.Path.GetExtension(picture.FileName) != ".pdf")
+                                                        {
+                                                            <a class="magnifier" href="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)"> <img src="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)" alt="" class="img-item mx-1"></a>
 
+                                                        }
+                                                        else
+                                                        {
+                                                            <a target="_blank" class="magnifier" href="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)">@picture.FileName </a>
+
+                                                        }
                                                     }
                                                 }
                                             </div>
@@ -208,29 +225,29 @@
                                     </div>
                                 </div>
                             </div>
-                           
+
                             <div class="dropdown-divider"></div>
-                           
 
 
-                             <div class="col-md-12">
+
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <i class="fa-solid fa-gears"></i><label class="ServiceViewHeaders">Service Details</label>
                                     <div class="row" style="padding-left:20px;">
-                                    
-                                         <div class="col-md-12">
-                                             <span class="labelsView">Remarks:</span>@Model._service.Remark
+
+                                        <div class="col-md-12">
+                                            <span class="labelsView">Remarks:</span>@Html.Raw(@Model._service.Remark)
                                         </div>
                                         <div class="dropdown-divider"></div>
-                                       <div class="col-md-12">
-                                            <span class="labelsView">Service Rendered:</span>@Model._service.ServiceDetails[0].ServiceRendered
+                                        <div class="col-md-12">
+                                            <span class="labelsView">Service Rendered:</span>@Html.Raw(@Model._service.ServiceDetails[0].ServiceRendered)
                                         </div>
                                         <div class="dropdown-divider"></div>
                                         <div class="col-md-12">
                                             <span class="labelsView"> Status After Service:</span>@Model._service.StatusAfterName
                                         </div>
                                         <div class="dropdown-divider"></div>
-                                         
+
                                     </div>
                                 </div>
 

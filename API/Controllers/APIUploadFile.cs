@@ -76,7 +76,18 @@ namespace API.Controllers
                     //{
                     //    file.CopyTo(stream);
                     //}
-                    StoreImage=UtilityHelper.comperssImage(file, filePath);
+                    if (Path.GetExtension(fileName).ToLower() != ".pdf")
+                    {
+                        StoreImage = UtilityHelper.comperssImage(file, filePath);
+                    }
+                    else
+                    {
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            file.CopyTo(stream);
+                        }
+                    }
+                  
                     var result =await _uploadFileLogic.UploadServiceImages(fileName, serviceDetailsId, pictureTypeId);
                     if (result)
                     {

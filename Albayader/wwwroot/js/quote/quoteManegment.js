@@ -5,11 +5,11 @@
     const jtoken = $('#utoken').val();
     const uploadurl = $('#UPLOADURL').val();
     let loadedmaterialCount = $('#materialcount').val();
-  
+
     let removedElem;
     let alloptions;
-                  
-                       
+
+
     var items = [];
     for (var i = 0; i < loadedmaterialCount; i++) {
         items.push(i);
@@ -119,7 +119,7 @@
                 console.log(arrUpdates)
                 $('#ddService').append('<option value="0">Select  Service  ...</option>')
                 for (var i = 0; i < arrUpdates.length; i++) {
-                    text = $.trim('# Ref: '+ arrUpdates[i].serviceId) + ' - Completed On: ' + $.trim(arrUpdates[i].completionDate);
+                    text = $.trim('# Ref: ' + arrUpdates[i].serviceId) + ' - Completed On: ' + $.trim(arrUpdates[i].completionDate);
                     val = arrUpdates[i].serviceId;
                     populate(text, val, '#ddService');
 
@@ -164,8 +164,8 @@
 
         // after ajax
         removedElem.remove();
-         console.log(items.length)
-     }
+        console.log(items.length)
+    }
 
     $('body').on('click', '#addItem', function () {
         addMateriaquotel()
@@ -174,7 +174,7 @@
     function addMateriaquotel() {
 
         loadedmaterialCount = parseInt(loadedmaterialCount) + 1
-       
+
         console.log("before", items)
         items.push(loadedmaterialCount);
         $('#itemsids').val(items)
@@ -184,7 +184,7 @@
             $('#AddItemMessage').text('')
             $('#errorMessage').text('')
 
-            
+
         }
 
     }
@@ -204,13 +204,13 @@
             ' <div class="col-md-3">' +
             ' <div class="form-group">' +
             '<label for="lat">Price</label>' +
-            ' <input type="text" class="form-control priceClass" name="price' + loadedmaterialCount + '" id="Price' + loadedmaterialCount + '" placeholder="Enter Price" required value="" />' +
+            ' <input type="text" class="form-control priceClass" name="price' + loadedmaterialCount + '" id="Price' + loadedmaterialCount + '" placeholder="Enter Price"  value="" />' +
             ' </div>' +
             ' </div>' +
             '<div class="col-md-3">' +
             '<div class="form-group">' +
             ' <label for="lat">Qty</label>' +
-            '<input type="text" class="form-control qtyClass" name="Qty' + loadedmaterialCount + '" id="Qty' + loadedmaterialCount + '" placeholder="Enter Qty" value="" required />' +
+            '<input type="text" class="form-control qtyClass" name="Qty' + loadedmaterialCount + '" id="Qty' + loadedmaterialCount + '" placeholder="Enter Qty" value=""  />' +
             '</div>' +
             '</div>' +
             ' <div class="col-md-3">' +
@@ -228,12 +228,12 @@
             ' </div>' +
             '</fieldset>' +
             ' </div >';
-            
+
         $('#allElementHolder').append(MaterQuote)
-        $('#Material' + loadedmaterialCount).html('<option value="">Select  Materials   ...</option>'+alloptions)
+        $('#Material' + loadedmaterialCount).html('<option value="">Select  Materials   ...</option>' + alloptions)
         $('#Material' + loadedmaterialCount).select2();
     }
-  
+
     $('.select2').select2();
     GetMaterials();
     function GetMaterials() {
@@ -252,7 +252,7 @@
                     text = $.trim(arrUpdates[i].materialName);
                     val = arrUpdates[i].materialId;
                     populate(text, val, '.materialLoad');
-                 
+
                 }
             },
             error: function (xhr, textStatus, errorThrown) {
@@ -260,13 +260,13 @@
                     window.location.href = 'Index';
                 }
                 $('.materialLoad').append('<option value="">Data Not Loaded  ...</option>')
-                
+
                 console.log('Error in Operation');
             }
         });
 
     }
- 
+
     function populate(text, val, controlId) {
         $(controlId).append('<option value=' + val + '>' + text + '</option>');
         alloptions += '<option value=' + val + '>' + text + '</option>'
@@ -295,38 +295,38 @@
             }
         }
 
-      
+
     })
 
 
-    
+
 
     // validation 
-    
-    jQuery.validator.addClassRules("priceClass", {
-        required: true,
-        decimal: true,
-    });
-    jQuery.validator.addClassRules("qtyClass", {
-        required: true,
-        digits: true,
-    });
-    jQuery.validator.addClassRules("descClass", {
-        maxlength: 250,
-    });
+
+    //jQuery.validator.addClassRules("priceClass", {
+    //    required: true,
+    //    decimal: true,
+    //});
+    //jQuery.validator.addClassRules("qtyClass", {
+    //    required: true,
+    //    digits: true,
+    //});
+    //jQuery.validator.addClassRules("descClass", {
+    //    maxlength: 250,
+    //});
 
 
     $('#quoteForm').validate({
         rules: {
             ddBranch: {
                 required: true,
-               
+
             },
             ddCompanies: {
                 required: true,
 
             },
-           
+
         },
 
         errorElement: 'span',

@@ -154,6 +154,22 @@ namespace LOGIC
                 return false;
             }
 
+
+        }
+
+        public async Task<Boolean> updateServiceDate(int serviceid, string newDate)
+        {
+
+            var resul = dservice.updateServiceDate(serviceid, newDate);
+            if (resul)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
     }
 }

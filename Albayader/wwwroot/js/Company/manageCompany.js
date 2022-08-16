@@ -52,6 +52,8 @@
             error: function (xhr, textStatus, errorThrown) {
                 if (xhr.status == 401) {
                     window.location.href = 'Index';
+                    alert(' Your login session expired, Please login again.');
+                    return;
                 }
             },
             xhr: function () {

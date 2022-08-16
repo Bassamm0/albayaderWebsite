@@ -271,4 +271,38 @@ progress {
 #eventFixHolder {
     display: none;
 }
+.SrMonth {
+    min-height: 250px;
+    height: 250px;
+    max-height: 250px;
+    max-width: 100%;
+}
+.SrMonthType {
+    min-height: 250px;
+    height: 250px;
+    max-height: 250px;
+    max-width: 100%;
+}
+.correctivePreventive {
+    min-height: 250px;
+    height: 250px;
+    max-height: 250px;
+    max-width: 100%;
+}
 
+.srPreBranch {
+    min-height: 250px;
+    height: 250px;
+    max-width: 100%;
+}
+.CorrectiveTypePerBranch {
+    min-height: 250px;
+    height: 250px;
+    max-width: 100%;
+}
+.CorrectiveTypePerMonth {
+    min-height: 250px;
+    height: 250px;
+    max-height: 250px;
+    max-width: 100%;
+}

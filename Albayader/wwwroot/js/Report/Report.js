@@ -2,7 +2,7 @@
 
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-
+    const arole = $('#Arole').val();
 
     function toTimeZone(DateTime) {
         var format = 'DD-MM-YYYY hh:mm:ss a';
@@ -17,6 +17,9 @@
         format: 'DD-MM-yyyy'
     });
 
+    $('#newDateChange').datetimepicker({
+        format: 'DD-MM-yyyy'
+    });
 
     const APIURL = $('#APIURI').val();
 
@@ -43,7 +46,7 @@
     $(document.body).on("change", "#ddVistType", function (e) {
         var selectedText = $(this).find("option:selected").text();
         val = $(this).val();
-        filterColumn(selectedText, val, 4);
+        filterColumn(selectedText, val, 3);
     });
 
     function filterColumn(text, val, column) {
@@ -98,11 +101,14 @@
                         serials = '';
                         if (data[i].serviceDetails != null && data[i].serviceDetails.length > 0) {
                             for (var j = 0; j < data[i].serviceDetails.length; j++) {
-                                if (j != data[i].serviceDetails.length - 1) {
-                                    serials += data[i].serviceDetails[j].serialNo + ','
-                                } else {
-                                    serials += data[i].serviceDetails[j].serialNo;
+                                if (data[i].serviceDetails[j].serialNo != '') {
+                                    if (j != data[i].serviceDetails.length - 1) {
+                                        serials += data[i].serviceDetails[j].serialNo + ','
+                                    } else {
+                                        serials += data[i].serviceDetails[j].serialNo;
+                                    }
                                 }
+                               
                             }
                         }
 
@@ -111,6 +117,7 @@
 
                     } else if (data[i].serviceTypeId == 2) {
                         if (data[i].correctiveServiceDetails != null && data[i].correctiveServiceDetails.length > 0) {
+
                             serials = data[i].correctiveServiceDetails[0].serialNo;
                         }
                     }
@@ -134,6 +141,9 @@
                         dataload += '<a class="dropdown-item" href="correctiveView?ServiceId=' + data[i].serviceId + '">View Details</a>';
                     }
                     dataload += '</li>';
+                    if (arole == "Administrator") {
+                        dataload += '<li class="changeDatecss" serviceid="' + data[i].serviceId + '"><a  class="dropdown-item " href="#"  data-toggle="modal" data-target="#modal-ChangeDate">Change Date</a></li>';
+                    }
 
                     var remark = '<span class="Remak">' + data[i].remark + '</span>'
                     $("#DrasftTbl").DataTable().row.add([
@@ -157,8 +167,12 @@
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
                 if (jqXhr.status == 401) {
                     window.location.href = 'Index';
+                    alert(' Your login session expired, Please login again.');
+                    return;
+                } else {
+                    alert('Error: something went wronge please try again later');
+
                 }
-                alert('Error: something went wronge please try again later');
             }
 
         }).done(function () {
@@ -208,11 +222,14 @@
                         serials = '';
                         if (data[i].serviceDetails != null && data[i].serviceDetails.length > 0) {
                             for (var j = 0; j < data[i].serviceDetails.length; j++) {
-                                if (j != data[i].serviceDetails.length - 1) {
-                                    serials += data[i].serviceDetails[j].serialNo + ','
-                                } else {
-                                    serials += data[i].serviceDetails[j].serialNo;
+                                if (data[i].serviceDetails[j].serialNo != '') {
+                                    if (j != data[i].serviceDetails.length - 1) {
+                                        serials += data[i].serviceDetails[j].serialNo + ','
+                                    } else {
+                                        serials += data[i].serviceDetails[j].serialNo;
+                                    }
                                 }
+
                             }
                         }
                       
@@ -245,6 +262,10 @@
                     }
                     dataload += '</li>';
 
+                    dataload += '<li class="changeDatecss" serviceid="' + data[i].serviceId + '"><a  class="dropdown-item " href="#"  data-toggle="modal" data-target="#modal-ChangeDate">Change Date</a></li>';
+
+
+
                     var remark = '<span class="Remak">' + data[i].remark + '</span>'
                     $("#DrasftTbl").DataTable().row.add([
                         c1,
@@ -269,8 +290,12 @@
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
                 if (jqXhr.status == 401) {
                     window.location.href = 'Index';
+                    alert(' Your login session expired, Please login again.');
+                    return;
+                } else {
+                    alert('Error: something went wronge please try again later');
+
                 }
-                alert('Error: something went wronge please try again later');
             }
 
         }).done(function () {
@@ -354,6 +379,59 @@
             $(element).removeClass('is-invalid');
         }
     });
+
+
+    $('body').on('click', '.changeDatecss', function () {
+        
+        changeServiceId = $(this).attr('serviceid');
+
+        $('#serviceDateId').val(changeServiceId)
+    });
+
+
+    $('body').on('click', '#chnageDate', function () {
+       
+        changeDate()
+
+    });
+    function changeDate() {
+        var serviceId = $('#serviceDateId').val();
+        var newDate = moment(moment($("#newDateChange").val(), 'DD-MM-YYYY')).format('MM-DD-YYYY')
+
+        if (newDate == '') {
+            alert('Plese select Date');
+            return;
+        }
+        var url = 'Reports?handler=changeDate&serviceId=' + serviceId + '&newDate=' + newDate;
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            // dataType: "json",
+            data: {},
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            success: function (data, status, xhr) {   // success callback function
+                $('#closedate').click();
+            },
+            error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                if (xhr.status == 401) {
+                    window.location.href = 'Index';
+                }
+                alert('Error: something went wronge please try again later');
+            }
+
+        }).done(function () {
+
+            $('#closedate').click();
+            intTable();
+            $("#newDateChange").val('')
+            toastr["success"]("Date changed successfuly.")
+        });
+    }
 
 
 })

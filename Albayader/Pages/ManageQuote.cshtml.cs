@@ -131,8 +131,15 @@ namespace AlbayaderWeb.Pages
                     {
                         EQuotationDetails _qdetails = new EQuotationDetails();
                         _qdetails.MaterialId = Convert.ToInt16(Request.Form["Material" + nums[i]].ToString());
-                        _qdetails.QuotationPrice = Convert.ToInt16(Request.Form["price" + nums[i]].ToString());
-                        _qdetails.Qty = Convert.ToInt16(Request.Form["qty" + nums[i]].ToString());
+
+                        if (!String.IsNullOrEmpty(Request.Form["price" + nums[i]]))
+                        {
+                            _qdetails.QuotationPrice = Convert.ToInt16(Request.Form["price" + nums[i]].ToString());
+                        }
+                        if (!String.IsNullOrEmpty(Request.Form["qty" + nums[i]]))
+                        {
+                            _qdetails.Qty = Convert.ToInt16(Request.Form["qty" + nums[i]].ToString());
+                        }
                         _qdetails.Description = Request.Form["description" + nums[i]].ToString();
                         
                         lQdetails.Add(_qdetails);
@@ -180,8 +187,14 @@ namespace AlbayaderWeb.Pages
                     {
                         EQuotationDetails _qdetails = new EQuotationDetails();
                         _qdetails.MaterialId = Convert.ToInt16(Request.Form["Material"+ nums[i]].ToString());
-                        _qdetails.QuotationPrice = Convert.ToInt16(Request.Form["price" + nums[i]].ToString());
-                        _qdetails.Qty = Convert.ToInt16(Request.Form["qty" + nums[i]].ToString());
+                        if (!String.IsNullOrEmpty(Request.Form["price" + nums[i]]))
+                        {
+                            _qdetails.QuotationPrice = Convert.ToInt16(Request.Form["price" + nums[i]].ToString());
+                        }
+                        if (!String.IsNullOrEmpty(Request.Form["qty" + nums[i]]))
+                        {
+                            _qdetails.Qty = Convert.ToInt16(Request.Form["qty" + nums[i]].ToString());
+                        }
                         _qdetails.Description =Request.Form["description" + nums[i]].ToString();
                         _qdetails.OpId = 1;
                         _qdetails.ServiceQuoteId= Convert.ToInt16(Request.Form["hdServiceQuoteId"]);

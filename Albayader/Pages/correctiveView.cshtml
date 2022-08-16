@@ -106,7 +106,7 @@
                                         </div>
                                         <div class="dropdown-divider"></div>
                                          <div class="col-md-12">
-                                            <span class="labelsView"> Probelm Reported: </span>@Model._service.ServiceDetails[0].ProblemReported
+                                            <span class="labelsView"> Probelm Reported: </span>@Html.Raw(@Model._service.ServiceDetails[0].ProblemReported)
                                         </div>
                                         <div class="dropdown-divider"></div>
                                         <div class="col-sm">
@@ -147,7 +147,17 @@
 
                                                     @if (picture.PictureTypeId == 1)
                                                     {
-                                                        <a class="magnifier" href="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)"> <img src="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)" alt="" class="img-item mx-1"></a>
+
+                                                        @if (@System.IO.Path.GetExtension(picture.FileName) != ".pdf")
+                                                        {
+                                                             <a class="magnifier" href="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)"> <img src="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)" alt="" class="img-item mx-1"></a>
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <a target="_blank" class="magnifier" href="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)">@picture.FileName </a>
+
+                                                        }
 
                                                     }
                                                 }
@@ -198,8 +208,16 @@
 
                                                     @if (picture.PictureTypeId == 2)
                                                     {
-                                                        <a class="magnifier" href="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)"> <img src="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)" alt="" class="img-item mx-1"></a>
+                                                         @if (@System.IO.Path.GetExtension(picture.FileName) != ".pdf")
+                                                        {
+                                                             <a class="magnifier" href="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)"> <img src="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)" alt="" class="img-item mx-1"></a>
 
+                                                        }
+                                                        else
+                                                        {
+                                                            <a target="_blank" class="magnifier" href="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)">@picture.FileName </a>
+
+                                                        }
                                                     }
                                                 }
                                             </div>
@@ -222,11 +240,11 @@
                                     <div class="row" style="padding-left:20px;">
                                     
                                          <div class="col-md-12">
-                                             <span class="labelsView">Remarks:</span>@Model._service.Remark
+                                             <span class="labelsView">Remarks:</span>@Html.Raw(@Model._service.Remark)
                                         </div>
                                         <div class="dropdown-divider"></div>
                                        <div class="col-md-12">
-                                            <span class="labelsView">Service Rendered:</span>@Model._service.ServiceDetails[0].ServiceRendered
+                                            <span class="labelsView">Service Rendered:</span>@Html.Raw(@Model._service.ServiceDetails[0].ServiceRendered)
                                         </div>
                                         <div class="dropdown-divider"></div>
                                         <div class="col-md-12">

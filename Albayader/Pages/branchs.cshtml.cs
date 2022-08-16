@@ -118,8 +118,8 @@ namespace AlbayaderWeb.Pages
 
         public async Task<IActionResult> OnPostDeletebranch(int id)
         {
-          
 
+            token = HttpContext.Session.GetString("token");
             if (id == 0)
             {
                 return Page();

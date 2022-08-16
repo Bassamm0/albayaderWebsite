@@ -11,7 +11,7 @@
 
     }
     //light box
-
+    
 
     $('#SaveAndComplete').attr('disabled', true);
     $('.js-signature').jqSignature({width: 400,height:250});
@@ -63,9 +63,12 @@
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
                 if (jqXhr.status == 401) {
                     window.location.href = 'Index';
-                }
-                alert('Error: something went wronge please try again later');
+                    alert(' Your login session expired, Please login again.');
+                    return;
+                } else {
+                    alert('Error: something went wronge please try again later');
 
+                }
             }
 
         }).done(function () {

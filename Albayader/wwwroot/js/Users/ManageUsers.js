@@ -312,8 +312,13 @@
                 }
             },
             error: function (xhr, textStatus, errorThrown) {
-                if (xhr.status == 401) {
+                if (jqXhr.status == 401) {
                     window.location.href = 'Index';
+                    alert(' Your login session expired, Please login again.');
+                    return;
+                } else {
+                    alert('Error: something went wronge please try again later');
+
                 }
                 $('#ddCountry').append('<option value="">Data Not Loaded  ...</option>')
                 $('#ddNationality').append('<option value="">Data Not Loaded  ...</option>')

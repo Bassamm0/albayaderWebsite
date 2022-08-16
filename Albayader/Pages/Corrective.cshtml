@@ -177,7 +177,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Problem Reported</label>
-                                    <textarea class="form-control" id="problemReported" rows="3">@(@Model._service.ServiceDetails.Count>0?@Model._service.ServiceDetails[0].ProblemReported:"")</textarea>
+                                    <textarea class="form-control" id="problemReported" rows="3">@(@Model._service.ServiceDetails.Count>0?@Html.Raw(@Model._service.ServiceDetails[0].ProblemReported.Replace("<br>","\n")):"")</textarea>
                                 </div>
                             </div>
                             <!-- /.col -->
@@ -313,18 +313,21 @@
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Remarks</label>
-                                                    <textarea class="form-control" id="Remarks" name="Remarks" rows="3">@Model._service.Remark</textarea>
+                                                    <textarea class="form-control" id="Remarks" name="Remarks" rows="3">@if (!String.IsNullOrEmpty(@Model._service.Remark))
+                                                        {
+                                                            @Html.Raw(@Model._service.Remark.Replace("<br>","\n"))
+                                                        }</textarea>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Service Rendered</label>
-                                                    <textarea class="form-control" id="Rendered" name="Rendered" rows="3">@(@Model._service.ServiceDetails.Count>0?@Model._service.ServiceDetails[0].ServiceRendered:"")</textarea>
+                                                    <textarea class="form-control" id="Rendered" name="Rendered" rows="3">@(@Model._service.ServiceDetails.Count>0?@Html.Raw(@Model._service.ServiceDetails[0].ServiceRendered.Replace("<br>","\n")):"")</textarea>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label>Materials Used</label>
+                                                    <label>Materials Used</label>\
                                                     <select name="MaterialUsed1" id="MaterialUsed1" class="form-control select2" style="width: 100%;" multiple>
                                                     </select>
                                                 </div>

@@ -405,7 +405,7 @@ namespace DAL.Functions
                     StringBuilder sQuery = new StringBuilder();
                     sQuery.Append(" select AU.Authname UserRole,* from users U  ");
                     sQuery.Append(" inner join AuthenticationLevels AU on AU.AuthId=U.AuthLevelRefId  ");
-                    sQuery.AppendFormat("where U.email ='{0}'  and U.IsDeleted=0 ", email);
+                    sQuery.AppendFormat("where U.email ='{0}'  and U.IsDeleted=0 and U.EndDate is null", email);
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -1062,7 +1062,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join UserAndBranch UB on UB.UserId=U.UserId ");
                     sQuery.Append(" inner join Branchs b on B.branchId=UB.BranchId  ");
                     sQuery.Append(" inner join Companies CO on Co.CompanyID=B.compnayId  ");
-                    sQuery.Append(" where U.AuthLevelRefId=4 and CO.CompanyID in  ");
+                    sQuery.Append(" where U.EndDate is null and U.AuthLevelRefId=4 and CO.CompanyID in  ");
                     sQuery.Append(" ( ");
                     sQuery.Append(" select co.CompanyID from Companies CO ");
                     sQuery.Append(" inner join Branchs B on B.compnayId=CO.CompanyID ");

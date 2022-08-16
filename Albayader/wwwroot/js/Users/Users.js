@@ -19,9 +19,6 @@
         var Userid = $("#deletedUserId").val()
         var url = 'Users?handler=DeleteUser&id=' + $("#deletedUserId").val();
 
-        //var formData = new FormData();
-        //formData.append("UserId", $("#deletedUserId").val());
-
         $.ajax({
             type: "POST",
             url: url,

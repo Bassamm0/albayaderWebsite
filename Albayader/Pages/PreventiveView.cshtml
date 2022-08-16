@@ -5,382 +5,401 @@
 }
 
 
-          <link rel="stylesheet" href="~/plugins/lightBox/touchTouch.css">
+<link rel="stylesheet" href="~/plugins/lightBox/touchTouch.css">
 <div class="content-wrapper">
 
-<section class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-left">
-                                <li class="breadcrumb-item"><a href="Dashboard">Dashboard</a></li>
-                                  <li class="breadcrumb-item"><a href="Reports">Report</a></li>
-                                <li class="breadcrumb-item actifve">Peventive Service Supervisor Review</li>
-                            </ol>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-left">
+                        <li class="breadcrumb-item"><a href="Dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="Reports">Report</a></li>
+                        <li class="breadcrumb-item actifve">Peventive Service Supervisor Review</li>
+                    </ol>
+                </div>
+
+            </div>
+
+
+
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="col-sm">
+
+                        <div class="info-box-content">
+                            <div class="user-block">
+                                <img class="img-circle img-bordered-sm" src="@Model.uploadurl@Model._service.PictureFileName" alt="user image">
+                                <span class="username">
+                                    <a href="#">@Model._service.TechnicianName</a>
+                                </span>
+                                <span class="description">Technician</span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm">
+
+                        <div class="info-box-content">
+                            <div class="info-box-text text-center text-muted"><b>@Model._service.CompanyName - @Model._service.BranchName</b></div>
+                            <div class="info-box-number text-center text-muted mb-0"> <span class="RefNum"> Ref:#@Model._service.ServiceId</span></div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm">
+
+                        <div class="info-box-content" style="float: right;text-align: left;">
+                            <div class="info-box-text text-center text-muted">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                @Model._service.CreatedDate.ToString("dd/MM/yyyy")
+                            </div>
+                            <div class="info-box-number text-muted mb-0"><i class="fa-solid fa-clock"></i> @Model._service.CreatedDate.ToString("hh:mm tt")</div>
                         </div>
 
                     </div>
 
 
-
                 </div>
-                <!-- /.container-fluid -->
-            </section>
-            <div class="container-fluid">
-                <div class="card">
+
+            </div>
+        </div>
+
+        <!--body content-->
+        <section class="content">
+            <form method="post" id="ClientSignatureForm" name="ClientSignatureForm">
+
+                <!--view data-->
+
+
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title">Service Details </h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+
+                        </div>
+                    </div>
                     <div class="card-body">
                         <div class="row">
 
-                       <div class="col-sm">
+                            @{
+                                int counter = 0;
 
-                          <div class="info-box-content">
-                            <div class="user-block">
-                              <img class="img-circle img-bordered-sm" src="@Model.uploadurl@Model._service.PictureFileName" alt="user image">
-                              <span class="username">
-                                <a href="#">@Model._service.TechnicianName</a>
-                              </span>
-                              <span class="description">Technician</span>
-                            </div>
+                                @foreach (var item in Model._service.ServiceDetails)
+                                {
 
-                          </div>
-                        </div>
-                        <div class="col-sm">
-
-                          <div class="info-box-content">
-                            <div class="info-box-text text-center text-muted"><b>@Model._service.CompanyName - @Model._service.BranchName</b></div>
-                            <div class="info-box-number text-center text-muted mb-0"> <span class="RefNum"> Ref:#@Model._service.ServiceId</span></div>
-                          </div>
-
-                        </div>
-                        <div class="col-sm">
-
-                          <div class="info-box-content" style="float: right;text-align: left;">
-                            <div class="info-box-text text-center text-muted"><i class="fa-solid fa-calendar-days"></i>
-                             @Model._service.CreatedDate.ToString("dd/MM/yyyy")
-                               </div>
-                            <div class="info-box-number text-muted mb-0"><i class="fa-solid fa-clock"></i> @Model._service.CreatedDate.ToString("hh:mm tt")</div>
-                          </div>
-
-                             </div>
+                                    <div class="col-md-12" style="padding-left: 0px;">
+                                        <div class="text-primary">
+                                            <i class="fa-solid fa-gear"></i> <label class="primary" style="font-size:30px;"> @Html.DisplayFor(modelItem => item.EquipmentName) </label>
+                                            <label class=""> Serial No.  @Html.DisplayFor(modelItem => item.SerialNo)</label>
 
 
-                        </div>
-
-                    </div>
-                </div>
-
-                <!--body content-->
-  <section class="content">             
-         <form method="post" id="ClientSignatureForm" name="ClientSignatureForm">
-
-            <!--view data-->
-
-
-                   <div class="card card-default" >
-                            <div class="card-header">
-                                <h3 class="card-title">Service Details </h3>
-
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                
-                                </div>
-                            </div>
-                              <div class="card-body">
-                                <div class="row" >
-                                   
-                                @{
-                                    int counter = 0;
-                         
-                                          @foreach (var item in Model._service.ServiceDetails)
-                                            {
-                                            
-                                         <div class="col-md-12" style="padding-left: 0px;">
-                                            <div class="text-primary" >
-                                                <i class="fa-solid fa-gear"></i> <label class="primary" style="font-size:30px;"> @Html.DisplayFor(modelItem => item.EquipmentName) </label>
-                                                <label class=""> Serial No.  @Html.DisplayFor(modelItem => item.SerialNo)</label>
-
-
-                                            </div>
                                         </div>
-                                         <div class="dropdown-divider" ></div>
-                                         <div class="col-md-12">
-                                                <div class="form-group">
-                                                 <i class="fa-solid fa-camera"></i> <label class="ServiceViewHeaders">Picture Before</label>
-                                                  <div class="">
-                                                    
-                                                            @if(item.servicePictures != null)
-                                                            {
+                                    </div>
+                                    <div class="dropdown-divider"></div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <i class="fa-solid fa-camera"></i> <label class="ServiceViewHeaders">Picture Before</label>
+                                            <div class="">
+
+                                                @if (item.servicePictures != null)
+                                                {
                                                     counter = counter + 1;
                                                     <div class="images-wrapper d-flex " id="gallery{@counter}">
                                                         @foreach (var picture in item.servicePictures)
-                                                                     {
+                                                        {
 
-                                                                          @if (picture.PictureTypeId == 1)
-                                                                            {
-                                                                                <a class="magnifier" href="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)"> <img src="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)" alt="" class="img-item mx-1"></a>
-                                                            
-                                                                            }
-                                                                     }  
-                                                                     </div>
+                                                            @if (picture.PictureTypeId == 1)
+                                                            {
+
+                                                                @if (@System.IO.Path.GetExtension(picture.FileName) != ".pdf")
+                                                                {
+                                                                    <a class="magnifier" href="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)"> <img src="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)" alt="" class="img-item mx-1"></a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a target="_blank" class="magnifier" href="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)">@picture.FileName </a>
+
+                                                                }
+
                                                             }
-                                              
-                                                    
+                                                        }
                                                     </div>
-                                              </div>
+                                                }
+
+
+                                            </div>
                                         </div>
+                                    </div>
 
-                                         <div class="dropdown-divider" ></div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <i class="fa-solid fa-gears"></i><label class="ServiceViewHeaders">Parts Checked</label>
-                                        <div class="row" style="padding-left:20px;">
-                                         @if (item.Elect)
-                                            {
-                                                 <div class="col">
-                                                   <i class="fa-solid fa-circle-check" style="color:green"></i> Elect Parts
-                                                </div>
-                                            }
-                                            @if (item.Moving)
-                                            {
-                                                 <div class="col">
-                                                   <i class="fa-solid fa-circle-check" style="color:green"></i> Moving Parts
-                                                </div>
-                                            }
-                                           
+                                    <div class="dropdown-divider"></div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <i class="fa-solid fa-gears"></i><label class="ServiceViewHeaders">Parts Checked</label>
+                                            <div class="row" style="padding-left:20px;">
+                                                @if (item.Elect)
+                                                {
+                                                    <div class="col">
+                                                        <i class="fa-solid fa-circle-check" style="color:green"></i> Elect Parts
+                                                    </div>
+                                                }
+                                                @if (item.Moving)
+                                                {
+                                                    <div class="col">
+                                                        <i class="fa-solid fa-circle-check" style="color:green"></i> Moving Parts
+                                                    </div>
+                                                }
 
-                                             @if (item.Bearings)
-                                            {
-                                                <div class="col">
-                                                  <i class="fa-solid fa-circle-check" style="color:green"></i> Bearings 
-                                                </div>
-                                            }
-                                             @if (item.Bells)
-                                            {
-                                                <div class="col">
-                                                  <i class="fa-solid fa-circle-check" style="color:green"></i> Bells 
-                                                </div>
-                                            }
-                                             @if (item.Motor)
-                                            {
-                                                <div class="col">
-                                                  <i class="fa-solid fa-circle-check" style="color:green"></i> Motor 
-                                                </div>
-                                            }
-                                             @if (item.Heater)
-                                            {
-                                                 <div class="col">
-                                                  <i class="fa-solid fa-circle-check" style="color:green"></i> Heater 
-                                                </div>
-                                            }
-                                             @if (item.SafetySwitch)
-                                            {
-                                                 <div class="col">
-                                                  <i class="fa-solid fa-circle-check" style="color:green"></i> Safety Switch 
-                                                </div>
-                                            }
-                                                 @if (item.ControlBoard)
-                                            {
-                                                 <div class="col">
-                                                  <i class="fa-solid fa-circle-check" style="color:green"></i> Control Board 
-                                                </div>
-                                            }
-                                             @if (item.Compressor)
-                                            {
-                                                 <div class="col">
-                                                  <i class="fa-solid fa-circle-check" style="color:green"></i> Compressor 
-                                                </div>
-                                            }
-                                             @if (item.TmpControl)
-                                            {
-                                                  <div class="col">
-                                                  <i class="fa-solid fa-circle-check" style="color:green"></i> Tmp. Control
-                                                </div>
-                                            }
-                                                </div>
-                        
+
+                                                @if (item.Bearings)
+                                                {
+                                                    <div class="col">
+                                                        <i class="fa-solid fa-circle-check" style="color:green"></i> Bearings
+                                                    </div>
+                                                }
+                                                @if (item.Bells)
+                                                {
+                                                    <div class="col">
+                                                        <i class="fa-solid fa-circle-check" style="color:green"></i> Bells
+                                                    </div>
+                                                }
+                                                @if (item.Motor)
+                                                {
+                                                    <div class="col">
+                                                        <i class="fa-solid fa-circle-check" style="color:green"></i> Motor
+                                                    </div>
+                                                }
+                                                @if (item.Heater)
+                                                {
+                                                    <div class="col">
+                                                        <i class="fa-solid fa-circle-check" style="color:green"></i> Heater
+                                                    </div>
+                                                }
+                                                @if (item.SafetySwitch)
+                                                {
+                                                    <div class="col">
+                                                        <i class="fa-solid fa-circle-check" style="color:green"></i> Safety Switch
+                                                    </div>
+                                                }
+                                                @if (item.ControlBoard)
+                                                {
+                                                    <div class="col">
+                                                        <i class="fa-solid fa-circle-check" style="color:green"></i> Control Board
+                                                    </div>
+                                                }
+                                                @if (item.Compressor)
+                                                {
+                                                    <div class="col">
+                                                        <i class="fa-solid fa-circle-check" style="color:green"></i> Compressor
+                                                    </div>
+                                                }
+                                                @if (item.TmpControl)
+                                                {
+                                                    <div class="col">
+                                                        <i class="fa-solid fa-circle-check" style="color:green"></i> Tmp. Control
+                                                    </div>
+                                                }
                                             </div>
 
-                                     </div>
-                                   <div class="dropdown-divider" ></div>
-                                <div class="col-md-6">
+                                        </div>
+
+                                    </div>
+                                    <div class="dropdown-divider"></div>
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <i class="fa-solid fa-boxes-stacked"></i> <label class="ServiceViewHeaders">Materials Used</label>
-                   
-                                                <ul> 
 
-                                                    @if(item.MaterialsUsed != null)
-                                                        {
-                                                            @foreach(var mUsed in item.MaterialsUsed)
-                                                            {
-                                                                <li>@Html.DisplayFor(modelItem => mUsed.MateriaUsedlName)</li>
-                                                            }
-                                                
+                                            <ul>
 
-                                                        }
-                                                   
-                                                </ul>
+                                                @if (item.MaterialsUsed != null)
+                                                {
+                                                    @foreach (var mUsed in item.MaterialsUsed)
+                                                    {
+                                                        <li>@Html.DisplayFor(modelItem => mUsed.MateriaUsedlName)</li>
+                                                    }
+
+
+                                                }
+
+                                            </ul>
                                         </div>
                                     </div>
 
-                                    
-                                   <div class="col-md-6">
+
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                             <i class="fa-solid fa-boxes-stacked"></i> <label class="ServiceViewHeaders">Required Materials</label>
-                   
-                                                <ul> 
+                                            <i class="fa-solid fa-boxes-stacked"></i> <label class="ServiceViewHeaders">Required Materials</label>
 
-                                                    @if(item.requiredMaterials != null)
-                                                        {
-                                                            @foreach(var mRequired in item.requiredMaterials)
-                                                            {
-                                                                <li>@Html.DisplayFor(modelItem => mRequired.RequireMaterialName)</li>
-                                                            }
-                                                
+                                            <ul>
 
-                                                        }
-                                                   
-                                                </ul>
+                                                @if (item.requiredMaterials != null)
+                                                {
+                                                    @foreach (var mRequired in item.requiredMaterials)
+                                                    {
+                                                        <li>@Html.DisplayFor(modelItem => mRequired.RequireMaterialName)</li>
+                                                    }
+
+
+                                                }
+
+                                            </ul>
                                         </div>
                                     </div>
-                                     <div class="dropdown-divider" ></div>
-                                       <div class="col-md-12">
-                                                <div class="form-group">
-                                                 <i class="fa-solid fa-camera"></i> <label class="ServiceViewHeaders">Picture After</label>
-                                                  <div class="">
-                                                  
-                                                            @if(item.servicePictures != null)
+                                    <div class="dropdown-divider"></div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <i class="fa-solid fa-camera"></i> <label class="ServiceViewHeaders">Picture After</label>
+                                            <div class="">
+
+                                                @if (item.servicePictures != null)
+                                                {
+                                                    counter = counter + 1;
+                                                    <div class="images-wrapper d-flex " id="gallery{@counter}">
+                                                        @foreach (var picture in item.servicePictures)
+                                                        {
+
+                                                            @if (picture.PictureTypeId == 2)
                                                             {
-                                                                 counter = counter + 1;
-                                                                 <div class="images-wrapper d-flex " id="gallery{@counter}">
-                                                                @foreach (var picture in item.servicePictures)
-                                                                     {
+                                                                @if (@System.IO.Path.GetExtension(picture.FileName) != ".pdf")
+                                                                {
+                                                                    <a class="magnifier" href="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)"> <img src="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)" alt="" class="img-item mx-1"></a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a class="magnifier" target="_blank" href="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)">@picture.FileName </a>
 
-                                                                          @if (picture.PictureTypeId == 2)
-                                                                            {
-                                                                                <a class="magnifier" href="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)"> <img src="@Model.uploadurl@Html.DisplayFor(modelItem => picture.FileName)" alt="" class="img-item mx-1"></a>
-                                                            
-                                                                            }
-                                                                     }  
-                                                                     </div>
+                                                                }
+
+
                                                             }
-                                              
-                                                    
+                                                        }
                                                     </div>
-                                              </div>
+                                                }
+
+
+                                            </div>
                                         </div>
-                                        
-                                         
-                                        }
-                                        <input type="hidden" value="@counter" id="galleryCount" />
-                                        }
+                                    </div>
+
+
+                                }
+                                <input type="hidden" value="@counter" id="galleryCount" />
+                            }
 
 
 
-                                         <div class="dropdown-divider" ></div>
-                                          <div class="col-md-12">
-                                            <div class="form-group">
-                                                <i class="fa-solid fa-calendar-check"></i> <label class="ServiceViewHeaders">Completion Date:</label>
-                   
-                                              <label style="font-size:20px;font-weight:bold">@Convert.ToDateTime(@Model._service.CompletionDate).ToString("dd/MM/yyyy hh:mm tt")</label>
-                        
-                                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <i class="fa-solid fa-calendar-check"></i> <label class="ServiceViewHeaders">Completion Date:</label>
 
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <i class="fa-solid fa-battery-full"></i> <label class="ServiceViewHeaders">Status After Service:</label>
-                   
-                                              <label style="font-size:20px;font-weight:bold">@Model._service.StatusAfterName</label>
-                        
-                                            </div>
+                                    <label style="font-size:20px;font-weight:bold">@Convert.ToDateTime(@Model._service.CompletionDate).ToString("dd/MM/yyyy hh:mm tt")</label>
 
-                                        </div>
-                                         <div class="dropdown-divider" ></div>
-                                          <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <i class="fa-solid fa-comment-dots"></i> <label class="ServiceViewHeaders">Remarks</label>
-                                               <div style="padding-left:20px">
-                                                   <p>
-                                                       @Model._service.Remark
-                                                   </p>
-                                                </div>
-                    
-                        
-                                                </div>
-
-                                            </div>
-                                         
-                                             <div class="dropdown-divider" ></div>
-                                         
-                                          <div class="col-md-12">
-                                            <div class="form-group">
-                                               <i class="fa-solid fa-person-chalkboard"></i> <label class="ServiceViewHeaders">Supervisor Review</label>
-                                                <div class="row" style="padding-left:20px;">
-                                    
-                                                     <div class="col-md-12">
-                                                         <span class="labelsView">Supervisor Name: </span>@Model._service.SupervisourName
-                                                    </div>
-                                                    <div class="dropdown-divider"></div>
-                                                   <div class="col-md-12">
-                                                        <span class="labelsView">Supervisor Feedback: </span>@Model._service.SupervisourFeedback
-                                                    </div>
-                                                    <div class="dropdown-divider"></div>
-                                                    <div class="col-md-12">
-                                                        <span class="labelsView"> Supervisor Signature: </span>
-                                                        <div>
-                                                        <img src="@Model._service.SupervisourSignature" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="dropdown-divider"></div>
-                                         
-                                                </div>
-                                            </div>
-
-                            </div>
                                 </div>
-                              </div>
+
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <i class="fa-solid fa-battery-full"></i> <label class="ServiceViewHeaders">Status After Service:</label>
+
+                                    <label style="font-size:20px;font-weight:bold">@Model._service.StatusAfterName</label>
+
+                                </div>
+
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <i class="fa-solid fa-comment-dots"></i> <label class="ServiceViewHeaders">Remarks</label>
+                                    <div style="padding-left:20px">
+                                        <p>
+                                           @Html.Raw(@Model._service.Remark)
+                                        </p>
+                                    </div>
+
+
+                                </div>
 
                             </div>
 
-            <!-- end view data-->
+                            <div class="dropdown-divider"></div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <i class="fa-solid fa-person-chalkboard"></i> <label class="ServiceViewHeaders">Supervisor Review</label>
+                                    <div class="row" style="padding-left:20px;">
+
+                                        <div class="col-md-12">
+                                            <span class="labelsView">Supervisor Name: </span>@Model._service.SupervisourName
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                        <div class="col-md-12">
+                                            <span class="labelsView">Supervisor Feedback: </span>@Model._service.SupervisourFeedback
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                        <div class="col-md-12">
+                                            <span class="labelsView"> Supervisor Signature: </span>
+                                            <div>
+                                                <img src="@Model._service.SupervisourSignature" />
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- end view data-->
 
 
 
-              <input type="hidden" id="APIURI" name="APIURI" value="@Model.apiurl"/>
-              <input type="hidden" id="Uploadlocation" name="Uploadlocation" value="@Model.uploadurl"/>
-        <input type="hidden" id="serviceid" name="serviceid" value="@Model._service.ServiceId"/>
+                <input type="hidden" id="APIURI" name="APIURI" value="@Model.apiurl" />
+                <input type="hidden" id="Uploadlocation" name="Uploadlocation" value="@Model.uploadurl" />
+                <input type="hidden" id="serviceid" name="serviceid" value="@Model._service.ServiceId" />
 
 
-        </form>
+            </form>
 
-          <!-- /.container-fluid -->
+            <!-- /.container-fluid -->
         </section>
 
 
-            </div>
-  
-        <!-- /.content -->
-
     </div>
 
-  
-    <!-- jQuery -->
-    <script src="plugins/jquery/jquery.min.js"></script>
-       <!-- Bootstrap 4 -->
-    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="js/Report/PreventiveView.js"></script>
-    <script src="plugins/Signature/jq-signature.min.js"></script>
+    <!-- /.content -->
+
+</div>
 
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/tus-js-client@latest/dist/tus.min.js"></script>
-         <script src="plugins/jquery-validation/jquery.validate.min.js"></script>
-            <script src="plugins/jquery-validation/additional-methods.min.js"></script>
+<!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="js/Report/PreventiveView.js"></script>
+<script src="plugins/Signature/jq-signature.min.js"></script>
 
-           
-      
 
-    <script src="~/plugins/lightBox/touchTouch.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/tus-js-client@latest/dist/tus.min.js"></script>
+<script src="plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="plugins/jquery-validation/additional-methods.min.js"></script>
+
+
+
+
+<script src="~/plugins/lightBox/touchTouch.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>

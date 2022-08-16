@@ -55,6 +55,18 @@ namespace API
             return filename;
         }
 
+        public static string getextention(string fileName)
+        {
+            string strExtn = "";
+          string filename = Path.GetFileNameWithoutExtension(fileName);
+            if (filename != "")
+            {
+                 strExtn = Path.GetExtension(fileName);
+               
+
+            }
+            return strExtn;
+        }
 
 
         //public static string GetFileUpload(FileUpload txtUploadCtrl)
@@ -97,6 +109,7 @@ namespace API
                 return true;
         }
 
+       
         public static string ResizeImage(Image img, int maxWidth, int maxHeight)
         {
             if (img.Width > maxWidth || img.Height > maxHeight)

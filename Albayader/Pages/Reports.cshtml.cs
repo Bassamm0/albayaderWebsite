@@ -46,47 +46,64 @@ namespace AlbayaderWeb.Pages
         }
 
 
+        public async Task<IActionResult> OnPost(string handler, string serviceId, string newDate)
+        {
+            token = HttpContext.Session.GetString("token");
 
-        //public async Task<List<EServiceModel>> getAllCompletedservices()
-        //{
-        //    apiurl = AppConfig.APIUrl;
-        //    // if user admin
-        
-        //    using (var httpClient = new HttpClient())
-        //    {
-        //        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            if (handler == "changeDate")
+            {
 
-        //        using (var response = await httpClient.GetAsync(apiurl + "service/completedservice"))
-        //        {
-
-        //            // string apiResponse = await response.Content.ReadAsStringAsync();
-        //            if (response.StatusCode.ToString() == "OK")
-        //            {
-        //                string responseJson = response.Content.ReadAsStringAsync().Result;
-
-        //                _services = JsonConvert.DeserializeObject<List<EServiceModel>>(responseJson);
-        //                //return response.StatusCode.ToString();
-        //            }
-        //            else
-        //            {
-
-        //                errorMessage = response.Content.ReadAsStringAsync().Result;
-        //                //  return response.StatusCode.ToString();
-        //            }
-
-
-
-        //        }
-        //    }
-
-
-        //    return _services;
-        //}
-
-       
-
+            }
+            if (serviceId == "0" || newDate == "")
+            {
+                return Page();
+            }
+            string statusCode = await changeserviceDate(serviceId, newDate);
+           
+            return Page();
+        }
       
+        public async Task<string> changeserviceDate(string serviceId,string newDate)
+        {
+            string apiurl = AppConfig.APIUrl;
+            var parameters = new Dictionary<string, string>();
+            parameters["serviceId"] = serviceId;
+            parameters["newDate"] = newDate;
 
-     
+            var json = JsonConvert.SerializeObject(parameters);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                using (var response = await httpClient.PostAsync(apiurl + "service/updateservicedate", data))
+                {
+                    // string apiResponse = await response.Content.ReadAsStringAsync();
+                    if (response.StatusCode.ToString() == "OK")
+                    {
+                        string responseJson = response.Content.ReadAsStringAsync().Result;
+
+                        //string res = JsonConvert.DeserializeObject<string>(responseJson);
+                        return response.StatusCode.ToString();
+                    }
+                    else
+                    {
+
+                        errorMessage = response.Content.ReadAsStringAsync().Result;
+                        //  return response.StatusCode.ToString();
+                    }
+
+
+
+                }
+            }
+
+
+            return "";
+        }
+
+
+
+
+
     }
 }

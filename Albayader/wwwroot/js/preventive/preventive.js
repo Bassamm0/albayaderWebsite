@@ -12,7 +12,7 @@
 
     $(".fileImage").fileinput({
         initialPreviewAsData: true,
-        allowedFileExtensions: ['jpg', 'png', 'gif', 'jpeg'],
+        allowedFileExtensions: ['jpg', 'png', 'gif', 'jpeg','pdf'],
         showUpload: true,
         showCaption: false,
         maxFileSize: 4000,
@@ -61,7 +61,7 @@
                 if (jqXhr.status == 401) {
                     window.location.href = 'Index';
                 }
-                alert('Error: something went wronge please try again later');
+                console.log('Error: something went wronge please try again later');
             }
 
         }).done(function () {
@@ -142,7 +142,7 @@
  
         $("#ddStatusAfter").val(ServiceObject.statusAfterId)
         $("#ddStatusAfter").trigger('change');
-        $("#serviceRemark").val(ServiceObject.remark);
+        $("#serviceRemark").val((ServiceObject.remark).replaceAll('<br>', '\n'));
         //ServiceDetailsid1
         toastr["success"]("Service loaded successfuly.")
     }
@@ -173,7 +173,7 @@
             + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Bearings' + cn + '" name="Bearings' + cn + '" data-on="Yes" data-off="No" > '
             + '<label class="partslable" for="Bearings' + cn + '">Bearings</label> </div>'
             + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Bells' + cn + '" name="Bells' + cn + '" data-on="Yes" data-off="No" > '
-            + '<label class="partslable" for="Bells' + cn + '">Bells</label> </div>'
+            + '<label class="partslable" for="Bells' + cn + '">Belts</label> </div>'
             + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Motor' + cn + '" name="Motor' + cn + '" data-on="Yes" data-off="No" > '
             + '<label class="partslable" for="Motor' + cn + '">Motor</label> </div>'
             + '<div class="col"> <input type="checkbox" data-toggle="toggle" data-width="75" data-height="50" id="Heater' + cn + '" name="Heater' + cn + '" data-on="Yes" data-off="No" > '
@@ -383,19 +383,28 @@
                     if (Operation == "add") {
                         $(obj).val(data.serviceDetailId);
                         addMaterials(EquId, data.serviceDetailId);
-                        uploadImages(InputElmentid, validationElem, EquId, data.serviceDetailId, pictureType);
+                        if (document.getElementById(InputElmentid).files.length > 0) {
+                            uploadImages(InputElmentid, validationElem, EquId, data.serviceDetailId, pictureType);
+
+                        }
                     } else {
                         serviceDetailId= $(obj).val()
                         addMaterials(EquId, serviceDetailId);
-                        uploadImages(InputElmentid, validationElem, EquId, serviceDetailId, pictureType);
+                        if (document.getElementById(InputElmentid).files.length > 0) {
+                            uploadImages(InputElmentid, validationElem, EquId, serviceDetailId, pictureType);
+                        }
                     }
                    
                 },
                 error: function (jqXhr, textStatus, errorMessage) { // error callback 
                     if (jqXhr.status == 401) {
                         window.location.href = 'Index';
+                        alert(' Your login session expired, Please login again.');
+                        return;
+                    } else {
+                        alert('Error: something went wronge please try again later');
+
                     }
-                    alert('Error: something went wronge please try again later');
                 }
 
             }).done(function () {
@@ -425,6 +434,7 @@
         // disable save
         $('#SaveDraft').attr('disabled', true);
         $('#SaveAndContinue').attr('disabled', true);
+
         $.ajax({
             url: APIURL + 'fileupload/UploadServiceImages',
             type: 'POST',
@@ -536,7 +546,7 @@
                 if (jqXhr.status == 401) {
                     window.location.href = 'Index';
                 }
-                alert('Error: something went wronge please try again later');
+                console.log('Error: something went wronge please try again later');
             }
         }).done(function () {
             console.log('done')
@@ -556,11 +566,7 @@
                 required: true,
 
             },
-            serviceRemark: {
-
-                maxlength: 250,
-
-            },
+           
         },
         errorElement: 'span',
         errorPlacement: function (error, element) {
@@ -624,7 +630,7 @@
                 if (jqXhr.status == 401) {
                     window.location.href = 'Index';
                 }
-                alert('Error: something went wronge please try again later');
+                console.log('Error: something went wronge please try again later');
             }
 
         }).done(function () {
@@ -801,7 +807,7 @@
                 if (jqXhr.status == 401) {
                     window.location.href = 'Index';
                 }
-                alert('Error: something went wronge please try again later');
+                console.log('Error: something went wronge please try again later');
             }
 
         }).done(function () {
@@ -818,7 +824,7 @@
     function updateStatus(statusId) {
 
         console.log(_ServiceId)
-        var remark = $('#serviceRemark').val()
+        var remark = $('#serviceRemark').val().replace(/\n/g, '<br>');
         var url = APIURL + 'service/updatestatus'
         var statusAfterId = $('#ddStatusAfter').val()
         var siteVistTypeId = 1;

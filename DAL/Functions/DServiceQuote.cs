@@ -508,6 +508,15 @@ namespace DAL.Functions
 
                 for (int i = 0; i < lQuoteDetials.Count; i++)
                 {
+
+                    if (lQuoteDetials[i].QuotationPrice == null)
+                    {
+                        lQuoteDetials[i].QuotationPrice = 0;
+                    }
+                    if (lQuoteDetials[i].Qty == null)
+                    {
+                        lQuoteDetials[i].Qty = 0;
+                    }
                     if (i == lQuoteDetials.Count - 1)
                     {
                         sQuery.AppendFormat(" ( {0}, {1},{2},{3},'{4}',{5}) ",ServiceQuoteId, lQuoteDetials[i].MaterialId, lQuoteDetials[i].QuotationPrice, lQuoteDetials[i].Qty, lQuoteDetials[i].Description, OpId);

@@ -116,8 +116,8 @@ namespace AlbayaderWeb.Pages
         public async Task<IActionResult> OnPostDeleteCompany(int id)
         {
             //delete 
-           // int companyid = Convert.ToInt16(Request.Form["deletedCompanyId"]);
-
+            // int companyid = Convert.ToInt16(Request.Form["deletedCompanyId"]);
+            token = HttpContext.Session.GetString("token");
             if (id == 0)
             {
                 return Page();

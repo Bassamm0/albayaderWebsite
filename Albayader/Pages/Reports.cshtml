@@ -259,7 +259,7 @@
            
               <div class="modal-footer justify-content-between">
 
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
              
             </div>
     
@@ -270,12 +270,54 @@
       </div>
 
 
+     
+        <div class="modal fade" id="modal-ChangeDate">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Change Date</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="col">
+                                <div class="form-group">
+                                   <label for="companyname">New Date</label>
+                                     <div class="input-group date" id="fnewDateChange" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#newDateChange" id="newDateChange" name="startDate" placeholder="Select New Date"/>
+                                        <div class="input-group-append" data-target="#newDateChange" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                              
+
+                            </div>
+            </div>
+            <form method="post" id="deleteForm" enctype="multipart/form-data">
+              <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal" id="closedate">Close</button>
+              <button type="button" class="btn btn-info"  id="chnageDate" name="chnageDate">change Date</button>
+              <input type="hidden" id="serviceDateId" name="serviceDateId" />
+            </div>
+            </form>
+           
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
 
         <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
 
     <input type="hidden" id="APIURI" name="APIURI" value="@Model.apiurl" />
+    <input type="hidden" id="Arole" name="Arole" value="@Model.role" />
 </div>
 
 

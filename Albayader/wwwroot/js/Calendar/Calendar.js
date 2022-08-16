@@ -55,8 +55,8 @@ $(document).ready(function () {
            
             newEvent.id = data[i].eventId;
             newEvent.title = data[i].title;
-            newEvent.start = moment(data[i].eventStartDate, 'D-mm-yyyy').format('yyyy-mm-D');
-            newEvent.end = moment(data[i].eventEndDate, 'D-mm-yyyy').format('yyyy-mm-D');
+            newEvent.start = moment(data[i].eventStartDate, 'DD-mm-yyyy').format('yyyy-mm-DD');
+            newEvent.end = moment(data[i].eventEndDate, 'DD-mm-yyyy').format('yyyy-mm-DD');
             //if (data[i].eventTypeId != 1 || data[i].eventTypeId != 2) {
             //    if (data[i].url != null && data[i].url != '') {
             //        newEvent.url = data[i].url
