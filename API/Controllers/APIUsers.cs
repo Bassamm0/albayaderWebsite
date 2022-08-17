@@ -18,14 +18,7 @@ namespace API
 
         private UserLogic userLogic = new UserLogic();
 
-        //[Route("add")]
-        //[HttpGet]
-        //public async Task<Boolean> AddUser(string username, string emailAdress, string password, int authLevelId)
-        //{
-        //    bool result = await userLogic.addUser(username, emailAdress, password, authLevelId);
-
-        //    return result;
-        //}
+      
 
         [Route("all")]
         [HttpGet]
