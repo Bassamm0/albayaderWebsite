@@ -13,7 +13,8 @@
 
 
     $('#startDate').datetimepicker({
-        format: 'DD-MM-yyyy'
+        format: 'DD-MM-yyyy',
+     
     });
     $('#endDate').datetimepicker({
         format: 'DD-MM-yyyy'
