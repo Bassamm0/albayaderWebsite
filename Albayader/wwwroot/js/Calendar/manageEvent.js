@@ -12,12 +12,13 @@
 
 
 
-    $('#startDate').datetimepicker({
-        format: 'DD-MM-yyyy',
-     
+    $('#startDate').datetimepicker({    
+        format: 'DD-MM-yyyy HH:mm',
+        icon: {time:'far fa-clock'}
     });
     $('#endDate').datetimepicker({
-        format: 'DD-MM-yyyy'
+        format: 'DD-MM-yyyy HH:mm',
+        icon: { time: 'far fa-clock' }
     });
     $('.select2').select2();
 

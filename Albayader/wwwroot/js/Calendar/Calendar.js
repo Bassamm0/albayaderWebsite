@@ -27,7 +27,7 @@ $(document).ready(function () {
             },
             success: function (data, textStatus, xhr) {
                 
-                console.log(data);
+               // console.log(data);
                 createEventObj(data)
 
             },
@@ -50,21 +50,27 @@ $(document).ready(function () {
     function createEventObj(data) {
        
         for (var i = 0; i < data.length; i++) {
+            var strTime = ("0" + new Date(data[i].eventStartDate).getHours()).slice(-2) + ':' + ("0" + new Date(data[i].eventStartDate).getMinutes()).slice(-2);
+            var endTime = ("0" + new Date(data[i].eventEndDate).getHours()).slice(-2) + ':' + ("0" + new Date(data[i].eventEndDate).getMinutes()).slice(-2);
+           
+            ("0" + new Date(data[i].eventStartDate).getMinutes()).slice(-2)
             var newEvent = new Object();
            
            
             newEvent.id = data[i].eventId;
             newEvent.title = data[i].title;
-            newEvent.start = moment(data[i].eventStartDate, 'DD-mm-yyyy').format('yyyy-mm-DD');
-            newEvent.end = moment(data[i].eventEndDate, 'DD-mm-yyyy').format('yyyy-mm-DD');
+            
+            newEvent.start = moment(data[i].eventStartDate, 'DD-mm-yyyy').format('yyyy-mm-DD') +' '+ strTime;
+            newEvent.end = moment(data[i].eventEndDate, 'DD-mm-yyyy').format('yyyy-mm-DD') + ' ' + endTime;
+            console.log(newEvent.start);
+
             //if (data[i].eventTypeId != 1 || data[i].eventTypeId != 2) {
             //    if (data[i].url != null && data[i].url != '') {
             //        newEvent.url = data[i].url
             //    }
-             
             //}
           
-            newEvent.allDay = true;
+            newEvent.allDay = false;
 
             if (data[i].eventTypeId == 1) {
                 newEvent.backgroundColor = '#007E33';
@@ -76,6 +82,7 @@ $(document).ready(function () {
             } else if (data[i].eventTypeId == 3) {
                 newEvent.backgroundColor = '#0099CC';
                 newEvent.borderColor = '#0099CC';
+
             } else if (data[i].eventTypeId == 4) {
                 newEvent.backgroundColor = '#9933CC';
                 newEvent.borderColor = '#9933CC';
