@@ -268,6 +268,9 @@ namespace DAL.Functions
                             if (dataReader["StatusAfterId"] != DBNull.Value) { oEServiceModel.StatusAfterId = (int)dataReader["StatusAfterId"]; }
                             if (dataReader["StatusAfterName"] != DBNull.Value) { oEServiceModel.StatusAfterName = (string)dataReader["StatusAfterName"]; }
                             if (dataReader["SupervisourFeedback"] != DBNull.Value) { oEServiceModel.SupervisourFeedback = (string)dataReader["SupervisourFeedback"]; }
+                            if (dataReader["SupervisourMobile"] != DBNull.Value) { oEServiceModel.SupervisourMobile = (string)dataReader["SupervisourMobile"]; }
+                            if (dataReader["SupervisourDesignation"] != DBNull.Value) { oEServiceModel.SupervisourDesignation = (string)dataReader["SupervisourDesignation"]; }
+                         
                             if (dataReader["Remark"] != DBNull.Value) { oEServiceModel.Remark = (string)dataReader["Remark"]; }
                             if (dataReader["VistTypeName"] != DBNull.Value) { oEServiceModel.VistTypeName = (string)dataReader["VistTypeName"]; }
 
@@ -346,6 +349,8 @@ namespace DAL.Functions
                             if (dataReader["Remark"] != DBNull.Value) { oEServiceModel.Remark = (string)dataReader["Remark"]; }
                             if (dataReader["VistTypeName"] != DBNull.Value) { oEServiceModel.VistTypeName = (string)dataReader["VistTypeName"]; }
                             // oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);
+                            if (dataReader["SupervisourMobile"] != DBNull.Value) { oEServiceModel.SupervisourMobile = (string)dataReader["SupervisourMobile"]; }
+                            if (dataReader["SupervisourDesignation"] != DBNull.Value) { oEServiceModel.SupervisourDesignation = (string)dataReader["SupervisourDesignation"]; }
 
                             services.Add(oEServiceModel);
                         }
@@ -411,6 +416,8 @@ namespace DAL.Functions
                             if (dataReader["Remark"] != DBNull.Value) { oEServiceModel.Remark = (string)dataReader["Remark"]; }
                             if (dataReader["VistTypeName"] != DBNull.Value) { oEServiceModel.VistTypeName = (string)dataReader["VistTypeName"]; }
                             // oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);
+                            if (dataReader["SupervisourMobile"] != DBNull.Value) { oEServiceModel.SupervisourMobile = (string)dataReader["SupervisourMobile"]; }
+                            if (dataReader["SupervisourDesignation"] != DBNull.Value) { oEServiceModel.SupervisourDesignation = (string)dataReader["SupervisourDesignation"]; }
 
                             services.Add(oEServiceModel);
                         }
@@ -475,6 +482,11 @@ namespace DAL.Functions
                             if (dataReader["SupervisourFeedback"] != DBNull.Value) { oEServiceModel.SupervisourFeedback = (string)dataReader["SupervisourFeedback"]; }
                             if (dataReader["Remark"] != DBNull.Value) { oEServiceModel.Remark = (string)dataReader["Remark"]; }
                              if (dataReader["VistTypeName"] != DBNull.Value) { oEServiceModel.VistTypeName = (string)dataReader["VistTypeName"]; }
+
+
+                            if (dataReader["SupervisourMobile"] != DBNull.Value) { oEServiceModel.SupervisourMobile = (string)dataReader["SupervisourMobile"]; }
+                            if (dataReader["SupervisourDesignation"] != DBNull.Value) { oEServiceModel.SupervisourDesignation = (string)dataReader["SupervisourDesignation"]; }
+
                             if (oEServiceModel.ServiceTypeId == 1)
                             {
                                 oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);
@@ -549,6 +561,9 @@ namespace DAL.Functions
                             if (dataReader["SupervisourFeedback"] != DBNull.Value) { oEServiceModel.SupervisourFeedback = (string)dataReader["SupervisourFeedback"]; }
                             if (dataReader["Remark"] != DBNull.Value) { oEServiceModel.Remark = (string)dataReader["Remark"]; }
                             if (dataReader["VistTypeName"] != DBNull.Value) { oEServiceModel.VistTypeName = (string)dataReader["VistTypeName"]; }
+
+                            if (dataReader["SupervisourMobile"] != DBNull.Value) { oEServiceModel.SupervisourMobile = (string)dataReader["SupervisourMobile"]; }
+                            if (dataReader["SupervisourDesignation"] != DBNull.Value) { oEServiceModel.SupervisourDesignation = (string)dataReader["SupervisourDesignation"]; }
                             // oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);
 
                             services.Add(oEServiceModel);
@@ -617,6 +632,9 @@ namespace DAL.Functions
                             if (dataReader["SupervisourName"] != DBNull.Value) { oEServiceModel.SupervisourName = (string)dataReader["SupervisourName"]; }
                             if (dataReader["SupervisourFeedback"] != DBNull.Value) { oEServiceModel.SupervisourFeedback = (string)dataReader["SupervisourFeedback"]; }
                             if (dataReader["SupervisourSignature"] != DBNull.Value) { oEServiceModel.SupervisourSignature = (string)dataReader["SupervisourSignature"]; }
+                            if (dataReader["SupervisourMobile"] != DBNull.Value) { oEServiceModel.SupervisourMobile = (string)dataReader["SupervisourMobile"]; }
+                            if (dataReader["SupervisourDesignation"] != DBNull.Value) { oEServiceModel.SupervisourDesignation = (string)dataReader["SupervisourDesignation"]; }
+
                             oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);                          
                         }
                     }
@@ -687,6 +705,8 @@ namespace DAL.Functions
                             if (dataReader["SupervisourName"] != DBNull.Value) { oEServiceModel.SupervisourName = (string)dataReader["SupervisourName"]; }
                             if (dataReader["SupervisourFeedback"] != DBNull.Value) { oEServiceModel.SupervisourFeedback = (string)dataReader["SupervisourFeedback"]; }
                             if (dataReader["SupervisourSignature"] != DBNull.Value) { oEServiceModel.SupervisourSignature = (string)dataReader["SupervisourSignature"]; }
+                            if (dataReader["SupervisourMobile"] != DBNull.Value) { oEServiceModel.SupervisourMobile = (string)dataReader["SupervisourMobile"]; }
+                            if (dataReader["SupervisourDesignation"] != DBNull.Value) { oEServiceModel.SupervisourDesignation = (string)dataReader["SupervisourDesignation"]; }
 
                             oEServiceModel.ServiceDetails = getAllCorrectiveServiceDetails(oEServiceModel.ServiceId);
                         }
@@ -751,6 +771,8 @@ namespace DAL.Functions
                             if (dataReader["SupervisourName"] != DBNull.Value) { oEServiceModel.SupervisourName = (string)dataReader["SupervisourName"]; }
                             if (dataReader["SupervisourFeedback"] != DBNull.Value) { oEServiceModel.SupervisourFeedback = (string)dataReader["SupervisourFeedback"]; }
                             if (dataReader["SupervisourSignature"] != DBNull.Value) { oEServiceModel.SupervisourSignature = (string)dataReader["SupervisourSignature"]; }
+                            if (dataReader["SupervisourMobile"] != DBNull.Value) { oEServiceModel.SupervisourMobile = (string)dataReader["SupervisourMobile"]; }
+                            if (dataReader["SupervisourDesignation"] != DBNull.Value) { oEServiceModel.SupervisourDesignation = (string)dataReader["SupervisourDesignation"]; }
 
 
                         }
@@ -870,7 +892,8 @@ namespace DAL.Functions
         }
 
 
-        public async Task<EServices> clientSignature(int serviceId, string SupervisourSignature, string SupervisourName, string SupervisourFeedback)
+        public async Task<EServices> clientSignature(int serviceId, string SupervisourSignature, 
+            string SupervisourName, string SupervisourFeedback, string SupervisourMobile, string SupervisourDesignation)
         {
             EServices eServices = new EServices();
 
@@ -880,6 +903,8 @@ namespace DAL.Functions
             eServices.SupervisourSignature = SupervisourSignature;
             eServices.SupervisourName = SupervisourName;
             eServices.SupervisourFeedback = SupervisourFeedback;
+            eServices.SupervisourMobile = SupervisourMobile;
+            eServices.SupervisourDesignation = SupervisourDesignation;
             eServices.CompletionDate = DateTime.UtcNow;
 
             if (eServices == null)
@@ -893,6 +918,8 @@ namespace DAL.Functions
                 context.Entry(eServices).Property(x => x.SupervisourSignature).IsModified = true;
                 context.Entry(eServices).Property(x => x.SupervisourName).IsModified = true;
                 context.Entry(eServices).Property(x => x.SupervisourFeedback).IsModified = true;
+                context.Entry(eServices).Property(x => x.SupervisourMobile).IsModified = true;
+                context.Entry(eServices).Property(x => x.SupervisourDesignation).IsModified = true;
                 context.Entry(eServices).Property(x => x.CompletionDate).IsModified = true;
 
                 await context.SaveChangesAsync();
@@ -1001,13 +1028,13 @@ namespace DAL.Functions
                     if (servicedetails.Bearings)
                         Clientbody.AppendFormat("<li> Bearings</li>");
                     if (servicedetails.Bells)
-                        Clientbody.AppendFormat("<li>Bells</li>");
+                        Clientbody.AppendFormat("<li>Belts</li>");
                     if (servicedetails.Motor)
                         Clientbody.AppendFormat(" <li>Motor</li>");
                     if (servicedetails.Heater)
                         Clientbody.AppendFormat("<li> EHeater</li>");
                     if (servicedetails.SafetySwitch)
-                        Clientbody.AppendFormat(" <li>Safety Switchs</li>");
+                        Clientbody.AppendFormat(" <li>Safety Switch</li>");
                     if (servicedetails.ControlBoard)
                         Clientbody.AppendFormat(" <li>Control Board</li>");
                     if (servicedetails.Compressor)

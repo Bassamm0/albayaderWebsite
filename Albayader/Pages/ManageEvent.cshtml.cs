@@ -129,6 +129,7 @@ namespace AlbayaderWeb.Pages
                     
                     postEvent.description = Request.Form["description"];
                     postEvent.eventTypeId = Convert.ToInt16(Request.Form["ddType"]);
+                    postEvent.statusId = 1;
 
                     if(postEvent.eventTypeId == 1 || postEvent.eventTypeId == 2)
                     {

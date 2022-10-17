@@ -67,6 +67,10 @@ namespace LOGIC
              var reusltDetails = dServiceQuote.insertBuldQuoteMaterials(resul.ServiceQuoteId,newServiceQuote.QouteDetails,logeduser.UserId);
             if (resul.ServiceQuoteId > 0)
             {
+
+
+                // insert status
+                dServiceQuote.insertQuoteStatus(resul.ServiceQuoteId, 1);
                 return true;
             }
             else

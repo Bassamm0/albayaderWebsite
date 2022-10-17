@@ -27,11 +27,13 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" Select B.BranchName,CO.Name CompanyName,SQ.*,SR.* from ServiceQuotes SQ ");
+                    sQuery.Append(" Select  QAS.QuotationStatusId,QAS.CreatedDate,QS.QuotationStatus, B.BranchName,CO.Name CompanyName,SQ.*,SR.* from ServiceQuotes SQ ");
                     sQuery.Append(" left join Services SR on SR.ServiceId=SQ.ServiceId ");
                     sQuery.Append(" inner  join Branchs b on b.branchId=SQ.BranchId  ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=B.compnayId ");
-                    sQuery.Append(" where SQ.Enddate is null  order by SQ.ServiceQuoteId desc ");
+                    sQuery.Append("  inner join QuotationAndStatus QAS on QAS.ServiceQuoteId=SQ.ServiceQuoteId ");
+                    sQuery.Append("  inner join QuotationStatus QS on QS.QuotationStatusId=QAS.QuotationStatusId ");
+                    sQuery.Append(" where SQ.Enddate is null and QAS.EndDate is null  order by SQ.ServiceQuoteId desc ");
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -48,6 +50,10 @@ namespace DAL.Functions
                             if (dataReader["CompanyName"] != DBNull.Value) { oEServiceQuote.CompanyName = (string)dataReader["CompanyName"]; }
                             if (dataReader["BranchName"] != DBNull.Value) { oEServiceQuote.BranchName = (string)dataReader["BranchName"]; }
                             if (dataReader["ReferenceId"] != DBNull.Value) { oEServiceQuote.ReferenceId = (string)dataReader["ReferenceId"]; }
+
+                            if (dataReader["QuotationStatusId"] != DBNull.Value) { oEServiceQuote.QuotationStatusId = (int)dataReader["QuotationStatusId"]; }
+                            if (dataReader["CreatedDate"] != DBNull.Value) { oEServiceQuote.CreatedDate = (DateTime)dataReader["CreatedDate"]; }
+                            if (dataReader["QuotationStatus"] != DBNull.Value) { oEServiceQuote.QuotationStatus = (string)dataReader["QuotationStatus"]; }
 
                             if (dataReader["OpId"] != DBNull.Value) { oEServiceQuote.OpId = (int)dataReader["OpId"]; }
                             oEServiceQuote.QouteDetails = getAllQuotationDetailse(oEServiceQuote.ServiceQuoteId);
@@ -78,11 +84,14 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" Select B.BranchName,CO.Name CompanyName,SQ.*,SR.* from ServiceQuotes SQ ");
+                    sQuery.Append(" Select QAS.QuotationStatusId,QAS.CreatedDate,QS.QuotationStatus,  B.BranchName,CO.Name CompanyName,SQ.*,SR.* from ServiceQuotes SQ ");
                     sQuery.Append(" left join Services SR on SR.ServiceId=SQ.ServiceId ");
                     sQuery.Append(" inner  join Branchs b on b.branchId=SQ.BranchId  ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=B.compnayId ");
-                    sQuery.AppendFormat(" where SQ.Enddate is null  and SQ.ServiceQuoteDate between '{0}' and '{1}'  order by SQ.ServiceQuoteId desc", startDate, endDate);
+                    sQuery.Append("  inner join QuotationAndStatus QAS on QAS.ServiceQuoteId=SQ.ServiceQuoteId ");
+                    sQuery.Append("  inner join QuotationStatus QS on QS.QuotationStatusId=QAS.QuotationStatusId ");
+
+                    sQuery.AppendFormat(" where SQ.Enddate is null and QAS.EndDate is null  and SQ.ServiceQuoteDate between '{0}' and '{1}'  order by SQ.ServiceQuoteId desc", startDate, endDate);
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -99,6 +108,11 @@ namespace DAL.Functions
                             if (dataReader["CompanyName"] != DBNull.Value) { oEServiceQuote.CompanyName = (string)dataReader["CompanyName"]; }
                             if (dataReader["BranchName"] != DBNull.Value) { oEServiceQuote.BranchName = (string)dataReader["BranchName"]; }
                             if (dataReader["ReferenceId"] != DBNull.Value) { oEServiceQuote.ReferenceId = (string)dataReader["ReferenceId"]; }
+                           
+                            if (dataReader["QuotationStatusId"] != DBNull.Value) { oEServiceQuote.QuotationStatusId = (int)dataReader["QuotationStatusId"]; }
+                            if (dataReader["CreatedDate"] != DBNull.Value) { oEServiceQuote.CreatedDate = (DateTime)dataReader["CreatedDate"]; }
+                            if (dataReader["QuotationStatus"] != DBNull.Value) { oEServiceQuote.QuotationStatus = (string)dataReader["QuotationStatus"]; }
+
 
                             if (dataReader["OpId"] != DBNull.Value) { oEServiceQuote.OpId = (int)dataReader["OpId"]; }
                             oEServiceQuote.QouteDetails = getAllQuotationDetailse(oEServiceQuote.ServiceQuoteId);
@@ -130,11 +144,14 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" Select B.BranchName,CO.Name CompanyName,SQ.*,SR.* from ServiceQuotes SQ ");
+                    sQuery.Append(" Select  QAS.QuotationStatusId,QAS.CreatedDate,QS.QuotationStatus, B.BranchName,CO.Name CompanyName,SQ.*,SR.* from ServiceQuotes SQ ");
                     sQuery.Append(" left join Services SR on SR.ServiceId=SQ.ServiceId ");
                     sQuery.Append(" inner  join Branchs b on b.branchId=SQ.BranchId  ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=B.compnayId ");
-                    sQuery.AppendFormat(" where CO.CompanyID={0} and SQ.Enddate is null  order by SQ.ServiceQuoteId desc", companyid);
+                    sQuery.Append("  inner join QuotationAndStatus QAS on QAS.ServiceQuoteId=SQ.ServiceQuoteId ");
+                    sQuery.Append("  inner join QuotationStatus QS on QS.QuotationStatusId=QAS.QuotationStatusId ");
+
+                    sQuery.AppendFormat(" where CO.CompanyID={0} and and QAS.EndDate is null  SQ.Enddate is null  order by SQ.ServiceQuoteId desc", companyid);
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
 
@@ -150,6 +167,10 @@ namespace DAL.Functions
                             if (dataReader["CompanyName"] != DBNull.Value) { oEServiceQuote.CompanyName = (string)dataReader["CompanyName"]; }
                             if (dataReader["BranchName"] != DBNull.Value) { oEServiceQuote.BranchName = (string)dataReader["BranchName"]; }
                             if (dataReader["ReferenceId"] != DBNull.Value) { oEServiceQuote.ReferenceId = (string)dataReader["ReferenceId"]; }
+                            if (dataReader["QuotationStatusId"] != DBNull.Value) { oEServiceQuote.QuotationStatusId = (int)dataReader["QuotationStatusId"]; }
+                            if (dataReader["CreatedDate"] != DBNull.Value) { oEServiceQuote.CreatedDate = (DateTime)dataReader["CreatedDate"]; }
+                            if (dataReader["QuotationStatus"] != DBNull.Value) { oEServiceQuote.QuotationStatus = (string)dataReader["QuotationStatus"]; }
+
 
                             if (dataReader["OpId"] != DBNull.Value) { oEServiceQuote.OpId = (int)dataReader["OpId"]; }
                             oEServiceQuote.QouteDetails = getAllQuotationDetailse(oEServiceQuote.ServiceQuoteId);
@@ -179,11 +200,13 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" Select B.BranchName,CO.Name CompanyName,SQ.*,SR.* from ServiceQuotes SQ ");
+                    sQuery.Append(" Select QAS.QuotationStatusId,QAS.CreatedDate,QS.QuotationStatus,B.BranchName,CO.Name CompanyName,SQ.*,SR.* from ServiceQuotes SQ ");
                     sQuery.Append(" left join Services SR on SR.ServiceId=SQ.ServiceId ");
                     sQuery.Append(" inner  join Branchs b on b.branchId=SQ.BranchId  ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=B.compnayId ");
-                    sQuery.AppendFormat(" where CO.CompanyID={0} SQ.Enddate is null and SQ.ServiceQuoteDate between '{1}' and '{2}' order by SQ.ServiceQuoteId desc", companyid, startDate, endDate);
+                    sQuery.Append("  inner join QuotationAndStatus QAS on QAS.ServiceQuoteId=SQ.ServiceQuoteId ");
+                    sQuery.Append("  inner join QuotationStatus QS on QS.QuotationStatusId=QAS.QuotationStatusId ");
+                    sQuery.AppendFormat(" where CO.CompanyID={0} and QAS.EndDate is null SQ.Enddate is null and SQ.ServiceQuoteDate between '{1}' and '{2}' order by SQ.ServiceQuoteId desc", companyid, startDate, endDate);
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
 
@@ -199,6 +222,9 @@ namespace DAL.Functions
                             if (dataReader["CompanyName"] != DBNull.Value) { oEServiceQuote.CompanyName = (string)dataReader["CompanyName"]; }
                             if (dataReader["ReferenceId"] != DBNull.Value) { oEServiceQuote.ReferenceId = (string)dataReader["ReferenceId"]; }
                             if (dataReader["BranchName"] != DBNull.Value) { oEServiceQuote.BranchName = (string)dataReader["BranchName"]; }
+                            if (dataReader["QuotationStatusId"] != DBNull.Value) { oEServiceQuote.QuotationStatusId = (int)dataReader["QuotationStatusId"]; }
+                            if (dataReader["CreatedDate"] != DBNull.Value) { oEServiceQuote.CreatedDate = (DateTime)dataReader["CreatedDate"]; }
+                            if (dataReader["QuotationStatus"] != DBNull.Value) { oEServiceQuote.QuotationStatus = (string)dataReader["QuotationStatus"]; }
 
                             if (dataReader["OpId"] != DBNull.Value) { oEServiceQuote.OpId = (int)dataReader["OpId"]; }
                             oEServiceQuote.QouteDetails = getAllQuotationDetailse(oEServiceQuote.ServiceQuoteId);
@@ -229,12 +255,15 @@ namespace DAL.Functions
                 using (var command = conn.CreateCommand())
                 {
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" Select B.BranchName,CO.Name CompanyName,CO.CompanyID,b.branchId,SQ.*,SR.* from ServiceQuotes SQ ");
+                    sQuery.Append(" Select QAS.QuotationStatusId,QAS.CreatedDate,QS.QuotationStatus,B.BranchName,CO.Name CompanyName,CO.CompanyID,b.branchId,SQ.*,SR.* from ServiceQuotes SQ ");
                     sQuery.Append(" left join Services SR on SR.ServiceId=SQ.ServiceId ");
                     sQuery.Append(" inner  join Branchs b on b.branchId=SQ.BranchId  ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=B.compnayId ");
 
-                    sQuery.AppendFormat(" where SQ.ServiceQuoteId={0} ", Id);
+                    sQuery.Append("  inner join QuotationAndStatus QAS on QAS.ServiceQuoteId=SQ.ServiceQuoteId ");
+                    sQuery.Append("  inner join QuotationStatus QS on QS.QuotationStatusId=QAS.QuotationStatusId ");
+
+                    sQuery.AppendFormat(" where SQ.ServiceQuoteId={0} and QAS.EndDate is null", Id);
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -254,6 +283,9 @@ namespace DAL.Functions
                             if (dataReader["ReferenceId"] != DBNull.Value) { oEServiceQuote.ReferenceId = (string)dataReader["ReferenceId"]; }
                             if (dataReader["CompanyID"] != DBNull.Value) { oEServiceQuote.CompanyId = (int)dataReader["CompanyID"]; }
                             if (dataReader["branchId"] != DBNull.Value) { oEServiceQuote.BranchId = (int)dataReader["branchId"]; }
+                            if (dataReader["QuotationStatusId"] != DBNull.Value) { oEServiceQuote.QuotationStatusId = (int)dataReader["QuotationStatusId"]; }
+                            if (dataReader["CreatedDate"] != DBNull.Value) { oEServiceQuote.CreatedDate = (DateTime)dataReader["CreatedDate"]; }
+                            if (dataReader["QuotationStatus"] != DBNull.Value) { oEServiceQuote.QuotationStatus = (string)dataReader["QuotationStatus"]; }
 
                             if (dataReader["OpId"] != DBNull.Value) { oEServiceQuote.OpId = (int)dataReader["OpId"]; }
                             oEServiceQuote.QouteDetails = getAllQuotationDetailse(oEServiceQuote.ServiceQuoteId);
@@ -302,7 +334,7 @@ namespace DAL.Functions
                 await context.SaveChangesAsync();
             }
 
-
+            insertQuoteStatus(ServiceQuote.ServiceQuoteId, ServiceQuote.QuotationStatusId);
 
             return ServiceQuote;
         }
@@ -530,6 +562,46 @@ namespace DAL.Functions
 
                 }
 
+                command.CommandText = sQuery.ToString();
+                // for select only to retrive value ExecuteScalar()
+                return (command.ExecuteNonQuery() > 0);
+
+            }
+
+            return result;
+        }
+
+        public bool EndQuoteStatus(int ServiceQuoteId)
+        {
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            bool result = false;
+            conn.Open();
+            using (var command = conn.CreateCommand())
+            {
+                StringBuilder sQuery = new StringBuilder();
+                sQuery.AppendFormat(" update  QuotationAndStatus set EndDate='{0}' where ServiceQuoteId={1} and EndDate is null ", DateTime.UtcNow, ServiceQuoteId);
+                command.CommandText = sQuery.ToString();
+                // for select only to retrive value ExecuteScalar()
+                return (command.ExecuteNonQuery() > 0);
+
+            }
+
+            return result;
+        }
+
+        public bool insertQuoteStatus(int ServiceQuoteId, int QuotationStatusId)
+        {
+
+            EndQuoteStatus(ServiceQuoteId);
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            bool result = false;
+            conn.Open();
+            using (var command = conn.CreateCommand())
+            {
+                StringBuilder sQuery = new StringBuilder();
+                sQuery.AppendFormat(" INSERT INTO QuotationAndStatus(ServiceQuoteId,QuotationStatusId,CreatedDate)VALUES({0},{1},'{2}') ", ServiceQuoteId, QuotationStatusId, DateTime.UtcNow);
                 command.CommandText = sQuery.ToString();
                 // for select only to retrive value ExecuteScalar()
                 return (command.ExecuteNonQuery() > 0);

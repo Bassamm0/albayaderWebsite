@@ -23,7 +23,8 @@ namespace Entity
         public string? SupervisourName { get; set; }
         [NotMapped]
         public string? SupervisourSignature { get; set; }
-
+        public string? SupervisourMobile { get; set; }
+        public string? SupervisourDesignation { get; set; }
         [NotMapped]
         public string? SupervisourFeedback { get; set; }
 

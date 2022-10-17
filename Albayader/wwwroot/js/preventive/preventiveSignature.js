@@ -40,9 +40,11 @@
 
         var clientName = $('#ClientName').val();
         var clientFeedback = $('#clientFeedback').val();
+        var SupervisourMobile = $('#ClientMobile').val();
+        var SupervisourDesignation = $('#ClientDesignation').val();
 
         var url = APIURL + 'service/clientsignature';
-        var data = '{"serviceId":' + _ServiceId + ',"supervisourSignature":"' + signatureB64 + '","supervisourName":"' + clientName + '","supervisourFeedback":"' + clientFeedback + '"}'
+        var data = '{"serviceId":' + _ServiceId + ',"supervisourSignature":"' + signatureB64 + '","supervisourName":"' + clientName + '","supervisourFeedback":"' + clientFeedback + '","SupervisourMobile":"' + SupervisourMobile + '","SupervisourDesignation":"' + SupervisourDesignation + '"}'
 
 
         $.ajax({

@@ -10,6 +10,7 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -6843,6 +6844,10 @@ button.bg-secondary:focus {
 .bg-success {
   background-color: #28a745 !important;
 }
+.bg-corrective {
+    background-color: rgba(138, 19, 250, 0.9) !important;
+}
+
 
 a.bg-success:hover, a.bg-success:focus,
 button.bg-success:hover,

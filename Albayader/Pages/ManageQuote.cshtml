@@ -58,6 +58,19 @@
                                             </select>
                                           </div>
                                         </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+
+                                            <label>Status</label>
+                                            <select name="ddStatus" id="ddStatus" class="form-control select2" style="width: 100%;">
+                                                <option value="1">Prospect</option>
+                                                <option value="2">Open job</option>
+                                                <option value="3">Done job</option>
+                                                <option value="4">Cancelled</option>
+                                                <option value="5">Stamped</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                         <div class="col-md-12">
                                              <div class="form-group">
                            
@@ -216,7 +229,8 @@
                                                         }
                                                     
                                                     }
-                                                    
+
+                                                    $('#ddStatus').val(@Model._Quote.QuotationStatusId).trigger('change');
                                                     $('#ddCompanies').val(@Model._Quote.CompanyId).trigger('change');
                                                     $('#ddBranch').val(@Model._Quote.BranchId).trigger('change');
                                                     $('#ddService').val(@Model._Quote.ServiceId).trigger('change');

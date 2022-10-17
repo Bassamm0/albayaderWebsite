@@ -1,4 +1,7 @@
-
+.bg-corrective {
+    background-color: rgba(138, 19, 250, 0.5) !important;
+    color:#fff;
+}
 
 .sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active, .sidebar-light-primary .nav-sidebar > .nav-item > .nav-link.active {
     background-color: #dc7926;

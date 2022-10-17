@@ -27,7 +27,8 @@ $(document).ready(function () {
             },
             success: function (data, textStatus, xhr) {
                 
-               // console.log(data);
+                 
+               console.log(data);
                 createEventObj(data)
 
             },
@@ -50,19 +51,29 @@ $(document).ready(function () {
     function createEventObj(data) {
        
         for (var i = 0; i < data.length; i++) {
+
+           
+            var startinitdate = moment(data[i].eventStartDate, 'DD-MM-yyyy HH:mm').format('yyyy-MM-DD HH:mm');
+
+
+
+            console.log('id:' + data[i].eventId + 'Date:' + startinitdate)
+
+
             var strTime = ("0" + new Date(data[i].eventStartDate).getHours()).slice(-2) + ':' + ("0" + new Date(data[i].eventStartDate).getMinutes()).slice(-2);
             var endTime = ("0" + new Date(data[i].eventEndDate).getHours()).slice(-2) + ':' + ("0" + new Date(data[i].eventEndDate).getMinutes()).slice(-2);
+         
+
            
-            ("0" + new Date(data[i].eventStartDate).getMinutes()).slice(-2)
             var newEvent = new Object();
            
            
             newEvent.id = data[i].eventId;
             newEvent.title = data[i].title;
             
-            newEvent.start = moment(data[i].eventStartDate, 'DD-mm-yyyy').format('yyyy-mm-DD') +' '+ strTime;
-            newEvent.end = moment(data[i].eventEndDate, 'DD-mm-yyyy').format('yyyy-mm-DD') + ' ' + endTime;
-            console.log(newEvent.start);
+            newEvent.start = moment(data[i].eventStartDate, 'DD-MM-yyyy HH:mm').format('yyyy-MM-DD HH:mm');
+            newEvent.end = moment(data[i].eventEndDate, 'DD-MM-yyyy HH:mm').format('yyyy-MM-DD HH:mm');
+           // console.log(newEvent.start);
 
             //if (data[i].eventTypeId != 1 || data[i].eventTypeId != 2) {
             //    if (data[i].url != null && data[i].url != '') {
@@ -71,26 +82,31 @@ $(document).ready(function () {
             //}
           
             newEvent.allDay = false;
+            if (data[i].statusId != 5) {
+                if (data[i].eventTypeId == 1) {
+                    newEvent.backgroundColor = '#17a2b8';
+                    newEvent.borderColor = '#0aa4bd';
+                } else if (data[i].eventTypeId == 2) {
+                    newEvent.backgroundColor = '#c489fc';
+                    newEvent.borderColor = '#934fd3';
 
-            if (data[i].eventTypeId == 1) {
+                } else if (data[i].eventTypeId == 3) {
+                    newEvent.backgroundColor = '#dc3545';
+                    newEvent.borderColor = '#b11a65';
+
+                } else if (data[i].eventTypeId == 4) {
+                    newEvent.backgroundColor = '#fd7e14';
+                    newEvent.borderColor = '#d76303';
+                } else {
+                    newEvent.backgroundColor = '#00695c';
+                    newEvent.borderColor = '#00695c';
+                }
+
+            } else {
                 newEvent.backgroundColor = '#007E33';
                 newEvent.borderColor = '#007E33';
-            } else if (data[i].eventTypeId == 2) {
-                newEvent.backgroundColor = '#FF8800';
-                newEvent.borderColor = '#FF8800';
-
-            } else if (data[i].eventTypeId == 3) {
-                newEvent.backgroundColor = '#0099CC';
-                newEvent.borderColor = '#0099CC';
-
-            } else if (data[i].eventTypeId == 4) {
-                newEvent.backgroundColor = '#9933CC';
-                newEvent.borderColor = '#9933CC';
-            } else {
-                newEvent.backgroundColor = '#00695c';
-                newEvent.borderColor = '#00695c';
             }
-          
+           
 
             eventObj.push(newEvent)
 

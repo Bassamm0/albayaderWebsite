@@ -117,5 +117,19 @@ namespace LOGIC
             }
 
         }
+        public async Task<Boolean> completeCalenderEvent(int id)
+        {
+
+            var resul = await dCalenderEvents.completeCalenderEvent(id);
+            if (resul != null && resul.EventId > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
     }
 }

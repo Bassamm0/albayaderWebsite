@@ -27,6 +27,8 @@ namespace Entity
         [NotMapped]
         public string? SupervisourFeedback { get; set; }
 
+        public string? SupervisourMobile { get; set; }
+        public string? SupervisourDesignation { get; set; }
         [NotMapped]
         public string? CreaterName { get; set; }
         [NotMapped]

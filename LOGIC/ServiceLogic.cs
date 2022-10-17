@@ -141,10 +141,10 @@ namespace LOGIC
             }
 
         }
-        public async Task<Boolean> clientSignature(int serviceId,string SupervisourSignature,string SupervisourName,string SupervisourFeedback)
+        public async Task<Boolean> clientSignature(int serviceId,string SupervisourSignature,string SupervisourName,string SupervisourFeedback, string SupervisourMobile, string SupervisourDesignation)
         {
 
-            var resul = await dservice.clientSignature(serviceId, SupervisourSignature, SupervisourName, SupervisourFeedback);
+            var resul = await dservice.clientSignature(serviceId, SupervisourSignature, SupervisourName, SupervisourFeedback,  SupervisourMobile,  SupervisourDesignation);
             if (resul != null && resul.ServiceId > 0)
             {
                 return true;

@@ -177,6 +177,36 @@ namespace API.Controllers
 
             return result;
         }
+        [Route("completeevent")]
+        [Authorize(Roles = "Administrator,Manager")]
+        [HttpPost]
+        public async Task<Boolean> completeCalenderEvent([FromBody] JsonElement objData)
+        {
+
+            bool result = false;
+
+            try
+            {
+                var id = objData.GetProperty("id").GetInt16();
+
+
+                result = await _calender.completeCalenderEvent(id);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "The given key was not present in the dictionary.")
+                {
+                    throw new DomainValidationFundException("Validation : One or more paramter are missing in the request,Error could be becuase of case sensetive");
+                }
+                if (ex.InnerException.ToString().Contains("Cannot insert the value NULL into column"))
+                {
+                    throw new DomainValidationFundException("Validation : null value not allowed to one of the parameters");
+                }
+                return false;
+            }
+
+            return result;
+        }
 
     }
 }

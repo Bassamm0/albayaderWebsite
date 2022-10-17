@@ -100,6 +100,7 @@
                     dataload += '</li>';
                     $("#DrasftTbl").DataTable().row.add([
                         data[i].referenceId,
+                        data[i].quotationStatus,
                        
                         data[i].branchName,
                         data[i].companyName,
@@ -181,6 +182,7 @@
                     dataload += '</li>';
                     $("#DrasftTbl").DataTable().row.add([
                         data[i].referenceId,
+                        data[i].quotationStatus,
 
                         data[i].branchName,
                         data[i].companyName,

@@ -32,6 +32,8 @@ namespace Entity
 
 
         public string? SupervisourFeedback { get; set; }
+        public string? SupervisourMobile { get; set; }
+        public string? SupervisourDesignation { get; set; }
         public int SiteVistTypeId { get; set; }
 
 

@@ -28,6 +28,13 @@ namespace Entity
       
         public int? BranchId { get; set; }
         public string? ReferenceId { get; set; }
+        [NotMapped]
+        public int QuotationStatusId { get; set; }
+        [NotMapped]
+        public DateTime? CreatedDate { get; set; }
+        [NotMapped]
+        public string? QuotationStatus { get; set; }
 
     }
+
 }

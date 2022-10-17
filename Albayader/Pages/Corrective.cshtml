@@ -313,7 +313,7 @@
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Remarks</label>
-                                                    <textarea class="form-control" id="Remarks" name="Remarks" rows="3">@if (!String.IsNullOrEmpty(@Model._service.Remark))
+                                                    <textarea class="form-control" id="Remarks" name="Remarks" rows="3" maxlength="1100">@if (!String.IsNullOrEmpty(@Model._service.Remark))
                                                         {
                                                             @Html.Raw(@Model._service.Remark.Replace("<br>","\n"))
                                                         }</textarea>

@@ -202,6 +202,7 @@ namespace AlbayaderWeb.Pages
 
                     }
                     _postQuote.BranchId = Convert.ToInt16(Request.Form["ddBranch"]);
+                    _postQuote.QuotationStatusId = Convert.ToInt16(Request.Form["ddStatus"]);
                     _postQuote.ServiceId = Convert.ToInt16(Request.Form["ddService"]);
                     _postQuote.ReferenceId = Request.Form["ReferenceId"];
                     _postQuote.ServiceQuoteFile = Request.Form["uploadedfile"];

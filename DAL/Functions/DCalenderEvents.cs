@@ -43,6 +43,7 @@ namespace DAL.Functions
                         {
                             ECalenderEvents oECalenderEvents = new ECalenderEvents();
                             if (dataReader["EventId"] != DBNull.Value) { oECalenderEvents.EventId = (int)dataReader["EventId"]; }
+                            if (dataReader["statusId"] != DBNull.Value) { oECalenderEvents.statusId = (int)dataReader["statusId"]; }
                             if (dataReader["title"] != DBNull.Value) { oECalenderEvents.title = (string)dataReader["title"]; }
                             if (dataReader["eventStartDate"] != DBNull.Value) { oECalenderEvents.eventStartDate = (string)dataReader["eventStartDate"]; }
                             if (dataReader["eventEndDate"] != DBNull.Value) { oECalenderEvents.eventEndDate = (string)dataReader["eventEndDate"]; }
@@ -114,6 +115,7 @@ namespace DAL.Functions
                             if (dataReader["TechnicainName"] != DBNull.Value) { oECalenderEvents.TechnicainName = (string)dataReader["TechnicainName"]; }
                             if (dataReader["BranchName"] != DBNull.Value) { oECalenderEvents.BranchName = (string)dataReader["BranchName"]; }
                             if (dataReader["eventType"] != DBNull.Value) { oECalenderEvents.eventType = (string)dataReader["eventType"]; }
+                            if (dataReader["statusId"] != DBNull.Value) { oECalenderEvents.statusId = (int)dataReader["statusId"]; }
 
 
                             users.Add(oECalenderEvents);
@@ -172,6 +174,7 @@ namespace DAL.Functions
                             if (dataReader["TechnicainName"] != DBNull.Value) { oECalenderEvents.TechnicainName = (string)dataReader["TechnicainName"]; }
                             if (dataReader["BranchName"] != DBNull.Value) { oECalenderEvents.BranchName = (string)dataReader["BranchName"]; }
                             if (dataReader["eventType"] != DBNull.Value) { oECalenderEvents.eventType = (string)dataReader["eventType"]; }
+                            if (dataReader["statusId"] != DBNull.Value) { oECalenderEvents.statusId = (int)dataReader["statusId"]; }
 
 
                             users.Add(oECalenderEvents);
@@ -230,6 +233,7 @@ namespace DAL.Functions
                             if (dataReader["BranchName"] != DBNull.Value) { oECalenderEvents.BranchName = (string)dataReader["BranchName"]; }
                             if (dataReader["eventType"] != DBNull.Value) { oECalenderEvents.eventType = (string)dataReader["eventType"]; }
                             if (dataReader["compnayId"] != DBNull.Value) { oECalenderEvents.compnayId = (int)dataReader["compnayId"]; }
+                            if (dataReader["statusId"] != DBNull.Value) { oECalenderEvents.statusId = (int)dataReader["statusId"]; }
 
                         }
                     }
@@ -296,8 +300,7 @@ namespace DAL.Functions
 
             return eCalenderEvent;
         }
-
-
+      
         public async Task<ECalenderEvents> removeCalenderEvent(int id)
         {
             ECalenderEvents eCalenderEvent = new ECalenderEvents();
@@ -322,7 +325,28 @@ namespace DAL.Functions
         }
 
 
-       
+        public async Task<ECalenderEvents> completeCalenderEvent(int id)
+        {
+            ECalenderEvents eCalenderEvent = new ECalenderEvents();
+
+
+            eCalenderEvent = getSingleCalenderEvent(id);
+            eCalenderEvent.statusId =5;
+
+            if (eCalenderEvent == null)
+            {
+                throw new DomainValidationFundException("Validation : The CalenderEvent is not found, make sure you are removing the correct CalenderEvent");
+            }
+            using (var context = new DatabaseContext(DatabaseContext.ops.dbOptions))
+            {
+                context.CalenderEvents.Attach(eCalenderEvent);
+                context.Entry(eCalenderEvent).Property(x => x.statusId).IsModified = true;
+                await context.SaveChangesAsync();
+
+            }
+
+            return eCalenderEvent;
+        }
 
     }
 }

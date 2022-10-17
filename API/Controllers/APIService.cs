@@ -249,9 +249,11 @@ namespace API.Controllers
                 var SupervisourSignature = objData.GetProperty("supervisourSignature").GetString();
                 var SupervisourName = objData.GetProperty("supervisourName").GetString();
                 var SupervisourFeedback = objData.GetProperty("supervisourFeedback").GetString();
+                var SupervisourMobile = objData.GetProperty("SupervisourMobile").GetString();
+                var SupervisourDesignation = objData.GetProperty("SupervisourDesignation").GetString();
 
 
-                result = await serviceLogic.clientSignature(serviceId, SupervisourSignature, SupervisourName, SupervisourFeedback);
+                result = await serviceLogic.clientSignature(serviceId, SupervisourSignature, SupervisourName, SupervisourFeedback,  SupervisourMobile,  SupervisourDesignation);
             }
             catch (Exception ex)
             {

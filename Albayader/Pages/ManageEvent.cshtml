@@ -168,10 +168,11 @@
                         <script type="text/javascript">
                         $(document).ready(function () {
                         $('.select2').select2();
+                                        $("#ddType").val(@Model._event.eventTypeId).trigger('change');
                         console.log('type',$('#hdEventTypeId').val())
                             if($('#hdEventTypeId').val() == 1 || $('#hdEventTypeId').val() == 2){
                                 $('#eventFixHolder').css('display', 'block')
-                                $("#ddType").val(@Model._event.eventTypeId).trigger('change');
+                               
                                 $("#ddCompanies").val(@Model._event.compnayId).trigger('change');
                                 $("#ddBranch").val(@Model._event.branchId).trigger('change');
                                 $("#ddTechnicain").val(@Model._event.TechnicanId).trigger('change');

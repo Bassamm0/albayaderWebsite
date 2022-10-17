@@ -107,11 +107,31 @@
                                                                           <button type="submit" class="dropdown-item" asp-page-handler="EditEvent"
                                                                               asp-route-companyid="@item.EventId"
                                                                              asp-route-id="@item.EventId" >
-                                                                                 Edit Event</button>
+                                                                                 Edit Event</button></li>
                                              
                                                                           
-                                                                          <li class="deleteEvent" EventName="@item.title" EventId="@item.EventId" data-toggle="modal" data-target="#modal-delete"><a  class="dropdown-item " href="#"  >Delete Event</a></li>
-                                               
+                                                                          <li class="del" EventName="@item.title" EventId="@item.EventId" data-toggle="modal" data-target="#modal-delete">
+                                                                                    <a class="dropdown-item text-danger" href="#">Delete Event</a>
+                                                                                </li>
+                                                                          
+                                                                          @if (@item.statusId != 5)
+                                                                                {
+
+                                                                                    <li class="Complete" EventId="@item.EventId">
+                                                                                        <button type="button" class="dropdown-item completeEvent  text-success"
+                                                                                    EventId="@item.EventId">
+                                                                                            Complete
+                                                                                        </button>
+                                                                                    </li>
+                                                                                }else{
+                                                                                    
+                                                                                    <li class="Complete" >
+
+                                                                                        <button class="dropdown-item btn" href="#" disabled>Completed</button>
+                                                                                    </li>
+                                                                                }
+
+
 
                                                                       </ul>
                                                                     </div>

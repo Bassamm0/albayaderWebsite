@@ -12,6 +12,7 @@ namespace Entity
     {
         [Key]
         public int EventId { get; set; }
+        public int? statusId { get; set; }
         public string title { get; set; }
         public string eventStartDate { get; set; }
         public string? eventEndDate { get; set; }
