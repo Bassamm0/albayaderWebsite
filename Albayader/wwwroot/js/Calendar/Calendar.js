@@ -81,7 +81,7 @@ $(document).ready(function () {
             //    }
             //}
           
-            newEvent.allDay = false;
+            newEvent.allDay = true;
             if (data[i].statusId != 5) {
                 if (data[i].eventTypeId == 1) {
                     newEvent.backgroundColor = '#17a2b8';
