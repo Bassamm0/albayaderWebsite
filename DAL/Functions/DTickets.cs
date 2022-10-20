@@ -1,0 +1,617 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using DAL.DataContext;
+using Entity;
+using DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System.Data.Common;
+using static DAL.DALException;
+
+namespace DAL.Functions
+{
+    public class Dtickets
+    {
+        public List<EticketViews> getAlltickets()
+        {
+            List<EticketViews> users = new List<EticketViews>();
+
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.Append(" select t.*,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
+                    sQuery.Append(" select * from ticketAndStatus ");
+                    sQuery.Append("  where ticketAndStatusId in ( ");
+                    sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
+                    sQuery.Append("   ) ");
+                    sQuery.Append(" ) as most_recent_status ");
+                    sQuery.Append(" on t.ticketid = most_recent_status.ticketid ");
+                    sQuery.Append(" inner join ticketCategory TC on TC.ticketCategoryId=t.ticketCategoryId");
+                    sQuery.Append(" inner join ticketStatus TS on TS.ticketStatusId=most_recent_status.ticketStatusId ");
+                    sQuery.Append(" inner join Users U on U.UserId=t.createdBy ");
+                    sQuery.Append(" inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
+                    sQuery.Append(" inner join Branchs B on B.branchId=UAB.BranchId ");
+                    sQuery.Append(" inner join Companies C on C.CompanyID=B.compnayId ");
+                    sQuery.Append(" left join");
+                    sQuery.Append(" (   ");
+                    sQuery.Append(" select * from ticketAndUser ");
+                    sQuery.Append("   where assginDate in (");
+                    sQuery.Append(" select max(assginDate) from ticketAndUser group by ticketid");
+                    sQuery.Append("  )");
+                    sQuery.Append("  ) as most_recent_assign ");
+                    sQuery.Append("  on most_recent_assign.ticketId=t.ticketId ");
+                    sQuery.Append(" left Join users AU on AU.UserId=most_recent_assign.AssginUserId ");
+
+
+
+                    sQuery.Append(" order by t.creationDate desc ");
+
+                    command.CommandText = sQuery.ToString();
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            EticketViews oEticketViews = new EticketViews();
+                            if (dataReader["ticketID"] != DBNull.Value) { oEticketViews.ticketId = (int)dataReader["ticketID"]; }
+                            if (dataReader["subject"] != DBNull.Value) { oEticketViews.subject = (string)dataReader["subject"]; }
+                            if (dataReader["ticketDetails"] != DBNull.Value) { oEticketViews.ticketDetails = (string)dataReader["ticketDetails"]; }
+                            if (dataReader["creationDate"] != DBNull.Value) { oEticketViews.creationDate = (DateTime)dataReader["creationDate"]; }
+                            if (dataReader["createdBy"] != DBNull.Value) { oEticketViews.createdBy = (int)dataReader["createdBy"]; }
+                            if (dataReader["severityId"] != DBNull.Value) { oEticketViews.severityId = (int)dataReader["severityId"]; }
+                            if (dataReader["ticketCategoryId"] != DBNull.Value) { oEticketViews.ticketCategoryId = (int)dataReader["ticketCategoryId"]; }
+                            if (dataReader["StatusDate"] != DBNull.Value) { oEticketViews.StatusDate = (DateTime)dataReader["StatusDate"]; }
+                            if (dataReader["CreatorName"] != DBNull.Value) { oEticketViews.CreatorName = (string)dataReader["CreatorName"]; }
+                            if (dataReader["BranchName"] != DBNull.Value) { oEticketViews.BranchName = (string)dataReader["BranchName"]; }
+                            if (dataReader["CompanyName"] != DBNull.Value) { oEticketViews.CompanyName = (string)dataReader["CompanyName"]; }
+                            if (dataReader["StatusName"] != DBNull.Value) { oEticketViews.StatusName = (string)dataReader["StatusName"]; }
+                            if (dataReader["AssignedUser"] != DBNull.Value) { oEticketViews.AssignedUser = (string)dataReader["AssignedUser"]; }
+
+                            users.Add(oEticketViews);
+                        }
+                    }
+                    dataReader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return users;
+        }
+
+        public List<EticketViews> getAllOpentickets()
+        {
+            List<EticketViews> users = new List<EticketViews>();
+
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.Append(" select t.*,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
+                    sQuery.Append(" select * from ticketAndStatus ");
+                    sQuery.Append("  where ticketAndStatusId in ( ");
+                    sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
+                    sQuery.Append("   ) ");
+                    sQuery.Append(" ) as most_recent_status ");
+                    sQuery.Append(" on t.ticketid = most_recent_status.ticketid ");
+                    sQuery.Append(" inner join ticketCategory TC on TC.ticketCategoryId=t.ticketCategoryId");
+                    sQuery.Append(" inner join ticketStatus TS on TS.ticketStatusId=most_recent_status.ticketStatusId ");
+                    sQuery.Append(" inner join Users U on U.UserId=t.createdBy ");
+                    sQuery.Append(" inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
+                    sQuery.Append(" inner join Branchs B on B.branchId=UAB.BranchId ");
+                    sQuery.Append(" inner join Companies C on C.CompanyID=B.compnayId ");
+                    sQuery.Append(" left join");
+                    sQuery.Append(" (   ");
+                    sQuery.Append(" select * from ticketAndUser ");
+                    sQuery.Append("   where assginDate in (");
+                    sQuery.Append(" select max(assginDate) from ticketAndUser group by ticketid");
+                    sQuery.Append("  )");
+                    sQuery.Append("  ) as most_recent_assign ");
+                    sQuery.Append("  on most_recent_assign.ticketId=t.ticketId ");
+                    sQuery.Append(" left Join users AU on AU.UserId=most_recent_assign.AssginUserId ");
+                    sQuery.Append(" where most_recent_status.ticketStatusId not in(7) order by t.creationDate desc ");
+
+                    command.CommandText = sQuery.ToString();
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            EticketViews oEticketViews = new EticketViews();
+                            if (dataReader["ticketID"] != DBNull.Value) { oEticketViews.ticketId = (int)dataReader["ticketID"]; }
+                            if (dataReader["subject"] != DBNull.Value) { oEticketViews.subject = (string)dataReader["subject"]; }
+                            if (dataReader["ticketDetails"] != DBNull.Value) { oEticketViews.ticketDetails = (string)dataReader["ticketDetails"]; }
+                            if (dataReader["creationDate"] != DBNull.Value) { oEticketViews.creationDate = (DateTime)dataReader["creationDate"]; }
+                            if (dataReader["createdBy"] != DBNull.Value) { oEticketViews.createdBy = (int)dataReader["createdBy"]; }
+                            if (dataReader["severityId"] != DBNull.Value) { oEticketViews.severityId = (int)dataReader["severityId"]; }
+                            if (dataReader["ticketCategoryId"] != DBNull.Value) { oEticketViews.ticketCategoryId = (int)dataReader["ticketCategoryId"]; }
+                            if (dataReader["StatusDate"] != DBNull.Value) { oEticketViews.StatusDate = (DateTime)dataReader["StatusDate"]; }
+                            if (dataReader["CreatorName"] != DBNull.Value) { oEticketViews.CreatorName = (string)dataReader["CreatorName"]; }
+                            if (dataReader["BranchName"] != DBNull.Value) { oEticketViews.BranchName = (string)dataReader["BranchName"]; }
+                            if (dataReader["CompanyName"] != DBNull.Value) { oEticketViews.CompanyName = (string)dataReader["CompanyName"]; }
+                            if (dataReader["StatusName"] != DBNull.Value) { oEticketViews.StatusName = (string)dataReader["StatusName"]; }
+                            if (dataReader["AssignedUser"] != DBNull.Value) { oEticketViews.AssignedUser = (string)dataReader["AssignedUser"]; }
+
+                            users.Add(oEticketViews);
+                        }
+                    }
+                    dataReader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return users;
+        }
+
+        public List<EticketViews> getAllClosedtickets()
+        {
+            List<EticketViews> users = new List<EticketViews>();
+
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.Append(" select t.*,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
+                    sQuery.Append(" select * from ticketAndStatus ");
+                    sQuery.Append("  where ticketAndStatusId in ( ");
+                    sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
+                    sQuery.Append("   ) ");
+                    sQuery.Append(" ) as most_recent_status ");
+                    sQuery.Append(" on t.ticketid = most_recent_status.ticketid ");
+                    sQuery.Append(" inner join ticketCategory TC on TC.ticketCategoryId=t.ticketCategoryId");
+                    sQuery.Append(" inner join ticketStatus TS on TS.ticketStatusId=most_recent_status.ticketStatusId ");
+                    sQuery.Append(" inner join Users U on U.UserId=t.createdBy ");
+                    sQuery.Append(" inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
+                    sQuery.Append(" inner join Branchs B on B.branchId=UAB.BranchId ");
+                    sQuery.Append(" inner join Companies C on C.CompanyID=B.compnayId ");
+                    sQuery.Append(" left join");
+                    sQuery.Append(" (   ");
+                    sQuery.Append(" select * from ticketAndUser ");
+                    sQuery.Append("   where assginDate in (");
+                    sQuery.Append(" select max(assginDate) from ticketAndUser group by ticketid");
+                    sQuery.Append("  )");
+                    sQuery.Append("  ) as most_recent_assign ");
+                    sQuery.Append("  on most_recent_assign.ticketId=t.ticketId ");
+                    sQuery.Append(" left Join users AU on AU.UserId=most_recent_assign.AssginUserId ");
+                    sQuery.Append(" where most_recent_status.ticketStatusId=7 order by t.creationDate desc ");
+
+                    command.CommandText = sQuery.ToString();
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            EticketViews oEticketViews = new EticketViews();
+                            if (dataReader["ticketID"] != DBNull.Value) { oEticketViews.ticketId = (int)dataReader["ticketID"]; }
+                            if (dataReader["subject"] != DBNull.Value) { oEticketViews.subject = (string)dataReader["subject"]; }
+                            if (dataReader["ticketDetails"] != DBNull.Value) { oEticketViews.ticketDetails = (string)dataReader["ticketDetails"]; }
+                            if (dataReader["creationDate"] != DBNull.Value) { oEticketViews.creationDate = (DateTime)dataReader["creationDate"]; }
+                            if (dataReader["createdBy"] != DBNull.Value) { oEticketViews.createdBy = (int)dataReader["createdBy"]; }
+                            if (dataReader["severityId"] != DBNull.Value) { oEticketViews.severityId = (int)dataReader["severityId"]; }
+                            if (dataReader["ticketCategoryId"] != DBNull.Value) { oEticketViews.ticketCategoryId = (int)dataReader["ticketCategoryId"]; }
+                            if (dataReader["StatusDate"] != DBNull.Value) { oEticketViews.StatusDate = (DateTime)dataReader["StatusDate"]; }
+                            if (dataReader["CreatorName"] != DBNull.Value) { oEticketViews.CreatorName = (string)dataReader["CreatorName"]; }
+                            if (dataReader["BranchName"] != DBNull.Value) { oEticketViews.BranchName = (string)dataReader["BranchName"]; }
+                            if (dataReader["CompanyName"] != DBNull.Value) { oEticketViews.CompanyName = (string)dataReader["CompanyName"]; }
+                            if (dataReader["StatusName"] != DBNull.Value) { oEticketViews.StatusName = (string)dataReader["StatusName"]; }
+                            if (dataReader["AssignedUser"] != DBNull.Value) { oEticketViews.AssignedUser = (string)dataReader["AssignedUser"]; }
+
+                            users.Add(oEticketViews);
+                        }
+                    }
+                    dataReader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return users;
+        }
+        public List<EticketViews> getAllCompanytickets(int companyid)
+        {
+            List<EticketViews> users = new List<EticketViews>();
+
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.Append(" select t.*,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join ( ");
+                    sQuery.Append(" select * from ticketAndStatus ");
+                    sQuery.Append("  where ticketAndStatusId in ( ");
+                    sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
+                    sQuery.Append("   ) ");
+                    sQuery.Append(" ) as most_recent_status ");
+                    sQuery.Append(" on t.ticketid = most_recent_status.ticketid ");
+                    sQuery.Append(" inner join ticketCategory TC on TC.ticketCategoryId=t.ticketCategoryId");
+                    sQuery.Append(" inner join ticketStatus TS on TS.ticketStatusId=most_recent_status.ticketStatusId ");
+                    sQuery.Append(" inner join Users U on U.UserId=t.createdBy ");
+                    sQuery.Append(" inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
+                    sQuery.Append(" inner join Branchs B on B.branchId=UAB.BranchId ");
+                    sQuery.Append(" inner join Companies C on C.CompanyID=B.compnayId ");
+                    sQuery.Append(" left join");
+                    sQuery.Append(" (   ");
+                    sQuery.Append(" select * from ticketAndUser ");
+                    sQuery.Append("   where assginDate in (");
+                    sQuery.Append(" select max(assginDate) from ticketAndUser group by ticketid");
+                    sQuery.Append("  )");
+                    sQuery.Append("  ) as most_recent_assign ");
+                    sQuery.Append("  on most_recent_assign.ticketId=t.ticketId ");
+                    sQuery.Append(" left Join users AU on AU.UserId=most_recent_assign.AssginUserId ");
+                    sQuery.AppendFormat(" where C.CompanyID={0} order by t.creationDate desc", companyid);
+
+                    command.CommandText = sQuery.ToString();
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            EticketViews oEticketViews = new EticketViews();
+                            if (dataReader["ticketID"] != DBNull.Value) { oEticketViews.ticketId = (int)dataReader["ticketID"]; }
+                            if (dataReader["subject"] != DBNull.Value) { oEticketViews.subject = (string)dataReader["subject"]; }
+                            if (dataReader["ticketDetails"] != DBNull.Value) { oEticketViews.ticketDetails = (string)dataReader["ticketDetails"]; }
+                            if (dataReader["creationDate"] != DBNull.Value) { oEticketViews.creationDate = (DateTime)dataReader["creationDate"]; }
+                            if (dataReader["createdBy"] != DBNull.Value) { oEticketViews.createdBy = (int)dataReader["createdBy"]; }
+                            if (dataReader["severityId"] != DBNull.Value) { oEticketViews.severityId = (int)dataReader["severityId"]; }
+                            if (dataReader["ticketCategoryId"] != DBNull.Value) { oEticketViews.ticketCategoryId = (int)dataReader["ticketCategoryId"]; }
+                            if (dataReader["StatusDate"] != DBNull.Value) { oEticketViews.StatusDate = (DateTime)dataReader["StatusDate"]; }
+                            if (dataReader["CreatorName"] != DBNull.Value) { oEticketViews.CreatorName = (string)dataReader["CreatorName"]; }
+                            if (dataReader["BranchName"] != DBNull.Value) { oEticketViews.BranchName = (string)dataReader["BranchName"]; }
+                            if (dataReader["CompanyName"] != DBNull.Value) { oEticketViews.CompanyName = (string)dataReader["CompanyName"]; }
+                            if (dataReader["StatusName"] != DBNull.Value) { oEticketViews.StatusName = (string)dataReader["StatusName"]; }
+                            if (dataReader["AssignedUser"] != DBNull.Value) { oEticketViews.AssignedUser = (string)dataReader["AssignedUser"]; }
+
+                            users.Add(oEticketViews);
+                        }
+                    }
+                    dataReader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return users;
+        }
+
+        public List<EticketViews> getAllCompanyOpentickets(int companyid)
+        {
+            List<EticketViews> users = new List<EticketViews>();
+
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.Append(" select t.*,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join ( ");
+                    sQuery.Append(" select * from ticketAndStatus ");
+                    sQuery.Append("  where ticketAndStatusId in ( ");
+                    sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
+                    sQuery.Append("   ) ");
+                    sQuery.Append(" ) as most_recent_status ");
+                    sQuery.Append(" on t.ticketid = most_recent_status.ticketid ");
+                    sQuery.Append(" inner join ticketCategory TC on TC.ticketCategoryId=t.ticketCategoryId");
+                    sQuery.Append(" inner join ticketStatus TS on TS.ticketStatusId=most_recent_status.ticketStatusId ");
+                    sQuery.Append(" inner join Users U on U.UserId=t.createdBy ");
+                    sQuery.Append(" inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
+                    sQuery.Append(" inner join Branchs B on B.branchId=UAB.BranchId ");
+                    sQuery.Append(" inner join Companies C on C.CompanyID=B.compnayId ");
+                    sQuery.Append(" left join");
+                    sQuery.Append(" (   ");
+                    sQuery.Append(" select * from ticketAndUser ");
+                    sQuery.Append("   where assginDate in (");
+                    sQuery.Append(" select max(assginDate) from ticketAndUser group by ticketid");
+                    sQuery.Append("  )");
+                    sQuery.Append("  ) as most_recent_assign ");
+                    sQuery.Append("  on most_recent_assign.ticketId=t.ticketId ");
+                    sQuery.Append(" left Join users AU on AU.UserId=most_recent_assign.AssginUserId ");
+                    sQuery.AppendFormat(" where C.CompanyID={0} and most_recent_status.ticketStatusId not in(7) order by t.creationDate desc", companyid);
+
+                    command.CommandText = sQuery.ToString();
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            EticketViews oEticketViews = new EticketViews();
+                            if (dataReader["ticketID"] != DBNull.Value) { oEticketViews.ticketId = (int)dataReader["ticketID"]; }
+                            if (dataReader["subject"] != DBNull.Value) { oEticketViews.subject = (string)dataReader["subject"]; }
+                            if (dataReader["ticketDetails"] != DBNull.Value) { oEticketViews.ticketDetails = (string)dataReader["ticketDetails"]; }
+                            if (dataReader["creationDate"] != DBNull.Value) { oEticketViews.creationDate = (DateTime)dataReader["creationDate"]; }
+                            if (dataReader["createdBy"] != DBNull.Value) { oEticketViews.createdBy = (int)dataReader["createdBy"]; }
+                            if (dataReader["severityId"] != DBNull.Value) { oEticketViews.severityId = (int)dataReader["severityId"]; }
+                            if (dataReader["ticketCategoryId"] != DBNull.Value) { oEticketViews.ticketCategoryId = (int)dataReader["ticketCategoryId"]; }
+                            if (dataReader["StatusDate"] != DBNull.Value) { oEticketViews.StatusDate = (DateTime)dataReader["StatusDate"]; }
+                            if (dataReader["CreatorName"] != DBNull.Value) { oEticketViews.CreatorName = (string)dataReader["CreatorName"]; }
+                            if (dataReader["BranchName"] != DBNull.Value) { oEticketViews.BranchName = (string)dataReader["BranchName"]; }
+                            if (dataReader["CompanyName"] != DBNull.Value) { oEticketViews.CompanyName = (string)dataReader["CompanyName"]; }
+                            if (dataReader["StatusName"] != DBNull.Value) { oEticketViews.StatusName = (string)dataReader["StatusName"]; }
+                            if (dataReader["AssignedUser"] != DBNull.Value) { oEticketViews.AssignedUser = (string)dataReader["AssignedUser"]; }
+
+                            users.Add(oEticketViews);
+                        }
+                    }
+                    dataReader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return users;
+        }
+        public List<EticketViews> getAllCompanyClosedtickets(int companyid)
+        {
+            List<EticketViews> users = new List<EticketViews>();
+
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.Append(" select t.*,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join ( ");
+                    sQuery.Append(" select * from ticketAndStatus ");
+                    sQuery.Append("  where ticketAndStatusId in ( ");
+                    sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
+                    sQuery.Append("   ) ");
+                    sQuery.Append(" ) as most_recent_status ");
+                    sQuery.Append(" on t.ticketid = most_recent_status.ticketid ");
+                    sQuery.Append(" inner join ticketCategory TC on TC.ticketCategoryId=t.ticketCategoryId");
+                    sQuery.Append(" inner join ticketStatus TS on TS.ticketStatusId=most_recent_status.ticketStatusId ");
+                    sQuery.Append(" inner join Users U on U.UserId=t.createdBy ");
+                    sQuery.Append(" inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
+                    sQuery.Append(" inner join Branchs B on B.branchId=UAB.BranchId ");
+                    sQuery.Append(" inner join Companies C on C.CompanyID=B.compnayId ");
+                    sQuery.Append(" left join");
+                    sQuery.Append(" (   ");
+                    sQuery.Append(" select * from ticketAndUser ");
+                    sQuery.Append("   where assginDate in (");
+                    sQuery.Append(" select max(assginDate) from ticketAndUser group by ticketid");
+                    sQuery.Append("  )");
+                    sQuery.Append("  ) as most_recent_assign ");
+                    sQuery.Append("  on most_recent_assign.ticketId=t.ticketId ");
+                    sQuery.Append(" left Join users AU on AU.UserId=most_recent_assign.AssginUserId ");
+                    sQuery.AppendFormat(" where C.CompanyID={0} and most_recent_status.ticketStatusId=7 order by t.creationDate desc", companyid);
+
+                    command.CommandText = sQuery.ToString();
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            EticketViews oEticketViews = new EticketViews();
+                            if (dataReader["ticketID"] != DBNull.Value) { oEticketViews.ticketId = (int)dataReader["ticketID"]; }
+                            if (dataReader["subject"] != DBNull.Value) { oEticketViews.subject = (string)dataReader["subject"]; }
+                            if (dataReader["ticketDetails"] != DBNull.Value) { oEticketViews.ticketDetails = (string)dataReader["ticketDetails"]; }
+                            if (dataReader["creationDate"] != DBNull.Value) { oEticketViews.creationDate = (DateTime)dataReader["creationDate"]; }
+                            if (dataReader["createdBy"] != DBNull.Value) { oEticketViews.createdBy = (int)dataReader["createdBy"]; }
+                            if (dataReader["severityId"] != DBNull.Value) { oEticketViews.severityId = (int)dataReader["severityId"]; }
+                            if (dataReader["ticketCategoryId"] != DBNull.Value) { oEticketViews.ticketCategoryId = (int)dataReader["ticketCategoryId"]; }
+                            if (dataReader["StatusDate"] != DBNull.Value) { oEticketViews.StatusDate = (DateTime)dataReader["StatusDate"]; }
+                            if (dataReader["CreatorName"] != DBNull.Value) { oEticketViews.CreatorName = (string)dataReader["CreatorName"]; }
+                            if (dataReader["BranchName"] != DBNull.Value) { oEticketViews.BranchName = (string)dataReader["BranchName"]; }
+                            if (dataReader["CompanyName"] != DBNull.Value) { oEticketViews.CompanyName = (string)dataReader["CompanyName"]; }
+                            if (dataReader["StatusName"] != DBNull.Value) { oEticketViews.StatusName = (string)dataReader["StatusName"]; }
+                            if (dataReader["AssignedUser"] != DBNull.Value) { oEticketViews.AssignedUser = (string)dataReader["AssignedUser"]; }
+
+                            users.Add(oEticketViews);
+                        }
+                    }
+                    dataReader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return users;
+        }
+        public EticketViews getSingleticket(int Id)
+        {
+
+
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            EticketViews oEticketViews = null;
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.Append(" select t.*,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
+                    sQuery.Append(" select * from ticketAndStatus ");
+                    sQuery.Append("  where ticketAndStatusId in ( ");
+                    sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
+                    sQuery.Append("   ) ");
+                    sQuery.Append(" ) as most_recent_status ");
+                    sQuery.Append(" on t.ticketid = most_recent_status.ticketid ");
+                    sQuery.Append(" inner join ticketCategory TC on TC.ticketCategoryId=t.ticketCategoryId");
+                    sQuery.Append(" inner join ticketStatus TS on TS.ticketStatusId=most_recent_status.ticketStatusId ");
+                    sQuery.Append(" inner join Users U on U.UserId=t.createdBy ");
+                    sQuery.Append(" inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
+                    sQuery.Append(" inner join Branchs B on B.branchId=UAB.BranchId ");
+                    sQuery.Append(" inner join Companies C on C.CompanyID=B.compnayId ");
+                    sQuery.Append(" left join");
+                    sQuery.Append(" (   ");
+                    sQuery.Append(" select * from ticketAndUser ");
+                    sQuery.Append("   where assginDate in (");
+                    sQuery.Append(" select max(assginDate) from ticketAndUser group by ticketid");
+                    sQuery.Append("  )");
+                    sQuery.Append("  ) as most_recent_assign ");
+                    sQuery.Append("  on most_recent_assign.ticketId=t.ticketId ");
+                    sQuery.Append(" left Join users AU on AU.UserId=most_recent_assign.AssginUserId ");
+                    sQuery.AppendFormat(" where t.ticketId ={0} ", Id);
+
+                    command.CommandText = sQuery.ToString();
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            oEticketViews = new EticketViews();
+
+                            if (dataReader["ticketID"] != DBNull.Value) { oEticketViews.ticketId = (int)dataReader["ticketID"]; }
+                            if (dataReader["subject"] != DBNull.Value) { oEticketViews.subject = (string)dataReader["subject"]; }
+                            if (dataReader["ticketDetails"] != DBNull.Value) { oEticketViews.ticketDetails = (string)dataReader["ticketDetails"]; }
+                            if (dataReader["creationDate"] != DBNull.Value) { oEticketViews.creationDate = (DateTime)dataReader["creationDate"]; }
+                            if (dataReader["createdBy"] != DBNull.Value) { oEticketViews.createdBy = (int)dataReader["createdBy"]; }
+                            if (dataReader["severityId"] != DBNull.Value) { oEticketViews.severityId = (int)dataReader["severityId"]; }
+                            if (dataReader["ticketCategoryId"] != DBNull.Value) { oEticketViews.ticketCategoryId = (int)dataReader["ticketCategoryId"]; }
+                            if (dataReader["StatusDate"] != DBNull.Value) { oEticketViews.StatusDate = (DateTime)dataReader["StatusDate"]; }
+                            if (dataReader["CreatorName"] != DBNull.Value) { oEticketViews.CreatorName = (string)dataReader["CreatorName"]; }
+                            if (dataReader["BranchName"] != DBNull.Value) { oEticketViews.BranchName = (string)dataReader["BranchName"]; }
+                            if (dataReader["CompanyName"] != DBNull.Value) { oEticketViews.CompanyName = (string)dataReader["CompanyName"]; }
+                            if (dataReader["StatusName"] != DBNull.Value) { oEticketViews.StatusName = (string)dataReader["StatusName"]; }
+                            if (dataReader["AssignedUser"] != DBNull.Value) { oEticketViews.AssignedUser = (string)dataReader["AssignedUser"]; }
+
+                        }
+                    }
+                    dataReader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return oEticketViews;
+        }
+
+        public async Task<Etickets> addticket(Etickets newticket)
+        {
+            newticket.creationDate = DateTime.UtcNow;
+            using (var context = new DatabaseContext(DatabaseContext.ops.dbOptions))
+            {
+                await context.tickets.AddAsync(newticket);
+                await context.SaveChangesAsync();
+            }
+
+            return newticket;
+        }
+        public async Task<Etickets> updateticket(Etickets ticket)
+        {
+           
+            if (ticket == null)
+            {
+                throw new DomainValidationFundException("Validation : The ticket is not found, make sure you are updating the correct ticket");
+            }
+            using (var context = new DatabaseContext(DatabaseContext.ops.dbOptions))
+            {
+                context.tickets.Attach(ticket);
+                context.Entry(ticket).Property(x => x.subject).IsModified = true;
+                context.Entry(ticket).Property(x => x.ticketDetails).IsModified = true;
+   
+               
+                context.Entry(ticket).Property(x => x.severityId).IsModified = true;
+                context.Entry(ticket).Property(x => x.ticketCategoryId).IsModified = true;
+
+                await context.SaveChangesAsync();
+            }
+
+            return ticket;
+        }
+       
+
+       
+
+        public int gettotalticketCount()
+        {
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            int result;
+            conn.Open();
+            using (var command = conn.CreateCommand())
+            {
+
+                StringBuilder sQuery = new StringBuilder();
+                sQuery.AppendFormat(" select count(*)as ticketCount from tickets ");
+                command.CommandText = sQuery.ToString();
+                result = (int)command.ExecuteScalar();
+            }
+
+            return result;
+        }
+
+        public int getCompanytotalticketCount(int companyId)
+        {
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            int result;
+            conn.Open();
+            using (var command = conn.CreateCommand())
+            {
+
+                StringBuilder sQuery = new StringBuilder();
+                sQuery.Append(" select count(*)as ticketCount from tickets t ");
+                sQuery.Append(" inner join Users U on U.UserId=t.createdBy ");
+                sQuery.Append(" inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
+                sQuery.Append(" inner join Branchs B on B.branchId=UAB.BranchId");
+                 sQuery.AppendFormat(" where b.CompanyID={0} ", companyId);
+                command.CommandText = sQuery.ToString();
+                result = (int)command.ExecuteScalar();
+            }
+
+            return result;
+        }
+
+        public async Task<EticketAndStatus> insertNewStatus(EticketAndStatus newticketStatus)
+        {
+            newticketStatus.StatusDate = DateTime.UtcNow;
+            using (var context = new DatabaseContext(DatabaseContext.ops.dbOptions))
+            {
+                await context.ticketAndStatus.AddAsync(newticketStatus);
+                await context.SaveChangesAsync();
+            }
+            return newticketStatus;
+        }
+
+    }
+}

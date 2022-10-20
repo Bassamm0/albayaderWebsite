@@ -48,6 +48,8 @@ namespace DAL.DataContext
         public DbSet<EQuotationDetails> quotationDetails { get; set; }
         public DbSet<ECalenderEvents> CalenderEvents { get; set; }
         public DbSet<EEquipments> Equipments { get; set; }
+        public DbSet<Etickets> tickets { get; set; }
+        public DbSet<EticketAndStatus> ticketAndStatus { get; set; }
 
 
 
