@@ -62,13 +62,12 @@ namespace LOGIC
         {
 
             List<EticketViews> tickets = dtickets.getAllCompanytickets(companyid);
-
             return tickets;
         }
-        public async Task<EticketViews> getticketById(int id)
+        public async Task<EticketViewsDetails> getticketById(int ticketId)
         {
 
-            EticketViews ticket = dtickets.getSingleticket(id);
+            EticketViewsDetails ticket = dtickets.getSingleticket(ticketId);
 
             return ticket;
         }

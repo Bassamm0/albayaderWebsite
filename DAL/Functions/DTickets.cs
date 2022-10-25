@@ -49,9 +49,6 @@ namespace DAL.Functions
                     sQuery.Append("  ) as most_recent_assign ");
                     sQuery.Append("  on most_recent_assign.ticketId=t.ticketId ");
                     sQuery.Append(" left Join users AU on AU.UserId=most_recent_assign.AssginUserId ");
-
-
-
                     sQuery.Append(" order by t.creationDate desc ");
 
                     command.CommandText = sQuery.ToString();
@@ -166,7 +163,6 @@ namespace DAL.Functions
         public List<EticketViews> getAllClosedtickets()
         {
             List<EticketViews> users = new List<EticketViews>();
-
             var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
             var conn = context.Database.GetDbConnection();
             try
@@ -235,6 +231,9 @@ namespace DAL.Functions
 
             return users;
         }
+
+
+
         public List<EticketViews> getAllCompanytickets(int companyid)
         {
             List<EticketViews> users = new List<EticketViews>();
@@ -452,13 +451,13 @@ namespace DAL.Functions
 
             return users;
         }
-        public EticketViews getSingleticket(int Id)
+        public EticketViewsDetails getSingleticket(int ticketId)
         {
-
+            DticketLog dtlog = new DticketLog();
 
             var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
             var conn = context.Database.GetDbConnection();
-            EticketViews oEticketViews = null;
+            EticketViewsDetails oEticketViews = null;
             try
             {
                 conn.Open();
@@ -487,7 +486,7 @@ namespace DAL.Functions
                     sQuery.Append("  ) as most_recent_assign ");
                     sQuery.Append("  on most_recent_assign.ticketId=t.ticketId ");
                     sQuery.Append(" left Join users AU on AU.UserId=most_recent_assign.AssginUserId ");
-                    sQuery.AppendFormat(" where t.ticketId ={0} ", Id);
+                    sQuery.AppendFormat(" where t.ticketId ={0} ", ticketId);
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -496,7 +495,7 @@ namespace DAL.Functions
                     {
                         while (dataReader.Read())
                         {
-                            oEticketViews = new EticketViews();
+                            oEticketViews = new EticketViewsDetails();
 
                             if (dataReader["ticketID"] != DBNull.Value) { oEticketViews.ticketId = (int)dataReader["ticketID"]; }
                             if (dataReader["subject"] != DBNull.Value) { oEticketViews.subject = (string)dataReader["subject"]; }
@@ -511,6 +510,8 @@ namespace DAL.Functions
                             if (dataReader["CompanyName"] != DBNull.Value) { oEticketViews.CompanyName = (string)dataReader["CompanyName"]; }
                             if (dataReader["StatusName"] != DBNull.Value) { oEticketViews.StatusName = (string)dataReader["StatusName"]; }
                             if (dataReader["AssignedUser"] != DBNull.Value) { oEticketViews.AssignedUser = (string)dataReader["AssignedUser"]; }
+                            oEticketViews.lticketfile = getAllTicketFile(ticketId);
+                            oEticketViews.lticketLog= dtlog.getticketLog(ticketId);
 
                         }
                     }
@@ -611,6 +612,50 @@ namespace DAL.Functions
                 await context.SaveChangesAsync();
             }
             return newticketStatus;
+        }
+
+        public List<EticketFiles> getAllTicketFile(int ticketId)
+        {
+            List<EticketFiles> users = new List<EticketFiles>();
+
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.Append(" select * from ticketFiles TF ");
+                    sQuery.AppendFormat(" where TF.ticketId={0}", ticketId);
+
+                    command.CommandText = sQuery.ToString();
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            EticketFiles oEticketFiles = new EticketFiles();
+                            if (dataReader["ticketFileId"] != DBNull.Value) { oEticketFiles.ticketFileId = (int)dataReader["ticketFileId"]; }
+                            if (dataReader["ticketId"] != DBNull.Value) { oEticketFiles.ticketId = (int)dataReader["ticketId"]; }
+                            if (dataReader["fileName"] != DBNull.Value) { oEticketFiles.fileName = (string)dataReader["fileName"]; }
+                          
+
+
+                            users.Add(oEticketFiles);
+                        }
+                    }
+                    dataReader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return users;
         }
 
     }

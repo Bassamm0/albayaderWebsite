@@ -15,6 +15,8 @@ namespace API.Controllers
     public class APITickets : ControllerBase
     {
         private ticketLogic ticketLogic = new ticketLogic();
+        private TicketLogLogic ticketLogLogic = new TicketLogLogic();
+
 
         [Route("all")]
         [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
@@ -72,14 +74,14 @@ namespace API.Controllers
             return tickets;
         }
 
-        [Route("getticketById")]
+        [Route("ticketdetails")]
       [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
         [HttpPost]
-        public async Task<EticketViews> getticketById([FromBody] JsonElement objData)
+        public async Task<EticketViewsDetails> getticketById([FromBody] JsonElement objData)
         {
-            int _id = objData.GetProperty("id").GetInt16();
-            EticketViews ticket = new EticketViews();
-            ticket = await ticketLogic.getticketById(_id);
+            int ticketId = objData.GetProperty("ticketId").GetInt16();
+            EticketViewsDetails ticket = new EticketViewsDetails();
+            ticket = await ticketLogic.getticketById(ticketId);
             if (ticket == null)
             {
                 throw new DomainValidationFundException("No data");
@@ -87,7 +89,8 @@ namespace API.Controllers
             return ticket;
         }
 
-        [Route("add")]
+
+       [Route("add")]
        [Authorize(Roles = "Administrator,Manager")]
         [HttpPost]
         public async Task<Boolean> addticket([FromBody] Etickets ticket)
@@ -145,7 +148,55 @@ namespace API.Controllers
 
             return result;
         }
-       
-       
-    }
+
+        
+
+        [Route("ticketLog")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
+        [HttpPost]
+        public async Task<List<EticketLog>> getTicketLog([FromBody] JsonElement objData)
+        {
+            int ticketId = objData.GetProperty("ticketId").GetInt16();
+            List<EticketLog> ticketLogs = new List<EticketLog>();
+            if (ticketId > 0)
+            {
+                ticketLogs = await ticketLogLogic.getticketLog(ticketId);
+
+            }
+
+            return ticketLogs;
+        }
+
+
+
+        [Route("addlog")]
+        [Authorize(Roles = "Administrator,Manager")]
+        [HttpPost]
+        public async Task<Boolean> addticketlog([FromBody] EticketLog ticketlog)
+        {
+
+            bool result = false;
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            EUser logeduser = claimHellper.GetCurrentUser(identity);
+            ticketlog.UserId = logeduser.UserId;
+            ticketlog.CreationDate = DateTime.UtcNow;
+            try
+            {
+                result = await ticketLogLogic.addticketLog(ticketlog);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "The given key was not present in the dictionary.")
+                {
+                    throw new DomainValidationFundException("Validation : One or more paramter are missing in the request,Error could be becuase of case sensetive");
+                }
+                if (ex.InnerException.ToString().Contains("Cannot insert the value NULL into column"))
+                {
+                    throw new DomainValidationFundException("Validation : null value not allowed to one of the parameters");
+                }
+                return false;
+            }
+            return result;
+        }
+    }  
 }

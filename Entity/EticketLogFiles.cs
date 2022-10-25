@@ -10,5 +10,6 @@ namespace Entity
     {
         public int ticketLogFileId { get; set; }
         public string fileName { get; set; }
+        public string ticketLogId { get; set; }
     }
 }
