@@ -5,9 +5,10 @@ using System.Text;
 using Entity;
 using System.Net.Http.Headers;
 
+
 namespace AlbayaderWeb.Pages
 {
-    public class CorrectiveModel : PageModel
+    public class editcorrectiveModel : PageModel
     {
         AppConfiguration AppConfig = new AppConfiguration();
         public string? apiurl { get; set; }
@@ -23,7 +24,7 @@ namespace AlbayaderWeb.Pages
 
         public ECorrectiveServiceModel _service = new ECorrectiveServiceModel();
 
-        public async Task<IActionResult> OnGet( int ServiceId)
+        public async Task<IActionResult> OnGet(int ServiceId)
         {
 
             if (HttpContext.Session.GetString("token") == null || HttpContext.Session.GetString("token") == "")
@@ -53,7 +54,7 @@ namespace AlbayaderWeb.Pages
             _service.ServiceDetails[0].ReportedDate = oDate.ToString("dd-MM-yyyy");
 
             int statusId = _service.StatusId;
-            if (statusId != 1 && statusId != 3)
+            if (statusId != 5)
             {
                 return Redirect("Dashboard");
             }
@@ -94,6 +95,5 @@ namespace AlbayaderWeb.Pages
             }
             return _service;
         }
-
     }
 }

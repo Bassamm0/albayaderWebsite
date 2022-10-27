@@ -5185,18 +5185,19 @@ input[type="button"].btn-block {
 }
 
 .badge {
-  display: inline-block;
-  padding: 0.25em 0.4em;
-  font-size: 75%;
-  font-weight: 700;
-  line-height: 1;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
-  border-radius: 0.25rem;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    width: 135px;
+    display: inline-block;
+    padding: 1em 1em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    /* padding:10px ; */
 }
-
 @media (prefers-reduced-motion: reduce) {
   .badge {
     transition: none;
@@ -5283,8 +5284,8 @@ a.badge-info:focus, a.badge-info.focus {
 }
 
 .badge-warning {
-  color: #1f2d3d;
-  background-color: #ffc107;
+    color: #ffffff;
+    background-color: #ffc107;
 }
 
 a.badge-warning:hover, a.badge-warning:focus {
@@ -5341,6 +5342,38 @@ a.badge-dark:focus, a.badge-dark.focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.5);
 }
+
+/* bassam */
+.badge-orang {
+    color: #fff;
+    background-color: #ff851b;
+}
+
+a.badge-orang:hover, a.badge-orang:focus {
+    color: #fff;
+    background-color: #ff851b;
+}
+
+.badge-purple {
+    color: #fff;
+    background-color: #605ca8;
+}
+
+a.badge-purple:hover, a.badge-orang:focus {
+    color: #fff;
+    background-color: #605ca8;
+}
+
+.badge-Lightblue {
+    color: #fff;
+    background-color: #3c8dbc;
+}
+
+a.badge-Lightblue:hover, a.badge-orang:focus {
+    color: #fff;
+    background-color: #3c8dbc;
+}
+/*  */
 
 .jumbotron {
   padding: 2rem 1rem;
@@ -53016,3 +53049,100 @@ a.text-muted:hover {
 }
 /*# sourceMappingURL=adminlte.css.map */
 
+/* bassam */
+.ticketViewDashboard {
+    padding: 0px 10px;
+    background: #1d2429;
+    color: #fff;
+}
+
+.ticketViewDashboardHeader {
+    background: #303233;
+    padding: 20px;
+}
+
+.ticketViewDashboardRowHeader {
+    padding: 20px;
+}
+
+    .ticketViewDashboardRowHeader div {
+        padding: 10px;
+    }
+
+.colRef {
+    width: 5%
+}
+
+.colSubject {
+    width: 50%;
+    font-size: large;
+}
+
+.colBranch {
+    width: 15%
+}
+
+.colAssigned {
+    width: 15%
+}
+
+.colStatus {
+    width: 10%
+}
+
+.dropdown-divider-light {
+    height: 0;
+    margin: 0.5rem 0;
+    overflow: hidden;
+    border-top: 1px solid #4f4f4f;
+}
+
+.blink {
+    animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+    0% {
+        background: #4f4f4f;
+    }
+
+    50% {
+        background: red;
+    }
+}
+
+.rowblink {
+    animation: blinkerfullrow 1s linear infinite;
+}
+
+@keyframes blinkerfullrow {
+    0% {
+        background: #4f4f4f;
+    }
+
+    100% {
+        background: red;
+    }
+}
+
+.bview {
+    padding: 20px;
+    width: 200px;
+    font-size: large;
+}
+
+
+/* bassam ticket view details */
+
+.ticketViewDetails {
+    margin: 30px 0px;
+}
+
+.ticket-divider {
+    width: 100%;
+    padding: 10px 0;
+}
+
+.badge-details {
+    width: 200px;
+}

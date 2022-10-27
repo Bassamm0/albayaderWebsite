@@ -60,6 +60,9 @@ $(document).ready(function () {
 		case "Calendar":
 			$("#calenderMenu").addClass("active");
 			break;
+		case "tickets":
+			$("#TicketsMenu").addClass("active");
+			break;
 		default:
 		// code block
 	}

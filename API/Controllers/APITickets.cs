@@ -44,6 +44,20 @@ namespace API.Controllers
 
             return tickets;
         }
+        [Route("opendate")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
+        [HttpPost]
+        public async Task<List<EticketViews>> getAllOpenticketsDate([FromBody] JsonElement objData)
+        {
+            var startDate = objData.GetProperty("startDate").GetString();
+            var endDate = objData.GetProperty("endDate").GetString();
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            EUser logeduser = claimHellper.GetCurrentUser(identity);
+            List<EticketViews> tickets = new List<EticketViews>();
+            tickets = await ticketLogic.getAllOpenticketsDate(logeduser,startDate,endDate);
+
+            return tickets;
+        }
         [Route("closed")]
         [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
         [HttpGet]

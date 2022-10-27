@@ -30,7 +30,10 @@ namespace Entity
         public DateTime StatusDate { get; set; }
         [NotMapped]
         public string StatusName { get; set; }
+        [NotMapped]
         public string AssignedUser { get; set; }
+        [NotMapped]
+        public int ticketStatusId { get; set; }
 
         public List<EticketFiles>? lticketfile { get; set; }
         public List<EticketLog>? lticketLog { get; set; }

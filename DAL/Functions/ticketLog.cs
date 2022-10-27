@@ -77,7 +77,7 @@ namespace DAL.Functions
                     sQuery.Append(" select TL.*,CONCAT(U.FirstName,' ',U.Lastname) as UserFullName from ticketLog TL");
                     sQuery.Append(" inner join Users U on U.UserId=TL.UserId  ");
                    
-                    sQuery.AppendFormat(" where TL.ticketId", ticketId);
+                    sQuery.AppendFormat(" where TL.ticketId={0}", ticketId);
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -231,7 +231,7 @@ namespace DAL.Functions
                         {
                             EticketLogFiles oEticketFiles = new EticketLogFiles();
                             if (dataReader["ticketLogFileId"] != DBNull.Value) { oEticketFiles.ticketLogFileId = (int)dataReader["ticketLogFileId"]; }
-                            if (dataReader["ticketLogId"] != DBNull.Value) { oEticketFiles.ticketLogId = (string)dataReader["ticketLogId"]; }
+                            if (dataReader["ticketLogId"] != DBNull.Value) { oEticketFiles.ticketLogId = (int)dataReader["ticketLogId"]; }
                             if (dataReader["fileName"] != DBNull.Value) { oEticketFiles.fileName = (string)dataReader["fileName"]; }
 
 

@@ -143,6 +143,14 @@
                     dataload += '</li>';
                     if (arole == "Administrator") {
                         dataload += '<li class="changeDatecss" serviceid="' + data[i].serviceId + '"><a  class="dropdown-item " href="#"  data-toggle="modal" data-target="#modal-ChangeDate">Change Date</a></li>';
+
+                        if (data[i].serviceTypeId == 1) {
+                            dataload += '<li class="editDatecss" serviceid="' + data[i].serviceId + '"><a  class="dropdown-item " href="editpreventive?ServiceId=' + data[i].serviceId + '" >Edit</a></li>';
+                        } else {
+                            dataload += '<li class="editDatecss" serviceid="' + data[i].serviceId + '"><a  class="dropdown-item " href="editcorrective?ServiceId=' + data[i].serviceId + '" >Edit</a></li>';
+
+                        }
+
                     }
 
                     var remark = '<span class="Remak">' + data[i].remark + '</span>'
@@ -262,9 +270,17 @@
                     }
                     dataload += '</li>';
 
-                    dataload += '<li class="changeDatecss" serviceid="' + data[i].serviceId + '"><a  class="dropdown-item " href="#"  data-toggle="modal" data-target="#modal-ChangeDate">Change Date</a></li>';
+                    if (arole == "Administrator") {
+                        dataload += '<li class="changeDatecss" serviceid="' + data[i].serviceId + '"><a  class="dropdown-item " href="#"  data-toggle="modal" data-target="#modal-ChangeDate">Change Date</a></li>';
 
+                        if (data[i].serviceTypeId == 1) {
+                            dataload += '<li class="editDatecss" serviceid="' + data[i].serviceId + '"><a  class="dropdown-item " href="editpreventive?ServiceId=' + data[i].serviceId + '" >Edit</a></li>';
+                        } else {
+                            dataload += '<li class="editDatecss" serviceid="' + data[i].serviceId + '"><a  class="dropdown-item " href="editcorrective?ServiceId=' + data[i].serviceId + '" >Edit</a></li>';
 
+                        }
+
+                    }
 
                     var remark = '<span class="Remak">' + data[i].remark + '</span>'
                     $("#DrasftTbl").DataTable().row.add([
@@ -433,5 +449,5 @@
         });
     }
 
-
+   
 })

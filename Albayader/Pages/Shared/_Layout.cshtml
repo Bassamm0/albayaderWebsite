@@ -9,6 +9,7 @@
 
 
     <!-- Google Font: Source Sans Pro -->
+    <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
     <!-- Font Awesome -->
@@ -296,6 +297,15 @@
                             
                             }
 
+                            <li class="nav-item">
+                                <a href="tickets" class="nav-link" id="TicketsMenu">
+                                    <i class="nav-icon fa-solid fa-handshake"></i>
+                                    <p style="padding-left: 10px;">
+                                        Tickets
+                                    </p>
+                                </a>
+
+                            </li>
 
                         </ul>
                     </nav>
@@ -336,7 +346,7 @@
     <script src="js/adminlte.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <script src="js/general.js"></script>
+    <script src="js/general.js?dt=@DateTime.Now.ToString("yyyyMMddhhmmss")"></script>
 
 </body>
 </html>

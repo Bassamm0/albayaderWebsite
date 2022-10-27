@@ -7,23 +7,24 @@ using System.Net.Http.Headers;
 
 namespace AlbayaderWeb.Pages
 {
-    public class CorrectiveModel : PageModel
+    public class editpreventiveModel : PageModel
     {
         AppConfiguration AppConfig = new AppConfiguration();
         public string? apiurl { get; set; }
         public string? uploadurl { get; set; }
         public string token { get; set; }
         public string email { get; set; }
-
+        public string role { get; set; }
         public int _BranchId { get; set; }
         public int _ServiceId { get; set; }
         public string errorMessage { get; set; }
         public string timezone { get; set; }
-        public string role { get; set; }
 
-        public ECorrectiveServiceModel _service = new ECorrectiveServiceModel();
 
-        public async Task<IActionResult> OnGet( int ServiceId)
+        public EServiceModel _service = new EServiceModel();
+
+
+        public async Task<IActionResult> OnGet(int BranchId, int ServiceId)
         {
 
             if (HttpContext.Session.GetString("token") == null || HttpContext.Session.GetString("token") == "")
@@ -44,25 +45,23 @@ namespace AlbayaderWeb.Pages
 
             apiurl = AppConfig.APIUrl;
             uploadurl = AppConfig.UploadURL;
-            _ServiceId = ServiceId;
+
+
+
             _service = await getService(ServiceId);
             //convert datetime to timezone          
             _service.CreatedDate = UtilityHelper.convertUTCtoTimeZone(_service.CreatedDate, timezone);
-            DateTime oDate = DateTime.ParseExact(_service.ServiceDetails[0].ReportedDate, "M/d/yyyy hh:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture);
 
-            _service.ServiceDetails[0].ReportedDate = oDate.ToString("dd-MM-yyyy");
 
             int statusId = _service.StatusId;
-            if (statusId != 1 && statusId != 3)
+            if (statusId != 5)
             {
                 return Redirect("Dashboard");
             }
             return null;
         }
-
-        public async Task<ECorrectiveServiceModel> getService(int id)
+        public async Task<EServiceModel> getService(int id)
         {
-
             apiurl = AppConfig.APIUrl;
             var parameters = new Dictionary<string, int>();
             parameters["id"] = id;
@@ -74,14 +73,14 @@ namespace AlbayaderWeb.Pages
             using (var httpClient = new HttpClient())
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                using (var response = await httpClient.PostAsync(apiurl + "service/getcorrectiveservicebyid", data))
+                using (var response = await httpClient.PostAsync(apiurl + "service/getservicebyid", data))
                 {
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")
                     {
                         string responseJson = response.Content.ReadAsStringAsync().Result;
 
-                        _service = JsonConvert.DeserializeObject<ECorrectiveServiceModel>(responseJson);
+                        _service = JsonConvert.DeserializeObject<EServiceModel>(responseJson);
                         //return response.StatusCode.ToString();
                     }
                     else

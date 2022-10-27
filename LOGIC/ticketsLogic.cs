@@ -43,6 +43,22 @@ namespace LOGIC
 
             return tickets;
         }
+
+        public async Task<List<EticketViews>> getAllOpenticketsDate(EUser logeduser,string startDate,string endDate)
+        {
+
+            List<EticketViews> tickets = new List<EticketViews>();
+            if (logeduser.CompanyTypeId == 1 && (logeduser.UserRole.ToLower() == "administrator" || logeduser.UserRole.ToLower() == "manager" || logeduser.UserRole.ToLower() == "technicion"))
+            {
+                tickets = dtickets.getAllOpenticketsDate(startDate,  endDate);
+            }
+            else if (logeduser.CompanyTypeId != 1 && logeduser.UserRole.ToLower() == "client manager")
+            {
+                tickets = dtickets.getAllCompanyOpenticketsDate(logeduser.CompanyId, startDate, endDate);
+            }
+
+            return tickets;
+        }
         public async Task<List<EticketViews>> getAllClosedtickets(EUser logeduser)
         {
 
