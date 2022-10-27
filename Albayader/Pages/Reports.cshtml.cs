@@ -104,6 +104,55 @@ namespace AlbayaderWeb.Pages
 
 
 
+        public async Task<IActionResult> OnPostDeleteService(int id)
+        {
+
+            token = HttpContext.Session.GetString("token");
+            if (id == 0)
+            {
+                return Page();
+            }
+            string statusCode = await deletService(id);
+
+            return null;
+
+        }
+        public async Task<string> deletService(int id)
+        {
+            string apiurl = AppConfig.APIUrl;
+            var parameters = new Dictionary<string, int>();
+            parameters["id"] = id;
+            var json = JsonConvert.SerializeObject(parameters);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                using (var response = await httpClient.PostAsync(apiurl + "service/remove", data))
+                {
+                    // string apiResponse = await response.Content.ReadAsStringAsync();
+                    if (response.StatusCode.ToString() == "OK")
+                    {
+                        string responseJson = response.Content.ReadAsStringAsync().Result;
+
+                        //string res = JsonConvert.DeserializeObject<string>(responseJson);
+                        return response.StatusCode.ToString();
+                    }
+                    else
+                    {
+
+                        errorMessage = response.Content.ReadAsStringAsync().Result;
+                        //  return response.StatusCode.ToString();
+                    }
+
+
+
+                }
+            }
+
+
+            return "";
+        }
+
 
     }
 }

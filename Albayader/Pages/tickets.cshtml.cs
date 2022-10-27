@@ -13,6 +13,8 @@ namespace AlbayaderWeb.Pages
     {
         AppConfiguration AppConfig = new AppConfiguration();
         public string? apiurl { get; set; }
+        public string? storeStartDate { get; set; }
+        public string? storeEndDate { get; set; }
         public string? uploadurl { get; set; }
         public string role { get; set; }
         public string token { get; set; }
@@ -83,26 +85,32 @@ namespace AlbayaderWeb.Pages
         public async Task<IActionResult> OnPost()
         {
             token = HttpContext.Session.GetString("token");
-           
+
+            storeStartDate = Request.Form["startDate"];
+            storeEndDate = Request.Form["endDate"];
 
             string type = Request.Form["actionType"];
             if(type== "filter")
             {
+
                 string startDate1 = Request.Form["startDate"];
                 string endDate1 = Request.Form["endDate"];
+               
+
+                if (String.IsNullOrEmpty(startDate1) || String.IsNullOrEmpty(endDate1)) return null;
 
                 DateTime osDate = DateTime.ParseExact(startDate1, "dd-MM-yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture);
                 DateTime oeDate = DateTime.ParseExact(endDate1, "dd-MM-yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture);
                 string startDate = osDate.ToString("yyyy-MM-dd HH:mm:ss");
                 string endDate = oeDate.ToString("yyyy-MM-dd HH:mm:ss");
-
+              
                 tickets = await getAllOpenticketsDate(startDate, endDate);
             }
             else
             {
                 tickets = await getAllOpentickets();
             }
-            return null;
+            return Page();
         }
         public async Task<List<EticketViews>> getAllOpenticketsDate(string startDate,string endDate)
         {

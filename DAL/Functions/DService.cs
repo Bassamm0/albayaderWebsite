@@ -35,7 +35,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join Users UT on UT.UserId=SR.TechnicianId ");
                     sQuery.Append(" inner join ServiceType ST on ST.ServiceTypeId=SR.ServiceTypeId ");
                     sQuery.Append(" left join StatusAfter STF on STF.StatusAfterId=SR.StatusAfterId ");
-                    sQuery.Append(" order by SR.CreatedDate desc ");
+                    sQuery.Append(" where SR.EndDate is null order by SR.CreatedDate desc ");
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -103,7 +103,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join ServiceType ST on ST.ServiceTypeId=SR.ServiceTypeId ");
                     sQuery.Append(" left join StatusAfter STF on STF.StatusAfterId=SR.StatusAfterId ");
                     sQuery.AppendFormat(" where SR.StatusId={0} ",StatusId);
-                    sQuery.Append(" order by SR.CreatedDate desc ");
+                    sQuery.Append(" and  SR.EndDate is null order by SR.CreatedDate desc ");
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -180,7 +180,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join ServiceType ST on ST.ServiceTypeId=SR.ServiceTypeId ");
                     sQuery.Append(" left join StatusAfter STF on STF.StatusAfterId=SR.StatusAfterId ");
                     sQuery.AppendFormat(" where SR.StatusId={0} and CO.CompanyId={1} ", StatusId,companyId);
-                    sQuery.Append(" order by SR.CreatedDate desc ");
+                    sQuery.Append("  and SR.EndDate is null order by SR.CreatedDate desc ");
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -243,7 +243,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join SiteVistType STV on STV.SiteVistTypeId=SR.SiteVistTypeId ");
                     sQuery.Append(" left join StatusAfter STF on STF.StatusAfterId=SR.StatusAfterId ");
                     sQuery.AppendFormat(" where SR.StatusId=5" );
-                    sQuery.Append(" order by SR.CompletionDate desc ");
+                    sQuery.Append("  and SR.EndDate is null order by SR.CompletionDate desc ");
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -321,7 +321,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join SiteVistType STV on STV.SiteVistTypeId=SR.SiteVistTypeId ");
                     sQuery.Append(" left join StatusAfter STF on STF.StatusAfterId=SR.StatusAfterId ");
                     sQuery.AppendFormat(" where SR.StatusId=5 and BR.branchId={0} ",BranchId);
-                    sQuery.Append(" order by SR.CompletionDate desc ");
+                    sQuery.Append("  and SR.EndDate is null order by SR.CompletionDate desc ");
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -388,7 +388,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join SiteVistType STV on STV.SiteVistTypeId=SR.SiteVistTypeId ");
                     sQuery.Append(" left join StatusAfter STF on STF.StatusAfterId=SR.StatusAfterId ");
                     sQuery.AppendFormat(" where SR.StatusId=5 and SR.CompletionDate between '{0}' and '{1}'", startDate, endDate);
-                    sQuery.Append(" order by SR.CompletionDate desc ");
+                    sQuery.Append("  and SR.EndDate is null order by SR.CompletionDate desc ");
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -455,7 +455,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join SiteVistType STV on STV.SiteVistTypeId=SR.SiteVistTypeId ");
                     sQuery.Append(" left join StatusAfter STF on STF.StatusAfterId=SR.StatusAfterId ");
                     sQuery.AppendFormat(" where SR.StatusId=5 and CO.CompanyID={0}", companyId);
-                    sQuery.Append(" order by SR.CompletionDate desc ");
+                    sQuery.Append("  and SR.EndDate is null order by SR.CompletionDate desc ");
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -534,7 +534,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join SiteVistType STV on STV.SiteVistTypeId=SR.SiteVistTypeId ");
                     sQuery.Append(" left join StatusAfter STF on STF.StatusAfterId=SR.StatusAfterId ");
                     sQuery.AppendFormat(" where SR.StatusId=5 and CO.CompanyID={0} and SR.CompletionDate between '{1}' and '{2}'", companyId, startDate, endDate);
-                    sQuery.Append(" order by SR.CompletionDate desc ");
+                    sQuery.Append("  and SR.EndDate is null order by SR.CompletionDate desc ");
                 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();

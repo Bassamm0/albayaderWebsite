@@ -13,10 +13,7 @@
         icon: { time: 'far fa-clock' }
     });
 
-    $('#newDateChange').datetimepicker({
-        format: 'DD-MM-yyyy'
-    });
-
+   
     const APIURL = $('#APIURI').val();
 
     $('.select2').select2();
@@ -33,18 +30,23 @@
     $('body').on('click', '#DateSearch', function () {
        
         if ($("#FilterDate").valid()) {
-            $('#FilterDate').submit();
             $('#actionType').val('filter')
+            $('#FilterDate').submit();
+           
         }
 
 
     })
     $('body').on('click', '#DateReset', function () {
 
-       // if ($('#actionType').val() == 'filter') {
-            $('#actionType').val('reset')
+       
+        $('#startDate').val('');
+        $('#endDate').val('');
+
+        $("#FilterDate").validate().cancelSubmit = true;
+        $('#actionType').val('reset')
             $('#FilterDate').submit();
-      //  } 
+  
    
 
 

@@ -657,7 +657,7 @@
         
         if (ServiceDetailsId == '') {
             deletedform.parent('div').parent('div').parent('div').remove();
-
+            cn--;
             return;
         }
         $('#deletedServiceDetailsId').val(ServiceDetailsId)
@@ -669,7 +669,7 @@
     $('body').on('click', '#deleteServiceDetailsbtn', function () {
 
         deleteServiceDetails();
-       // cn--;
+       //cn--;
         console.log('remove', cn)
 
     })
@@ -704,7 +704,7 @@
         }).done(function () {
             $('#modal-details').modal('hide');
             deletedform.parent('div').parent('div').parent('div').remove()
-
+            cn--;
 
         });
 

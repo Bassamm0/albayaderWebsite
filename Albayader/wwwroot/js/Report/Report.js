@@ -152,6 +152,7 @@
                         }
 
                     }
+                    dataload += '<li class="deleteBtn" serviceid="' + data[i].serviceId + '"><a  class="dropdown-item text-danger" href="#"  data-toggle="modal" data-target="#modal-delete">Delete</a></li>';
 
                     var remark = '<span class="Remak">' + data[i].remark + '</span>'
                     $("#DrasftTbl").DataTable().row.add([
@@ -281,6 +282,7 @@
                         }
 
                     }
+                    dataload += '<li class="deleteBtn" serviceid="' + data[i].serviceId + '"><a  class="dropdown-item text-danger" href="#"  data-toggle="modal" data-target="#modal-delete">Delete</a></li>';
 
                     var remark = '<span class="Remak">' + data[i].remark + '</span>'
                     $("#DrasftTbl").DataTable().row.add([
@@ -448,6 +450,57 @@
             toastr["success"]("Date changed successfuly.")
         });
     }
+
+
+    var obj;
+    $('body').on('click', '.deleteBtn', function () {
+
+        var ServiceId = $(this).attr('ServiceId')
+        $('#ServiceToDeleteName').html('#'+ServiceId)
+      
+        $('#deletedServiceId').val(ServiceId);
+        //User?id=1&handler=DeleteUser
+        obj = $(this).parents('ul').parents('div').parents('td').parents('tr')
+
+
+    })
+    $('body').on('click', '#DeleteService', function () {
+
+        var ServiceId = $("#deletedServiceId").val()
+        var url = 'reports?handler=DeleteService&id=' + $("#deletedServiceId").val();
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            // dataType: "json",
+            data: {},
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            success: function (data, status, xhr) {   // success callback function
+
+            },
+            error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                if (xhr.status == 401) {
+                    window.location.href = 'Index';
+                }
+                alert('Error: something went wronge please try again later');
+            }
+
+        }).done(function () {
+
+            $('#closeDelete').click();
+
+            obj.remove()
+            table.clear().draw();
+            toastr["success"]("User delete successfuly.")
+        });
+
+
+
+    })
 
    
 })
