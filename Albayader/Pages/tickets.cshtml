@@ -126,6 +126,7 @@
                                                     <th>Created</th>
                                                     <th>Last Activity</th>
                                                     <th>Assigned</th>
+                                                    <th>Service</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
 
@@ -150,6 +151,12 @@
                                                                  }else{
                                                                       <td>Not Assigned </td>
                                                                  }
+                                                                   @if(item.serviceId!=0){
+                                                                  <td>@item.serviceId</td>
+                                                                   }else{
+                                                                  <td>No Service</td>
+
+                                                                   }
                                                                
                                                                 @if(@item.ticketStatusId==1){
                                                                      <td style="text-align:center ;"> <span class="badge badge-purple" >@item.StatusName</span> </td>
@@ -174,8 +181,13 @@
                                                                             </button>
                                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                                                 <a ticketid="@item.ticketId" class="dropdown-item assginUser" href="#" data-toggle="modal" data-target="#modal-assign">Assgin to</a>
+                                                                                
                                                                                 <a ticketid="@item.ticketId" class="dropdown-item changeStatus" href="#" data-toggle="modal" data-target="#modal-status">Change Status</a>
+                                                                               @if(item.serviceId==0){
                                                                                 <a ticketid="@item.ticketId" companyId="@item.CompanyId" class="dropdown-item createService" href="#" data-toggle="modal" data-target="#modal-creatService">Create A Service</a>
+
+                                                                               }
+                                                                              
                                                                                 <a ticketid="@item.ticketId" class="dropdown-item closeTicket" href="#" >Close</a>
                                                                             </div>
                                                                         </div>
@@ -350,6 +362,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <form method="post" id="creatServiceForm" enctype="multipart/form-data">
+                                <div class="form-group">
                                     <label for="exampleInputEmail1">Create  service for ticket <span id="createaserviceTicket"></span></label>
                                     <select name="ddBranch" id="ddBranch" class="form-control select2" style="width: 100%;">
                                       
@@ -357,6 +370,12 @@
 
 
                                     </select>
+                                    </div>
+                                <div class="form-group">
+                                   
+                                    <select name="ddtechnicain" id="ddtechnicain" class="form-control select2" style="width: 100%;">
+                                    </select>
+                                </div>
                                 </form>
                             </div>
                         </div>

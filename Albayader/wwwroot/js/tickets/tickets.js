@@ -127,9 +127,9 @@
                 toastr["success"]("Status changed successfuly.")
             } else {
                 obj.remove()
-                // $("#DrasftTbl").DataTable().clear().draw();
-                table.clear().draw();
+               
                 toastr["success"]("The ticket closed and moved to closed ticket successfuly.")
+                window.location.href = 'tickets';
             }
           
 
@@ -183,7 +183,6 @@
 
             objAssgin.html($("#ddAssgin option:selected").text())
             toastr["success"]("ticket assigned  successfuly.")
-
         });
 
     });
@@ -251,7 +250,9 @@
             ddBranch: {
                 required: true,
             },
-
+            ddtechnicain: {
+                required:true,
+            },
 
         },
 
@@ -310,8 +311,8 @@
         $('#createServiceId').val(ticketId)
        
 
-        getCompanyBranch(companyid)
-
+        getCompanyBranch(companyid);
+        gettechnicaion();
     })
 
 
@@ -356,13 +357,14 @@
 
     }
 
-    $('body').on('click', '#doAssignUser', function () {
+    $('body').on('click', '#docreateaservice', function () {
 
         if (!$("#creatServiceForm").valid()) {
             return false;
         }
         branchId = $("#ddBranch").val();
-        var url = 'tickets?handler=CreateService&id=' + $("#createServiceId").val() + '&branchId=' + branchId;
+        technicainId = $("#ddtechnicain").val()
+        var url = 'tickets?handler=CreateService&id=' + $("#createServiceId").val() + '&branchId=' + branchId + '&technicainId=' + technicainId;
         $.ajax({
             type: "POST",
             url: url,
@@ -389,12 +391,49 @@
 
             
             toastr["success"]("Service created  successfuly.")
-
+            window.location.href = 'tickets';
         });
 
     });
 
 
+    //get all technicain
 
+   
+
+
+
+
+    function gettechnicaion() {
+
+        $("#ddtechnicain").html('')
+        $.ajax({
+            type: "GET",
+            url: APIURL + "user/getalltechnicain",
+            contentType: "application/json; charset=utf-8",
+            /* async: false,*/
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
+            },
+            success: function (data, textStatus, xhr) {
+                var arrUpdates = (typeof data) == 'string' ? eval('(' + data + ')') : data;
+                console.log(arrUpdates)
+                $('#ddtechnicain').append('<option value="">All technicaion  ...</option>')
+                for (var i = 0; i < arrUpdates.length; i++) {
+                    text = $.trim(arrUpdates[i].firstName + ' ' + arrUpdates[i].lastName);
+                    val = arrUpdates[i].userId;
+                    populate(text, val, '#ddtechnicain');
+
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                $('#ddtechnicain').append('<option value="">Data Not Loaded  ...</option>')
+                console.log('Error in Operation');
+            }
+        });
+
+    }
 
 })

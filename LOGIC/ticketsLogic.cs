@@ -7,6 +7,7 @@ using DAL.Interfaces;
 using DAL;
 using Entity;
 using DAL.Functions;
+using System.Net.Http;
 
 namespace LOGIC
 {
@@ -148,6 +149,40 @@ namespace LOGIC
                 return false;
             }
         }
+        public async Task<Boolean> createTicketService(EticketAndService ticketAndService)
+        {
 
+          
+            DService dService = new DService();
+           EServices eService=new EServices();
+           eService.BranchId = ticketAndService.branchId;
+            eService.TechnicianId = ticketAndService.TechnicianId;
+            eService.CreatedBy = ticketAndService.userId;
+            eService.StatusId = 1;
+
+            eService.CreatedDate = DateTime.Now;
+            eService.ServiceTypeId = 2;
+
+            var resul = await dService.addService(eService);
+            if (resul.ServiceId > 0)
+            {
+                ticketAndService.ServiceId = resul.ServiceId;
+                var resul1 = await dtickets.createTicketService(ticketAndService);
+
+                if (resul1.ticketAndServiceId > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+           
+        }
     }
 }

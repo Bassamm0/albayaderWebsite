@@ -36,5 +36,8 @@ namespace Entity
         public string AssignedUser { get; set; }
         [NotMapped]
         public int ticketStatusId { get; set; }
+
+        [NotMapped]
+        public int serviceId { get; set; }
     }
 }

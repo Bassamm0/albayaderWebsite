@@ -27,7 +27,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select t.*,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
+                    sQuery.Append(" select t.*,TAS.ServiceId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
                     sQuery.Append(" select * from ticketAndStatus ");
                     sQuery.Append("  where ticketAndStatusId in ( ");
                     sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
@@ -49,6 +49,7 @@ namespace DAL.Functions
                     sQuery.Append("  ) as most_recent_assign ");
                     sQuery.Append("  on most_recent_assign.ticketId=t.ticketId ");
                     sQuery.Append(" left Join users AU on AU.UserId=most_recent_assign.AssginUserId ");
+                    sQuery.Append(" left join ticketAndService TAS on TAS.ticketId=t.ticketId ");
                     sQuery.Append(" order by t.creationDate desc ");
 
                     command.CommandText = sQuery.ToString();
@@ -72,6 +73,7 @@ namespace DAL.Functions
                             if (dataReader["CompanyName"] != DBNull.Value) { oEticketViews.CompanyName = (string)dataReader["CompanyName"]; }
                             if (dataReader["StatusName"] != DBNull.Value) { oEticketViews.StatusName = (string)dataReader["StatusName"]; }
                             if (dataReader["AssignedUser"] != DBNull.Value) { oEticketViews.AssignedUser = (string)dataReader["AssignedUser"]; }
+                            if (dataReader["serviceId"] != DBNull.Value) { oEticketViews.serviceId = (int)dataReader["serviceId"]; }
 
                             users.Add(oEticketViews);
                         }
@@ -100,7 +102,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select t.*,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
+                    sQuery.Append(" select t.*,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
                     sQuery.Append(" select * from ticketAndStatus ");
                     sQuery.Append("  where ticketAndStatusId in ( ");
                     sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
@@ -122,6 +124,7 @@ namespace DAL.Functions
                     sQuery.Append("  ) as most_recent_assign ");
                     sQuery.Append("  on most_recent_assign.ticketId=t.ticketId ");
                     sQuery.Append(" left Join users AU on AU.UserId=most_recent_assign.AssginUserId ");
+                    sQuery.Append(" left join ticketAndService TAS on TAS.ticketId=t.ticketId ");
                     sQuery.Append(" where most_recent_status.ticketStatusId not in(7) order by t.creationDate desc ");
 
                     command.CommandText = sQuery.ToString();
@@ -147,6 +150,7 @@ namespace DAL.Functions
                             if (dataReader["AssignedUser"] != DBNull.Value) { oEticketViews.AssignedUser = (string)dataReader["AssignedUser"]; }
                             if (dataReader["ticketStatusId"] != DBNull.Value) { oEticketViews.ticketStatusId = (int)dataReader["ticketStatusId"]; }
                             if (dataReader["CompanyId"] != DBNull.Value) { oEticketViews.CompanyId = (int)dataReader["CompanyId"]; }
+                            if (dataReader["serviceId"] != DBNull.Value) { oEticketViews.serviceId = (int)dataReader["serviceId"]; }
 
                             users.Add(oEticketViews);
                         }
@@ -176,7 +180,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select t.*,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
+                    sQuery.Append(" select t.*,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
                     sQuery.Append(" select * from ticketAndStatus ");
                     sQuery.Append("  where ticketAndStatusId in ( ");
                     sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
@@ -198,6 +202,7 @@ namespace DAL.Functions
                     sQuery.Append("  ) as most_recent_assign ");
                     sQuery.Append("  on most_recent_assign.ticketId=t.ticketId ");
                     sQuery.Append(" left Join users AU on AU.UserId=most_recent_assign.AssginUserId ");
+                    sQuery.Append(" left join ticketAndService TAS on TAS.ticketId=t.ticketId ");
                     sQuery.AppendFormat(" where most_recent_status.ticketStatusId not in(7) and t.creationdate >= '{0}' and t.creationdate <= '{1}' ",startDate,endDate);
                     sQuery.Append(" order by t.creationDate desc ");
 
@@ -224,6 +229,7 @@ namespace DAL.Functions
                             if (dataReader["AssignedUser"] != DBNull.Value) { oEticketViews.AssignedUser = (string)dataReader["AssignedUser"]; }
                             if (dataReader["ticketStatusId"] != DBNull.Value) { oEticketViews.ticketStatusId = (int)dataReader["ticketStatusId"]; }
                             if (dataReader["CompanyId"] != DBNull.Value) { oEticketViews.CompanyId = (int)dataReader["CompanyId"]; }
+                            if (dataReader["serviceId"] != DBNull.Value) { oEticketViews.serviceId = (int)dataReader["serviceId"]; }
 
                             users.Add(oEticketViews);
                         }
@@ -251,7 +257,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select t.*,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
+                    sQuery.Append(" select t.*,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
                     sQuery.Append(" select * from ticketAndStatus ");
                     sQuery.Append("  where ticketAndStatusId in ( ");
                     sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
@@ -273,6 +279,7 @@ namespace DAL.Functions
                     sQuery.Append("  ) as most_recent_assign ");
                     sQuery.Append("  on most_recent_assign.ticketId=t.ticketId ");
                     sQuery.Append(" left Join users AU on AU.UserId=most_recent_assign.AssginUserId ");
+                    sQuery.Append(" left join ticketAndService TAS on TAS.ticketId=t.ticketId ");
                     sQuery.Append(" where most_recent_status.ticketStatusId=7 order by t.creationDate desc ");
 
                     command.CommandText = sQuery.ToString();
@@ -297,6 +304,7 @@ namespace DAL.Functions
                             if (dataReader["StatusName"] != DBNull.Value) { oEticketViews.StatusName = (string)dataReader["StatusName"]; }
                             if (dataReader["AssignedUser"] != DBNull.Value) { oEticketViews.AssignedUser = (string)dataReader["AssignedUser"]; }
                             if (dataReader["CompanyId"] != DBNull.Value) { oEticketViews.CompanyId = (int)dataReader["CompanyId"]; }
+                            if (dataReader["serviceId"] != DBNull.Value) { oEticketViews.serviceId = (int)dataReader["serviceId"]; }
 
                             users.Add(oEticketViews);
                         }
@@ -327,7 +335,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select t.*,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join ( ");
+                    sQuery.Append(" select t.*,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join ( ");
                     sQuery.Append(" select * from ticketAndStatus ");
                     sQuery.Append("  where ticketAndStatusId in ( ");
                     sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
@@ -349,6 +357,7 @@ namespace DAL.Functions
                     sQuery.Append("  ) as most_recent_assign ");
                     sQuery.Append("  on most_recent_assign.ticketId=t.ticketId ");
                     sQuery.Append(" left Join users AU on AU.UserId=most_recent_assign.AssginUserId ");
+                    sQuery.Append(" left join ticketAndService TAS on TAS.ticketId=t.ticketId ");
                     sQuery.AppendFormat(" where C.CompanyID={0} order by t.creationDate desc", companyid);
 
                     command.CommandText = sQuery.ToString();
@@ -373,6 +382,7 @@ namespace DAL.Functions
                             if (dataReader["StatusName"] != DBNull.Value) { oEticketViews.StatusName = (string)dataReader["StatusName"]; }
                             if (dataReader["AssignedUser"] != DBNull.Value) { oEticketViews.AssignedUser = (string)dataReader["AssignedUser"]; }
                             if (dataReader["CompanyId"] != DBNull.Value) { oEticketViews.CompanyId = (int)dataReader["CompanyId"]; }
+                            if (dataReader["serviceId"] != DBNull.Value) { oEticketViews.serviceId = (int)dataReader["serviceId"]; }
 
                             users.Add(oEticketViews);
                         }
@@ -401,7 +411,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select t.*,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join ( ");
+                    sQuery.Append(" select t.*,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join ( ");
                     sQuery.Append(" select * from ticketAndStatus ");
                     sQuery.Append("  where ticketAndStatusId in ( ");
                     sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
@@ -423,6 +433,7 @@ namespace DAL.Functions
                     sQuery.Append("  ) as most_recent_assign ");
                     sQuery.Append("  on most_recent_assign.ticketId=t.ticketId ");
                     sQuery.Append(" left Join users AU on AU.UserId=most_recent_assign.AssginUserId ");
+                    sQuery.Append(" left join ticketAndService TAS on TAS.ticketId=t.ticketId ");
                     sQuery.AppendFormat(" where C.CompanyID={0} and most_recent_status.ticketStatusId not in(7) order by t.creationDate desc", companyid);
 
                     command.CommandText = sQuery.ToString();
@@ -448,6 +459,7 @@ namespace DAL.Functions
                             if (dataReader["AssignedUser"] != DBNull.Value) { oEticketViews.AssignedUser = (string)dataReader["AssignedUser"]; }
                             if (dataReader["ticketStatusId"] != DBNull.Value) { oEticketViews.ticketStatusId = (int)dataReader["ticketStatusId"]; }
                             if (dataReader["CompanyId"] != DBNull.Value) { oEticketViews.CompanyId = (int)dataReader["CompanyId"]; }
+                            if (dataReader["serviceId"] != DBNull.Value) { oEticketViews.serviceId = (int)dataReader["serviceId"]; }
 
                             users.Add(oEticketViews);
                         }
@@ -475,7 +487,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select t.*,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join ( ");
+                    sQuery.Append(" select t.*,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join ( ");
                     sQuery.Append(" select * from ticketAndStatus ");
                     sQuery.Append("  where ticketAndStatusId in ( ");
                     sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
@@ -497,6 +509,7 @@ namespace DAL.Functions
                     sQuery.Append("  ) as most_recent_assign ");
                     sQuery.Append("  on most_recent_assign.ticketId=t.ticketId ");
                     sQuery.Append(" left Join users AU on AU.UserId=most_recent_assign.AssginUserId ");
+                    sQuery.Append(" left join ticketAndService TAS on TAS.ticketId=t.ticketId ");
                     sQuery.AppendFormat(" where C.CompanyID={0} and most_recent_status.ticketStatusId not in(7) and t.creationdate >= '{1}' and t.creationdate <= '{2}'", companyid, startDate, endDate);
                     sQuery.Append(" order by t.creationDate desc ");
                     command.CommandText = sQuery.ToString();
@@ -522,6 +535,7 @@ namespace DAL.Functions
                             if (dataReader["AssignedUser"] != DBNull.Value) { oEticketViews.AssignedUser = (string)dataReader["AssignedUser"]; }
                             if (dataReader["ticketStatusId"] != DBNull.Value) { oEticketViews.ticketStatusId = (int)dataReader["ticketStatusId"]; }
                             if (dataReader["CompanyId"] != DBNull.Value) { oEticketViews.CompanyId = (int)dataReader["CompanyId"]; }
+                            if (dataReader["serviceId"] != DBNull.Value) { oEticketViews.serviceId = (int)dataReader["serviceId"]; }
 
                             users.Add(oEticketViews);
                         }
@@ -549,7 +563,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select t.*,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join ( ");
+                    sQuery.Append(" select t.*,TAS.ServiceId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join ( ");
                     sQuery.Append(" select * from ticketAndStatus ");
                     sQuery.Append("  where ticketAndStatusId in ( ");
                     sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
@@ -571,6 +585,7 @@ namespace DAL.Functions
                     sQuery.Append("  ) as most_recent_assign ");
                     sQuery.Append("  on most_recent_assign.ticketId=t.ticketId ");
                     sQuery.Append(" left Join users AU on AU.UserId=most_recent_assign.AssginUserId ");
+                    sQuery.Append(" left join ticketAndService TAS on TAS.ticketId=t.ticketId ");
                     sQuery.AppendFormat(" where C.CompanyID={0} and most_recent_status.ticketStatusId=7 order by t.creationDate desc", companyid);
 
                     command.CommandText = sQuery.ToString();
@@ -594,6 +609,7 @@ namespace DAL.Functions
                             if (dataReader["CompanyName"] != DBNull.Value) { oEticketViews.CompanyName = (string)dataReader["CompanyName"]; }
                             if (dataReader["StatusName"] != DBNull.Value) { oEticketViews.StatusName = (string)dataReader["StatusName"]; }
                             if (dataReader["AssignedUser"] != DBNull.Value) { oEticketViews.AssignedUser = (string)dataReader["AssignedUser"]; }
+                            if (dataReader["serviceId"] != DBNull.Value) { oEticketViews.serviceId = (int)dataReader["serviceId"]; }
 
                             users.Add(oEticketViews);
                         }
@@ -827,6 +843,18 @@ namespace DAL.Functions
             }
 
             return ticketAndUser;
+        }
+
+        public async Task<EticketAndService> createTicketService(EticketAndService ticketAndService)
+        {
+            ticketAndService.CreationDate = DateTime.UtcNow;
+            using (var context = new DatabaseContext(DatabaseContext.ops.dbOptions))
+            {
+                await context.ticketAndService.AddAsync(ticketAndService);
+                await context.SaveChangesAsync();
+            }
+
+            return ticketAndService;
         }
     }
 }

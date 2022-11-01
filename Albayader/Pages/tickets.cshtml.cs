@@ -305,5 +305,60 @@ namespace AlbayaderWeb.Pages
         }
 
 
+        public async Task<IActionResult> OnPostCreateService(int id, int userId,int technicainId)
+        {
+
+            token = HttpContext.Session.GetString("token");
+            if (id == 0)
+            {
+                return Page();
+            }
+            EticketAndService ticketAndService = new EticketAndService();
+            ticketAndService.ticketId = id;
+            ticketAndService.branchId = userId;
+            ticketAndService.TechnicianId = technicainId;
+            string statusCode = await CreateAService(ticketAndService);
+
+
+
+            return null;
+
+        }
+
+        public async Task<string> CreateAService(EticketAndService ticketAndService)
+        {
+            string apiurl = AppConfig.APIUrl;
+
+            var json = JsonConvert.SerializeObject(ticketAndService);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                using (var response = await httpClient.PostAsync(apiurl + "tickets/createservice", data))
+                {
+                    // string apiResponse = await response.Content.ReadAsStringAsync();
+                    if (response.StatusCode.ToString() == "OK")
+                    {
+                        string responseJson = response.Content.ReadAsStringAsync().Result;
+
+                        //string res = JsonConvert.DeserializeObject<string>(responseJson);
+                        return response.StatusCode.ToString();
+                    }
+                    else
+                    {
+
+                        errorMessage = response.Content.ReadAsStringAsync().Result;
+                        //  return response.StatusCode.ToString();
+                    }
+
+
+
+                }
+            }
+
+
+            return "";
+        }
+
     }
 }
