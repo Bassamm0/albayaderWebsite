@@ -122,7 +122,32 @@ namespace LOGIC
             }
 
         }
-       
-      
+        public async Task<Boolean> insertNewStatus(EticketAndStatus ticketAndStatus)
+        {
+
+            var resul = await dtickets.insertNewStatus(ticketAndStatus);
+            if (resul.ticketId > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public async Task<Boolean> assginTicketuser(EticketAndUser ticketAndUser)
+        {
+
+            var resul = await dtickets.assginTicketuser(ticketAndUser);
+            if (resul.ticketId > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 }

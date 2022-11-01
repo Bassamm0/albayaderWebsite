@@ -48,9 +48,13 @@ namespace AlbayaderWeb.Pages
             _service = await getService(ServiceId);
             //convert datetime to timezone          
             _service.CreatedDate = UtilityHelper.convertUTCtoTimeZone(_service.CreatedDate, timezone);
-            DateTime oDate = DateTime.ParseExact(_service.ServiceDetails[0].ReportedDate, "M/d/yyyy hh:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture);
 
-            _service.ServiceDetails[0].ReportedDate = oDate.ToString("dd-MM-yyyy");
+            if (_service.ServiceDetails.Count>0){
+                DateTime oDate = DateTime.ParseExact(_service.ServiceDetails[0].ReportedDate, "M/d/yyyy hh:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture);
+
+                _service.ServiceDetails[0].ReportedDate = oDate.ToString("dd-MM-yyyy");
+            }
+           
 
             int statusId = _service.StatusId;
             if (statusId != 1 && statusId != 3)

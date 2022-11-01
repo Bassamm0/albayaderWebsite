@@ -14,7 +14,7 @@ namespace Entity
         public int ticketAndStatusId { get; set; }
         public int ticketId { get; set; }
         public int ticketStatusId { get; set; }
-        public DateTime StatusDate { get; set; }
+        public DateTime? StatusDate { get; set; }
         public int? UserId { get; set; }
 
     }

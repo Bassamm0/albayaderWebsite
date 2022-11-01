@@ -22,8 +22,9 @@ namespace AlbayaderWeb.Pages
 
         public string errorMessage { get; set; }
         public List<EticketViews>? tickets = null;
- 
-       
+        public List<UserViewModel>? ViewUser = null;
+
+
         public async Task<IActionResult> OnGet()
         {
             if (HttpContext.Session.GetString("token") == null || HttpContext.Session.GetString("token") == "")
@@ -42,8 +43,9 @@ namespace AlbayaderWeb.Pages
             }
             apiurl = AppConfig.APIUrl;
             uploadurl = AppConfig.UploadURL;
-
+            ViewUser = await getAllCompanyUser(2);
             tickets = await getAllOpentickets();
+            
             return null;
         }
 
@@ -151,6 +153,157 @@ namespace AlbayaderWeb.Pages
 
             return tickets;
         }
+
+      
+        public async Task<IActionResult> OnPostChangeStatus(int id, int statusId)
+        {
+
+            token = HttpContext.Session.GetString("token");
+            if (id == 0)
+            {
+                return Page();
+            }
+            EticketAndStatus ticketAndStatus =new EticketAndStatus();
+            ticketAndStatus.ticketId = id;
+            ticketAndStatus.ticketStatusId = statusId;
+            string statusCode = await ticketchangeStatus(ticketAndStatus);
+           
+            
+            
+            return null;
+
+        }
+        public async Task<string> ticketchangeStatus(EticketAndStatus ticketAndStatus)
+        {
+            string apiurl = AppConfig.APIUrl;
+            
+            var json = JsonConvert.SerializeObject(ticketAndStatus);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                using (var response = await httpClient.PostAsync(apiurl + "tickets/changestatus", data))
+                {
+                    // string apiResponse = await response.Content.ReadAsStringAsync();
+                    if (response.StatusCode.ToString() == "OK")
+                    {
+                        string responseJson = response.Content.ReadAsStringAsync().Result;
+
+                        //string res = JsonConvert.DeserializeObject<string>(responseJson);
+                        return response.StatusCode.ToString();
+                    }
+                    else
+                    {
+
+                        errorMessage = response.Content.ReadAsStringAsync().Result;
+                        //  return response.StatusCode.ToString();
+                    }
+
+
+
+                }
+            }
+
+
+            return "";
+        }
+
+
+        public async Task<List<UserViewModel>> getAllCompanyUser(int companyid)
+        {
+            apiurl = AppConfig.APIUrl;
+            // if user admin
+            var parameters = new Dictionary<string, int>();
+            parameters["companyid"] = companyid;
+            var json = JsonConvert.SerializeObject(parameters);
+
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+
+
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                using (var response = await httpClient.PostAsync(apiurl + "User/getCompanyUsers", data))
+                {
+                    // string apiResponse = await response.Content.ReadAsStringAsync();
+                    if (response.StatusCode.ToString() == "OK")
+                    {
+                        string responseJson = response.Content.ReadAsStringAsync().Result;
+
+                        ViewUser = JsonConvert.DeserializeObject<List<UserViewModel>>(responseJson);
+                        //return response.StatusCode.ToString();
+                    }
+                    else
+                    {
+
+                        errorMessage = response.Content.ReadAsStringAsync().Result;
+                        //  return response.StatusCode.ToString();
+                    }
+
+
+
+                }
+            }
+
+
+            return ViewUser;
+        }
+
+        public async Task<IActionResult> OnPostAssign(int id, int userId)
+        {
+         
+            token = HttpContext.Session.GetString("token");
+            if (id == 0)
+            {
+                return Page();
+            }
+            EticketAndUser ticketAndUser = new EticketAndUser();
+            ticketAndUser.ticketId = id;
+            ticketAndUser.AssginUserId = userId;
+            string statusCode = await assignUser(ticketAndUser);
+
+
+
+            return null;
+
+        }
+
+        public async Task<string> assignUser(EticketAndUser ticketAndUser)
+        {
+            string apiurl = AppConfig.APIUrl;
+
+            var json = JsonConvert.SerializeObject(ticketAndUser);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                using (var response = await httpClient.PostAsync(apiurl + "tickets/assignuser", data))
+                {
+                    // string apiResponse = await response.Content.ReadAsStringAsync();
+                    if (response.StatusCode.ToString() == "OK")
+                    {
+                        string responseJson = response.Content.ReadAsStringAsync().Result;
+
+                        //string res = JsonConvert.DeserializeObject<string>(responseJson);
+                        return response.StatusCode.ToString();
+                    }
+                    else
+                    {
+
+                        errorMessage = response.Content.ReadAsStringAsync().Result;
+                        //  return response.StatusCode.ToString();
+                    }
+
+
+
+                }
+            }
+
+
+            return "";
+        }
+
 
     }
 }

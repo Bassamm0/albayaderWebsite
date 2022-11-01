@@ -173,10 +173,10 @@
                                                                                Action
                                                                             </button>
                                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-assign">Assgin to</a>
-                                                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-status">Change Status</a>
-                                                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-status">Create A Service</a>
-                                                                                <a class="dropdown-item" href="#">Close</a>
+                                                                                <a ticketid="@item.ticketId" class="dropdown-item assginUser" href="#" data-toggle="modal" data-target="#modal-assign">Assgin to</a>
+                                                                                <a ticketid="@item.ticketId" class="dropdown-item changeStatus" href="#" data-toggle="modal" data-target="#modal-status">Change Status</a>
+                                                                                <a ticketid="@item.ticketId" companyId="@item.CompanyId" class="dropdown-item createService" href="#" data-toggle="modal" data-target="#modal-creatService">Create A Service</a>
+                                                                                <a ticketid="@item.ticketId" class="dropdown-item closeTicket" href="#" >Close</a>
                                                                             </div>
                                                                         </div>
                                                                     </td>   
@@ -233,6 +233,157 @@
 </div>
 
 
+
+<div class="modal fade" id="modal-status">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Change the ticket  <span class="statusTicketId"></span>  status </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">
+                                The ticket <span class="statusTicketId"></span> status will be Change to the selected
+                                status
+                            </label>
+                            <form name="changeStatus" id="changeStatus" enctype="multipart/form-data">
+                                <select name="ddStatus" id="ddStatus" class="form-control select2 " style="width: 100%;">
+                                <option value="">Please Select Status</option>
+                                <option value="1">New</option>
+                                <option value="2">Inprocess</option>
+                                <option value="3">Tch. Waiting</option>
+                                <option value="4">Waiting for Client Res.</option>
+                                <option value="5">Breach </option>
+                                <option value="6">Onhold</option>
+                          
+
+
+                            </select>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+         
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" id="changestatusclose" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-info" id="doChangeStatus" name="doChangeStatus">Change Status</button>
+                    <input type="hidden" name="changeStatusServiceId" id="changeStatusServiceId" />
+                </div>
+            
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+
+</div>
+<!-- /.modal -->
+
+
+<div class="modal fade" id="modal-assign">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Assgin to ticket <span id="assginTicketId"></span>  to user </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <form method="post" id="assignForm" enctype="multipart/form-data">
+                            <label for="exampleInputEmail1">The ticket will be assgin to the selected user</label>
+                            <select name="ddAssgin" id="ddAssgin" class="form-control select2" style="width: 100%;">
+                                <option value="">Please Select User</option>
+                                    @if (Model.ViewUser!=null){
+                                        @foreach (var user in @Model.ViewUser)
+                                        {
+                                            <option value="@user.userId">@user.firstName  @user.lastName</option>
+                                        }
+
+                                    }
+                               
+
+
+                            </select>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="assignClose">Close</button>
+                    <button type="button" class="btn btn-info" id="doAssignUser">Assgin</button>
+                    <input type="hidden" id="assginServiceId" name="assginServiceId" />
+                </div>
+            
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+    </div>
+
+
+    <div class="modal fade" id="modal-creatService">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Create a Service for Ticket #<span id="assginTicketId"></span> </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <form method="post" id="creatServiceForm" enctype="multipart/form-data">
+                                    <label for="exampleInputEmail1">Create  service for ticket <span id="createaserviceTicket"></span></label>
+                                    <select name="ddBranch" id="ddBranch" class="form-control select2" style="width: 100%;">
+                                      
+                                      
+
+
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="createserviceClose">Close</button>
+                    <button type="button" class="btn btn-info" id="docreateaservice">create a service</button>
+                    <input type="hidden" id="createServiceId" name="createServiceId" />
+                </div>
+
+
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+                   @section Scripts{
+                        <script type="text/javascript">
+                        $(document).ready(function () {
+                       
+
+                        })
+                         </script>
+                       }
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
@@ -257,7 +408,7 @@
 <script src="~/js/tickets/tickets.js?dt=@DateTime.Now.ToString("yyyyMMddhhmmss")"></script>
 <!-- DataTables  & Plugins -->
 
-<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="plugins/datatables/jquery.dataTables.min.js" ></script>
 <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>

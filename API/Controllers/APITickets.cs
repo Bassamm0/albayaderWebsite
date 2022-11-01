@@ -212,5 +212,64 @@ namespace API.Controllers
             }
             return result;
         }
+
+
+        [Route("changestatus")]
+        [Authorize(Roles = "Administrator,Manager")]
+        [HttpPost]
+        public async Task<Boolean> changeStatus([FromBody] EticketAndStatus ticketAndStatus)
+        {
+
+            bool result = false;
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            EUser logeduser = claimHellper.GetCurrentUser(identity);
+            ticketAndStatus.UserId = logeduser.UserId;
+            try
+            {
+                result = await ticketLogic.insertNewStatus(ticketAndStatus);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "The given key was not present in the dictionary.")
+                {
+                    throw new DomainValidationFundException("Validation : One or more paramter are missing in the request,Error could be becuase of case sensetive");
+                }
+                if (ex.InnerException.ToString().Contains("Cannot insert the value NULL into column"))
+                {
+                    throw new DomainValidationFundException("Validation : null value not allowed to one of the parameters");
+                }
+                return false;
+            }
+            return result;
+        }
+
+        [Route("assignuser")]
+        [Authorize(Roles = "Administrator,Manager")]
+        [HttpPost]
+        public async Task<Boolean> assginTicketuser([FromBody] EticketAndUser ticketAndUser)
+        {
+
+            bool result = false;
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            EUser logeduser = claimHellper.GetCurrentUser(identity);
+            ticketAndUser.UserId = logeduser.UserId;
+            try
+            {
+                result = await ticketLogic.assginTicketuser(ticketAndUser);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "The given key was not present in the dictionary.")
+                {
+                    throw new DomainValidationFundException("Validation : One or more paramter are missing in the request,Error could be becuase of case sensetive");
+                }
+                if (ex.InnerException.ToString().Contains("Cannot insert the value NULL into column"))
+                {
+                    throw new DomainValidationFundException("Validation : null value not allowed to one of the parameters");
+                }
+                return false;
+            }
+            return result;
+        }
     }  
 }

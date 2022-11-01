@@ -51,6 +51,7 @@ namespace DAL.DataContext
         public DbSet<Etickets> tickets { get; set; }
         public DbSet<EticketAndStatus> ticketAndStatus { get; set; }
         public DbSet<EticketLog> ticketLog { get; set; }
+        public DbSet<EticketAndUser> ticketAndUser { get; set; }
 
 
 

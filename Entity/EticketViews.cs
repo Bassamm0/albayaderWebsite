@@ -27,6 +27,8 @@ namespace Entity
         [NotMapped]
         public string CompanyName { get; set; }
         [NotMapped]
+        public int CompanyId { get; set; }
+        [NotMapped]
         public DateTime StatusDate { get; set; }
         [NotMapped]
         public string StatusName { get; set; }
