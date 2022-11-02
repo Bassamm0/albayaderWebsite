@@ -107,10 +107,10 @@ namespace API.Controllers
        [Route("add")]
        [Authorize(Roles = "Administrator,Manager")]
         [HttpPost]
-        public async Task<Boolean> addticket([FromBody] Etickets ticket)
+        public async Task<Etickets> addticket([FromBody] Etickets ticket)
         {
 
-            bool result = false;
+            var result =new Etickets();
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             EUser logeduser = claimHellper.GetCurrentUser(identity);
             ticket.createdBy = logeduser.UserId;
@@ -129,7 +129,7 @@ namespace API.Controllers
                 {
                     throw new DomainValidationFundException("Validation : null value not allowed to one of the parameters");
                 }
-                return false;
+              
             }
             return result;
         }
@@ -300,5 +300,8 @@ namespace API.Controllers
             }
             return result;
         }
+
+
+
     }  
 }

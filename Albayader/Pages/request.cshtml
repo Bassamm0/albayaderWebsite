@@ -1,0 +1,185 @@
+﻿@page
+@model AlbayaderWeb.Pages.requestModel
+@{
+
+    ViewData["Title"] = "Submit a Request";
+}
+
+<style>
+
+    .file-preview .close{
+        display:none;
+    }
+</style>
+
+<link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+<div class="content-wrapper">
+
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-left">
+                        <li class="breadcrumb-item"><a href="Dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item "><a href="tickets">Tickets</a></li>
+                        <li class="breadcrumb-item active" id="currentLable"> Submit A Ticket</li>
+                    </ol>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+
+
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card card-default">
+                <div class="card-header">
+                    <h3 class="card-title">Ticket details</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row">
+
+                        <form id="newRequestForm">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Subject</label>
+                                    <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Details</label>
+                                    <textarea class="form-control" id="details" name="details" rows="10"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Severity</label>
+                                    <select name="ddSeverity" id="ddSeverity" class="form-control select2" style="width: 100%;">
+                                        <option value="">Please Select Severity</option>
+                                        <option value="1">low</option>
+                                        <option value="2">medium</option>
+                                        <option value="3">High</option>
+                                        <option value="4">Critical</option>
+
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Category</label>
+                                    <select name="ddCategory" id="ddCategory" class="form-control select2" style="width: 100%;">
+                                        <option value="">Please Select Category</option>
+                                        <option value="1">Kitchen and Bakery Section</option>
+                                        <option value="2">Boiler</option>
+                                        <option value="3">Other</option>
+
+
+
+                                    </select>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="col-md-12">
+                                <div class="form-group col-md-12">
+                                    <label for="exampleInputFile">Attach </label>
+                                    <div class="input-group " id="uploadBeforeHolder">
+
+                                        <input id="Pictures" name="Pictures" class="file fa-2x fileImage " type="file" multiple="true" style="height:50px;" EquId="1" pictureType="1">
+
+
+
+                                        <div class="fielUploadValidationHolder">
+                                            <span id="uploadError" class="errorMessage uploadError"></span>
+                                            <progress id="fileProgress" style="display: none" class="progress"></progress>
+                                            <span id="lblMessage" class="uploadSccessMessage lblMessage"></span>
+                                            <div id="thumbHolder" class="thumbHolder">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                        </form>
+              
+
+                    </div>
+
+
+
+
+                    <!-- /.row -->
+                    <div class="dropdown-divider"></div>
+
+                    <div class="row" style="float: right;">
+                        <div class="col">
+                            <div style="padding: 20px;float:left">
+                                <a href='materials' class="btn btn-block btn-default btn-lg" style="width: 200px;">Cancel</a>
+
+                            </div>
+
+                            <div style="padding: 20px;float:left">
+                                <button type="button" id="createTicket" class="btn btn-block btn-info btn-lg" style="width: 200px;">Create</button>
+
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.card-body -->
+
+            </div>
+            <!-- /.card -->
+
+
+        </div>
+    </section>
+    <!-- /.content -->
+
+</div>
+<input type="hidden" id="APIURI" name="APIURI" value="@Model.apiurl" />
+<input type="hidden" id="Uploadlocation" name="Uploadlocation" value="@Model.uploadurl" />
+
+
+<!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<!-- Select2 -->
+<script src="plugins/select2/js/select2.full.min.js"></script>
+<!-- InputMask -->
+<script src="plugins/moment/moment.min.js"></script>
+<script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- date-range-picker -->
+
+
+<script src="~/js/tickets/newrequest.js?dt=@DateTime.Now.ToString("yyyyMMddhhmmss")"></script>
+
+<link rel="stylesheet" type="text/css" href="~/plugins/fileInput/fileinput.css" />
+<script type="text/javascript" src="~/plugins/fileInput/fileinput.js"></script>
+
+
+<script src="plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="plugins/jquery-validation/additional-methods.min.js"></script>

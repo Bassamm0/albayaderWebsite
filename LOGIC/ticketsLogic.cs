@@ -88,7 +88,7 @@ namespace LOGIC
 
             return ticket;
         }
-        public async Task<Boolean> addticket(Etickets newticket)
+        public async Task<Etickets> addticket(Etickets newticket)
         {
 
             var resul = await dtickets.addticket(newticket);
@@ -102,11 +102,11 @@ namespace LOGIC
                 ticketAndStatus.ticketStatusId = 1;
                 dtickets.insertNewStatus(ticketAndStatus);
 
-                return true;
+                return resul;
             }
             else
             {
-                return false;
+                return resul;
             }
         }
         public async Task<Boolean> updateticket(Etickets ticket)

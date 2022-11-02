@@ -51,6 +51,23 @@ namespace DAL.Functions
 
             return newServicePictures;
         }
+        public async Task<EticketFiles> UploadTicketImages(string file, int ticketId)
+        {
+
+
+            EticketFiles newticketFiles = new EticketFiles();
+
+            newticketFiles.fileName = file;
+            newticketFiles.ticketId = ticketId;
+
+            using (var context = new DatabaseContext(DatabaseContext.ops.dbOptions))
+            {
+                await context.ticketFiles.AddAsync(newticketFiles);
+                await context.SaveChangesAsync();
+            }
+
+            return newticketFiles;
+        }
 
 
     }

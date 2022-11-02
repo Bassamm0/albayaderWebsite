@@ -37,5 +37,19 @@ namespace LOGIC
             }
 
         }
+
+        public async Task<Boolean> UploadTicketImages(string file, int ticketid)
+        {
+            var result = await _dUploadFile.UploadTicketImages(file, ticketid);
+            if (result.ticketFileId > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
     }
 }
