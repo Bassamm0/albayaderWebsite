@@ -1,0 +1,417 @@
+﻿@page
+@model AlbayaderWeb.Pages.ticketdetailsModel
+@{
+    ViewData["Title"] = "Ticket Details";
+}
+
+  <!-- summernote -->
+  <link rel="stylesheet" href="~/plugins/summernote/summernote-bs4.min.css">
+<link rel="stylesheet" href="~/plugins/lightBox/touchTouch.css">
+<div class="content-wrapper">
+
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-left">
+                        <li class="breadcrumb-item"><a href="Dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="tickets">tickets</a></li>
+                        <li class="breadcrumb-item actifve">Ticket details #@Model.ticketViewsDetails.ticketId #@Model.ticketViewsDetails.subject</li>
+                    </ol>
+                </div>
+
+            </div>
+
+
+
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+
+
+
+                        <div class="card">
+
+                            <div class="card-body">
+                                <div class="row">
+
+
+
+                                    <div class="col-sm">
+
+                                        <div class="info-box-content">
+
+                                            <div class="info-box-text text-left text-muted">Ref:#@Model.ticketViewsDetails.ticketId</div>
+                                            <div class="info-box-number text-left text-muted">Created On:@Model.ticketViewsDetails.creationDate </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+
+                                        <div class="info-box-content">
+                                            <div class="info-box-text text-center text-muted">@Model.ticketViewsDetails.CompanyName</div>
+                                            <div class="info-box-number text-center text-muted mb-0">@Model.ticketViewsDetails.BranchName</div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm">
+
+                                        <div class="info-box-content" style="float: right;text-align: left;">
+                                            <div class="info-box-text text-center text-muted">
+                                                Last Activity:@Model.ticketViewsDetails.StatusDate
+                                               
+                                            </div>
+
+
+                                            <div class="info-box-number text-center mb-0">
+                                                
+                                                @if (@Model.ticketViewsDetails.ticketStatusId == 1)
+                                                {
+                                                    <td style="text-align:center ;"> <span class="badge badge-purple">@Model.ticketViewsDetails.StatusName</span> </td>
+                                                }
+                                                else if (@Model.ticketViewsDetails.ticketStatusId== 2)
+                                                {
+                                                    <td style="text-align:center ;"> <span class="badge badge-Lightblue">@Model.ticketViewsDetails.StatusName</span> </td>
+                                                }
+                                                else if (@Model.ticketViewsDetails.ticketStatusId == 3)
+                                                {
+                                                    <td style="text-align:center ;"> <span class="badge badge-warning">@Model.ticketViewsDetails.StatusName</span> </td>
+                                                }
+                                                else if (@Model.ticketViewsDetails.ticketStatusId == 4)
+                                                {
+                                                    <td style="text-align:center ;"> <span class="badge badge-dark">@Model.ticketViewsDetails.StatusName</span> </td>
+                                                }
+                                                else if (@Model.ticketViewsDetails.ticketStatusId == 5)
+                                                {
+                                                    <td style="text-align:center ;"> <span class="badge badge-danger">@Model.ticketViewsDetails.StatusName</span> </td>
+                                                }
+                                                else if (@Model.ticketViewsDetails.ticketStatusId == 6)
+                                                {
+                                                    <td style="text-align:center ;"> <span class="badge badge-orang">@Model.ticketViewsDetails.StatusName</span> </td>
+                                                }
+                                                else if (@Model.ticketViewsDetails.ticketStatusId == 7)
+                                                {
+                                                    <td style="text-align:center ;"> <span class="badge badge-success">@Model.ticketViewsDetails.StatusName</span> </td>
+                                                }
+                                            </div>
+
+
+
+                                        </div>
+
+                                    </div>
+
+                                
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+
+                        <!--Equipment 1-->
+                        <div class="card card-default">
+
+
+
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    Ref:#@Model.ticketViewsDetails.ticketId - @Model.ticketViewsDetails.subject
+                                </h3>
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+
+                                </div>
+                            </div>
+
+
+                            <!-- /.card-header -->
+                            <div class="card-body">
+
+                                <div class="row">
+
+                                    <div class="user-block">
+                                        @if (!String.IsNullOrEmpty(@Model.ticketViewsDetails.PictureFileName))
+                                        {
+                                            <img class="img-circle img-bordered-sm" src="@Model.uploadurl@Html.DisplayFor(modelItem => @Model.ticketViewsDetails.PictureFileName)">
+
+                                        }
+                                        else
+                                        {
+                                            <img class="img-circle img-bordered-sm"
+                                             src="~/images/user.png"
+                                             alt="User Avatar" />
+                                        }
+
+                                        <span class="username">
+                                            <span>@Model.ticketViewsDetails.CreatorName</span>
+                                        </span>
+                                        <span class="description">@Model.ticketViewsDetails.creationDate</span>
+                                    </div>
+                                    <div class="col-md-12 ticketViewDetails">
+                                        @Html.Raw(@Model.ticketViewsDetails.ticketDetails)
+
+                                    </div>
+
+                                     @if (Model.ticketViewsDetails.lticketfile.Count>0){
+                                           
+                                        <div class="col-md-12">
+                                            <label>Attach</label>
+                                            <ul class="attachList">
+                                                @foreach (var file in Model.ticketViewsDetails.lticketfile)
+                                            {
+
+                                                    <li>
+                                                        <i class="fa fa-download"></i>
+                                                           <a target="_blank" href="@Model.uploadurl@Html.DisplayFor(modelItem => file.fileName)">@file.fileName </a>
+                                                    </li>
+
+
+                                                }
+                                            </ul>
+                                        </div>
+                                    }
+
+                                    
+
+
+
+
+                                    <div class="col-md-12" style="padding-top:30px">
+                                        <div class="dropdown-divider ticket-divider"></div>
+                                    </div>
+
+                                </div>
+
+
+
+                                 @if (Model.ticketViewsDetails.lticketLog!=null){
+                                    @foreach (var log in Model.ticketViewsDetails.lticketLog)
+                                    {
+                                        <div class="row">
+
+                                            <div class="user-block">
+                                                @if (!String.IsNullOrEmpty(@log.PictureFileName)){
+                                                    <img class="img-circle img-bordered-sm" src="@Model.uploadurl@Html.DisplayFor(modelItem => log.PictureFileName)">
+
+                                                }else{
+                                                    <img class ="img-circle img-bordered-sm"
+                                             src="~/images/user.png"
+                                    
+                                             alt="User Avatar" />
+                                                }
+
+                                                <span class="username">
+                                                    <span>@log.UserFullName</span>
+                                                </span>
+                                                <span class="description">@log.CreationDate</span>
+                                            </div>
+                                            <div class="col-md-12 ticketViewDetails">
+                                               @Html.Raw(@log.Message)
+
+                                            </div>
+
+
+                                            @if (log.lticketLogFiles.Count>0 )
+                                            {
+                                                <div class="col-md-12">
+                                                    <label>Attach</label>
+                                                    <ul class="attachList">
+                                                        @foreach (var logfile in log.lticketLogFiles)
+                                                        {
+
+                                                            <li >
+                                                               <i class="fa fa-download"></i> <a target="_blank" href="@Model.uploadurl@Html.DisplayFor(modelItem => logfile.fileName)">@logfile.fileName </a>
+                                                            </li>
+
+
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            }
+
+                                            @if(log.CompanyId==2){
+                                                <div class="col-md-12" style="padding-top:30px">
+
+                                                    <div class="info-box-content">
+
+                                                        <div class="info-box-text text-left text-muted">Regards,</div>
+                                                        <div class="info-box-text text-left text-muted">Al Bayader Team</div>
+                                                        <div class="info-box-number text-left text-muted mb-0">OUR CLIENT IS OUR PARTNER</div>
+
+                                                    </div>
+                                                </div>
+                                            }else{
+                                                
+                                            }
+
+
+
+
+
+                                            <div class="col-md-12" style="padding-top:30px">
+                                                <div class="dropdown-divider ticket-divider"></div>
+                                            </div>
+
+                                        </div>
+
+                                    }
+                                 }          
+                                 
+                                
+
+
+                           @if(Model.ticketViewsDetails.ticketStatusId!=7){
+
+
+                                    <div class="row">
+
+                                        <form id="replyform">
+                                        <div class="col-md-12" style="padding-top:50px ;"></div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Reply</label>
+                                                    <textarea class="form-control" id="replyTxt" name="replyTxt" rows="10"></textarea>
+                                                    <span id="replyTxt-error" class="error invalid-feedback"></span>
+                                            </div>
+                                        </div>
+                                      @if(Model.CompanyId == "2"){
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Reply</label>
+                                                        <select name="ddStatus" id="ddStatus" class="form-control select2 required" style="width: 100%;">
+                                                            <option value="">Don't Change the ticket  Status or select another status</option>
+                                                            
+                                                            <option value="2">Inprocess</option>
+                                                            <option value="3">Tch. Waiting</option>
+                                                            <option value="4">Waiting for Client Res.</option>
+                                                            <option value="5">Breach </option>
+                                                            <option value="6">Onhold</option>
+                                                            <option value="7">Close</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                      }
+                                           
+                                        </form>
+                                        <div class="col-md-12">
+                                            <div class="form-group col-md-12">
+                                                <label for="exampleInputFile">Attach </label>
+                                                <div class="input-group " id="uploadBeforeHolder">
+
+                                                    <input id="Pictures" name="Pictures" class="file fa-2x fileImage " type="file" multiple="true" style="height:50px;" EquId="1" pictureType="1">
+
+
+
+                                                    <div class="fielUploadValidationHolder">
+                                                        <span id="uploadError" class="errorMessage uploadError"></span>
+                                                        <progress id="fileProgress" style="display: none" class="progress"></progress>
+                                                        <span id="lblMessage" class="uploadSccessMessage lblMessage"></span>
+                                                        <div id="thumbHolder" class="thumbHolder">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+
+
+                                    <div class="row" style="padding-top: 50px;">
+
+                                        <div class="col-md-6">
+                                            <button type="button" id="cancel" class="btn btn-block btn-default btn-lg">
+                                                Cancel
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button type="button" id="submitreply" name="submitreply" class="btn btn-block btn-info btn-lg">
+                                                Reply
+                                            </button>
+                                        </div>
+
+
+                                    </div>
+                           }
+
+                              
+                                <!-- /.card-body -->
+
+                            </div>
+                            <!-- /.card -->
+
+
+                        </div>
+
+
+                   
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- end view data-->
+
+
+
+            <input type="hidden" id="companyId" name="companyId" value="@Model.CompanyId" />
+            <input type="hidden" id="Arole" name="Arole" value="@Model.role" />
+            <input type="hidden" id="APIURI" name="APIURI" value="@Model.apiurl" />
+            <input type="hidden" id="ticketid" name="ticketid" value="@Model.ticketViewsDetails.ticketId" />
+                <input type="hidden" id="Uploadlocation" name="Uploadlocation" value="@Model.uploadurl" />
+
+
+        </div>
+            <!-- /.container-fluid -->
+        </section>
+
+
+
+
+    <!-- /.content -->
+
+</div>
+
+
+
+
+<!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="js/tickets/ticketdetails.js?dt=@DateTime.Now.ToString("yyyyMMddhhmmss")"></script>
+
+
+
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/tus-js-client@latest/dist/tus.min.js"></script>
+<script src="plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="plugins/jquery-validation/additional-methods.min.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="~/plugins/fileInput/fileinput.css" />
+<script type="text/javascript" src="~/plugins/fileInput/fileinput.js"></script>
+
+
+<script src="plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="plugins/jquery-validation/additional-methods.min.js"></script>
+
+
+<script src="~/plugins/lightBox/touchTouch.js"></script>
+<!-- Select2 -->
+<script src="plugins/select2/js/select2.full.min.js"></script>
+<!-- Summernote -->
+<script src="~/plugins/summernote/summernote-bs4.min.js"></script>

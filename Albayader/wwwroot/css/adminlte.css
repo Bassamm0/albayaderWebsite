@@ -53146,3 +53146,7 @@ a.text-muted:hover {
 .badge-details {
     width: 200px;
 }
+
+.attachList {
+    list-style: none;
+}

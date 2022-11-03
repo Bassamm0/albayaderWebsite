@@ -100,15 +100,17 @@
                                             </thead>
                                             <tbody id="TabelData">
 
-                                                @if(Model.tickets!=null)
+                                                @if(@Model.tickets!=null)
                                                 {
 
                                                     @foreach(var item in Model.tickets){
                                                          <tr>
-                                                                <td>@item.ticketId</td>
-                                                                <td><a href="ViewTicketDetails?ticketId=@item.ticketId">
+                                                            <td>@item.ticketId</td>
+                                                            <td>
+                                                                <a href="ticketdetails?ticketId=@item.ticketId">
                                                                     @item.subject
-                                                                </a></td>
+                                                                </a>
+                                                            </td>
                                                                 <td>@item.BranchName</td>
                                                                 <td>@item.creationDate</td>
                                                                  <td>@item.StatusDate</td>

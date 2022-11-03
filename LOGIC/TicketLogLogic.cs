@@ -40,18 +40,11 @@ namespace LOGIC
 
             return ticketLog;
         }
-        public async Task<Boolean> addticketLog(EticketLog newticketLog)
+        public async Task<EticketLog> addticketLog(EticketLog newticketLog)
         {
 
             var resul = await dticketLog.addticketLog(newticketLog);
-            if (resul.ticketLogId > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return resul;
         }
         public async Task<Boolean> updateticketLog(EticketLog ticketLog)
         {

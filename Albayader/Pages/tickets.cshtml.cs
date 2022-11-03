@@ -2,6 +2,7 @@ using Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using System;
 using System.ComponentModel.Design;
 using System.Globalization;
 using System.Net.Http.Headers;
@@ -19,10 +20,12 @@ namespace AlbayaderWeb.Pages
         public string role { get; set; }
         public string token { get; set; }
         public string email { get; set; }
+        public string timezone { get; set; }
 
         public string errorMessage { get; set; }
         public List<EticketViews>? tickets = null;
         public List<UserViewModel>? ViewUser = null;
+        public string CompanyId { get; set; }
 
 
         public async Task<IActionResult> OnGet()
@@ -33,14 +36,13 @@ namespace AlbayaderWeb.Pages
             }
             else
             {
+                CompanyId = HttpContext.Session.GetString("CompanyId");
                 token = HttpContext.Session.GetString("token");
                 role = HttpContext.Session.GetString("Role");
+                timezone = HttpContext.Session.GetString("timezone");
 
             }
-            if (role.ToLower() != "administrator" && role.ToLower() != "manager")
-            {
-                return Redirect("Index");
-            }
+        
             apiurl = AppConfig.APIUrl;
             uploadurl = AppConfig.UploadURL;
             ViewUser = await getAllCompanyUser(2);
@@ -52,19 +54,30 @@ namespace AlbayaderWeb.Pages
         public async Task<List<EticketViews>> getAllOpentickets()
         {
             apiurl = AppConfig.APIUrl;
-            // if user admin
            
+            // if user admin
+
             using (var httpClient = new HttpClient())
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 using (var response = await httpClient.GetAsync(apiurl + "tickets/open"))
                 {
+
+                    timezone = HttpContext.Session.GetString("timezone");
                     // string apiResponse = await response.Content.ReadAsStringAsync();
                     if (response.StatusCode.ToString() == "OK")
                     {
                         string responseJson = response.Content.ReadAsStringAsync().Result;
 
                         tickets = JsonConvert.DeserializeObject<List<EticketViews>>(responseJson);
+                        if (tickets.Count > 0)
+                        {
+                            for (int i = 0; i < tickets.Count; i++)
+                            {
+                                tickets[i].creationDate = UtilityHelper.convertUTCtoTimeZone(tickets[i].creationDate, timezone);
+                            }
+                        }
+
                         //return response.StatusCode.ToString();
                     }
                     else

@@ -19,6 +19,8 @@ namespace AlbayaderWeb.Pages
         public string role { get; set; }
         public string token { get; set; }
         public string email { get; set; }
+        public string timezone { get; set; }
+
 
         public string errorMessage { get; set; }
         public List<EticketViews>? tickets = null;
@@ -35,15 +37,14 @@ namespace AlbayaderWeb.Pages
             {
                 token = HttpContext.Session.GetString("token");
                 role = HttpContext.Session.GetString("Role");
+                timezone = HttpContext.Session.GetString("timezone");
+
 
             }
-            if (role.ToLower() != "administrator" && role.ToLower() != "manager")
-            {
-                return Redirect("Index");
-            }
+          
             apiurl = AppConfig.APIUrl;
             uploadurl = AppConfig.UploadURL;
-             tickets = await getAllClosedtickets();
+            tickets = await getAllClosedtickets();
 
             return null;
         }
@@ -54,6 +55,8 @@ namespace AlbayaderWeb.Pages
 
             using (var httpClient = new HttpClient())
             {
+                timezone = HttpContext.Session.GetString("timezone");
+
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 using (var response = await httpClient.GetAsync(apiurl + "tickets/closed"))
                 {
@@ -63,6 +66,14 @@ namespace AlbayaderWeb.Pages
                         string responseJson = response.Content.ReadAsStringAsync().Result;
 
                         tickets = JsonConvert.DeserializeObject<List<EticketViews>>(responseJson);
+                     
+                        if (tickets.Count > 0)
+                        {
+                            for (int i = 0; i < tickets.Count; i++)
+                            {
+                                tickets[i].creationDate = UtilityHelper.convertUTCtoTimeZone(tickets[i].creationDate, timezone);
+                            }
+                        }
                         //return response.StatusCode.ToString();
                     }
                     else

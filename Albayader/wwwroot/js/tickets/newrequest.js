@@ -6,6 +6,16 @@
     const jtoken = $('#utoken').val();
 
 
+    $('#details').summernote({
+        height: 250,   //set editable area's height
+        codemirror: { // codemirror options
+            theme: 'monokai'
+        }
+    });
+
+    $('#replyTxt-error').html('')
+    $('#replyTxt-error').css('display', 'none')
+
 
     $(".fileImage").fileinput({
         initialPreviewAsData: true,
@@ -37,78 +47,28 @@
     })
 
 
-    $('#newRequestForm').validate({
-        rules: {
-            subject: {
-                required: true,
-                maxlength: 150,
-            },
-
-            details: {
-                required: true,
-                maxlength: 1500,
-
-            },
-            ddSeverity: {
-                required: true,
-               
-            },
-            ddCategory: {
-                required: true,
-
-            },
-
-        },
-
-        errorElement: 'span',
-        errorPlacement: function (error, element) {
-            error.addClass('invalid-feedback');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element, errorClass, validClass) {
-            $(element).addClass('is-invalid');
-        },
-        unhighlight: function (element, errorClass, validClass) {
-            $(element).removeClass('is-invalid');
-        }
-    });
-
-    //$('body').on('click', '.fileinput-upload-button', function () {
-
-    //    $("#newRequestForm").submit(function (e) {
-    //        return false;
-
-    //    });
-    //    if (!$('#newRequestForm').valid()) {
-
-
-    //        toastr["warning"]("Please select the required fields.")
-    //        return false;
-    //    }
-
-    //    var validationElem = $(this).next('div').parent('span').parent('div').next('div');
-
-    //    var InputElmentid = $(this).next('div').children('input').attr('id');
-
-    //    saveDetailsOnUpload(InputElmentid, validationElem);
-
-
-    //})
-
+    
     function saveDetailsOnUpload(InputElmentid, validationElem) {
 
 
 
-       
+        $('#replyTxt-error').html('')
+        $('#replyTxt-error').css('display', 'none')
+        
+
         var url = APIURL + 'tickets/add' 
 
         // create new
         var subject = $("#subject").val();
-        var ticketDetails = $("#details").val().replace(/\n/g, '<br>');
+        var ticketDetails = $("#details").val();
         var severityId = $("#ddSeverity").val();
         var ticketCategoryId = $("#ddCategory").val();
 
-
+        if (ticketDetails == '') {
+            $('#replyTxt-error').html('This field is required.')
+            $('#replyTxt-error').css('display', 'block')
+            return;
+        }
 
         var senddata = '{"subject":"' + subject + '","ticketDetails":"' + ticketDetails + '","severityId":' + severityId + ',"ticketCategoryId":' + ticketCategoryId + '} '
         $.ajax({
@@ -224,59 +184,41 @@
         });
 
     }
-
-
-    // delete 
-    $('body').on('click', '.deletImage', function () {
-        var image = $(this).attr('filename')
-        $('#DeleteImageBtn').attr('fileName', image)
-        $('#deletedItemName').html('')
-    })
-
-    $('body').on('click', '#DeleteImageBtn', function () {
-        var image = $(this).attr('filename');
-        deleteImage(image);
-    })
-    function deleteImage(image) {
-
-        var url = APIURL + 'servicedetails/deleteimage';
-        var data = '{"image":"' + image + '"}'
-
-
-
-        $.ajax({
-            type: "POST",
-            url: url,
-            contentType: "application/json; charset=utf-8",
-            data: data,
-            headers: {
-                RequestVerificationToken:
-                    $('input:hidden[name="__RequestVerificationToken"]').val(),
-                Authorization: 'Bearer ' + jtoken,
+    $('#newRequestForm').validate({
+        rules: {
+            subject: {
+                required: true,
+                maxlength: 150,
             },
-            success: function (data, status, xhr) {   // success callback function
-                console.log('deleted')
 
+            details: {
+                required: true,
+                maxlength: 1500,
 
             },
-            error: function (jqXhr, textStatus, errorMessage) { // error callback 
-                if (jqXhr.status == 401) {
-                    window.location.href = 'Index';
-                    alert(' Your login session expired, Please login again.');
-                    return;
-                }
-                alert('Error: something went wronge please try again later');
-            }
+            ddSeverity: {
+                required: true,
 
-        }).done(function () {
-            $('#Closedelete').click();
-            $(".deletImage[filename='" + image + "']").parent('div').parent('div').remove();
-            toastr["success"]("Image deleted successfuly.")
+            },
+            ddCategory: {
+                required: true,
 
+            },
 
-        });
-    }
+        },
 
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
 
 
 })

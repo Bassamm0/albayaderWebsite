@@ -32,10 +32,7 @@ namespace AlbayaderWeb.Pages
                 timezone = HttpContext.Session.GetString("timezone");
 
             }
-            if (role.ToLower() != "administrator" && role.ToLower() != "manager" && role.ToLower() != "technicion")
-            {
-                return Redirect("Index");
-            }
+            
 
             apiurl = AppConfig.APIUrl;
             uploadurl = AppConfig.UploadURL;

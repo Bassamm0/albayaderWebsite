@@ -34,7 +34,8 @@ namespace Entity
         public string AssignedUser { get; set; }
         [NotMapped]
         public int ticketStatusId { get; set; }
-
+        [NotMapped]
+        public string PictureFileName { get; set; }
         public List<EticketFiles>? lticketfile { get; set; }
         public List<EticketLog>? lticketLog { get; set; }
 

@@ -19,6 +19,14 @@ namespace Entity
 
         [NotMapped]
         public string? UserFullName { get; set; }
+        [NotMapped]
+        public string? PictureFileName { get; set; }
+        [NotMapped]
+        public string? BranchName { get; set; }
+        [NotMapped]
+        public int? CompanyId { get; set; }
+        [NotMapped]
+        public string? companyName { get; set; }
         public List<EticketLogFiles>? lticketLogFiles { get; set; }
 
     }

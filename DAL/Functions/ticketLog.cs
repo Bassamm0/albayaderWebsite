@@ -74,8 +74,11 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select TL.*,CONCAT(U.FirstName,' ',U.Lastname) as UserFullName from ticketLog TL");
+                    sQuery.Append(" select TL.*,CONCAT(U.FirstName,' ',U.Lastname) as UserFullName,u.PictureFileName,b.BranchName,C.CompanyID,c.Name companyName from ticketLog TL");
                     sQuery.Append(" inner join Users U on U.UserId=TL.UserId  ");
+                    sQuery.Append("  inner join UserAndBranch UAB on UAB.UserId=U.UserId  ");
+                    sQuery.Append("  inner join Branchs B on B.branchId=UAB.BranchId  ");
+                    sQuery.Append("  inner join Companies C on C.CompanyID=b.compnayId ");
                    
                     sQuery.AppendFormat(" where TL.ticketId={0}", ticketId);
 
@@ -93,6 +96,10 @@ namespace DAL.Functions
                             if (dataReader["CreationDate"] != DBNull.Value) { oEticketLog.CreationDate = (DateTime)dataReader["CreationDate"]; }
                             if (dataReader["UserId"] != DBNull.Value) { oEticketLog.UserId = (int)dataReader["UserId"]; }
                             if (dataReader["UserFullName"] != DBNull.Value) { oEticketLog.UserFullName = (string)dataReader["UserFullName"]; }
+                            if (dataReader["PictureFileName"] != DBNull.Value) { oEticketLog.PictureFileName = (string)dataReader["PictureFileName"]; }
+                            if (dataReader["companyName"] != DBNull.Value) { oEticketLog.companyName = (string)dataReader["companyName"]; }
+                            if (dataReader["BranchName"] != DBNull.Value) { oEticketLog.BranchName = (string)dataReader["BranchName"]; }
+                            if (dataReader["CompanyId"] != DBNull.Value) { oEticketLog.CompanyId = (int)dataReader["CompanyId"]; }
 
                             oEticketLog.lticketLogFiles = getAllTicketLogFile(oEticketLog.ticketLogId);
                             users.Add(oEticketLog);
@@ -220,7 +227,7 @@ namespace DAL.Functions
 
                     StringBuilder sQuery = new StringBuilder();
                     sQuery.Append(" select * from ticketLogFiles TF ");
-                    sQuery.AppendFormat("where TF.ticketLogId={0}", ticketlogIdId);
+                    sQuery.AppendFormat("where TF.ticketLogId={0} and endDate is null", ticketlogIdId);
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();

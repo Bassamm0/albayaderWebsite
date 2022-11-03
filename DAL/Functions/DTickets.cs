@@ -637,7 +637,7 @@ namespace DAL.Functions
                 using (var command = conn.CreateCommand())
                 {
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select t.*,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
+                    sQuery.Append(" select t.*,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,U.PictureFileName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
                     sQuery.Append(" select * from ticketAndStatus ");
                     sQuery.Append("  where ticketAndStatusId in ( ");
                     sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
@@ -683,6 +683,7 @@ namespace DAL.Functions
                             if (dataReader["CompanyName"] != DBNull.Value) { oEticketViews.CompanyName = (string)dataReader["CompanyName"]; }
                             if (dataReader["StatusName"] != DBNull.Value) { oEticketViews.StatusName = (string)dataReader["StatusName"]; }
                             if (dataReader["AssignedUser"] != DBNull.Value) { oEticketViews.AssignedUser = (string)dataReader["AssignedUser"]; }
+                            if (dataReader["PictureFileName"] != DBNull.Value) { oEticketViews.PictureFileName = (string)dataReader["PictureFileName"]; }
                             if (dataReader["ticketStatusId"] != DBNull.Value) { oEticketViews.ticketStatusId = (int)dataReader["ticketStatusId"]; }
                             oEticketViews.lticketfile = getAllTicketFile(ticketId);
                             oEticketViews.lticketLog= dtlog.getticketLog(ticketId);
@@ -802,7 +803,7 @@ namespace DAL.Functions
 
                     StringBuilder sQuery = new StringBuilder();
                     sQuery.Append(" select * from ticketFiles TF ");
-                    sQuery.AppendFormat(" where TF.ticketId={0}", ticketId);
+                    sQuery.AppendFormat(" where TF.ticketId={0}  and endDate is null", ticketId);
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();

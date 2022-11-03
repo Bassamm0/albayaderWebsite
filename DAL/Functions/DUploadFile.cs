@@ -69,6 +69,22 @@ namespace DAL.Functions
             return newticketFiles;
         }
 
+        public async Task<ELogFiles> UploadTicketLogImages(string file, int ticketLogId)
+        {
 
+            ELogFiles eticketLogFiles = new ELogFiles();
+
+            eticketLogFiles.fileName = file;
+            eticketLogFiles.ticketLogId = ticketLogId;
+
+            using (var context = new DatabaseContext(DatabaseContext.ops.dbOptions))
+            {
+                await context.ticketLogFiles.AddAsync(eticketLogFiles);
+                await context.SaveChangesAsync();
+            }
+
+            return eticketLogFiles;
+        }
+      
     }
 }

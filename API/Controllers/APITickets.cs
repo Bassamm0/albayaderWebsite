@@ -19,7 +19,7 @@ namespace API.Controllers
 
 
         [Route("all")]
-        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
+       [Authorize(Roles = "Administrator,Manager")]
         [HttpGet]
         public async Task<List<EticketViews>> getAlltickets()
         {
@@ -32,7 +32,7 @@ namespace API.Controllers
             return tickets;
         }
         [Route("open")]
-        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
+        [Authorize]
         [HttpGet]
         public async Task<List<EticketViews>> getAllOpentickets()
         {
@@ -45,7 +45,7 @@ namespace API.Controllers
             return tickets;
         }
         [Route("opendate")]
-        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
+        [Authorize]
         [HttpPost]
         public async Task<List<EticketViews>> getAllOpenticketsDate([FromBody] JsonElement objData)
         {
@@ -59,7 +59,7 @@ namespace API.Controllers
             return tickets;
         }
         [Route("closed")]
-        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
+        [Authorize]
         [HttpGet]
         public async Task<List<EticketViews>> getAllClosedtickets()
         {
@@ -73,7 +73,7 @@ namespace API.Controllers
         }
 
         [Route("companytickets")]
-        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
+        [Authorize]
         [HttpPost]
         public async Task<List<EticketViews>> getAllCompanytickets([FromBody] JsonElement objData)
         {
@@ -89,7 +89,7 @@ namespace API.Controllers
         }
 
         [Route("ticketdetails")]
-      [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
+      [Authorize]
         [HttpPost]
         public async Task<EticketViewsDetails> getticketById([FromBody] JsonElement objData)
         {
@@ -105,7 +105,7 @@ namespace API.Controllers
 
 
        [Route("add")]
-       [Authorize(Roles = "Administrator,Manager")]
+       [Authorize]
         [HttpPost]
         public async Task<Etickets> addticket([FromBody] Etickets ticket)
         {
@@ -166,7 +166,7 @@ namespace API.Controllers
         
 
         [Route("ticketLog")]
-        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
+        [Authorize]
         [HttpPost]
         public async Task<List<EticketLog>> getTicketLog([FromBody] JsonElement objData)
         {
@@ -184,12 +184,12 @@ namespace API.Controllers
 
 
         [Route("addlog")]
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize]
         [HttpPost]
-        public async Task<Boolean> addticketlog([FromBody] EticketLog ticketlog)
+        public async Task<EticketLog> addticketlog([FromBody] EticketLog ticketlog)
         {
 
-            bool result = false;
+            EticketLog result = new EticketLog();
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             EUser logeduser = claimHellper.GetCurrentUser(identity);
             ticketlog.UserId = logeduser.UserId;
@@ -208,14 +208,14 @@ namespace API.Controllers
                 {
                     throw new DomainValidationFundException("Validation : null value not allowed to one of the parameters");
                 }
-                return false;
+                return result;
             }
             return result;
         }
 
 
         [Route("changestatus")]
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize(Roles = "Administrator,Manager,Technicion,Support")]
         [HttpPost]
         public async Task<Boolean> changeStatus([FromBody] EticketAndStatus ticketAndStatus)
         {
@@ -244,7 +244,7 @@ namespace API.Controllers
         }
 
         [Route("assignuser")]
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize(Roles = "Administrator,Manager,Technicion,Support")]
         [HttpPost]
         public async Task<Boolean> assginTicketuser([FromBody] EticketAndUser ticketAndUser)
         {
@@ -273,7 +273,7 @@ namespace API.Controllers
         }
 
         [Route("createservice")]
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize(Roles = "Administrator,Manager,Technicion,Support")]
         [HttpPost]
         public async Task<Boolean> createTicketService([FromBody] EticketAndService ticketAndService)
         {

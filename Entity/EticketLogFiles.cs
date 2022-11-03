@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Entity
 {
     public class EticketLogFiles
@@ -13,5 +14,6 @@ namespace Entity
         public int ticketLogFileId { get; set; }
         public string fileName { get; set; }
         public int ticketLogId { get; set; }
+
     }
 }
