@@ -18,7 +18,7 @@ namespace API.Controllers
         private TicketLogLogic ticketLogLogic = new TicketLogLogic();
 
 
-        [Route("all")]
+       [Route("all")]
        [Authorize(Roles = "Administrator,Manager")]
         [HttpGet]
         public async Task<List<EticketViews>> getAlltickets()
@@ -41,6 +41,18 @@ namespace API.Controllers
             EUser logeduser = claimHellper.GetCurrentUser(identity);
             List<EticketViews> tickets = new List<EticketViews>();
             tickets = await ticketLogic.getAllOpentickets(logeduser);
+
+            return tickets;
+        }
+        [Route("openforview")]
+
+        [HttpGet]
+        public async Task<List<EticketViews>> getAllOpenticketsview()
+        {
+
+          
+            List<EticketViews> tickets = new List<EticketViews>();
+            tickets = await ticketLogic.getAllOpenticketsview();
 
             return tickets;
         }
@@ -103,7 +115,6 @@ namespace API.Controllers
             return ticket;
         }
 
-
        [Route("add")]
        [Authorize]
         [HttpPost]
@@ -117,7 +128,7 @@ namespace API.Controllers
             try
             {
                
-                result = await ticketLogic.addticket(ticket);
+                result = await ticketLogic.addticket(ticket, logeduser);
             }
             catch (Exception ex)
             {
@@ -196,7 +207,7 @@ namespace API.Controllers
             ticketlog.CreationDate = DateTime.UtcNow;
             try
             {
-                result = await ticketLogLogic.addticketLog(ticketlog);
+                result = await ticketLogLogic.addticketLog(ticketlog,logeduser);
             }
             catch (Exception ex)
             {
@@ -255,7 +266,7 @@ namespace API.Controllers
             ticketAndUser.UserId = logeduser.UserId;
             try
             {
-                result = await ticketLogic.assginTicketuser(ticketAndUser);
+                result = await ticketLogic.assginTicketuser(ticketAndUser, logeduser);
             }
             catch (Exception ex)
             {

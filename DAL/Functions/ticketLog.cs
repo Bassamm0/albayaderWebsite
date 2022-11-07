@@ -258,5 +258,27 @@ namespace DAL.Functions
         }
 
 
+        public string getTicketstatus(int ticketId)
+        {
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            string result;
+            conn.Open();
+            using (var command = conn.CreateCommand())
+            {
+
+                StringBuilder sQuery = new StringBuilder();
+                sQuery.Append("select  ts.StatusName from ticketAndStatus TAS ");
+                sQuery.Append("inner join ticketStatus TS on TS.ticketStatusId=TAS.ticketStatusId ");
+                sQuery.AppendFormat("where TAS.ticketAndStatusId in (select MAX(ticketAndStatusId) from ticketAndStatus where ticketId={0}) ", ticketId);
+                sQuery.AppendFormat("and TAS.ticketId={0} ", ticketId);
+                command.CommandText = sQuery.ToString();
+                result = (string)command.ExecuteScalar();
+            }
+
+            return result;
+        }
+
+
     }
 }

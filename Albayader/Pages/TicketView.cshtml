@@ -2,7 +2,149 @@
 @model AlbayaderWeb.Pages.TicketViewModel
 @{
     ViewData["Title"] = "Tickets View";
+    Layout = "~/Pages/Shared/_PlanLayout.cshtml";
+
 }
 
 
 
+<style>
+    html {
+        background: #1d2429;
+    }
+</style>
+
+    <div class="wrapper" style="background:#000 ;padding-bottom: 150px;">
+        <!-- Navbar -->
+        <!-- Main Sidebar Container -->
+        <!-- Content Wrapper. Contains page content -->
+        <div class="">
+            <!-- Content Header (Page header) -->
+            <!-- Main content -->
+            <section class="content">
+
+                <div class="col-md-12">
+
+
+                    <div class="ticketViewDashboardHeadr">
+
+
+                        <div class="row" style="padding:10px ;background: #fff;">
+                            <div class="col">
+                                <img src="images/logo-albyader.png" />
+                            </div>
+                            <div class="col">
+                                <h3 class="card-title" style="padding-top: 20px;">
+                                    Tickets
+                                </h3>
+                            </div>
+
+
+
+
+
+                        </div>
+
+
+
+
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col">
+
+                                    <div class="ticketViewDashboard">
+                                        <div class="row ticketViewDashboardHeader">
+                                            <div class="colRef">
+                                                Ref.
+                                            </div>
+
+                                            <div class="colSubject">
+                                                Subject
+                                            </div>
+                                            <div class="colBranch">
+                                                Branch
+                                            </div>
+                                            <div class="colBranch">
+                                                Assigned
+                                            </div>
+                                            <div class="colStatus">
+                                                Status
+                                            </div>
+                                        </div>
+                                        <div class="row ticketViewDashboardRowHeader">
+                                            <div class="colRef">
+                                                #81
+                                            </div>
+
+                                            <div class="colSubject">
+                                                The AC Motor is not working we need your technicaion to
+                                                visit our site ASAP
+                                                The AC Motor is not working we need your technicaion to
+                                                visit our site ASAP
+                                                The AC Motor is not working we need your technicaion to
+
+                                            </div>
+                                            <div class="colBranch">
+                                                AJMAN CITY CENTRE
+                                            </div>
+                                            <div class="colAssigned">
+                                                Mohammed Ams
+                                            </div>
+                                            <div class="colStatus">
+                                                <span class="badge badge-purple bview">New</span>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-divider-light"></div>
+                                        
+                                   
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.card-body -->
+
+                </div>
+                <!-- /.card -->
+
+
+
+            <input type="hidden" id="APIURI" name="APIURI" value="@Model.apiurl" />
+
+
+
+    <!-- /.container-fluid -->
+    </section>
+
+    <!-- /.content-wrapper -->
+    <footer class="main-footer" style="width:100%;margin-left:0;bottom: 0ch;position: fixed;">
+        <strong>
+            Copyright &copy; 2022
+            <a href="#">Al Bayader</a>.
+        </strong>
+        All rights reserved.
+    </footer>
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+<!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="js/Users/Users.js"></script>
+<script src="~/js/tickets/ticketview.js?dt=@DateTime.Now.ToString("yyyyMMddhhmmss")"></script>

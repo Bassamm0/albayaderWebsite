@@ -140,6 +140,46 @@ namespace DAL
             }
            
         }
+
+        public async void SendEmail(List<EUser> toList, string subject, string body)
+        {
+            string smtpClient = AppConfig.smtpClient;
+            string emailFrom = AppConfig.emailFrom;
+            string pwd = AppConfig.ePassword;
+
+            InternetAddressList list = new InternetAddressList();
+            foreach (EUser user in toList)
+            {
+                list.Add(new MailboxAddress(user.FirstName + ' ' + user.Lastname, user.Email));
+
+            }
+
+            bool isSent = false;
+            try
+            {
+                var email = new MimeMessage();
+                email.Sender = MailboxAddress.Parse(emailFrom);
+                email.To.AddRange(list);
+                email.Subject = subject;
+                var builder = new BodyBuilder();
+
+                builder.HtmlBody = body;
+                email.Body = builder.ToMessageBody();
+                using var smtp = new SmtpClient();
+
+                smtp.Connect(smtpClient, 587, SecureSocketOptions.None);
+                smtp.Authenticate(emailFrom, pwd);
+                await smtp.SendAsync(email);
+                smtp.Disconnect(true);
+                isSent = true;
+            }
+            catch (Exception ex)
+            {
+                isSent = false;
+
+            }
+
+        }
         public async Task SendEmailAs(string from, string to, string subject, string body)
         {
 
