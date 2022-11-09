@@ -153,7 +153,7 @@
                                                                 <td>@item.BranchName</td>
                                                                 <td>@item.creationDate</td>
                                                                  <td>@item.StatusDate</td>
-                                                                 @if(!String.IsNullOrEmpty(@item.AssignedUser.Trim())){
+                                                                 @if(   !String.IsNullOrEmpty(@item.AssignedUser.Trim())){
                                                                       <td> @item.AssignedUser </td>
                                                                  }else{
                                                                       <td>Not Assigned </td>

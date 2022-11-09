@@ -335,12 +335,20 @@
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <i class="fa-solid fa-person-chalkboard"></i> <label class="ServiceViewHeaders">Supervisor Review</label>
+                                    <i class="fa-solid fa-person-chalkboard"></i> <label class="ServiceViewHeaders">Client Review</label>
                                     <div class="row" style="padding-left:20px;">
 
                                         <div class="col-md-12">
                                             <span class="labelsView">Supervisor Name: </span>@Model._service.SupervisourName
                                         </div>
+                                          <div class="dropdown-divider"></div>
+                                    <div class="col-md-12">
+                                        <span class="labelsView">Supervisor Mobile: </span>@Model._service.SupervisourMobile
+                                    </div>
+                                         <div class="dropdown-divider"></div>
+                                    <div class="col-md-12">
+                                        <span class="labelsView">Supervisor Feedback: </span>@Model._service.SupervisourDesignation
+                                    </div>
                                         <div class="dropdown-divider"></div>
                                         <div class="col-md-12">
                                             <span class="labelsView">Supervisor Feedback: </span>@Model._service.SupervisourFeedback

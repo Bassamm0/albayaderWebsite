@@ -7,6 +7,11 @@ using static DAL.DALException;
 using System.Data;
 using System.Security.Claims;
 using System.Text.Json;
+using API.Hubs;
+using System.Net;
+using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.AspNetCore.SignalR;
+using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace API.Controllers
 {
@@ -14,11 +19,18 @@ namespace API.Controllers
     [ApiController]
     public class APITickets : ControllerBase
     {
+        private readonly IHubContext<TicketHub> _hubContext;
         private ticketLogic ticketLogic = new ticketLogic();
         private TicketLogLogic ticketLogLogic = new TicketLogLogic();
+       
 
+        public APITickets(IHubContext<TicketHub> hubContext)
+        {
+            _hubContext = hubContext;
+           
+        }
 
-       [Route("all")]
+        [Route("all")]
        [Authorize(Roles = "Administrator,Manager")]
         [HttpGet]
         public async Task<List<EticketViews>> getAlltickets()
@@ -129,6 +141,7 @@ namespace API.Controllers
             {
                
                 result = await ticketLogic.addticket(ticket, logeduser);
+                await _hubContext.Clients.All.SendAsync("newTicketAdded", result);
             }
             catch (Exception ex)
             {

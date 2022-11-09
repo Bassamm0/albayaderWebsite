@@ -49,12 +49,12 @@
 
 
 
-                        <div class="form-group">
+                        <div class="form-group" >
                             <div class="row">
                                 <div class="col">
 
-                                    <div class="ticketViewDashboard">
-                                        <div class="row ticketViewDashboardHeader">
+                                <div class="ticketViewDashboard" >
+                                        <div class="row ticketViewDashboardHeader" >
                                             <div class="colRef">
                                                 Ref.
                                             </div>
@@ -72,31 +72,12 @@
                                                 Status
                                             </div>
                                         </div>
-                                        <div class="row ticketViewDashboardRowHeader">
-                                            <div class="colRef">
-                                                #81
-                                            </div>
+                                    <div id="ticketsHolder" class="ticketViewDashboardRowHeader">
 
-                                            <div class="colSubject">
-                                                The AC Motor is not working we need your technicaion to
-                                                visit our site ASAP
-                                                The AC Motor is not working we need your technicaion to
-                                                visit our site ASAP
-                                                The AC Motor is not working we need your technicaion to
 
-                                            </div>
-                                            <div class="colBranch">
-                                                AJMAN CITY CENTRE
-                                            </div>
-                                            <div class="colAssigned">
-                                                Mohammed Ams
-                                            </div>
-                                            <div class="colStatus">
-                                                <span class="badge badge-purple bview">New</span>
-                                            </div>
                                         </div>
-                                        <div class="dropdown-divider-light"></div>
-                                        
+                                       
+
                                    
 
                                     </div>
@@ -148,3 +129,14 @@
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="js/Users/Users.js"></script>
 <script src="~/js/tickets/ticketview.js?dt=@DateTime.Now.ToString("yyyyMMddhhmmss")"></script>
+
+
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/tus-js-client@latest/dist/tus.min.js"></script>
+
+    <!-- default icons used in the plugin are from Bootstrap 5.x icon library (which can be enabled by loading CSS below) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.min.css" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script src="~/lib/microsoft-signalr/signalr.js"></script>
+    <script src="~/lib/microsoft-signalr/signalr.min.js"></script>

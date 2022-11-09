@@ -178,7 +178,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select t.*,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
+                    sQuery.Append(" select top(18) t.*,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
                     sQuery.Append(" select * from ticketAndStatus ");
                     sQuery.Append("  where ticketAndStatusId in ( ");
                     sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
@@ -201,7 +201,7 @@ namespace DAL.Functions
                     sQuery.Append("  on most_recent_assign.ticketId=t.ticketId ");
                     sQuery.Append(" left Join users AU on AU.UserId=most_recent_assign.AssginUserId ");
                     sQuery.Append(" left join ticketAndService TAS on TAS.ticketId=t.ticketId ");
-                    sQuery.Append(" where most_recent_status.ticketStatusId not in(7) order by t.creationDate ASC ");
+                    sQuery.Append(" where most_recent_status.ticketStatusId not in(7) order by t.creationDate desc ");
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();

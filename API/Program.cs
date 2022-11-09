@@ -5,6 +5,8 @@ using Newtonsoft.Json;
 using API;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.Server.IISIntegration;
+using API.Hubs;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,11 +45,14 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       builder =>
                       {
-                          builder.AllowAnyOrigin()
-                          .SetIsOriginAllowedToAllowWildcardSubdomains()
+                          builder
+                          //.AllowAnyOrigin()
+                                 .SetIsOriginAllowedToAllowWildcardSubdomains()
                                 .AllowAnyHeader()
                                 .AllowAnyMethod()
-                                ;
+                                .AllowCredentials()
+                                .SetIsOriginAllowed((hosts) => true);
+                          
                       });
 });
 
@@ -60,6 +65,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddRazorPages();
+
+builder.Services.AddSignalR();
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
@@ -98,6 +105,7 @@ app.UseEndpoints(endpoints =>
         pattern: "{controller=Home}/{action=Index}/{id?}");
     endpoints.MapControllers();
     endpoints.MapRazorPages();
+    endpoints.MapHub<TicketHub>("API/ticketHub");
 });
 app.MapControllers();
 
@@ -115,4 +123,8 @@ app.UseStaticFiles(new StaticFileOptions
 //                Path.Combine(Directory.GetCurrentDirectory(), "Uploads")),
 //    RequestPath = "/Uploads"
 //});
+
+
+
+
 app.Run();

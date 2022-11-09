@@ -7,7 +7,10 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using LOGIC.UserLogic;
-
+using API.Hubs;
+using System.Net;
+using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.AspNetCore.SignalR;
 
 namespace API.Controllers
 {
@@ -17,20 +20,26 @@ namespace API.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
+        private readonly IHubContext<TicketHub> _hubContext;
         private IConfiguration _config;
-        public LoginController(IConfiguration config)
+        public LoginController(IConfiguration config, IHubContext<TicketHub> hubContext)
         {
+            _hubContext = hubContext;
             _config = config;
         }
 
         [AllowAnonymous]
         [HttpPost]
-        public   IActionResult Login([FromBody] UserLogin userLogin)
+        public async Task<IActionResult> Login([FromBody] UserLogin userLogin)
         {
             var user =  Authenticate(userLogin);
             if (user != null)
             {
                 var token = Generate(user);
+
+
+                await _hubContext.Clients.All.SendAsync("ReceiveMessage", user.FirstName, $"User loged in  at: {DateTime.Now}");
+
                 return Ok(token);
             }
             return NotFound("User name or password is not correct.");
@@ -92,6 +101,8 @@ namespace API.Controllers
 
             return null;
         }
+
+      
     }
 }
 

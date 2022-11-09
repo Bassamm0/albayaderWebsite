@@ -328,9 +328,9 @@
     let Repairing = [];
     let Commissioning = [];
     let Installation = [];
-    let AMC = [];
+    let SiteInspection = [];
     let Emergency = [];
-    let arrayType = ["Warranty", "Repairing", "Commissioning and Startup", "Installation", "AMC", "Emergency"];
+    let arrayType = ["Warranty", "Repairing", "Commissioning and Startup", "Installation", "Site Inspection", "Emergency"];
     var correctivetype;
     function visitTypeMonth(lsservicePerMonthVist) {
 
@@ -338,7 +338,7 @@
          Repairing = [];
          Commissioning = [];
          Installation = [];
-         AMC = [];
+         SiteInspection = [];
          Emergency = [];
 
 
@@ -375,7 +375,7 @@
                     createTypesValues(months, lsservicePerMonthVist, Installation, arrayType[i]);
                     break;
                 case 4:
-                    createTypesValues(months, lsservicePerMonthVist, AMC, arrayType[i]);
+                    createTypesValues(months, lsservicePerMonthVist, SiteInspection, arrayType[i]);
                     break;
                 case 5:
                     createTypesValues(months, lsservicePerMonthVist, Emergency, arrayType[i]);
@@ -427,11 +427,11 @@
                         borderWidth: 1,
                         data: Installation
                     }, {
-                        label: "AMC",
+                        label: "Site Inspection",
                         backgroundColor: 'rgba(214, 51, 132, 0.2)',
                         borderColor: 'rgba(214, 51, 132, 1)',
                         borderWidth: 1,
-                        data: AMC
+                        data: SiteInspection
                     }, {
                         label: "Emergency",
                         backgroundColor: 'rgba(200, 53, 0, 0.2)',
@@ -476,7 +476,7 @@
     let ArrRepairing = [];
     let ArrCommissioning = [];
     let ArrInstallation = [];
-    let ArrAMC = [];
+    let ArrSiteInspection = [];
     let ArrEmergency = [];
     var CorrectiveTypePerBranch;
     // type branchs
@@ -487,7 +487,7 @@
          ArrRepairing = [];
          ArrCommissioning = [];
          ArrInstallation = [];
-         ArrAMC = [];
+        ArrSiteInspection = [];
          ArrEmergency = [];
         if (lsservicePerBranchVisit == null) {
             return;
@@ -510,7 +510,7 @@
                     constructBranchType( lsservicePerBranchVisit, ArrInstallation, arrayType[i]);
                     break;
                 case 4:
-                    constructBranchType( lsservicePerBranchVisit, ArrAMC, arrayType[i]);
+                    constructBranchType(lsservicePerBranchVisit, ArrSiteInspection, arrayType[i]);
                     break;
                 case 5:
                     constructBranchType( lsservicePerBranchVisit, ArrEmergency, arrayType[i]);
@@ -568,8 +568,8 @@
                 ,
                 {
                     axis: 'y',
-                    label: 'AMC',
-                    data: ArrAMC,
+                    label: 'Site Inspection',
+                    data: ArrSiteInspection,
                     fill: false,
                     backgroundColor: 'rgba(214, 51, 132, 0.2)',
                     borderColor: 'rgba(214, 51, 132, 1)',
