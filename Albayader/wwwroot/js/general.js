@@ -63,6 +63,15 @@ $(document).ready(function () {
 		case "tickets":
 			$("#TicketsMenu").addClass("active");
 			break;
+		case "ticketclosed":
+			$("#TicketsMenu").addClass("active");
+			break;
+		case "request":
+			$("#TicketsMenu").addClass("active");
+			break;
+		case "request":
+			$("#ticketdetails").addClass("active");
+			break;
 		default:
 		// code block
 	}

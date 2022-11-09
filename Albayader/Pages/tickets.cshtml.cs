@@ -1,6 +1,7 @@
 using Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel.Design;
@@ -25,6 +26,9 @@ namespace AlbayaderWeb.Pages
         public string errorMessage { get; set; }
         public List<EticketViews>? tickets = null;
         public List<UserViewModel>? ViewUser = null;
+
+        public EServices postedService = new EServices();
+        public EServices _eServices = new EServices();
         public string CompanyId { get; set; }
 
 
@@ -318,7 +322,7 @@ namespace AlbayaderWeb.Pages
         }
 
 
-        public async Task<IActionResult> OnPostCreateService(int id, int userId,int technicainId)
+        public async Task<IActionResult> OnPostCreateService(int id, int branchId, int technicainId,int SiteVistTypeId)
         {
 
             token = HttpContext.Session.GetString("token");
@@ -328,10 +332,15 @@ namespace AlbayaderWeb.Pages
             }
             EticketAndService ticketAndService = new EticketAndService();
             ticketAndService.ticketId = id;
-            ticketAndService.branchId = userId;
+            ticketAndService.branchId = branchId;
             ticketAndService.TechnicianId = technicainId;
+            ticketAndService.SiteVistTypeId = SiteVistTypeId;
+
             string statusCode = await CreateAService(ticketAndService);
 
+
+
+           
 
 
             return null;
@@ -372,6 +381,9 @@ namespace AlbayaderWeb.Pages
 
             return "";
         }
+
+
+     
 
     }
 }

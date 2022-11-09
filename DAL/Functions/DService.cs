@@ -140,10 +140,19 @@ namespace DAL.Functions
                             {
                                 services.Add(oEServiceModel);
                             }
-                            if (oEServiceModel.CorrectiveServiceDetails != null && oEServiceModel.CorrectiveServiceDetails.Count>0)
+                            if (StatusId != 1)
+                            {
+                                if (oEServiceModel.CorrectiveServiceDetails != null && oEServiceModel.CorrectiveServiceDetails.Count > 0)
+                                {
+                                    services.Add(oEServiceModel);
+                                }
+                            }
+                            else
                             {
                                 services.Add(oEServiceModel);
+
                             }
+                            
 
 
                         }
@@ -799,7 +808,7 @@ namespace DAL.Functions
             newService.SupervisourSignature = null;
             newService.SupervisourFeedback = null;
             newService.StatusAfterId = 2;
-            newService.SiteVistTypeId = 1;
+            //newService.SiteVistTypeId = 1;
             newService.CreatedDate=DateTime.UtcNow;
 
             using (var context = new DatabaseContext(DatabaseContext.ops.dbOptions))

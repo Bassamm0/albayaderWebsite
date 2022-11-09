@@ -1,17 +1,41 @@
 ﻿$(document).ready(function () {
 
-
+    var Notifcationmessage = "";
     const connection = new signalR.HubConnectionBuilder()
         .withUrl("https://localhost:7174/API/ticketHub")
         .build();
 
-    connection.on("newTicketAdded", (ticket) => {
+    connection.on("newTicketAdded", (ticket, creator) => {
     
-        const encodedMsg = ticket ;
-        toastr["success"]("New ticket has been add  " + encodedMsg)
-        console.log(ticket)
+        Notifcationmessage = '<div style="font-size:20px;"  >New ticket with Ref #' + ticket.ticketId + ' Subject ' + ticket.subject + ' has been created  by ' + creator.firstName + ' ' + creator.lastname + ' from Company ' + creator.companyName + ' Branch ' + creator.branchName +'</div>';
+        toastr["success"](Notifcationmessage)
+
         getTickets();
     });
+  
+
+    connection.on("statusChanged", (ticketAndStatus, creator) => {
+
+        Notifcationmessage = '<div style="font-size:20px;"  >The status of ticket with Ref #' + ticketAndStatus.ticketId + ' has been changes to ' + statusName(ticketAndStatus.ticketStatusId) + ' by ' + creator.firstName + ' ' + creator.lastname + '</div>';
+        toastr["success"](Notifcationmessage)
+
+        getTickets();
+    });
+    connection.on("assginTicketUser", (ticketAndUser, assigneduser, creator) => {
+
+        Notifcationmessage = '<div style="font-size:20px;"  >The  ticket with Ref #' + ticketAndUser.ticketId + ' has been assigned to ' + assigneduser.firstName + ' ' + assigneduser.lastname + ' by ' + creator.firstName + ' ' + creator.lastname + '</div>';
+        toastr["success"](Notifcationmessage)
+
+        getTickets();
+    });
+
+    connection.on("createTicketService", (ticketAndService, creator) => {
+        console.log(ticketAndService)
+        Notifcationmessage = '<div style="font-size:20px;"  >A service for  ticket with Ref #' + ticketAndService.ticketId + ' has been created with service refernce #' + ticketAndService.serviceId + ' by ' + creator.firstName + ' ' + creator.lastname + '</div>';
+        toastr["success"](Notifcationmessage)
+
+    });
+
 
     connection.start().catch(err => console.error(err.toString()));
 
@@ -25,12 +49,12 @@
         "debug": false,
         "newestOnTop": false,
         "progressBar": false,
-        "positionClass": "toast-top-right",
+        "positionClass": "toast-top-full-width",
         "preventDuplicates": false,
         "onclick": null,
         "showDuration": "300",
         "hideDuration": "1000",
-        "timeOut": "15000",
+        "timeOut": "25000",
         "extendedTimeOut": "1000",
         "showEasing": "swing",
         "hideEasing": "linear",
@@ -293,6 +317,77 @@
         }
        
         return css;
+    }
+
+    function statusCaseToaster(id) {
+        var css;
+        switch (id) {
+            case 1:
+
+                css = "badge badge-purple"
+                break;
+            case 2:
+                css = "badge badge-Lightblue"
+                break;
+            case 3:
+                css = "badge badge-warning"
+
+                break;
+            case 4:
+                css = "badge badge-dark"
+
+                break;
+            case 5:
+                css = "badge badge-danger"
+
+                break;
+            case 6:
+                css = "badge badge-orang"
+
+
+                break;
+
+            default:
+            // code block
+        }
+        return css;
+    }
+
+    function statusName(id) {
+        var StatusName;
+        switch (id) {
+            case 1:
+
+                StatusName = "New"
+                break;
+            case 2:
+                StatusName = "Inprocess"
+                break;
+            case 3:
+                StatusName = "Waiting For Tch."
+
+                break;
+            case 4:
+                StatusName = "Waiting For Client Res."
+
+                break;
+            case 5:
+                StatusName = "Breach"
+
+                break;
+            case 6:
+                StatusName = "Onhold"
+
+                break;
+            case 7:
+                StatusName = "Closed"
+
+
+                break;
+            default:
+            // code block
+        }
+        return StatusName;
     }
 
 });

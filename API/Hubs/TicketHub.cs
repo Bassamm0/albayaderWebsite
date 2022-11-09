@@ -8,21 +8,22 @@ namespace API.Hubs
         {
             await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
-        public async Task NewTicket(EticketViews ticket)
+        public async Task NewTicket(EticketViews ticket, EUser creator)
         {
-            await Clients.All.SendAsync("newTicketAdded", ticket);
+            await Clients.All.SendAsync("newTicketAdded", ticket, creator);
         }
-        public async Task ChangeStatus(int ticketId,int ticketStatusId,string StatusName)
+        public async Task ChangeStatus(EticketAndStatus ticketAndStatus, EUser creator)
         {
-            await Clients.All.SendAsync("changeStatus", ticketId, ticketStatusId, StatusName);
+            await Clients.All.SendAsync("statusChanged", ticketAndStatus, creator);
         }
-        public async Task AssginTicketUser(int ticketId, string UserName)
+        public async Task AssginTicketUser(EticketAndUser ticketAndUser,EUser assigneduser,EUser creator)
         {
-            await Clients.All.SendAsync("assginTicketUser", ticketId, UserName);
+            await Clients.All.SendAsync("assginTicketUser", ticketAndUser, assigneduser, creator);
         }
-        public async Task CreateTicketService(int ticketId, int serviceId)
+        public async Task CreateTicketService(EticketAndService ticketAndService, EUser creator)
         {
-            await Clients.All.SendAsync("createTicketService", ticketId, serviceId);
+            await Clients.All.SendAsync("createTicketService", ticketAndService, creator);
         }
+
     }
 }

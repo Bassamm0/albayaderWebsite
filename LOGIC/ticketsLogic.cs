@@ -260,6 +260,7 @@ namespace LOGIC
             eService.StatusId = 1;
 
             eService.CreatedDate = DateTime.Now;
+            eService.SiteVistTypeId = ticketAndService.SiteVistTypeId;
             eService.ServiceTypeId = 2;
 
             var resul = await dService.addService(eService);

@@ -247,7 +247,7 @@
                                 </li>
                                
                             }
-
+                           
                              @if (@Context.Session.GetString("Role").ToLower() == "administrator" || @Context.Session.GetString("Role").ToLower() == "manager")
                             {
                                 <li class="nav-item">
@@ -260,7 +260,23 @@
 
                                 </li>
                             
+                          }
+                            @if (@Context.Session.GetString("Role").ToLower() == "administrator" || @Context.Session.GetString("Role").ToLower() == "manager" || @Context.Session.GetString("Role").ToLower() == "client manager" || @Context.Session.GetString("Role").ToLower() == "support"|| @Context.Session.GetString("Role").ToLower() == "supervisor")
+                            {
+                            <li class="nav-item">
+                                <a href="tickets" class="nav-link" id="TicketsMenu">
+                                    <i class="fa-sharp fa-solid fa-comment"></i>
+                                    <p style="padding-left: 10px;">
+                                        Tickets
+                                    </p>
+                                </a>
+
+                            </li>
+                            }
                           
+                           @if (@Context.Session.GetString("Role").ToLower() == "administrator" || @Context.Session.GetString("Role").ToLower() == "manager")
+                            {
+                             
 
                             <li class="nav-item">
                                     <a href="#" class="nav-link" id="settingMenu">
@@ -296,16 +312,7 @@
                                     
                             
                             }
-
-                            <li class="nav-item">
-                                <a href="tickets" class="nav-link" id="TicketsMenu">
-                                    <i class="nav-icon fa-solid fa-handshake"></i>
-                                    <p style="padding-left: 10px;">
-                                        Tickets
-                                    </p>
-                                </a>
-
-                            </li>
+                            
 
                         </ul>
                     </nav>

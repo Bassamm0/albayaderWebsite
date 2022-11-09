@@ -12,6 +12,7 @@ using System.Net;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.AspNetCore.SignalR;
 using static Org.BouncyCastle.Math.EC.ECCurve;
+using LOGIC.UserLogic;
 
 namespace API.Controllers
 {
@@ -141,7 +142,7 @@ namespace API.Controllers
             {
                
                 result = await ticketLogic.addticket(ticket, logeduser);
-                await _hubContext.Clients.All.SendAsync("newTicketAdded", result);
+                await _hubContext.Clients.All.SendAsync("newTicketAdded", result,logeduser);
             }
             catch (Exception ex)
             {
@@ -251,6 +252,7 @@ namespace API.Controllers
             try
             {
                 result = await ticketLogic.insertNewStatus(ticketAndStatus);
+                await _hubContext.Clients.All.SendAsync("statusChanged", ticketAndStatus, logeduser);
             }
             catch (Exception ex)
             {
@@ -280,6 +282,11 @@ namespace API.Controllers
             try
             {
                 result = await ticketLogic.assginTicketuser(ticketAndUser, logeduser);
+                UserLogic logicuser = new UserLogic();
+
+                EUser assigneduser = await logicuser.getUserById(ticketAndUser.AssginUserId);
+
+                await _hubContext.Clients.All.SendAsync("assginTicketUser", ticketAndUser, assigneduser, logeduser);
             }
             catch (Exception ex)
             {
@@ -309,6 +316,8 @@ namespace API.Controllers
             try
             {
                 result = await ticketLogic.createTicketService(ticketAndService);
+                await _hubContext.Clients.All.SendAsync("createTicketService", ticketAndService, logeduser);
+
             }
             catch (Exception ex)
             {

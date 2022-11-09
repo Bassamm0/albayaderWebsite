@@ -253,7 +253,9 @@
             ddtechnicain: {
                 required:true,
             },
-
+            ddVistType: {
+                required: true,
+            },
         },
 
         errorElement: 'span',
@@ -364,7 +366,8 @@
         }
         branchId = $("#ddBranch").val();
         technicainId = $("#ddtechnicain").val()
-        var url = 'tickets?handler=CreateService&id=' + $("#createServiceId").val() + '&branchId=' + branchId + '&technicainId=' + technicainId;
+        SiteVistTypeId = $("#ddVistType").val()
+        var url = 'tickets?handler=CreateService&id=' + $("#createServiceId").val() + '&branchId=' + branchId + '&technicainId=' + technicainId + '&SiteVistTypeId=' + SiteVistTypeId;
         $.ajax({
             type: "POST",
             url: url,

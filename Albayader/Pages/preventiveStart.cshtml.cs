@@ -97,6 +97,7 @@ namespace AlbayaderWeb.Pages
             postedService.BranchId = BranchId;
             postedService.CreatedDate= DateTime.Now;
             postedService.ServiceTypeId = serviceTypeId;
+            postedService.SiteVistTypeId =1;
 
 
            _eServices = await addService(postedService);

@@ -30,6 +30,8 @@ namespace API
                     City = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.StateOrProvince)?.Value,
                     CompanyTypeId= Convert.ToInt32(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.GroupSid)?.Value),
                     CompanyId = Convert.ToInt32(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.PrimarySid)?.Value),
+                    BranchName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.DenyOnlySid)?.Value,
+                    CompanyName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Spn)?.Value,
                 };
 
             }

@@ -20,7 +20,9 @@ namespace Entity
         public int branchId { get; set; }
         [NotMapped]
         public int TechnicianId { get; set; }
-        
+        [NotMapped]
+        public int SiteVistTypeId { get; set; }
+
 
     }
 }

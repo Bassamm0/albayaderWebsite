@@ -70,6 +70,7 @@ namespace API.Controllers
                 new Claim(ClaimTypes.GroupSid, user.CompanyTypeId.ToString()),
                 new Claim(ClaimTypes.PrimaryGroupSid, user.CompanyName.ToString()),
                 new Claim(ClaimTypes.DenyOnlySid, user.BranchName.ToString()),
+                new Claim(ClaimTypes.Spn, user.CompanyName.ToString()),
 
             };
 
