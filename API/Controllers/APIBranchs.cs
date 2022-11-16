@@ -32,7 +32,7 @@ namespace API.Controllers
         }
 
         [Route("companybranchs")]
-        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion,Support")]
         [HttpPost]
         public async Task<List<EBranchs>> getAllCompanyBranchs([FromBody] JsonElement objData)
         {
@@ -48,7 +48,7 @@ namespace API.Controllers
         }
 
         [Route("getBranchById")]
-        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion,Support")]
         [HttpPost]
         public async Task<EBranchs> getBranchById([FromBody] JsonElement objData)
         {

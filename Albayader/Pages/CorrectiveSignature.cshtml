@@ -132,6 +132,18 @@
                             <div class="dropdown-divider"></div>
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <i class="fa-thin fa-gear"></i> <label class="ServiceViewHeaders">Equipment Type:</label>
+                                    <div class="">
+
+                                        @Model._service.ServiceDetails[0].EquipmentTypeName
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dropdown-divider"></div>
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <i class="fa-solid fa-camera"></i> <label class="ServiceViewHeaders">Picture Before</label>
                                     <div class="">
                                         @{

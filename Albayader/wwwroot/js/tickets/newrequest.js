@@ -38,7 +38,7 @@
 
         if ($("#newRequestForm").valid()) {
 
-            var validationElem = 'fielUploadValidationHolder';
+            var validationElem = '#fielUploadValidationHolder';
 
             var InputElmentid = 'Pictures';
 
@@ -98,7 +98,10 @@
         }).done(function () {
 
             console.log('done')
-            window.location.href = 'tickets';
+            var files = document.getElementById(InputElmentid).files
+            if (files.length == 0) {
+                window.location.href = 'tickets';
+            }
 
         });
 
@@ -111,13 +114,16 @@
 
         var files = document.getElementById(InputElmentid).files
         var formData = new FormData();
-
+        if (files.length == 0) {
+            return;
+        }
         // Loop through files
         for (var i = 0; i < files.length; i++) {
             var file = files[i];
             formData.append("files", file);
 
         }
+ 
         $('#createTicket').attr('disabled', true);
     
 
@@ -164,6 +170,7 @@
                     $(validationElem).children('.uploadError').html('Some Thing went wrong, please contact the administrator')
                 }
                 $('#createTicket').attr('disabled', false);
+                window.location.href = 'tickets';
  
             },
             xhr: function () {

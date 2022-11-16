@@ -62,7 +62,7 @@ namespace API
         }
 
         [Route("getCompanyUsers")]
-        [Authorize(Roles = "Administrator,Manager,Client Manager")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager,Support,Technicion")]
         [HttpPost]
         public async Task<List<UserViewModel>> getCompanyUsers([FromBody] JsonElement objData)
         {
@@ -109,7 +109,7 @@ namespace API
 
 
         [Route("getalltechnicain")]
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize(Roles = "Administrator,Manager,Support,Technicion")]
         [HttpGet]
         public async Task<List<EUser>> getAllTechnicain()
         {
@@ -120,7 +120,7 @@ namespace API
             return users;
         }
         [Route("getBranchUsers")]
-        [Authorize(Roles = "Administrator,Manager,Client Manager")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager,Support,Technicion")]
         [HttpGet]
         public async Task<List<UserViewModel>> getBranchUsers([FromBody] JsonElement objData)
         {
@@ -211,7 +211,7 @@ namespace API
             return result;
         }
         [Route("addwithbranch")]
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize(Roles = "Administrator,Manager,Support,Technicion")]
         [HttpPost]
         public async Task<Boolean> AddUserWithBranch([FromBody] EUser user)
         {
@@ -246,7 +246,7 @@ namespace API
         }
 
         [Route("updatewithbranch")]
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize(Roles = "Administrator,Manager,Support")]
         [HttpPost]
         public async Task<Boolean> updateUserwithbranch([FromBody] EUser UpdatedUser)
 
@@ -312,7 +312,7 @@ namespace API
 
 
         [Route("isemailexist")]
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize(Roles = "Administrator,Manager,Support")]
         [HttpPost]
         public async Task<Boolean> IsEmailExist([FromBody] JsonElement objData)
         {
@@ -603,7 +603,7 @@ namespace API
 
         [Authorize]
         [Route("getLoginUser")]
-        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion,Client User")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion,Client User,Support,Supervisor")]
         [HttpGet]
         public async Task<EUser> getLoginUserDetails()
         {

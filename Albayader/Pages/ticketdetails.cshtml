@@ -16,7 +16,7 @@
                     <ol class="breadcrumb float-sm-left">
                         <li class="breadcrumb-item"><a href="Dashboard">Dashboard</a></li>
                         <li class="breadcrumb-item"><a href="tickets">tickets</a></li>
-                        <li class="breadcrumb-item actifve">Ticket details #@Model.ticketViewsDetails.ticketId #@Model.ticketViewsDetails.subject</li>
+                        <li class="breadcrumb-item actifve">Ticket details #@Model.ticketViewsDetails.ticketId </li>
                     </ol>
                 </div>
 
@@ -124,7 +124,7 @@
 
                             <div class="card-header">
                                 <h3 class="card-title">
-                                    Ref:#@Model.ticketViewsDetails.ticketId - @Model.ticketViewsDetails.subject
+                                    Ref:#@Model.ticketViewsDetails.ticketId 
                                 </h3>
 
                                 <div class="card-tools">
@@ -291,7 +291,7 @@
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">Reply</label>
                                                         <select name="ddStatus" id="ddStatus" class="form-control select2 " style="width: 100%;">
-                                                            <option value="">Don't Change the ticket  Status or select another status</option>
+                                                            <option value="">Don't Change the ticket  Status </option>
                                                             
                                                             <option value="2">Inprocess</option>
                                                             <option value="3">Tch. Waiting</option>
@@ -314,7 +314,7 @@
 
 
 
-                                                    <div class="fielUploadValidationHolder">
+                                                    <div class="fielUploadValidationHolder" id="fielUploadValidationHolder">
                                                         <span id="uploadError" class="errorMessage uploadError"></span>
                                                         <progress id="fileProgress" style="display: none" class="progress"></progress>
                                                         <span id="lblMessage" class="uploadSccessMessage lblMessage"></span>

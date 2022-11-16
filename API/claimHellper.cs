@@ -32,6 +32,7 @@ namespace API
                     CompanyId = Convert.ToInt32(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.PrimarySid)?.Value),
                     BranchName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.DenyOnlySid)?.Value,
                     CompanyName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Spn)?.Value,
+                    BranchId = Convert.ToInt32(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Upn)?.Value),
                 };
 
             }

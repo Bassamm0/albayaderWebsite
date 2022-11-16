@@ -4,10 +4,10 @@
     const APIURL = $('#APIURI').val();
     const UploadUrl = $('#Uploadlocation').val();
     const role = $('#uRol').val();
-    var jtoken = $('#utoken').val();
+    var jtoken = $('#utoken').val(); 
    
 
-    if (role.toLowerCase() == 'administrator' || role.toLowerCase() == 'manager' || role.toLowerCase() == 'client manager') {
+    if (role.toLowerCase() == 'administrator' || role.toLowerCase() == 'manager' || role.toLowerCase() == 'client manager' || role.toLowerCase() == 'support' || role.toLowerCase() == 'supervisor') {
         var year = new Date().getFullYear().toString();
         initDashbaord(year)
      
@@ -53,16 +53,20 @@
 
                 allServiceMonth(data.allServiceMonth)
                 
-                brancService(data.preventiveBranch, data.correctiveBranch)
-
-                visitTypeMonth(data.lsservicePerMonthVist)
-                serviceTypeBranchs(data.lsservicePerBranchVisit)
+             
 
                 $('#preventiveCount').html('<h3>' + data.preventiveCount+'</h3> <p>Preventive Service</p>')
                 $('#correctiveCount').html('<h3>' + data.correctiveCount + '</h3> <p>Corrective Service</p>')
                 $('#otherCount').html('<h3>' + data.otherCount + '</h3> <p>Other Service</p>')
                 $('#branchCount').html('<h3>' + data.branchCount + '</h3> <p>Branches</p>')
 
+                if (role.toLowerCase() == 'administrator' || role.toLowerCase() == 'manager' || role.toLowerCase() == 'client manager' || role.toLowerCase() == 'support' ) {
+
+                    brancService(data.preventiveBranch, data.correctiveBranch)
+                    visitTypeMonth(data.lsservicePerMonthVist)
+                    serviceTypeBranchs(data.lsservicePerBranchVisit)
+                }
+               
             },
 
             error: function (xhr, textStatus, errorThrown) {
@@ -330,7 +334,7 @@
     let Installation = [];
     let SiteInspection = [];
     let Emergency = [];
-    let arrayType = ["Warranty", "Repairing", "Commissioning and Startup", "Installation", "Site Inspection", "Emergency"];
+    let arrayType = ["Warranty", "Repairing", "Commissioning and Startup", "Installation", "Site Inspection", "Emergency","Breakdown Emergency"];
     var correctivetype;
     function visitTypeMonth(lsservicePerMonthVist) {
 
@@ -340,6 +344,7 @@
          Installation = [];
          SiteInspection = [];
          Emergency = [];
+         BreakdownEmergency = [];
 
 
         if (lsservicePerMonthVist == null ) {
@@ -359,7 +364,7 @@
             "Nov",
             "Dec"]
        
-       
+ 
         for (var i = 0; i < arrayType.length; i++) {
             switch (i) {
                 case 0:
@@ -379,6 +384,10 @@
                     break;
                 case 5:
                     createTypesValues(months, lsservicePerMonthVist, Emergency, arrayType[i]);
+                    break;
+                case 6:
+                    createTypesValues(months, lsservicePerMonthVist, BreakdownEmergency, arrayType[i]);
+                    console.log(lsservicePerMonthVist)
                     break;
             }
           
@@ -438,6 +447,12 @@
                         borderColor: 'rgba(200, 53, 0, 1)',
                         borderWidth: 1,
                         data: Emergency
+                    }, {
+                        label: "Breakdown Emergency",
+                        backgroundColor: 'rgba(194, 0, 0, 0.3)',
+                        borderColor: 'rgba(194, 0, 0, 1)',
+                        borderWidth: 1,
+                        data: ArrBreakDownEmergency
                     }
                 ]
             },
@@ -478,6 +493,7 @@
     let ArrInstallation = [];
     let ArrSiteInspection = [];
     let ArrEmergency = [];
+    let ArrBreakDownEmergency = [];
     var CorrectiveTypePerBranch;
     // type branchs
     function serviceTypeBranchs(lsservicePerBranchVisit) {
@@ -488,7 +504,8 @@
          ArrCommissioning = [];
          ArrInstallation = [];
         ArrSiteInspection = [];
-         ArrEmergency = [];
+        ArrEmergency = [];
+        ArrBreakDownEmergency = [];
         if (lsservicePerBranchVisit == null) {
             return;
         }
@@ -514,6 +531,9 @@
                     break;
                 case 5:
                     constructBranchType( lsservicePerBranchVisit, ArrEmergency, arrayType[i]);
+                    break;
+                case 6:
+                    constructBranchType(lsservicePerBranchVisit, ArrBreakDownEmergency, arrayType[i]);
                     break;
             }
 
@@ -583,6 +603,16 @@
                     fill: false,
                     backgroundColor: 'rgba(200, 53, 0, 0.2)',
                     borderColor: 'rgba(200, 53, 0, 1)',
+                    borderWidth: 1,
+                }
+                ,
+                {
+                    axis: 'y',
+                    label: 'Break Down Emergency',
+                    data: ArrBreakDownEmergency,
+                    fill: false,
+                    backgroundColor: 'rgba(194, 0, 0, 0.3)',
+                    borderColor: 'rgba(194, 0, 0, 1)',
                     borderWidth: 1,
                 }
             ]

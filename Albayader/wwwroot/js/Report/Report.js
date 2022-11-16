@@ -161,7 +161,7 @@
                         data[i].serviceTypeName,
                      
                         data[i].vistTypeName,
-                        serials,
+                       // serials,
                         toTimeZone(moment(moment(data[i].completionDate, 'MM/DD/YYYY hh:mm:ss')).format('DD-MM-YYYY hh:mm:ss a')),
                         remark,
                    
@@ -291,7 +291,7 @@
                         data[i].serviceTypeName,
 
                         data[i].vistTypeName,
-                        serials,
+                       // serials,
                         toTimeZone(moment(moment(data[i].completionDate, 'MM/DD/YYYY hh:mm:ss')).format('DD-MM-YYYY hh:mm:ss a')),
                         remark,
 

@@ -36,7 +36,7 @@ namespace AlbayaderWeb.Pages
         {
             if (HttpContext.Session.GetString("token") == null || HttpContext.Session.GetString("token") == "")
             {
-                return Redirect("Index");
+                //return Redirect("Index");
             }
             else
             {
@@ -103,7 +103,11 @@ namespace AlbayaderWeb.Pages
 
         public async Task<IActionResult> OnPost()
         {
+            CompanyId = HttpContext.Session.GetString("CompanyId");
             token = HttpContext.Session.GetString("token");
+            role = HttpContext.Session.GetString("Role");
+            timezone = HttpContext.Session.GetString("timezone");
+
 
             storeStartDate = Request.Form["startDate"];
             storeEndDate = Request.Form["endDate"];
@@ -175,7 +179,11 @@ namespace AlbayaderWeb.Pages
         public async Task<IActionResult> OnPostChangeStatus(int id, int statusId)
         {
 
+            CompanyId = HttpContext.Session.GetString("CompanyId");
             token = HttpContext.Session.GetString("token");
+            role = HttpContext.Session.GetString("Role");
+            timezone = HttpContext.Session.GetString("timezone");
+
             if (id == 0)
             {
                 return Page();
@@ -269,8 +277,12 @@ namespace AlbayaderWeb.Pages
 
         public async Task<IActionResult> OnPostAssign(int id, int userId)
         {
-         
+
+            CompanyId = HttpContext.Session.GetString("CompanyId");
             token = HttpContext.Session.GetString("token");
+            role = HttpContext.Session.GetString("Role");
+            timezone = HttpContext.Session.GetString("timezone");
+
             if (id == 0)
             {
                 return Page();
@@ -325,7 +337,11 @@ namespace AlbayaderWeb.Pages
         public async Task<IActionResult> OnPostCreateService(int id, int branchId, int technicainId,int SiteVistTypeId)
         {
 
+            CompanyId = HttpContext.Session.GetString("CompanyId");
             token = HttpContext.Session.GetString("token");
+            role = HttpContext.Session.GetString("Role");
+            timezone = HttpContext.Session.GetString("timezone");
+
             if (id == 0)
             {
                 return Page();

@@ -118,7 +118,7 @@
                 <!-- ./col -->
             </div>
 
-            @if (@Model.role.ToLower() == "administrator" || @Model.role.ToLower() == "manager" || @Model.role.ToLower() == "client manager")
+            @if (@Model.role.ToLower() == "administrator" || @Model.role.ToLower() == "manager" || @Model.role.ToLower() == "client manager" || @Model.role.ToLower() == "supervisor" || @Model.role.ToLower() == "support")
             {
 
 
@@ -182,11 +182,11 @@
                 </div>
 
                  </div>
-              
-                    <div class="row">
-                        <!-- LINE CHART -->
-                        <div class="col-md-12">
-                   <div class="card">
+
+                <div class="row">
+                    <!-- LINE CHART -->
+                    <div class="col-md-12">
+                        <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Preventive  vs Corrective</h3>
 
@@ -203,79 +203,85 @@
                                 </div>
                             </div>
                             <!-- /.card-body -->
+                        </div>
                     </div>
-                    </div>
-                        <!-- /.card -->
-                        <!-- BAR CHART -->
+                    <!-- /.card -->
+                    <!-- BAR CHART -->
+                    @if (@Model.role.ToLower() != "supervisor")
+                    {
                         <div class="col-md-12">
-                    <div class="card ">
-                            <div class="card-header">
-                                <h3 class="card-title">Service Per Branch</h3>
+                            <div class="card ">
+                                <div class="card-header">
+                                    <h3 class="card-title">Service Per Branch</h3>
 
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
 
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart">
-                                    <canvas id="barChart" class="srPreBranch"></canvas>
+                                <div class="card-body">
+                                    <div class="chart">
+                                        <canvas id="barChart" class="srPreBranch"></canvas>
 
+                                    </div>
                                 </div>
+                                <!-- /.card-body -->
                             </div>
-                            <!-- /.card-body -->
-                    </div>
-                    </div>
-                        <!-- /.card -->
-                    </div>
+                        </div>
+                    }
+                    <!-- /.card -->
+                        </div>
 
 
+                @if (@Model.role.ToLower() != "supervisor")
+                {
+                        <div class="col-md-12">
+                            <div class="card ">
+                                <div class="card-header">
+                                    <h3 class="card-title">Corrective Type Per Month </h3>
 
-                     <div class="col-md-12">
-                        <div class="card ">
-                            <div class="card-header">
-                                <h3 class="card-title">Corrective Type Per Month </h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
 
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart">
-                                    <canvas id="CorrectiveTypePerMonth" class="CorrectiveTypePerMonth"></canvas>
+                                <div class="card-body">
+                                    <div class="chart">
+                                        <canvas id="CorrectiveTypePerMonth" class="CorrectiveTypePerMonth"></canvas>
 
+                                    </div>
                                 </div>
+                                <!-- /.card-body -->
                             </div>
-                            <!-- /.card-body -->
-                    </div>
-                    </div>
-                     <div class="col-md-12">
-                     <div class="card card ">
-                            <div class="card-header">
-                                <h3 class="card-title">Corrective Type Per Branch </h3>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card card ">
+                                <div class="card-header">
+                                    <h3 class="card-title">Corrective Type Per Branch </h3>
 
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
 
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart">
-                                    <canvas id="CorrectiveTypePerBranch" class="CorrectiveTypePerBranch"></canvas>
+                                <div class="card-body">
+                                    <div class="chart">
+                                        <canvas id="CorrectiveTypePerBranch" class="CorrectiveTypePerBranch"></canvas>
 
+                                    </div>
                                 </div>
+                                <!-- /.card-body -->
                             </div>
-                            <!-- /.card-body -->
-                    </div>
 
-                   </div>
+                        </div>
+                    }
+                  
          
                     <!-- /.col (RIGHT) -->
       

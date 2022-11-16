@@ -336,7 +336,7 @@ namespace DAL.Functions
                 using (var command = conn.CreateCommand())
                 {
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append("select AU.Authname UserRole,CON.Name ResidentCountry,CONN.Name NationalityName, CO.Name CompanyName,CO.CompanyID,CO.CompanyTypeId ,* from users U ");
+                    sQuery.Append("select BR.branchId, AU.Authname UserRole,CON.Name ResidentCountry,CONN.Name NationalityName, CO.Name CompanyName,CO.CompanyID,CO.CompanyTypeId ,* from users U ");
                     sQuery.Append("inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
                     sQuery.Append("inner join Branchs BR on BR.branchId=UAB.BranchId ");
                     sQuery.Append("inner join Companies CO on CO.CompanyID = BR.compnayId ");
@@ -378,6 +378,7 @@ namespace DAL.Functions
                             if (dataReader["NationalityName"] != DBNull.Value) { oEUsers.NationalityName = (string)dataReader["NationalityName"]; }
                             if (dataReader["CompanyName"] != DBNull.Value) { oEUsers.CompanyName = (string)dataReader["CompanyName"]; }
                             if (dataReader["CompanyID"] != DBNull.Value) { oEUsers.CompanyId = (int)dataReader["CompanyID"]; }
+                            if (dataReader["BranchId"] != DBNull.Value) { oEUsers.BranchId = (int)dataReader["BranchId"]; }
                             if (dataReader["UserRole"] != DBNull.Value) { oEUsers.UserRole = (string)dataReader["UserRole"]; }
 
                         }

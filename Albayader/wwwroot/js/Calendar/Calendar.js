@@ -225,7 +225,10 @@ $(document).ready(function () {
                 // trigger model
               
 
-                var techname='', branchName='';
+                var techname = '', branchName = '';
+                if (data.technicainName == null) {
+                    data.technicainName = "";
+                }
                 if (data.eventTypeId == 1 || data.eventTypeId == 2) {
                     techname = ` <li class="list-group-item"><span class='ViewDetailsTit'>Technician:</span> ${data.technicainName}</li>`
                     branchName = ` <li class="list-group-item"><span class='ViewDetailsTit'>Branch:</span> ${data.branchName}</li>`

@@ -158,6 +158,36 @@ namespace API.Controllers
             }
             return result;
         }
+        [Route("addticketclient")]
+        [Authorize]
+        [HttpPost]
+        public async Task<Etickets> addticketClient([FromBody] Etickets ticket)
+        {
+
+            var result = new Etickets();
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            EUser logeduser = claimHellper.GetCurrentUser(identity);
+            
+            try
+            {
+
+                result = await ticketLogic.addticketclient(ticket, logeduser);
+                await _hubContext.Clients.All.SendAsync("newTicketAdded", result, logeduser);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "The given key was not present in the dictionary.")
+                {
+                    throw new DomainValidationFundException("Validation : One or more paramter are missing in the request,Error could be becuase of case sensetive");
+                }
+                if (ex.InnerException.ToString().Contains("Cannot insert the value NULL into column"))
+                {
+                    throw new DomainValidationFundException("Validation : null value not allowed to one of the parameters");
+                }
+
+            }
+            return result;
+        }
 
         [Route("update")]
        // [Authorize(Roles = "Administrator,Manager")]
@@ -240,7 +270,7 @@ namespace API.Controllers
 
 
         [Route("changestatus")]
-        [Authorize(Roles = "Administrator,Manager,Technicion,Support")]
+        [Authorize(Roles = "Administrator,Manager,Technicion,Support,Supervisor,Client User")]
         [HttpPost]
         public async Task<Boolean> changeStatus([FromBody] EticketAndStatus ticketAndStatus)
         {
@@ -269,6 +299,36 @@ namespace API.Controllers
             return result;
         }
 
+        [Route("closeticket")]
+        [Authorize]
+        [HttpPost]
+        public async Task<Boolean> closeticket([FromBody] EticketAndStatus ticketAndStatus)
+        {
+
+            bool result = false;
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            EUser logeduser = claimHellper.GetCurrentUser(identity);
+            ticketAndStatus.UserId = logeduser.UserId;
+            ticketAndStatus.ticketStatusId = 7;
+            try
+            {
+                result = await ticketLogic.insertNewStatus(ticketAndStatus);
+                await _hubContext.Clients.All.SendAsync("statusChanged", ticketAndStatus, logeduser);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "The given key was not present in the dictionary.")
+                {
+                    throw new DomainValidationFundException("Validation : One or more paramter are missing in the request,Error could be becuase of case sensetive");
+                }
+                if (ex.InnerException.ToString().Contains("Cannot insert the value NULL into column"))
+                {
+                    throw new DomainValidationFundException("Validation : null value not allowed to one of the parameters");
+                }
+                return false;
+            }
+            return result;
+        }
         [Route("assignuser")]
         [Authorize(Roles = "Administrator,Manager,Technicion,Support")]
         [HttpPost]

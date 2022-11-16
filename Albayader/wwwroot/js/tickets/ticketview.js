@@ -1,8 +1,11 @@
 ﻿$(document).ready(function () {
+    const jtoken = $('#utoken').val()
+
+    const APIURL = $('#APIURI').val();
 
     var Notifcationmessage = "";
     const connection = new signalR.HubConnectionBuilder()
-        .withUrl("https://localhost:7174/API/ticketHub")
+        .withUrl(APIURL+"ticketHub")
         .build();
 
     connection.on("newTicketAdded", (ticket, creator) => {
@@ -62,10 +65,7 @@
         "hideMethod": "fadeOut"
     }
 
-    const jtoken = $('#utoken').val()
-
-    const APIURL = $('#APIURI').val();
-
+    
 
     let dataload = "";
     let dataload1 = "";

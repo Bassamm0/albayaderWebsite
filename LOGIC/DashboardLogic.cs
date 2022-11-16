@@ -15,13 +15,17 @@ namespace LOGIC
         {
             EDashboard oEDashbaord = new EDashboard();
 
-            if(logeduser.CompanyTypeId==1 && (logeduser.UserRole.ToLower() == "administrator" || logeduser.UserRole.ToLower() == "manager"))
+            if(logeduser.CompanyTypeId==1 && (logeduser.UserRole.ToLower() == "administrator" || logeduser.UserRole.ToLower() == "manager" || logeduser.UserRole.ToLower() == "support"))
             {
                 oEDashbaord = oDDashBoard.getDashboardData(year);
             }
             else if(logeduser.CompanyTypeId != 1 && logeduser.UserRole.ToLower() == "client manager")
             {
                 oEDashbaord = oDDashBoard.getDashboardDataUser(year,logeduser.CompanyId);
+            }
+            else if (logeduser.CompanyTypeId != 1 && logeduser.UserRole.ToLower() == "supervisor")
+            {
+                oEDashbaord = oDDashBoard.getDashboardDataUserBranch(year, logeduser.CompanyId,logeduser.BranchId);
             }
 
             return oEDashbaord;

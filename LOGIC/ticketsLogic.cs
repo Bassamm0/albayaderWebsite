@@ -42,7 +42,7 @@ namespace LOGIC
         {
 
             List<EticketViews> tickets = new List<EticketViews>();
-            if (logeduser.CompanyTypeId == 1 && (logeduser.UserRole.ToLower() == "administrator" || logeduser.UserRole.ToLower() == "manager" || logeduser.UserRole.ToLower() == "technicion"))
+            if (logeduser.CompanyTypeId == 1 && (logeduser.UserRole.ToLower() == "administrator" || logeduser.UserRole.ToLower() == "manager" || logeduser.UserRole.ToLower() == "technicion" || logeduser.UserRole.ToLower() == "support"))
             {
                 tickets = dtickets.getAlltickets();
             }
@@ -57,13 +57,18 @@ namespace LOGIC
         {
 
             List<EticketViews> tickets = new List<EticketViews>();
-            if (logeduser.CompanyTypeId == 1 && (logeduser.UserRole.ToLower() == "administrator" || logeduser.UserRole.ToLower() == "manager" || logeduser.UserRole.ToLower() == "technicion"))
+            if (logeduser.CompanyTypeId == 1 && (logeduser.UserRole.ToLower() == "administrator" || logeduser.UserRole.ToLower() == "manager" || logeduser.UserRole.ToLower() == "technicion" || logeduser.UserRole.ToLower() == "support"))
             {
                 tickets = dtickets.getAllOpentickets();
             }
             else if (logeduser.CompanyTypeId != 1 && logeduser.UserRole.ToLower() == "client manager")
             {
                 tickets = dtickets.getAllCompanyOpentickets(logeduser.CompanyId);
+            }
+            else
+            {
+                tickets = dtickets.getUserOpentickets(logeduser.CompanyId,logeduser.UserId);
+
             }
 
             return tickets;
@@ -83,7 +88,7 @@ namespace LOGIC
         {
 
             List<EticketViews> tickets = new List<EticketViews>();
-            if (logeduser.CompanyTypeId == 1 && (logeduser.UserRole.ToLower() == "administrator" || logeduser.UserRole.ToLower() == "manager" || logeduser.UserRole.ToLower() == "technicion"))
+            if (logeduser.CompanyTypeId == 1 && (logeduser.UserRole.ToLower() == "administrator" || logeduser.UserRole.ToLower() == "manager" || logeduser.UserRole.ToLower() == "technicion" || logeduser.UserRole.ToLower() == "support"))
             {
                 tickets = dtickets.getAllOpenticketsDate(startDate,  endDate);
             }
@@ -98,7 +103,7 @@ namespace LOGIC
         {
 
             List<EticketViews> tickets = new List<EticketViews>();
-            if (logeduser.CompanyTypeId == 1 && (logeduser.UserRole.ToLower() == "administrator" || logeduser.UserRole.ToLower() == "manager" || logeduser.UserRole.ToLower() == "technicion"))
+            if (logeduser.CompanyTypeId == 1 && (logeduser.UserRole.ToLower() == "administrator" || logeduser.UserRole.ToLower() == "manager" || logeduser.UserRole.ToLower() == "technicion" || logeduser.UserRole.ToLower() == "support"))
             {
                 tickets = dtickets.getAllClosedtickets();
             }
@@ -106,7 +111,10 @@ namespace LOGIC
             {
                 tickets = dtickets.getAllCompanyClosedtickets(logeduser.CompanyId);
             }
-
+            else 
+            {
+                tickets = dtickets.getUserClosedtickets(logeduser.CompanyId,logeduser.UserId);
+            }
             return tickets;
         }
         public async Task<List<EticketViews>> getAllCompanytickets(int companyid)
@@ -122,7 +130,7 @@ namespace LOGIC
 
             return ticket;
         }
-        public async Task<Etickets> addticket(Etickets newticket,EUser Creator)
+        public async Task<Etickets> addticketclient(Etickets newticket,EUser Creator)
         {
 
             var resul = await dtickets.addticket(newticket);
@@ -152,6 +160,58 @@ namespace LOGIC
                 });
                 T1.Start();
                
+                ousers = dUser.getAllAdminAndManagerAndSupport();
+
+                //  send email
+
+
+                Thread T2 = new Thread(delegate ()
+                {
+                    utilityHelper.SendEmail(ousers, "New Ticket [#" + resul.ticketId + "] " + resul.subject, emailadmintBody);
+
+                });
+                T2.Start();
+
+
+                // notfication
+
+                return resul;
+            }
+            else
+            {
+                return resul;
+            }
+        }
+        public async Task<Etickets> addticket(Etickets newticket, EUser Creator)
+        {
+
+            var resul = await dtickets.addticket(newticket);
+            if (resul.ticketId > 0)
+            {
+                // create status as new 
+                EticketAndStatus ticketAndStatus = new EticketAndStatus();
+                ticketAndStatus.StatusDate = DateTime.UtcNow;
+                ticketAndStatus.ticketId = resul.ticketId;
+                ticketAndStatus.UserId = newticket.createdBy;
+                ticketAndStatus.ticketStatusId = 1;
+                dtickets.insertNewStatus(ticketAndStatus);
+
+
+
+                ousers.Add(Creator);
+
+                string emailclientBody = buildEmailbody(resul, Creator, "Client");
+
+                string emailadmintBody = buildEmailbody(resul, Creator, "admin");
+
+                Thread T1 = new Thread(delegate ()
+                {
+
+                    utilityHelper.SendEmail(ousers, "[#" + resul.ticketId + "] " + resul.subject, emailclientBody);
+
+                });
+                T1.Start();
+
                 ousers = dUser.getAllAdminAndManagerAndSupport();
 
                 //  send email

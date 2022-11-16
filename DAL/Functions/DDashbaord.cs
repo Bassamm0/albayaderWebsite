@@ -152,15 +152,21 @@ namespace DAL.Functions
                 {
                     StringBuilder sQuery = new StringBuilder();
                     sQuery.Append("SELECT  ( ");
+
                     sQuery.Append(" SELECT COUNT(SR.serviceId)");
                     sQuery.Append(" FROM services SR ");
                     sQuery.Append(" inner join Branchs BR on BR.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
-                    sQuery.AppendFormat(" where SR.StatusId=5 and SR.ServiceTypeId=1 and SR.EndDate is null and CO.CompanyID={0} and  YEAR(CompletionDate) ='{1}' ", companyId,year);
+                    sQuery.AppendFormat(" where SR.StatusId=5 and SR.ServiceTypeId=1 and SR.EndDate is null and CO.CompanyID={0} and  YEAR(CompletionDate) ='{1}' ", companyId, year);
+
                     sQuery.Append(" ) AS Preventive, ");
+
                     sQuery.Append(" ( ");
-                    sQuery.Append(" SELECT COUNT(serviceId) ");
-                    sQuery.Append(" from services where ServiceTypeId =2 and EndDate is null and StatusId=5 ");
+                    sQuery.Append(" SELECT COUNT(SR.serviceId)");
+                    sQuery.Append(" FROM services SR ");
+                    sQuery.Append(" inner join Branchs BR on BR.branchId=SR.BranchId ");
+                    sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
+                    sQuery.AppendFormat(" where SR.StatusId=5 and SR.ServiceTypeId=2 and SR.EndDate is null and CO.CompanyID={0} and  YEAR(CompletionDate) ='{1}' ", companyId, year);
                     sQuery.Append(" ) AS Corrective ");
 
 
@@ -205,6 +211,75 @@ namespace DAL.Functions
             return OEDashboard;
         }
 
+
+        public EDashboard getDashboardDataUserBranch(string year, int companyId,int BranchId)
+        {
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            EDashboard OEDashboard = null;
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.Append("SELECT  ( ");
+
+                    sQuery.Append(" SELECT COUNT(SR.serviceId)");
+                    sQuery.Append(" FROM services SR ");
+                    sQuery.Append(" inner join Branchs BR on BR.branchId=SR.BranchId ");
+                    sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
+                    sQuery.AppendFormat(" where SR.StatusId=5 and SR.ServiceTypeId=1 and SR.EndDate is null and BR.branchId={0} and  YEAR(CompletionDate) ='{1}' ", BranchId, year);
+                    sQuery.Append(" ) AS Preventive, ");
+                    sQuery.Append(" ( ");
+                    sQuery.Append(" SELECT COUNT(SR.serviceId)");
+                    sQuery.Append(" FROM services SR ");
+                    sQuery.Append(" inner join Branchs BR on BR.branchId=SR.BranchId ");
+                    sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
+                    sQuery.AppendFormat(" where SR.StatusId=5 and SR.ServiceTypeId=2 and SR.EndDate is null and BR.branchId={0} and  YEAR(CompletionDate) ='{1}' ", BranchId, year);
+                    sQuery.Append(" ) AS Corrective ");
+
+
+                    command.CommandText = sQuery.ToString();
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            OEDashboard = new EDashboard();
+
+                            if (dataReader["Preventive"] != DBNull.Value) { OEDashboard.preventiveCount = (int)dataReader["Preventive"]; }
+                            if (dataReader["Corrective"] != DBNull.Value) { OEDashboard.correctiveCount = (int)dataReader["Corrective"]; }
+                            OEDashboard.preventMonth = getMonthServiceBytypeAndYearCompany(1, year, companyId);
+                            OEDashboard.correctiveMonth = getMonthServiceBytypeAndYearCompany(2, year, companyId);
+                            OEDashboard.allServiceMonth = getMonthServiceBytypeAndYearCompany(0, year, companyId);
+
+
+                            OEDashboard.preventiveBranch = getServiceBranchCompany(1, companyId, year);
+                            OEDashboard.correctiveBranch = getServiceBranchCompany(2, companyId, year);
+                            OEDashboard.allServiceBranch = getServiceBranchCompany(0, companyId, year);
+
+                            //OEDashboard.branchCount = odbranch.getCompanytotalBranchCount(companyId);
+
+                            //OEDashboard.lsservicePerMonthVist = getMonthServiceByVisitTypeAndYearCompany(year, companyId);
+                            //OEDashboard.lsservicePerBranchVisit = getServiceByVisitTypeAndBranchCompany(companyId, year);
+
+
+
+
+                        }
+                    }
+                    dataReader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return OEDashboard;
+        }
         public List<ServicePerMonth> getMonthServiceBytypeAndYearCompany(int type, string year,int companyid)
         {
             List<ServicePerMonth> lServicePerMonth = new List<ServicePerMonth>();

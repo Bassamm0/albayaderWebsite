@@ -83,8 +83,8 @@
                   <div class="form-group">
                                 <label for="mon=bile">Birthday</label>
                      <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" 
-                        id="birthday" name="birthday" value="@Model._User.Birthday"/>
+                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"
+                                               id="birthday" name="birthday" value="@Model._User.Birthday.ToString("dd/MM/yyyy")" />
                         <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
@@ -162,10 +162,12 @@
                        <option value="1">Administrator</option>
                        <option value="2">Techniction </option>
                        <option value="3">Manager </option>
+                                        <option value="6">Support </option>
                                     }else{
                         <option value="4">Client Manager </option>
                        <option value="5">Client User </option>
-                    
+                       <option value="7">Supervisor </option>
+                      
                                     }
                                    
                        
@@ -321,9 +323,11 @@
                        <option value="1">Administrator</option>
                        <option value="2">Techniction </option>
                        <option value="3">Manager </option>
+                                        <option value="6">Support </option>
                                     }else{
                         <option value="4">Client Manager </option>
-                       <option value="5">Client User </option>
+                                        <option value="5">Client User </option>
+                                        <option value="7">Supervisor </option>
                     
                                     }
     

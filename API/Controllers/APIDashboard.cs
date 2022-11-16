@@ -22,7 +22,7 @@ namespace API.Controllers
 
   
         [Route("dashboarddata")]
-        [Authorize(Roles = "Administrator,Manager,Client Manager")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager,Supervisor,Support")]
         [HttpPost]
         public async Task<EDashboard> getDashboardData([FromBody] JsonElement objData)
         {

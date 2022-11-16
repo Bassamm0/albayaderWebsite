@@ -71,6 +71,7 @@ namespace API.Controllers
                 new Claim(ClaimTypes.PrimaryGroupSid, user.CompanyName.ToString()),
                 new Claim(ClaimTypes.DenyOnlySid, user.BranchName.ToString()),
                 new Claim(ClaimTypes.Spn, user.CompanyName.ToString()),
+                new Claim(ClaimTypes.Upn, user.BranchId.ToString()),
 
             };
 

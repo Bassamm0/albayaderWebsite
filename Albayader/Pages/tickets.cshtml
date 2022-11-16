@@ -25,12 +25,26 @@
                     </ol>
                 </div>
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                   <div style="float:right;;" >
+                  <ol class="breadcrumb float-sm-right">
                         <a href="request" class="btn btn-info" style="width:200px;">
                             <i class="fa fa-headset"></i>    Submit A Ticket
                         </a>
                     </ol>
                 </div>
+                    @if (@Model.role.ToLower() == "administrator" || @Model.role.ToLower() == "manager" || @Model.role.ToLower() == "support" )
+                            {
+                <div style="float:right; padding-right:10px">
+                      <ol class="breadcrumb float-sm-right">
+                        <a href="requestforclient" class="btn btn-default" style="width:300px;">
+                            <i class="fa fa-headset"></i>    Submit A Ticket For Client
+                        </a>
+                    </ol>
+                    
+                </div>
+                         }
+                </div>
+              
             </div>
 
 
@@ -400,6 +414,7 @@
                                     <option value="5">Installation</option>
                                     <option value="6">Site Inspection</option>
                                     <option value="7">Emergency</option>
+                                    <option value="7">Breakdown Emergency</option>
 
 
                                 </select>
@@ -423,14 +438,7 @@
         </div>
         <!-- /.modal-dialog -->
       </div>
-                   @section Scripts{
-                        <script type="text/javascript">
-                        $(document).ready(function () {
-                       
-
-                        })
-                         </script>
-                       }
+                   
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->

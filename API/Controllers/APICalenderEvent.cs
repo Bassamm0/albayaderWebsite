@@ -19,7 +19,7 @@ namespace API.Controllers
         private CalenderEventsLogic _calender = new CalenderEventsLogic();
 
         [Route("all")]
-        [Authorize(Roles = "Administrator,Manager,Client Manager")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager,Support,Supervisor")]
         [HttpGet]
         public async Task<List<ECalenderEvents>> getAllCalenderEvents()
         {
@@ -33,7 +33,7 @@ namespace API.Controllers
         }
 
         [Route("display")]
-        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion,Support,Supervisor")]
         [HttpGet]
         public async Task<List<ECalenderEvents>> getAllCalenderEventsForDisplay()
         {
@@ -46,7 +46,7 @@ namespace API.Controllers
             return events;
         }
         [Route("branchevent")]
-        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion,Support,Supervisor")]
         [HttpPost]
         public async Task<List<ECalenderEvents>> getAllCompanyBranchs([FromBody] JsonElement objData)
         {
@@ -62,7 +62,7 @@ namespace API.Controllers
         }
 
         [Route("geteventById")]
-        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager,Technicion,Support,Supervisor")]
         [HttpPost]
         public async Task<ECalenderEvents> getCalenderEventById([FromBody] JsonElement objData)
         {

@@ -111,7 +111,7 @@
 
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
-                if (xhr.status == 401) {
+                if (jqXhr.status == 401) {
                     window.location.href = 'Index';
                 }
                 alert('Error: something went wronge please try again later');
@@ -146,7 +146,7 @@
 
         $('#assginServiceId').val(ticketId);
         obj = $(this).parents('div').parents('div').parents('td').parents('tr');
-        objAssgin = $(this).parents('div').parents('div').parents('td').prev('td').prev('td');
+        objAssgin = $(this).parents('div').parents('div').parents('td').prev('td').prev('td').prev('td');
 
     })
 
@@ -171,7 +171,7 @@
 
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
-                if (xhr.status == 401) {
+                if (jqXhr.status == 401) {
                     window.location.href = 'Index';
                 }
                 alert('Error: something went wronge please try again later');
@@ -382,7 +382,7 @@
 
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
-                if (xhr.status == 401) {
+                if (jqXhr.status == 401) {
                     window.location.href = 'Index';
                 }
                 alert('Error: something went wronge please try again later');
@@ -423,9 +423,9 @@
             success: function (data, textStatus, xhr) {
                 var arrUpdates = (typeof data) == 'string' ? eval('(' + data + ')') : data;
                 console.log(arrUpdates)
-                $('#ddtechnicain').append('<option value="">All technicaion  ...</option>')
+                $('#ddtechnicain').append('<option value="">Select technicaion  ...</option>')
                 for (var i = 0; i < arrUpdates.length; i++) {
-                    text = $.trim(arrUpdates[i].firstName + ' ' + arrUpdates[i].lastName);
+                    text = $.trim(arrUpdates[i].firstName + ' ' + arrUpdates[i].lastname);
                     val = arrUpdates[i].userId;
                     populate(text, val, '#ddtechnicain');
 

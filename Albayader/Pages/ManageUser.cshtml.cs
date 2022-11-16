@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System.Text;
 using Entity;
 using System.Net.Http.Headers;
+using DAL.Functions;
 
 namespace AlbayaderWeb.Pages
 {
@@ -121,7 +122,9 @@ namespace AlbayaderWeb.Pages
                     _User.Title = Request.Form["ddTitle"];
                     _User.FirstName = Request.Form["firstname"];
                     _User.Lastname = Request.Form["lastname"];
-                    _User.Birthday =Convert.ToDateTime(Request.Form["birthday"]);
+                    DateTime oDate = DateTime.ParseExact(Request.Form["birthday"], "d/M/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+
+                    _User.Birthday = oDate;
                     _User.Email = Request.Form["email"];
                     _User.Username = Request.Form["email"];
                     _User.Mobile = Request.Form["mobile"];
@@ -159,7 +162,9 @@ namespace AlbayaderWeb.Pages
                     _User.Title = Request.Form["ddTitle"];
                     _User.FirstName = Request.Form["firstname"];
                     _User.Lastname = Request.Form["lastname"];
-                    _User.Birthday = Convert.ToDateTime(Request.Form["birthday"]);
+                    DateTime oDate = DateTime.ParseExact(Request.Form["birthday"], "d/M/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+
+                    _User.Birthday = oDate;
                     _User.Email = Request.Form["email"];
                     _User.Username = Request.Form["email"];
                     _User.Mobile = Request.Form["mobile"];

@@ -6,7 +6,7 @@
     const jtoken = $('#utoken').val();
     const APIURL = $('#APIURI').val();
 
-
+    var ticketId = $("#ticketid").val();
 
     $('#replyTxt').summernote({
         height: 250,   //set editable area's height
@@ -42,7 +42,7 @@
 
         if ($("#replyform").valid()) {
 
-            var validationElem = 'fielUploadValidationHolder';
+            var validationElem = '#fielUploadValidationHolder';
 
             var InputElmentid = 'Pictures';
 
@@ -107,7 +107,11 @@
         }).done(function () {
 
             console.log('done')
-            window.location.href = 'ticketdetails?ticketId=' + ticketId;
+            
+            var files = document.getElementById(InputElmentid).files
+            if (files.length == 0) {
+                window.location.href = 'ticketdetails?ticketId=' + ticketId;
+            }
 
         });
 
@@ -170,6 +174,9 @@
         var files = document.getElementById(InputElmentid).files
         var formData = new FormData();
 
+        if (files.length == 0) {
+            return;
+        }
         // Loop through files
         for (var i = 0; i < files.length; i++) {
             var file = files[i];
@@ -214,6 +221,7 @@
                     $(validationElem).children('.uploadError').html('Some Thing went wrong, please contact the administrator')
                 }
                 $('#submitreply').attr('disabled', false);
+
                 window.location.href = 'ticketdetails?ticketId=' + ticketId;
             },
             xhr: function () {
@@ -266,4 +274,8 @@
             $(element).removeClass('is-invalid');
         }
     });
+
+    $('body').on('click', '#cancel', function () {
+        window.location.href = 'tickets';
+    })
 })  
