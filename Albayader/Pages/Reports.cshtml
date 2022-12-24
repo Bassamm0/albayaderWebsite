@@ -5,7 +5,7 @@
 }
 
 <!-- daterange picker -->
-  <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+<link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
 <!-- Tempusdominus Bootstrap 4 -->
 <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 
@@ -49,95 +49,95 @@
 
                         <form id="FilterDate" method="post">
 
-                      
 
-                        <div class="row">
 
-                            <div class="col">
-                                <div class="form-group">
-                                 
-                                     <div class="input-group date" id="startDateHolder" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#startDate" id="startDate" name="startDate" placeholder="Select Start Date"/>
-                                        <div class="input-group-append" data-target="#startDate" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            <div class="row">
+
+                                <div class="col">
+                                    <div class="form-group">
+
+                                        <div class="input-group date" id="startDateHolder" data-target-input="nearest">
+                                            <input type="text" class="form-control datetimepicker-input" data-target="#startDate" id="startDate" name="startDate" placeholder="Select Start Date" />
+                                            <div class="input-group-append" data-target="#startDate" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
                                         </div>
+
+                                    </div>
+
+
+
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+
+                                        <div class="input-group date" id="EndDateHolder" data-target-input="nearest">
+                                            <input type="text" class="form-control datetimepicker-input" data-target="#endDate" id="endDate" name="endDate" placeholder="Select End Date" />
+                                            <div class="input-group-append" data-target="#endDate" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+                                </div>
+                                <div class="" style="width:165px;">
+                                    <div style="float:left;padding-right:10px;">
+                                        <button type="button" class="btn btn-block btn-info" id="DateSearch">Apply</button>
+
+                                    </div>
+
+                                    <div style="float:left;">
+                                        <button type="button" class="btn btn-block btn-default" id="DateReset">Reset</button>
+
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <div class="form-group">
+                                        <select class="form-control select2" style="width: 100%;" id="ddServiceType">
+                                            <option selected="selected" value="">All Type</option>
+                                            <option value="1">Preventive</option>
+                                            <option value="2">Corrective</option>
+                                            <option value="3">Other</option>
+
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <select name="ddVistType" id="ddVistType" class="form-control select2" style="width: 100%;">
+                                            <option value="">All Site Vist</option>
+                                            <option value="1">Planned</option>
+                                            <option value="2">Warranty</option>
+                                            <option value="3">Repairing</option>
+                                            <option value="4">Commissioning and Startup</option>
+                                            <option value="5">Installation</option>
+                                            <option value="6">Site Inspection</option>
+                                            <option value="7">Emergency</option>
+                                            <option value="7">Breakdown Emergency</option>
+
+
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <select class="form-control select2" style="width: 100%;" id="ddBranch">
+                                            <option selected="selected">All Branch</option>
+
+
+                                        </select>
                                     </div>
 
                                 </div>
 
-                              
-
                             </div>
-                            <div class="col">
-                                <div class="form-group">
-                                 
-                                     <div class="input-group date" id="EndDateHolder" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#endDate" id="endDate" name="endDate" placeholder="Select End Date"/>
-                                        <div class="input-group-append" data-target="#endDate" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                              
-
-                            </div>
-                           <div class="" style="width:165px;">
-                                <div style="float:left;padding-right:10px;">
-                                    <button type="button" class="btn btn-block btn-info"  id="DateSearch" >Apply</button>
-
-                                </div>
-                       
-                              <div style="float:left;">
-                                    <button type="button" class="btn btn-block btn-default"  id="DateReset">Reset</button>
-
-                                </div>
-                            </div>
-                          
-                         <div class="col">
-                                <div class="form-group">
-                                    <select class="form-control select2" style="width: 100%;" id="ddServiceType">
-                                      <option selected="selected" value="">All Type</option>
-                                        <option value="1">Preventive</option>
-                                        <option value="2">Corrective</option>
-                                        <option value="3">Other</option>
-
-                                    </select>
-                                </div>
-
-                            </div>
-                            <div class="col">
-                                <div class="form-group">
-                                     <select name="ddVistType" id="ddVistType" class="form-control select2" style="width: 100%;">
-                                    <option value="">All Site Vist</option>
-                                    <option value="1">Planned</option>
-                                    <option value="2">Warranty</option>
-                                    <option value="3">Repairing</option>
-                                    <option value="4">Commissioning and Startup</option>
-                                    <option value="5">Installation</option>
-                                    <option value="6">Site Inspection</option>
-                                    <option value="7">Emergency</option>
-                                    <option value="7">Breakdown Emergency</option>
-
-
-                                </select>
-                                </div>
-
-                            </div>
-                              <div class="col">
-                                <div class="form-group">
-                                    <select class="form-control select2" style="width: 100%;" id="ddBranch">
-                                        <option selected="selected">All Branches</option>
-                                        
-
-                                    </select>
-                                </div>
-
-                            </div>
-
-                        </div>
-                          </form>
+                        </form>
 
 
                         <div class="dropdown-divider"></div>
@@ -151,20 +151,18 @@
                                                 <tr>
                                                     <th>Ref.</th>
                                                     <th>Branch</th>
-                                                     <th>Type</th>
-                                                   
+                                                    <th>Type</th>
+
                                                     <th>Service Type</th>
-                                                    @*<th>Equipment Serials</th>*@
-                                                     <th>Date </th>
-                                                      <th>Remarks *  </th>
-                                
+                                                    <th>Date </th>
+                                                    <th>Remarks *  </th>
+
                                                     <th>Action</th>
-                                                  
+
                                                 </tr>
                                             </thead>
-                                            <tbody id="TabelData" >
-
-                                                </tbody>
+                                            <tbody id="TabelData">
+                                            </tbody>
                                         </table>
                                     </div>
 
@@ -195,134 +193,174 @@
 
 
 
-  <!-- /.modal -->
+        <!-- /.modal -->
         <div class="modal fade" id="modal-Add">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Add Comment</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-          <form id="Comments">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Comment</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="Comments">
 
-               <div class="col-md-12">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Comment on # <span id="servicetextId"></span></label>
-                  <textarea class="form-control" id="serviceComment" name="serviceComment" rows="3" maxlength="250" required></textarea>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Comment on # <span id="servicetextId"></span></label>
+                                    <textarea class="form-control" id="serviceComment" name="serviceComment" rows="3" maxlength="250" required></textarea>
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+
+                    <div class="modal-footer justify-content-between">
+                        <button Commentserviceid="" id="addComment" type="button" class="btn btn-info">add</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="closeaddCom">Close</button>
+
+                    </div>
+
                 </div>
-              </div>
-          </form>
-
-                
+                <!-- /.modal-content -->
             </div>
-           
-              <div class="modal-footer justify-content-between">
-              <button Commentserviceid="" id="addComment" type="button" class="btn btn-info" >add</button>
-              <button type="button" class="btn btn-default" data-dismiss="modal" id="closeaddCom">Close</button>
- 
-            </div>
-    
-          </div>
-          <!-- /.modal-content -->
+            <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal-dialog -->
-      </div>
 
 
         <div class="modal fade" id="modal-view">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">View Comment</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">View Comment</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="col-md-12">
+                                <div class="card-footer card-comments" id="commentList">
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="modal-footer justify-content-between">
+
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                    </div>
+
+                </div>
+                <!-- /.modal-content -->
             </div>
-            <div class="modal-body">
-            <div >
-                <div class="col-md-12">
-                <div class="card-footer card-comments" id="commentList">
-              
-      
-               
-              </div>
-
-              </div>
-
-
-            </div>
-
-                
-            </div>
-           
-              <div class="modal-footer justify-content-between">
-
-              <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
-             
-            </div>
-    
-          </div>
-          <!-- /.modal-content -->
+            <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal-dialog -->
-      </div>
 
 
-     
+
         <div class="modal fade" id="modal-ChangeDate">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Change Date</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Change Date</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="companyname">New Date</label>
+                                <div class="input-group date" id="fnewDateChange" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#newDateChange" id="newDateChange" name="startDate" placeholder="Select New Date" />
+                                    <div class="input-group-append" data-target="#newDateChange" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                    <form method="post" id="deleteForm" enctype="multipart/form-data">
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id="closedate">Close</button>
+                            <button type="button" class="btn btn-info" id="chnageDate" name="chnageDate">change Date</button>
+                            <input type="hidden" id="serviceDateId" name="serviceDateId" />
+                        </div>
+                    </form>
+
+                </div>
+                <!-- /.modal-content -->
             </div>
-            <div class="modal-body">
-                <div class="col">
-                                <div class="form-group">
-                                   <label for="companyname">New Date</label>
-                                     <div class="input-group date" id="fnewDateChange" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#newDateChange" id="newDateChange" name="startDate" placeholder="Select New Date"/>
-                                        <div class="input-group-append" data-target="#newDateChange" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
+            <!-- /.modal-dialog -->
+        </div>
+
+        
+        <div class="modal fade" id="modal-updateBranch">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Change Branch</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="branch"></label>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <select class="form-control select2" style="width: 100%;" id="ddchangeBranch" required>
+                                            <option selected="selected" >All Branch</option>
+
+
+                                        </select>
                                     </div>
 
                                 </div>
 
-                              
-
                             </div>
+
+
+
+                        </div>
+                    </div>
+                    <form method="post" id="branchForm" enctype="multipart/form-data">
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id="closeBranch">Close</button>
+                            <button type="button" class="btn btn-info" id="chnageBranch" name="chnageBranch">change Branch</button>
+                            <input type="hidden" id="servicebranchId" name="servicebranchId" />
+                        </div>
+                    </form>
+
+                </div>
+                <!-- /.modal-content -->
             </div>
-            <form method="post" id="deleteForm" enctype="multipart/form-data">
-              <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal" id="closedate">Close</button>
-              <button type="button" class="btn btn-info"  id="chnageDate" name="chnageDate">change Date</button>
-              <input type="hidden" id="serviceDateId" name="serviceDateId" />
-            </div>
-            </form>
-           
-          </div>
-          <!-- /.modal-content -->
+            <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal-dialog -->
-      </div>
 
-
-
-       <div class="modal fade" id="modal-delete">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Delete Service</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
+        <div class="modal fade" id="modal-delete">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Delete Service</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                     <div class="modal-body">
                         <div id="Deletetext">
                             Are you sure you want to delete the service
@@ -332,19 +370,19 @@
                             <div class="deleteWarning"> Please note that this action can't be rolled back and the deleted data can't be retrived</div>
                         </div>
                     </div>
-            <form method="post" id="deleteForm" enctype="multipart/form-data">
-              <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal" id="closeDelete">Close</button>
-              <button type="button" class="btn btn-danger"  id="DeleteService" name="DeleteService">Delete</button>
-              <input type="hidden" id="deletedServiceId" name="deletedServiceId" />
+                    <form method="post" id="deleteForm" enctype="multipart/form-data">
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id="closeDelete">Close</button>
+                            <button type="button" class="btn btn-danger" id="DeleteService" name="DeleteService">Delete</button>
+                            <input type="hidden" id="deletedServiceId" name="deletedServiceId" />
+                        </div>
+                    </form>
+
+                </div>
+                <!-- /.modal-content -->
             </div>
-            </form>
-           
-          </div>
-          <!-- /.modal-content -->
+            <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal-dialog -->
-      </div>
 
         <!-- /.container-fluid -->
     </section>

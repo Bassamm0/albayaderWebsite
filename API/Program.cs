@@ -39,6 +39,7 @@ var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
                            };
                        });
 
+builder.Services.AddHostedService<TimedHostedService>();
 
 builder.Services.AddCors(options =>
 {

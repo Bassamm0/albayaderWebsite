@@ -263,6 +263,8 @@ namespace DAL.Functions
             var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
             var conn = context.Database.GetDbConnection();
             string result;
+            try
+            {
             conn.Open();
             using (var command = conn.CreateCommand())
             {
@@ -275,6 +277,12 @@ namespace DAL.Functions
                 command.CommandText = sQuery.ToString();
                 result = (string)command.ExecuteScalar();
             }
+            }
+            finally
+            {
+                conn.Close();
+            }
+           
 
             return result;
         }

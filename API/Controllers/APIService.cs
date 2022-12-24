@@ -7,6 +7,7 @@ using System.Text.Json;
 using static DAL.DALException;
 using System.Globalization;
 using System.Security.Claims;
+using System.IO;
 
 namespace API.Controllers
 {
@@ -44,6 +45,8 @@ namespace API.Controllers
         public async Task<List<EServiceModel>> getAllCompletedService()
         {
 
+
+
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             EUser logeduser = claimHellper.GetCurrentUser(identity);
             List<EServiceModel> services = new List<EServiceModel>();
@@ -51,6 +54,143 @@ namespace API.Controllers
 
             return services;
         }
+
+
+        [Route("servicereport")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager")]
+        [HttpPost]
+        public async Task <IActionResult> getServiceReport()
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            EUser logeduser = claimHellper.GetCurrentUser(identity);
+            List<EServiceModel> services = new List<EServiceModel>();
+            services = await serviceLogic.getServiceReport(logeduser);
+
+
+            var draw = Request.Form["draw"].FirstOrDefault();
+            var start = Request.Form["start"].FirstOrDefault();
+            var length = Request.Form["length"].FirstOrDefault();
+            var sType = Request.Form["sType"].FirstOrDefault();
+            var visitType = Request.Form["visitType"].FirstOrDefault();
+            var branch = Request.Form["branch"].FirstOrDefault();
+
+            var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+            var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+            var searchValue = Request.Form["search[value]"].FirstOrDefault();
+            int pageSize = length != null ? Convert.ToInt32(length) : 0;
+            int skip = start != null ? Convert.ToInt32(start) : 0;
+            int recordsTotal = 0;
+
+            var result= from s in services select s; ;
+
+            if (sType!= "All Type")
+            {
+                 result = from s in services
+                             where s.ServiceTypeName == sType
+                             select s;
+            }
+
+            if (visitType != "All Site Vist")
+            {
+                result = from s in result
+                         where s.VistTypeName == visitType
+                         select s;
+            }
+            if (branch != "All Branch")
+            {
+                result = from s in result
+                         where s.BranchName.ToLower().Contains(branch.ToLower())
+                         select s;
+            }
+            if (!string.IsNullOrEmpty(searchValue))
+            {
+                result = result.Where(m => m.ServiceId.ToString().Contains(searchValue.ToLower())
+                                            || m.BranchName.ToLower().Contains(searchValue.ToLower())
+                                            || m.ServiceTypeName.ToLower().Contains(searchValue.ToLower())
+                                            || m.VistTypeName.ToLower().Contains(searchValue.ToLower())
+                                            || m.Remark.ToLower().Contains(searchValue.ToLower()));
+            }
+
+
+            recordsTotal = result.Count();
+            var data = result.Skip(skip).Take(pageSize).ToList();
+            var jsonData = new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data };
+
+
+
+            return Ok(jsonData);
+        }
+
+        [Route("servicereportdatefilter")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager")]
+        [HttpPost]
+        public async Task<IActionResult> getServiceReportdateFilter()
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            EUser logeduser = claimHellper.GetCurrentUser(identity);
+            List<EServiceModel> services = new List<EServiceModel>();
+
+            var startDate = Request.Form["startDate"].FirstOrDefault();
+            var endDate = Request.Form["endDate"].FirstOrDefault();
+
+            services = await serviceLogic.getAllCompletedServiceByDate(logeduser, startDate,endDate);
+
+
+            var draw = Request.Form["draw"].FirstOrDefault();
+            var start = Request.Form["start"].FirstOrDefault();
+            var length = Request.Form["length"].FirstOrDefault();
+            var sType = Request.Form["sType"].FirstOrDefault();
+            var visitType = Request.Form["visitType"].FirstOrDefault();
+            var branch = Request.Form["branch"].FirstOrDefault();
+
+            var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+            var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+            var searchValue = Request.Form["search[value]"].FirstOrDefault();
+            int pageSize = length != null ? Convert.ToInt32(length) : 0;
+            int skip = start != null ? Convert.ToInt32(start) : 0;
+            int recordsTotal = 0;
+
+            var result = from s in services select s; ;
+
+            if (sType != "All Type")
+            {
+                result = from s in services
+                         where s.ServiceTypeName == sType
+                         select s;
+            }
+
+            if (visitType != "All Site Vist")
+            {
+                result = from s in result
+                         where s.VistTypeName == visitType
+                         select s;
+            }
+            if (branch != "All Branch")
+            {
+                result = from s in result
+                         where s.BranchName.ToLower().Contains(branch.ToLower())
+                         select s;
+            }
+            if (!string.IsNullOrEmpty(searchValue))
+            {
+                result = result.Where(m => m.ServiceId.ToString().Contains(searchValue.ToLower())
+                                            || m.BranchName.ToLower().Contains(searchValue.ToLower())
+                                            || m.ServiceTypeName.ToLower().Contains(searchValue.ToLower())
+                                            || m.VistTypeName.ToLower().Contains(searchValue.ToLower())
+                                            || m.Remark.ToLower().Contains(searchValue.ToLower()));
+            }
+
+
+            recordsTotal = result.Count();
+            var data = result.Skip(skip).Take(pageSize).ToList();
+            var jsonData = new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data };
+
+
+
+            return Ok(jsonData);
+        }
+
+
 
         [Route("completedservicebyBranch")]
         [Authorize(Roles = "Administrator,Manager,Client Manager")]
@@ -286,6 +426,39 @@ namespace API.Controllers
 
 
                 result = await serviceLogic.updateServiceDate(Convert.ToInt16(serviceId), newDate);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "The given key was not present in the dictionary.")
+                {
+                    throw new DomainValidationFundException("Validation : One or more paramter are missing in the request,Error could be becuase of case sensetive");
+                }
+                if (ex.InnerException.ToString().Contains("Cannot insert the value NULL into column"))
+                {
+                    throw new DomainValidationFundException("Validation : null value not allowed to one of the parameters");
+                }
+                return false;
+            }
+
+            return result;
+        }
+
+        [Route("updateservicebranch")]
+        [Authorize(Roles = "Administrator")]
+        [HttpPost]
+        public async Task<Boolean> updateBranch([FromBody] JsonElement objData)
+        {
+
+            bool result = false;
+
+            try
+            {
+                var serviceId = objData.GetProperty("serviceId").GetString();
+                var branchId = objData.GetProperty("branchId").GetString();
+
+
+
+                result = await serviceLogic.updateBranch(Convert.ToInt16(serviceId), Convert.ToInt16(branchId));
             }
             catch (Exception ex)
             {

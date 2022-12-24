@@ -152,7 +152,7 @@
                                         @if (@Model._service.ServiceDetails[0].servicePictures != null)
                                         {
                                             counter = counter + 1;
-                                            <div class="images-wrapper d-flex " id="gallery{@counter}">
+                                            <div class="images-wrapper " id="gallery{@counter}">
                                                 @foreach (var picture in @Model._service.ServiceDetails[0].servicePictures)
                                                 {
 
@@ -206,12 +206,12 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <i class="fa-solid fa-camera"></i> <label class="ServiceViewHeaders">Picture After</label>
-                                    <div class="">
+                                    <div>
 
                                         @if (@Model._service.ServiceDetails[0].servicePictures != null)
                                         {
                                             counter = counter + 1;
-                                            <div class="images-wrapper d-flex " id="gallery{@counter}">
+                                            <div class="images-wrapper" id="gallery{@counter}">
                                                 @foreach (var picture in @Model._service.ServiceDetails[0].servicePictures)
                                                 {
 
@@ -232,7 +232,7 @@
                                             </div>
                                         }
 
-
+                                         <input type="hidden" value="@counter" id="galleryCount" />
 
                                     </div>
                                 </div>

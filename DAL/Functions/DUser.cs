@@ -736,15 +736,23 @@ namespace DAL.Functions
             var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
             var conn = context.Database.GetDbConnection();
             string result;
-            conn.Open();
-            using (var command = conn.CreateCommand())
+            try
             {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
 
-                StringBuilder sQuery = new StringBuilder();
-                sQuery.AppendFormat("select email from users where userid={0} ", userId);
-                command.CommandText = sQuery.ToString();
-                result = (string)command.ExecuteScalar();
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.AppendFormat("select email from users where userid={0} ", userId);
+                    command.CommandText = sQuery.ToString();
+                    result = (string)command.ExecuteScalar();
+                }
             }
+            finally
+            {
+                conn.Close();
+            }
+           
 
             return result;
         }
@@ -754,16 +762,25 @@ namespace DAL.Functions
             var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
             var conn = context.Database.GetDbConnection();
             DateTime result;
-            conn.Open();
-            using (var command = conn.CreateCommand())
+            try
             {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
 
-                StringBuilder sQuery = new StringBuilder();
-                sQuery.AppendFormat("select generatedDate from recoverpassword where token='{0}' ", token);
-                command.CommandText = sQuery.ToString();
-                 result = (DateTime)command.ExecuteScalar();
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.AppendFormat("select generatedDate from recoverpassword where token='{0}' ", token);
+                    command.CommandText = sQuery.ToString();
+                    result = (DateTime)command.ExecuteScalar();
+                }
+
+
             }
-          
+            finally
+            {
+                conn.Close();
+            }
+           
             return result;
         }
 

@@ -154,10 +154,10 @@
 
 .images-wrapper {
     width: 100%;
-    display: flex;
+   /* display: flex;
     overflow-x: scroll;
     overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch;*/
 }
 
 .img-item {

@@ -44,6 +44,8 @@ namespace Entity
         [NotMapped]
         public string? CompanyName { get; set; }
         [NotMapped]
+        public int? CompanyId { get; set; }
+        [NotMapped]
        public List<EServiceDetails>? ServiceDetails { get; set; }
         [NotMapped]
         public List<ECorrectiveServiceDetails>? CorrectiveServiceDetails { get; set; }

@@ -53,7 +53,7 @@
         if (!$("#FilterDate").valid()) {
             return;
         }
-        datefilterval = true
+        datefilterval=true
         loadDataTable(datefilterval);
     })
 
@@ -78,7 +78,7 @@
         } else {
             var fullUrl = APIURL + 'service/servicereport'
         }
-
+        
         var table = $("#DrasftTbl").DataTable({
             ajax: {
                 url: fullUrl,
@@ -110,13 +110,7 @@
                 { data: "serviceTypeName", name: "serviceTypeName" },
                 { data: "vistTypeName", name: "vistTypeName" },
                 { data: "completionDate", name: "completionDate" },
-                {
-                    data: "remark", name: "remark",
-                    render: function (data, row) {
-                        return '<span class="Remak">' + data +'</span>'
-                    }
-
-                },
+                { data: "remark", name: "remark" },
                 {
                     data: null,
                     // render: function (data, row) { return '<div >'+data.serviceId+'</div>'; }
@@ -136,7 +130,6 @@
                                 editData += '<li class="editDatecss" serviceid="' + data.serviceId + '"><a target="_blank"  class="dropdown-item " href="editcorrective?ServiceId=' + data.serviceId + '" >Edit</a></li>'
 
                             }
-                            editData = '<li class="changeBranchcss" serviceid="' + data.serviceId + '" companyId="' + data.companyId + '"><a  class="dropdown-item " href="#"  data-toggle="modal" data-target="#modal-updateBranch">Change Branch</a></li>'
 
                         }
 
@@ -158,7 +151,7 @@
 
     }
 
-
+   
 
     $(document.body).on("change", "#ddBranch", function (e) {
         var selectedText = $(this).find("option:selected").text();
@@ -168,7 +161,7 @@
     $(document.body).on("change", "#ddServiceType", function (e) {
         var selectedText = $(this).find("option:selected").text();
         val = $(this).val();
-        // $("input[type='search']").val(selectedText);
+       // $("input[type='search']").val(selectedText);
         filterColumn(selectedText, val, 2);
     });
     $(document.body).on("change", "#ddVistType", function (e) {
@@ -178,7 +171,7 @@
     });
 
     function filterColumn(text, val, column) {
-
+        
         if (val != '') {
             $('#DrasftTbl')
                 .DataTable()
@@ -200,7 +193,7 @@
     }
 
 
-
+    
 
 
     getBranches();
@@ -238,7 +231,7 @@
     }
 
 
-    
+
 
     function populate(text, val, controlId) {
         $(controlId).append('<option value=' + val + '>' + text + '</option>');
@@ -268,9 +261,8 @@
     });
 
 
-
     $('body').on('click', '.changeDatecss', function () {
-
+        
         changeServiceId = $(this).attr('serviceid');
 
         $('#serviceDateId').val(changeServiceId)
@@ -278,7 +270,7 @@
 
 
     $('body').on('click', '#chnageDate', function () {
-
+       
         changeDate()
 
     });
@@ -326,8 +318,8 @@
     $('body').on('click', '.deleteBtn', function () {
 
         var ServiceId = $(this).attr('ServiceId')
-        $('#ServiceToDeleteName').html('#' + ServiceId)
-
+        $('#ServiceToDeleteName').html('#'+ServiceId)
+      
         $('#deletedServiceId').val(ServiceId);
         //User?id=1&handler=DeleteUser
         obj = $(this).parents('ul').parents('div').parents('td').parents('tr')
@@ -371,95 +363,5 @@
 
     })
 
-
-
-    $('body').on('click', '.changeBranchcss', function () {
-
-        var ServiceId = $(this).attr('ServiceId')
-        var comapnyid = $(this).attr('companyId')
-       
-
-        $('#servicebranchId').val(ServiceId);
-        getCompanyBranch(comapnyid)
-
-    })
-
-    function getCompanyBranch(_companyId) {
-
-        $("#ddchangeBranch").html('')
-        $.ajax({
-            type: "POST",
-            url: APIURL + "branch/companybranchs",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({ 'companyid': parseInt(_companyId) }),
-            async: false,
-            headers: {
-                RequestVerificationToken:
-                    $('input:hidden[name="__RequestVerificationToken"]').val(),
-                Authorization: 'Bearer ' + jtoken,
-            },
-            success: function (data, textStatus, xhr) {
-                var arrUpdates = (typeof data) == 'string' ? eval('(' + data + ')') : data;
-                console.log(arrUpdates)
-                $('#ddchangeBranch').append('<option value="">Select  Branch  ...</option>')
-                for (var i = 0; i < arrUpdates.length; i++) {
-                    text = $.trim(arrUpdates[i].branchName);
-                    val = arrUpdates[i].branchId;
-                    populate(text, val, '#ddchangeBranch');
-
-                }
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                $('#ddchangeBranch').append('<option value="">Data Not Loaded  ...</option>')
-                console.log('Error in Operation');
-            }
-        });
-
-    }
-
-
-    $('body').on('click', '#chnageBranch', function () {
-
-        
-        changebranch()
-
-    });
-    function changebranch() {
-        var serviceId = $('#servicebranchId').val();
-        var branchId = $('#ddchangeBranch').val();
-
-        if (branchId == '') {
-            alert('Please select a branch');
-            return;
-        }
-        var url = 'Reports?handler=ChangeBranch&serviceId=' + serviceId + '&branchId=' + branchId;
-
-        $.ajax({
-            type: "POST",
-            url: url,
-            contentType: "application/json; charset=utf-8",
-            // dataType: "json",
-            data: {},
-            headers: {
-                RequestVerificationToken:
-                    $('input:hidden[name="__RequestVerificationToken"]').val()
-            },
-            success: function (data, status, xhr) {   // success callback function
-                $('#closedate').click();
-            },
-            error: function (jqXhr, textStatus, errorMessage) { // error callback 
-                if (xhr.status == 401) {
-                    window.location.href = 'Index';
-                }
-                alert('Error: something went wronge please try again later');
-            }
-
-        }).done(function () {
-
-            $('#closeBranch').click();
-            loadDataTable(datefilterval);
-            toastr["success"]("Branch changed successfuly.")
-        });
-    }
-
+   
 })

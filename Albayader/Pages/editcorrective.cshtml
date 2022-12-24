@@ -456,9 +456,12 @@
                         $("#ddVistType").val(@Model._service.SiteVistTypeId).trigger('change');
 
                         $("#ddStatusAfter").val(@Model._service.StatusAfterId).trigger('change');
-                        $("#ddType").val(@Model._service.ServiceTypeId).trigger('change');
+                      
 
                         if (@Model._service.ServiceDetails.Count> 0) {
+                            console.log(@Model._service.ServiceDetails[0].EquipmentTypeId)
+                            $("#ddType").val(@(@Model._service.ServiceDetails.Count > 0 ? @Model._service.ServiceDetails[0].EquipmentTypeId : "")).trigger('change');
+
                             $("#ddCondition").val(@(@Model._service.ServiceDetails.Count > 0 ? @Model._service.ServiceDetails[0].ConditionId : "")).trigger('change');
                             $("#Equipments1").val(@(@Model._service.ServiceDetails.Count > 0 ? @Model._service.ServiceDetails[0].EquipmentId : "")).trigger('change');
                         }

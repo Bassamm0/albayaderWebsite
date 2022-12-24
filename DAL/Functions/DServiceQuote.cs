@@ -386,7 +386,9 @@ namespace DAL.Functions
             var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
             var conn = context.Database.GetDbConnection();
             int result;
-            conn.Open();
+            try
+            {
+             conn.Open();
             using (var command = conn.CreateCommand())
             {
 
@@ -395,6 +397,12 @@ namespace DAL.Functions
                 command.CommandText = sQuery.ToString();
                 result = (int)command.ExecuteScalar();
             }
+            }
+            finally
+            {
+                conn.Close();
+            }
+           
 
             return result;
         }
@@ -404,7 +412,9 @@ namespace DAL.Functions
             var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
             var conn = context.Database.GetDbConnection();
             int result;
-            conn.Open();
+            try
+            {
+             conn.Open();
             using (var command = conn.CreateCommand())
             {
 
@@ -416,6 +426,12 @@ namespace DAL.Functions
                 command.CommandText = sQuery.ToString();
                 result = (int)command.ExecuteScalar();
             }
+            }
+            finally
+            {
+                conn.Close();
+            }
+           
 
             return result;
         }
@@ -507,6 +523,8 @@ namespace DAL.Functions
             var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
             var conn = context.Database.GetDbConnection();
             bool result = false;
+            try
+            {
             conn.Open();
             using (var command = conn.CreateCommand())
             {
@@ -521,6 +539,12 @@ namespace DAL.Functions
                 return (command.ExecuteNonQuery() > 0);
 
             }
+            }
+            finally
+            {
+                conn.Close();
+            }
+           
 
             return result;
         }
@@ -530,6 +554,8 @@ namespace DAL.Functions
             var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
             var conn = context.Database.GetDbConnection();
             bool result = false;
+            try
+            {
             conn.Open();
             using (var command = conn.CreateCommand())
             {
@@ -567,6 +593,12 @@ namespace DAL.Functions
                 return (command.ExecuteNonQuery() > 0);
 
             }
+            }
+            finally
+            {
+                conn.Close();
+            }
+           
 
             return result;
         }
@@ -576,7 +608,9 @@ namespace DAL.Functions
             var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
             var conn = context.Database.GetDbConnection();
             bool result = false;
-            conn.Open();
+            try
+            {
+             conn.Open();
             using (var command = conn.CreateCommand())
             {
                 StringBuilder sQuery = new StringBuilder();
@@ -586,6 +620,12 @@ namespace DAL.Functions
                 return (command.ExecuteNonQuery() > 0);
 
             }
+            }
+            finally
+            {
+                conn.Close();
+            }
+          
 
             return result;
         }
@@ -596,7 +636,10 @@ namespace DAL.Functions
             EndQuoteStatus(ServiceQuoteId);
             var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
             var conn = context.Database.GetDbConnection();
+
             bool result = false;
+            try
+            {
             conn.Open();
             using (var command = conn.CreateCommand())
             {
@@ -607,6 +650,12 @@ namespace DAL.Functions
                 return (command.ExecuteNonQuery() > 0);
 
             }
+            }
+            finally
+            {
+                conn.Close();
+            }
+           
 
             return result;
         }

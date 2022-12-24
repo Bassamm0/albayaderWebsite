@@ -242,7 +242,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append("select CONCAT(U.FirstName,' ',U.Lastname) as CreaterName ,CONCAT(UT.FirstName,' ',UT.Lastname) as TechnicianName, ");
+                    sQuery.Append(" select  CONCAT(U.FirstName,' ',U.Lastname) as CreaterName ,CONCAT(UT.FirstName,' ',UT.Lastname) as TechnicianName, ");
                     sQuery.Append(" BR.BranchName,CO.Name CompanyName,ST.ServiceTypeName, STF.StatusAfterName ,STV.VistTypeName ,SR.* from services SR ");
                     sQuery.Append(" inner join  Branchs BR on BR.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
@@ -283,15 +283,93 @@ namespace DAL.Functions
                             if (dataReader["Remark"] != DBNull.Value) { oEServiceModel.Remark = (string)dataReader["Remark"]; }
                             if (dataReader["VistTypeName"] != DBNull.Value) { oEServiceModel.VistTypeName = (string)dataReader["VistTypeName"]; }
 
-                            if (oEServiceModel.ServiceTypeId == 1)
-                            {
-                                oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);
+                            //if (oEServiceModel.ServiceTypeId == 1)
+                            //{
+                            //    oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);
 
-                            }
-                            else
-                            {
-                                oEServiceModel.CorrectiveServiceDetails = getAllCorrectiveServiceDetails(oEServiceModel.ServiceId);
-                            }
+                            //}
+                            //else
+                            //{
+                            //    oEServiceModel.CorrectiveServiceDetails = getAllCorrectiveServiceDetails(oEServiceModel.ServiceId);
+                            //}
+
+                            services.Add(oEServiceModel);
+                        }
+                    }
+                    dataReader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return services;
+        }
+        public List<EServiceModel> getServiceReport()
+        {
+            List<EServiceModel> services = new List<EServiceModel>();
+
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.Append(" select  CONCAT(U.FirstName,' ',U.Lastname) as CreaterName ,CONCAT(UT.FirstName,' ',UT.Lastname) as TechnicianName, ");
+                    sQuery.Append(" BR.BranchName,CO.Name CompanyName,CO.CompanyId,ST.ServiceTypeName, STF.StatusAfterName ,STV.VistTypeName ,SR.* from services SR ");
+                    sQuery.Append(" inner join  Branchs BR on BR.branchId=SR.BranchId ");
+                    sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
+                    sQuery.Append(" inner join Users U on U.UserId=SR.CreatedBy ");
+                    sQuery.Append(" inner join Users UT on UT.UserId=SR.TechnicianId ");
+                    sQuery.Append(" inner join ServiceType ST on ST.ServiceTypeId=SR.ServiceTypeId ");
+                    sQuery.Append(" inner join SiteVistType STV on STV.SiteVistTypeId=SR.SiteVistTypeId ");
+                    sQuery.Append(" left join StatusAfter STF on STF.StatusAfterId=SR.StatusAfterId ");
+                    sQuery.AppendFormat(" where SR.StatusId=5");
+                    sQuery.Append("  and SR.EndDate is null order by SR.CompletionDate desc ");
+
+                    command.CommandText = sQuery.ToString();
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            EServiceModel oEServiceModel = new EServiceModel();
+                            if (dataReader["ServiceId"] != DBNull.Value) { oEServiceModel.ServiceId = (int)dataReader["ServiceId"]; }
+                            if (dataReader["ServiceTypeId"] != DBNull.Value) { oEServiceModel.ServiceTypeId = (int)dataReader["ServiceTypeId"]; }
+                            if (dataReader["StatusId"] != DBNull.Value) { oEServiceModel.StatusId = (int)dataReader["StatusId"]; }
+                            if (dataReader["TechnicianId"] != DBNull.Value) { oEServiceModel.TechnicianId = (int)dataReader["TechnicianId"]; }
+                            if (dataReader["BranchId"] != DBNull.Value) { oEServiceModel.BranchId = (int)dataReader["BranchId"]; }
+                            if (dataReader["CreatedDate"] != DBNull.Value) { oEServiceModel.CreatedDate = (DateTime)dataReader["CreatedDate"]; }
+                            if (dataReader["CompletionDate"] != DBNull.Value) { oEServiceModel.CompletionDate = dataReader["CompletionDate"].ToString(); }
+                            if (dataReader["CreaterName"] != DBNull.Value) { oEServiceModel.CreaterName = (string)dataReader["CreaterName"]; }
+                            if (dataReader["TechnicianName"] != DBNull.Value) { oEServiceModel.TechnicianName = (string)dataReader["TechnicianName"]; }
+                            if (dataReader["ServiceTypeName"] != DBNull.Value) { oEServiceModel.ServiceTypeName = (string)dataReader["ServiceTypeName"]; }
+                            if (dataReader["BranchName"] != DBNull.Value) { oEServiceModel.BranchName = (string)dataReader["BranchName"]; }
+                            if (dataReader["CompanyName"] != DBNull.Value) { oEServiceModel.CompanyName = (string)dataReader["CompanyName"]; }
+                            if (dataReader["StatusAfterId"] != DBNull.Value) { oEServiceModel.StatusAfterId = (int)dataReader["StatusAfterId"]; }
+                            if (dataReader["StatusAfterName"] != DBNull.Value) { oEServiceModel.StatusAfterName = (string)dataReader["StatusAfterName"]; }
+                            if (dataReader["SupervisourFeedback"] != DBNull.Value) { oEServiceModel.SupervisourFeedback = (string)dataReader["SupervisourFeedback"]; }
+                            if (dataReader["SupervisourMobile"] != DBNull.Value) { oEServiceModel.SupervisourMobile = (string)dataReader["SupervisourMobile"]; }
+                            if (dataReader["SupervisourDesignation"] != DBNull.Value) { oEServiceModel.SupervisourDesignation = (string)dataReader["SupervisourDesignation"]; }
+
+                            if (dataReader["Remark"] != DBNull.Value) { oEServiceModel.Remark = (string)dataReader["Remark"]; }
+                            if (dataReader["VistTypeName"] != DBNull.Value) { oEServiceModel.VistTypeName = (string)dataReader["VistTypeName"]; }
+                            if (dataReader["CompanyId"] != DBNull.Value) { oEServiceModel.CompanyId = (int)dataReader["CompanyId"]; }
+
+                            //if (oEServiceModel.ServiceTypeId == 1)
+                            //{
+                            //    oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);
+
+                            //}
+                            //else
+                            //{
+                            //    oEServiceModel.CorrectiveServiceDetails = getAllCorrectiveServiceDetails(oEServiceModel.ServiceId);
+                            //}
 
                             services.Add(oEServiceModel);
                         }
@@ -321,7 +399,7 @@ namespace DAL.Functions
 
                     StringBuilder sQuery = new StringBuilder();
                     sQuery.Append("select CONCAT(U.FirstName,' ',U.Lastname) as CreaterName ,CONCAT(UT.FirstName,' ',UT.Lastname) as TechnicianName, ");
-                    sQuery.Append(" BR.BranchName,CO.Name CompanyName,ST.ServiceTypeName, STF.StatusAfterName ,STV.VistTypeName ,SR.* from services SR ");
+                    sQuery.Append(" BR.BranchName,CO.Name CompanyName,CO.CompanyId,ST.ServiceTypeName, STF.StatusAfterName ,STV.VistTypeName ,SR.* from services SR ");
                     sQuery.Append(" inner join  Branchs BR on BR.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
                     sQuery.Append(" inner join Users U on U.UserId=SR.CreatedBy ");
@@ -360,6 +438,7 @@ namespace DAL.Functions
                             // oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);
                             if (dataReader["SupervisourMobile"] != DBNull.Value) { oEServiceModel.SupervisourMobile = (string)dataReader["SupervisourMobile"]; }
                             if (dataReader["SupervisourDesignation"] != DBNull.Value) { oEServiceModel.SupervisourDesignation = (string)dataReader["SupervisourDesignation"]; }
+                            if (dataReader["CompanyId"] != DBNull.Value) { oEServiceModel.CompanyId = (int)dataReader["CompanyId"]; }
 
                             services.Add(oEServiceModel);
                         }
@@ -388,7 +467,7 @@ namespace DAL.Functions
 
                     StringBuilder sQuery = new StringBuilder();
                     sQuery.Append("select CONCAT(U.FirstName,' ',U.Lastname) as CreaterName ,CONCAT(UT.FirstName,' ',UT.Lastname) as TechnicianName, ");
-                    sQuery.Append(" BR.BranchName,CO.Name CompanyName,ST.ServiceTypeName, STF.StatusAfterName ,STV.VistTypeName ,SR.* from services SR ");
+                    sQuery.Append(" BR.BranchName,CO.Name CompanyName,CO.CompanyId,ST.ServiceTypeName, STF.StatusAfterName ,STV.VistTypeName ,SR.* from services SR ");
                     sQuery.Append(" inner join  Branchs BR on BR.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
                     sQuery.Append(" inner join Users U on U.UserId=SR.CreatedBy ");
@@ -427,6 +506,7 @@ namespace DAL.Functions
                             // oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);
                             if (dataReader["SupervisourMobile"] != DBNull.Value) { oEServiceModel.SupervisourMobile = (string)dataReader["SupervisourMobile"]; }
                             if (dataReader["SupervisourDesignation"] != DBNull.Value) { oEServiceModel.SupervisourDesignation = (string)dataReader["SupervisourDesignation"]; }
+                            if (dataReader["CompanyId"] != DBNull.Value) { oEServiceModel.CompanyId = (int)dataReader["CompanyId"]; }
 
                             services.Add(oEServiceModel);
                         }
@@ -496,15 +576,15 @@ namespace DAL.Functions
                             if (dataReader["SupervisourMobile"] != DBNull.Value) { oEServiceModel.SupervisourMobile = (string)dataReader["SupervisourMobile"]; }
                             if (dataReader["SupervisourDesignation"] != DBNull.Value) { oEServiceModel.SupervisourDesignation = (string)dataReader["SupervisourDesignation"]; }
 
-                            if (oEServiceModel.ServiceTypeId == 1)
-                            {
-                                oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);
+                            //if (oEServiceModel.ServiceTypeId == 1)
+                            //{
+                            //    oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);
 
-                            }
-                            else
-                            {
-                                oEServiceModel.CorrectiveServiceDetails=getAllCorrectiveServiceDetails(oEServiceModel.ServiceId);
-                            }
+                            //}
+                            //else
+                            //{
+                            //    oEServiceModel.CorrectiveServiceDetails=getAllCorrectiveServiceDetails(oEServiceModel.ServiceId);
+                            //}
 
                             services.Add(oEServiceModel);
                         }
@@ -534,7 +614,7 @@ namespace DAL.Functions
 
                     StringBuilder sQuery = new StringBuilder();
                     sQuery.Append("select CONCAT(U.FirstName,' ',U.Lastname) as CreaterName ,CONCAT(UT.FirstName,' ',UT.Lastname) as TechnicianName, ");
-                    sQuery.Append(" BR.BranchName,CO.Name CompanyName,ST.ServiceTypeName, STF.StatusAfterName ,STV.VistTypeName ,SR.* from services SR ");
+                    sQuery.Append(" BR.BranchName,CO.Name CompanyName,CO.CompanyId,ST.ServiceTypeName, STF.StatusAfterName ,STV.VistTypeName ,SR.* from services SR ");
                     sQuery.Append(" inner join  Branchs BR on BR.branchId=SR.BranchId ");
                     sQuery.Append(" inner join Companies CO on CO.CompanyID=BR.compnayId ");
                     sQuery.Append(" inner join Users U on U.UserId=SR.CreatedBy ");
@@ -574,6 +654,7 @@ namespace DAL.Functions
                             if (dataReader["SupervisourMobile"] != DBNull.Value) { oEServiceModel.SupervisourMobile = (string)dataReader["SupervisourMobile"]; }
                             if (dataReader["SupervisourDesignation"] != DBNull.Value) { oEServiceModel.SupervisourDesignation = (string)dataReader["SupervisourDesignation"]; }
                             // oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);
+                            if (dataReader["CompanyId"] != DBNull.Value) { oEServiceModel.CompanyId = (int)dataReader["CompanyId"]; }
 
                             services.Add(oEServiceModel);
                         }
@@ -1494,7 +1575,11 @@ namespace DAL.Functions
             var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
             var conn = context.Database.GetDbConnection();
             bool result = false;
+
+            try
+            {
             conn.Open();
+
             using (var command = conn.CreateCommand())
             {
 
@@ -1508,9 +1593,54 @@ namespace DAL.Functions
                 return (command.ExecuteNonQuery() > 0);
 
             }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+           
 
             return result;
         }
 
+
+        public bool updateBranch(int serviceId, int branchId)
+        {
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            bool result = false;
+
+            try
+            {
+                conn.Open();
+
+                using (var command = conn.CreateCommand())
+                {
+
+                    StringBuilder sQuery = new StringBuilder();
+                    sQuery.Append("UPDATE Services SET ");
+                     sQuery.AppendFormat(" BranchId ={0}", branchId);
+                    sQuery.AppendFormat(" where ServiceId={0}", serviceId);
+                    command.CommandText = sQuery.ToString();
+                    // for select only to retrive value ExecuteScalar()
+                    return (command.ExecuteNonQuery() > 0);
+
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+
+
+            return result;
+        }
+
+        // check status data change for auto status update
+
+
+      
     }
 }

@@ -32,12 +32,13 @@ namespace DAL
 
             InternetAddressList list = new InternetAddressList();
             list.Add(new MailboxAddress("",to));
-            list.Add(new MailboxAddress("Bassam","bassam.mhisen@gmail.com"));
+          
 
             bool isSent = false;
             try
             {
                 var email = new MimeMessage();
+                email.From.Add(new MailboxAddress("Albayader Service Support", emailFrom));
                 email.Sender = MailboxAddress.Parse(emailFrom);
                 email.To.AddRange(list);
                 email.Subject = subject;
@@ -78,6 +79,7 @@ namespace DAL
             try
             {
                 var email = new MimeMessage();
+                email.From.Add(new MailboxAddress("Albayader Service Support", emailFrom));
                 email.Sender = MailboxAddress.Parse(emailFrom);
                 email.To.AddRange(list);
                 email.Subject = subject;
@@ -118,6 +120,7 @@ namespace DAL
             try
             {
                 var email = new MimeMessage();
+                email.From.Add(new MailboxAddress("Albayader Service Support", emailFrom));
                 email.Sender = MailboxAddress.Parse(emailFrom);
                 email.To.AddRange(list);
                 email.Subject = subject;
@@ -150,7 +153,7 @@ namespace DAL
             InternetAddressList list = new InternetAddressList();
             foreach (EUser user in toList)
             {
-                list.Add(new MailboxAddress(user.FirstName + ' ' + user.Lastname, user.Email));
+                list.Add(new MailboxAddress(user.FirstName + " " + user.Lastname, user.Email));
 
             }
 
@@ -162,9 +165,10 @@ namespace DAL
                 email.To.AddRange(list);
                 email.Subject = subject;
                 var builder = new BodyBuilder();
-
+                email.From.Add(new MailboxAddress("Albayader Service Support", emailFrom));
                 builder.HtmlBody = body;
                 email.Body = builder.ToMessageBody();
+
                 using var smtp = new SmtpClient();
 
                 smtp.Connect(smtpClient, 587, SecureSocketOptions.None);

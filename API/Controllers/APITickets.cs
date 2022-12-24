@@ -390,11 +390,41 @@ namespace API.Controllers
                     throw new DomainValidationFundException("Validation : null value not allowed to one of the parameters");
                 }
                 return false;
+            }   
+            return result;
+        }
+        [Route("sendNotficatio")]
+        [Authorize(Roles = "Administrator,Manager,Technicion,Support")]
+        [HttpPost]
+        public async Task<Boolean> SendNotification(EticketAndStatus ticketAndStatus)
+        {
+
+            bool result = false;
+            EUser oeEuser = new EUser();
+            oeEuser.UserId = 0;
+            oeEuser.FirstName = "System";
+            oeEuser.Lastname = "";
+            oeEuser.Email = "";
+            oeEuser.AuthLevelRefId = 1;
+            try
+            {
+                await _hubContext.Clients.All.SendAsync("statusChanged", ticketAndStatus, oeEuser);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "The given key was not present in the dictionary.")
+                {
+                    throw new DomainValidationFundException("Validation : One or more paramter are missing in the request,Error could be becuase of case sensetive");
+                }
+                if (ex.InnerException.ToString().Contains("Cannot insert the value NULL into column"))
+                {
+                    throw new DomainValidationFundException("Validation : null value not allowed to one of the parameters");
+                }
+                return false;
             }
             return result;
         }
 
 
-
-    }  
+    }
 }

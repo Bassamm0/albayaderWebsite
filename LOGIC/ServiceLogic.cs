@@ -46,6 +46,24 @@ namespace LOGIC
 
             return services;
         }
+
+
+        public async Task<List<EServiceModel>> getServiceReport(EUser logeduser)
+        {
+            List<EServiceModel> services = new List<EServiceModel>();
+            if (logeduser.CompanyTypeId == 1 && (logeduser.UserRole.ToLower() == "administrator" || logeduser.UserRole.ToLower() == "manager"))
+            {
+                services = dservice.getServiceReport();
+            }
+            else if (logeduser.CompanyTypeId != 1 && logeduser.UserRole.ToLower() == "client manager")
+            {
+                services = dservice.getAllCompletedServiceCompany(logeduser.CompanyId);
+            }
+
+            // if manager
+
+            return services;
+        }
         public async Task<List<EServiceModel>> getAllCompletedServiceBranch(EUser logeduser,int BranchId)
         {
             List<EServiceModel> services = new List<EServiceModel>();
@@ -171,5 +189,20 @@ namespace LOGIC
             }
 
         }
+        public async Task<Boolean> updateBranch(int serviceid, int branchId)
+        {
+
+            var resul = dservice.updateBranch(serviceid, branchId);
+            if (resul)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        //updateBranch
     }
 }

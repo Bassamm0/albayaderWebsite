@@ -8309,7 +8309,7 @@ button.bg-dark:focus {
 
 .mr-1,
 .mx-1 {
-  margin-right: 0.25rem !important;
+  margin: 0.25rem !important;
 }
 
 .mb-1,

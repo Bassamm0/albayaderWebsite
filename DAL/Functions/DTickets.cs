@@ -969,7 +969,9 @@ namespace DAL.Functions
             var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
             var conn = context.Database.GetDbConnection();
             int result;
-            conn.Open();
+            try
+            {
+             conn.Open();
             using (var command = conn.CreateCommand())
             {
 
@@ -978,6 +980,12 @@ namespace DAL.Functions
                 command.CommandText = sQuery.ToString();
                 result = (int)command.ExecuteScalar();
             }
+            }
+            finally
+            {
+                conn.Close();
+            }
+           
 
             return result;
         }
@@ -987,7 +995,9 @@ namespace DAL.Functions
             var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
             var conn = context.Database.GetDbConnection();
             int result;
-            conn.Open();
+            try
+            {
+             conn.Open();
             using (var command = conn.CreateCommand())
             {
 
@@ -1001,6 +1011,12 @@ namespace DAL.Functions
                 result = (int)command.ExecuteScalar();
             }
 
+            }
+            finally
+            {
+                conn.Close();
+            }
+          
             return result;
         }
 
@@ -1088,6 +1104,8 @@ namespace DAL.Functions
             var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
             var conn = context.Database.GetDbConnection();
             int result;
+            try
+            {
             conn.Open();
             using (var command = conn.CreateCommand())
             {
@@ -1097,9 +1115,75 @@ namespace DAL.Functions
                 command.CommandText = sQuery.ToString();
                 result = (int)command.ExecuteScalar();
             }
+            }
+            finally
+            {
+                conn.Close();
+            }
+            
 
             return result;
         }
 
+        // check status data change for auto status update
+        public List<EticketViews> getallServicebefore3datys()
+        {
+            List<EticketViews> users = new List<EticketViews>();
+
+            var context = new DatabaseContext(DatabaseContext.ops.dbOptions);
+            var conn = context.Database.GetDbConnection();
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+
+                    StringBuilder sQuery = new StringBuilder();
+
+                    sQuery.Append(" select t.*,TAS.ServiceId, ");
+                    sQuery.Append(" most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName from tickets t join ( ");
+                    sQuery.Append(" select * from ticketAndStatus ");
+                    sQuery.Append("  where ticketAndStatusId in (  ");
+                    sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid  ");
+                    sQuery.Append(" )  ");
+                    sQuery.Append(" ) as most_recent_status  ");
+                    sQuery.Append("  on t.ticketid = most_recent_status.ticketid  ");
+
+                    sQuery.Append(" inner join ticketStatus TS on TS.ticketStatusId=most_recent_status.ticketStatusId  ");
+                    sQuery.Append(" left join ticketAndService TAS on TAS.ticketId=t.ticketId   ");
+                    sQuery.Append(" where most_recent_status.ticketStatusId not in(7,5)  and most_recent_status.StatusDate < dateadd(hh, -72, getdate())  ");
+                    sQuery.Append("  order by t.creationDate desc   ");
+                    command.CommandText = sQuery.ToString();
+                    DbDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            EticketViews oEticketViews = new EticketViews();
+                            if (dataReader["ticketID"] != DBNull.Value) { oEticketViews.ticketId = (int)dataReader["ticketID"]; }
+                            if (dataReader["subject"] != DBNull.Value) { oEticketViews.subject = (string)dataReader["subject"]; }
+                            if (dataReader["ticketDetails"] != DBNull.Value) { oEticketViews.ticketDetails = (string)dataReader["ticketDetails"]; }
+                            if (dataReader["creationDate"] != DBNull.Value) { oEticketViews.creationDate = (DateTime)dataReader["creationDate"]; }
+                            if (dataReader["createdBy"] != DBNull.Value) { oEticketViews.createdBy = (int)dataReader["createdBy"]; }
+                            if (dataReader["severityId"] != DBNull.Value) { oEticketViews.severityId = (int)dataReader["severityId"]; }
+                            if (dataReader["ticketCategoryId"] != DBNull.Value) { oEticketViews.ticketCategoryId = (int)dataReader["ticketCategoryId"]; }
+                            if (dataReader["StatusDate"] != DBNull.Value) { oEticketViews.StatusDate = (DateTime)dataReader["StatusDate"]; }
+                            if (dataReader["StatusName"] != DBNull.Value) { oEticketViews.StatusName = (string)dataReader["StatusName"]; }
+                            if (dataReader["ticketStatusId"] != DBNull.Value) { oEticketViews.ticketStatusId = (int)dataReader["ticketStatusId"]; }
+
+                            users.Add(oEticketViews);
+                        }
+                    }
+                    dataReader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return users;
+        }
     }
 }

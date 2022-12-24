@@ -141,7 +141,7 @@
                                         {
 
                                             counter = counter + 1;
-                                            <div class="images-wrapper d-flex " id="gallery{@counter}">
+                                            <div class="images-wrapper " id="gallery{@counter}">
                                                 @foreach (var picture in @Model._service.ServiceDetails[0].servicePictures)
                                                 {
 
@@ -202,7 +202,7 @@
                                         @if (@Model._service.ServiceDetails[0].servicePictures != null)
                                         {
                                             counter = counter + 1;
-                                            <div class="images-wrapper d-flex " id="gallery{@counter}">
+                                            <div class="images-wrapper " id="gallery{@counter}">
                                                 @foreach (var picture in @Model._service.ServiceDetails[0].servicePictures)
                                                 {
 
