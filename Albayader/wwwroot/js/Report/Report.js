@@ -136,7 +136,7 @@
                                 editData += '<li class="editDatecss" serviceid="' + data.serviceId + '"><a target="_blank"  class="dropdown-item " href="editcorrective?ServiceId=' + data.serviceId + '" >Edit</a></li>'
 
                             }
-                            editData = '<li class="changeBranchcss" serviceid="' + data.serviceId + '" companyId="' + data.companyId + '"><a  class="dropdown-item " href="#"  data-toggle="modal" data-target="#modal-updateBranch">Change Branch</a></li>'
+                            editData += '<li class="changeBranchcss" serviceid="' + data.serviceId + '" companyId="' + data.companyId + '"><a  class="dropdown-item " href="#"  data-toggle="modal" data-target="#modal-updateBranch">Change Branch</a></li>'
 
                         }
 

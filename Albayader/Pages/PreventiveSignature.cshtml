@@ -303,7 +303,35 @@
                                         <i class="fa-solid fa-comment-dots"></i> <label class="ServiceViewHeaders">Remarks</label>
                                         <div style="padding-left:20px">
                                             <p>
-                                                @Html.Raw(@Model._service.Remark)
+                                                @Html.Raw(@Model._service.Remark.Replace("\n", "<br>"))
+                                            </p>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                    <div class="col-md-12">
+                                    <div class="form-group">
+                                        <i class="fa-solid fa-comment-medical"></i> <label class="ServiceViewHeaders">Recommendation</label>
+                                        <div style="padding-left:20px">
+                                            <p>
+                                                @Html.Raw(@Model._service.recomendation.Replace("\n", "<br>"))
+                                            </p>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <i class="fa-solid fa-screwdriver"></i> <label class="ServiceViewHeaders">Service Render</label>
+                                        <div style="padding-left:20px">
+                                            <p>
+                                                @Html.Raw(@Model._service.serviceRender.Replace("\n", "<br>"))
                                             </p>
                                         </div>
 

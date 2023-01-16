@@ -234,6 +234,19 @@
                                         <!-- /.col -->
                                         <div class="col">
                                             <div class="form-group">
+
+                                                <label>AMC Type</label>
+                                                <select name="ddAMCType" id="ddAMCType" class="form-control select2" style="width: 100%;">
+                                                    <option value="">Select the AMC Type</option>
+                                                    <option value="1">AMC</option>
+                                                    <option value="2">none-AMC</option>
+                                                </select>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
                                                 <label for="exampleInputEmail1">Model</label>
                                                 <input type="text" class="form-control" id="Model" name="Model" placeholder="Enter Model" value="@(@Model._service.ServiceDetails.Count>0?@Model._service.ServiceDetails[0].Model:"")">
                                             </div>
@@ -310,7 +323,14 @@
                                     <fieldset class="form-group border p-3">
                                         <legend class="w-auto px-2">Service Details</legend>
                                         <div class="row">
-                                            <div class="col">
+                                             <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Materials Used</label>\
+                                                    <select name="MaterialUsed1" id="MaterialUsed1" class="form-control select2" style="width: 100%;" multiple>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Remarks</label>
                                                     <textarea class="form-control" id="Remarks" name="Remarks" rows="3" maxlength="2500">@if (!String.IsNullOrEmpty(@Model._service.Remark))
@@ -319,19 +339,26 @@
                                                         }</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col">
+                                            <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Service Rendered</label>
                                                     <textarea class="form-control" id="Rendered" name="Rendered" rows="3">@(@Model._service.ServiceDetails.Count > 0 ? @Html.Raw(@Model._service.ServiceDetails[0].ServiceRendered.Replace("<br>", "\n")) : "")</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <label>Materials Used</label>\
-                                                    <select name="MaterialUsed1" id="MaterialUsed1" class="form-control select2" style="width: 100%;" multiple>
-                                                    </select>
-                                                </div>
+                                           <div class="col-md-12">
+                                            <div class="form-group">
+                                              <label for="exampleInputEmail1">Recommendation</label>
+                                                    <textarea class="form-control" id="serviceRecommendation" name="serviceRecommendation" rows="3" maxlength="2000">@(@Model._service.ServiceDetails.Count > 0 ? @Html.Raw(@Model._service.Recommendation.Replace("<br>", "\n")) : "")</textarea>
                                             </div>
+                                          </div>
+              
+                                          <div class="col-md-12">
+                                            <div class="form-group">
+                                              <label for="exampleInputEmail1">Root Of Cuase </label>
+                                                    <textarea class="form-control" id="rootofcuase" name="rootofcuase" rows="3" maxlength="2000">@(@Model._service.ServiceDetails.Count > 0 ? @Html.Raw(@Model._service.rootOfCause.Replace("<br>", "\n")) : "")</textarea>
+                                            </div>
+                                          </div>
+                                          
                                         </div>
                                     </fieldset>
 
@@ -382,8 +409,7 @@
                                             <select name="ddStatusAfter" id="ddStatusAfter" class="form-control select2 ddEquipment" style="width: 100%;">
                                                 <option value="">Please Select Status</option>
                                                 <option value="1">Complete</option>
-                                                <option value="2">Incomplete</option>
-                                                <option value="3">Pending for Spare</option>
+                                                 <option value="3">Pending for Approval</option>
                                                 <option value="4">Under Observation</option>
 
                                             </select>
@@ -460,6 +486,7 @@
 
                         if (@Model._service.ServiceDetails.Count> 0) {
                             console.log(@Model._service.ServiceDetails[0].EquipmentTypeId)
+                             $("#ddAMCType").val(@(@Model._service.ServiceDetails.Count > 0 ? @Model._service.ServiceDetails[0].AMCTypeId : "")).trigger('change');
                             $("#ddType").val(@(@Model._service.ServiceDetails.Count > 0 ? @Model._service.ServiceDetails[0].EquipmentTypeId : "")).trigger('change');
 
                             $("#ddCondition").val(@(@Model._service.ServiceDetails.Count > 0 ? @Model._service.ServiceDetails[0].ConditionId : "")).trigger('change');

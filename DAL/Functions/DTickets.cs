@@ -1126,6 +1126,10 @@ namespace DAL.Functions
         }
 
         // check status data change for auto status update
+
+
+        // get all ticket which is not closed or Onhold Breach
+
         public List<EticketViews> getallServicebefore3datys()
         {
             List<EticketViews> users = new List<EticketViews>();
@@ -1151,7 +1155,7 @@ namespace DAL.Functions
 
                     sQuery.Append(" inner join ticketStatus TS on TS.ticketStatusId=most_recent_status.ticketStatusId  ");
                     sQuery.Append(" left join ticketAndService TAS on TAS.ticketId=t.ticketId   ");
-                    sQuery.Append(" where most_recent_status.ticketStatusId not in(7,5)  and most_recent_status.StatusDate < dateadd(hh, -72, getdate())  ");
+                    sQuery.Append(" where most_recent_status.ticketStatusId not in(7,5,6)  and most_recent_status.StatusDate < dateadd(hh, -72, getdate())  ");
                     sQuery.Append("  order by t.creationDate desc   ");
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();

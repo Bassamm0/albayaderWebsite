@@ -724,6 +724,8 @@ namespace DAL.Functions
                             if (dataReader["SupervisourSignature"] != DBNull.Value) { oEServiceModel.SupervisourSignature = (string)dataReader["SupervisourSignature"]; }
                             if (dataReader["SupervisourMobile"] != DBNull.Value) { oEServiceModel.SupervisourMobile = (string)dataReader["SupervisourMobile"]; }
                             if (dataReader["SupervisourDesignation"] != DBNull.Value) { oEServiceModel.SupervisourDesignation = (string)dataReader["SupervisourDesignation"]; }
+                            if (dataReader["Recommendation"] != DBNull.Value) { oEServiceModel.recomendation = (string)dataReader["Recommendation"]; }
+                            if (dataReader["serviceRender"] != DBNull.Value) { oEServiceModel.serviceRender = (string)dataReader["serviceRender"]; }
 
                             oEServiceModel.ServiceDetails = getAllServiceDetails(oEServiceModel.ServiceId);                          
                         }
@@ -797,6 +799,8 @@ namespace DAL.Functions
                             if (dataReader["SupervisourSignature"] != DBNull.Value) { oEServiceModel.SupervisourSignature = (string)dataReader["SupervisourSignature"]; }
                             if (dataReader["SupervisourMobile"] != DBNull.Value) { oEServiceModel.SupervisourMobile = (string)dataReader["SupervisourMobile"]; }
                             if (dataReader["SupervisourDesignation"] != DBNull.Value) { oEServiceModel.SupervisourDesignation = (string)dataReader["SupervisourDesignation"]; }
+                            if (dataReader["Recommendation"] != DBNull.Value) { oEServiceModel.Recommendation = (string)dataReader["Recommendation"]; }
+                            if (dataReader["RootOfCause"] != DBNull.Value) { oEServiceModel.rootOfCause = (string)dataReader["RootOfCause"]; }
 
                             oEServiceModel.ServiceDetails = getAllCorrectiveServiceDetails(oEServiceModel.ServiceId);
                         }
@@ -888,7 +892,7 @@ namespace DAL.Functions
             newService.SupervisourName = null;
             newService.SupervisourSignature = null;
             newService.SupervisourFeedback = null;
-            newService.StatusAfterId = 2;
+            newService.StatusAfterId = 4;
             //newService.SiteVistTypeId = 1;
             newService.CreatedDate=DateTime.UtcNow;
 
@@ -913,6 +917,8 @@ namespace DAL.Functions
                 context.Entry(eServices).Property(x => x.TechnicianId).IsModified = true;
                 context.Entry(eServices).Property(x => x.ServiceTypeId).IsModified = true;
                 context.Entry(eServices).Property(x => x.Remark).IsModified = true;
+                context.Entry(eServices).Property(x => x.Recommendation).IsModified = true;
+                context.Entry(eServices).Property(x => x.serviceRender).IsModified = true;
                 context.Entry(eServices).Property(x => x.StatusAfterId).IsModified = true;
 
                 await context.SaveChangesAsync();
@@ -944,7 +950,7 @@ namespace DAL.Functions
             return eServices;
         }
 
-        public async Task<EServices> updateStatus(int serviceId, int statusId,string remark,int statusAfterId,int siteVistTypeId)
+        public async Task<EServices> updateStatus(int serviceId, int statusId,string remark,int statusAfterId,int siteVistTypeId, string Recommendation, string serviceRender,string rootOfCause)
         {
             EServices eServices = new EServices();
 
@@ -954,6 +960,9 @@ namespace DAL.Functions
             eServices.Remark=remark;
             eServices.StatusAfterId=statusAfterId;
             eServices.SiteVistTypeId= siteVistTypeId;
+            eServices.Recommendation= Recommendation;
+            eServices.serviceRender= serviceRender;
+            eServices.rootOfCause = rootOfCause;
 
             if (eServices == null)
             {
@@ -966,6 +975,9 @@ namespace DAL.Functions
                 context.Entry(eServices).Property(x => x.Remark).IsModified = true;
                 context.Entry(eServices).Property(x => x.StatusAfterId).IsModified = true;
                 context.Entry(eServices).Property(x => x.SiteVistTypeId).IsModified = true;
+                context.Entry(eServices).Property(x => x.Recommendation).IsModified = true;
+                context.Entry(eServices).Property(x => x.serviceRender).IsModified = true;
+                context.Entry(eServices).Property(x => x.rootOfCause).IsModified = true;
 
                 await context.SaveChangesAsync();
             }
@@ -1321,6 +1333,7 @@ namespace DAL.Functions
                             if (dataReader["ConditionName"] != DBNull.Value) { oEServiceDetails.ConditionName = (string)dataReader["ConditionName"]; }
                             if (dataReader["SerialNo"] != DBNull.Value) { oEServiceDetails.SerialNo = (string)dataReader["SerialNo"]; }
                             if (dataReader["EquipmentTypeName"] != DBNull.Value) { oEServiceDetails.EquipmentTypeName = (string)dataReader["EquipmentTypeName"]; }
+                            if (dataReader["AMCTypeId"] != DBNull.Value) { oEServiceDetails.AMCTypeId = (int)dataReader["AMCTypeId"]; }
                             oEServiceDetails.MaterialsUsed = getCorrectMaterialsUsed(oEServiceDetails.CorrectiveServiceDetailsId);
                              oEServiceDetails.servicePictures = getCorrectiveServicePictures(oEServiceDetails.CorrectiveServiceDetailsId);
                             serviceDetails.Add(oEServiceDetails);

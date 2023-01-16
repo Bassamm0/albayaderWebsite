@@ -25,7 +25,9 @@ namespace Entity
         public int StatusAfterId { get; set; }
 
         public string? Remark { get; set; }
-
+        public string? Recommendation { get; set; }
+        public string? serviceRender { get; set; }
+        public string? rootOfCause { get; set; }
         public string? SupervisourName { get; set; }
 
         public string? SupervisourSignature { get; set; }

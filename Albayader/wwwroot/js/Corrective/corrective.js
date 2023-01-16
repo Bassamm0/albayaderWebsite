@@ -82,6 +82,7 @@
         var serviceId = _ServiceId;
         var equipmentId = $("#Equipments1" ).val();
         var problemReported = $("#problemReported").val().replace(/\n/g, '<br>');
+        var AMCTypeId = $("#ddAMCType").val();
         var conditionId = $("#ddCondition").val();
         var equipmentTypeId = $("#ddType").val();
         var reportedDate = moment($("#reportedDate").data('date'), 'D-mm-yyyy').format('yyyy-mm-D');
@@ -91,7 +92,7 @@
         var serviceRendered = $("#Rendered").val().replace(/\n/g, '<br>');
         var serialNo = $("#Serial").val();
         
-        var senddata = '{"serviceId":' + serviceId + ',"correctiveServiceDetailsId":' + ServiceDetailsId + ',"equipmentId":' + equipmentId + ',"problemReported":"' + problemReported + '","conditionId":' + conditionId + ' ,"equipmentTypeId": ' + equipmentTypeId + ', "reportedDate": "' + reportedDate + '", "reportedBy": "' + reportedBy + '", "model": "' + model + '", "serviceRendered": "' + serviceRendered + '", "serialNo": "' + serialNo + '"} '
+        var senddata = '{"serviceId":' + serviceId + ',"correctiveServiceDetailsId":' + ServiceDetailsId + ',"equipmentId":' + equipmentId + ',"problemReported":"' + problemReported + '","conditionId":' + conditionId + ' ,"equipmentTypeId": ' + equipmentTypeId + ', "reportedDate": "' + reportedDate + '", "reportedBy": "' + reportedBy + '", "model": "' + model + '", "serviceRendered": "' + serviceRendered + '", "serialNo": "' + serialNo + '", "AMCTypeId": "' + AMCTypeId + '"} '
         $.ajax({
             type: "POST",
             url: url,
@@ -415,11 +416,15 @@
 
        
         var remark = $('#Remarks').val().replace(/\n/g, '<br>')
+        var recomendation = $('#serviceRecommendation').val().replace(/\n/g, '<br>');
+        var rootOfCause = $('#rootofcuase').val().replace(/\n/g, '<br>');
+
         var url = APIURL + 'service/updatestatus'
         var statusAfterId = $('#ddStatusAfter').val()
         var siteVistTypeId = $('#ddVistType').val()
+        var serviceType = 2;
 
-        var senddata = '{"serviceId":' + _ServiceId + ',"statusId":' + statusId + ',"remark":"' + remark + '","statusAfterId":' + statusAfterId + ',"siteVistTypeId":' + siteVistTypeId + '}'
+        var senddata = '{"serviceId":' + _ServiceId + ',"serviceType":' + serviceType + ',"statusId":' + statusId + ',"remark":"' + remark + '","recommendation":"' + recomendation + '","rootOfCause":"' + rootOfCause + '","statusAfterId":' + statusAfterId + ',"siteVistTypeId":' + siteVistTypeId + '}'
         $.ajax({
             type: "POST",
             url: url,
@@ -483,6 +488,9 @@
                 required: true,
             },
             Equipments1: {
+                required: true,
+            },
+            AMCTypeId: {
                 required: true,
             },
             Model: {

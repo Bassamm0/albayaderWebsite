@@ -129,6 +129,15 @@
 
                                 </div>
                             </div>
+                          <div class="dropdown-divider"></div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <i class="fa-solid fa-wrench"></i> <label class="ServiceViewHeaders">AMC Type:</label>
+                                    <div class="">
+                                        @(@Model._service.ServiceDetails[0].AMCTypeId == 1 ? "AMC" : "none-AMC")
+                                    </div>
+                                </div>
+                            </div>
                             <div class="dropdown-divider"></div>
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -239,12 +248,20 @@
                                     <i class="fa-solid fa-gears"></i><label class="ServiceViewHeaders">Service Details</label>
                                     <div class="row" style="padding-left:20px;">
                                     
-                                         <div class="col-md-12">
-                                             <span class="labelsView">Remarks:</span>@Html.Raw(@Model._service.Remark)
+                                        <div class="col-md-12">
+                                            <span class="labelsView">Remarks:</span>@Html.Raw(@Model._service.Remark.Replace("\n", "<br>"))
                                         </div>
                                         <div class="dropdown-divider"></div>
-                                       <div class="col-md-12">
-                                            <span class="labelsView">Service Rendered:</span>@Html.Raw(@Model._service.ServiceDetails[0].ServiceRendered)
+                                        <div class="col-md-12">
+                                            <span class="labelsView">Service Rendered:</span>@Html.Raw(@Model._service.ServiceDetails[0].ServiceRendered.Replace("\n", "<br>"))
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                        <div class="col-md-12">
+                                            <span class="labelsView">Recommendation:</span>@Html.Raw(@Model._service.Recommendation.Replace("\n", "<br>"))
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                        <div class="col-md-12">
+                                            <span class="labelsView">Root Of Cause:</span>@Html.Raw(@Model._service.rootOfCause.Replace("\n", "<br>"))
                                         </div>
                                         <div class="dropdown-divider"></div>
                                         <div class="col-md-12">
@@ -277,7 +294,7 @@
                                     </div>
                                     <div class="dropdown-divider"></div>
                                     <div class="col-md-12">
-                                        <span class="labelsView">Supervisor Feedback: </span>@Model._service.SupervisourFeedback
+                                            <span class="labelsView">Supervisor Feedback: </span>@Model._service.SupervisourFeedback.Replace("\n", "<br>")
                                     </div>
                                     <div class="dropdown-divider"></div>
                                     <div class="col-md-12">

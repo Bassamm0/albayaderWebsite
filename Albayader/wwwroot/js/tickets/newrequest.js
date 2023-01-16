@@ -36,6 +36,18 @@
     // validation 
     $('#createTicket').click(function (e) {
 
+        $('#uploadError').text('')
+        if ($("#ddSeverity").val() == '3' || $("#ddSeverity").val() == '4') {
+            var ufiles = document.getElementById('Pictures').files
+
+            if (ufiles.length == 0) {
+                toastr["warning"]("As your problem severity is higher than medium, kindly provide some photos for the issue.")
+                $('#uploadError').text('Please choose image to upload')
+                return;
+            }
+
+        }
+
         if ($("#newRequestForm").valid()) {
 
             var validationElem = '#fielUploadValidationHolder';
@@ -191,6 +203,7 @@
         });
 
     }
+
     $('#newRequestForm').validate({
         rules: {
             subject: {

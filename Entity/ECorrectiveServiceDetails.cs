@@ -24,7 +24,7 @@ namespace Entity
       
         public string? SerialNo { get; set; }
         public string? ProblemReported { get; set; }
-      
+        public int AMCTypeId { get; set; }
 
 
 

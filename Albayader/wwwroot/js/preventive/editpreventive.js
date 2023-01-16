@@ -143,6 +143,8 @@
         $("#ddStatusAfter").val(ServiceObject.statusAfterId)
         $("#ddStatusAfter").trigger('change');
         $("#serviceRemark").val((ServiceObject.remark).replaceAll('<br>', '\n'));
+        $("#serviceRecommendation").val((ServiceObject.recomendation).replaceAll('<br>', '\n'));
+        $("#servicerender").val((ServiceObject.serviceRender).replaceAll('<br>', '\n'));
         //ServiceDetailsid1
         toastr["success"]("Service loaded successfuly.")
     }
@@ -825,11 +827,14 @@
 
         console.log(_ServiceId)
         var remark = $('#serviceRemark').val().replace(/\n/g, '<br>');
+        var recomendation = $('#serviceRecommendation').val().replace(/\n/g, '<br>');
+        var serviceRender = $('#servicerender').val().replace(/\n/g, '<br>');
         var url = APIURL + 'service/updatestatus'
         var statusAfterId = $('#ddStatusAfter').val()
         var siteVistTypeId = 1;
+        var serviceType = 1;
 
-        var senddata = '{"serviceId":' + _ServiceId + ',"statusId":' + statusId + ',"remark":"' + remark + '","statusAfterId":' + statusAfterId + ',"siteVistTypeId":' + siteVistTypeId + '}'
+        var senddata = '{"serviceId":' + _ServiceId + ',"serviceType":' + serviceType + ',"statusId":' + statusId + ',"remark":"' + remark + '","recommendation":"' + recomendation + '","serviceRender":"' + serviceRender + '","statusAfterId":' + statusAfterId + ',"siteVistTypeId":' + siteVistTypeId + '}'
         $.ajax({
             type: "POST",
             url: url,

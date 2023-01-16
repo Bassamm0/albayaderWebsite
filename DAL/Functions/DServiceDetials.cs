@@ -204,6 +204,7 @@ namespace DAL.Functions
                 context.Entry(ServiceDetails).Property(x => x.SerialNo).IsModified = true;
                 context.Entry(ServiceDetails).Property(x => x.ServiceRendered).IsModified = true;
                 context.Entry(ServiceDetails).Property(x => x.ProblemReported).IsModified = true;
+                context.Entry(ServiceDetails).Property(x => x.AMCTypeId).IsModified = true;
 
 
                 await context.SaveChangesAsync();

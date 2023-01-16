@@ -18,6 +18,9 @@ namespace Entity
         public string? CompletionDate { get; set; }
 
         public string ?Remark { get; set; }
+        public string ?recomendation { get; set; }
+        public string ?serviceRender { get; set; }
+        public string ?rootOfCause { get; set; }
         public int StatusAfterId { get; set; }
 
         public string? SupervisourName { get; set; }

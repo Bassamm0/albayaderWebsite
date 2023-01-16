@@ -18,7 +18,10 @@ namespace Entity
         public DateTime? CompletionDate { get; set; }
 
         public string? Remark { get; set; }
+        public string? Recommendation { get; set; }
+        public string? rootOfCause { get; set; }
         public int StatusAfterId { get; set; }
+        public int AMCTypeId { get; set; }
 
         public string? SupervisourName { get; set; }
         [NotMapped]

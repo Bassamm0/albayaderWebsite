@@ -355,9 +355,25 @@ namespace API.Controllers
                 var remark = objData.GetProperty("remark").GetString();
                 var statusAfterId = objData.GetProperty("statusAfterId").GetInt16();
                 var siteVistTypeId = objData.GetProperty("siteVistTypeId").GetInt16();
+                var Recommendation = objData.GetProperty("recommendation").GetString();
+
+                var serviceType = objData.GetProperty("serviceType").GetInt16();
+                var serviceRender = "";
+                var rootOfCause = "";
+                if (serviceType == 1)
+                {
+                     serviceRender = objData.GetProperty("serviceRender").GetString();
+
+                }
+                else
+                {
+                     rootOfCause = objData.GetProperty("rootOfCause").GetString();
+
+                }
 
 
-                result = await serviceLogic.updateStatus(serviceId, statusId,remark, statusAfterId, siteVistTypeId);
+
+                result = await serviceLogic.updateStatus(serviceId, statusId,remark, statusAfterId, siteVistTypeId, Recommendation, serviceRender,rootOfCause);
             }
             catch (Exception ex)
             {
