@@ -190,6 +190,38 @@ namespace API.Controllers
             return Ok(jsonData);
         }
 
+        [Route("exportexcel")]
+        [Authorize(Roles = "Administrator,Manager,Client Manager")]
+        [HttpPost]
+        public async Task<ActionResult> exportexcel()
+        {
+
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            EUser logeduser = claimHellper.GetCurrentUser(identity);
+            List<EServiceModel> services = new List<EServiceModel>();
+            services = await serviceLogic.getAllCompletedService(logeduser);
+
+            StringBuilder str = new StringBuilder();
+            str.Append("<table border=`" + "1px" + "`b>");
+            str.Append("<tr>");
+            str.Append("<td><b><font face=Arial Narrow size=3>serivceId</font></b></td>");
+            str.Append("<td><b><font face=Arial Narrow size=3>BranchName</font></b></td>");
+            str.Append("<td><b><font face=Arial Narrow size=3>completion Date</font></b></td>");
+            str.Append("</tr>");
+            foreach (EServiceModel val in services)
+            {
+                str.Append("<tr>");
+                str.Append("<td><font face=Arial Narrow size=" + "14px" + ">" + val.ServiceId.ToString() + "</font></td>");
+                str.Append("<td><font face=Arial Narrow size=" + "14px" + ">" + val.BranchName.ToString() + "</font></td>");
+                str.Append("<td><font face=Arial Narrow size=" + "14px" + ">" + val.CompletionDate.ToString() + "</font></td>");
+                str.Append("</tr>");
+            }
+            str.Append("</table>");
+            HttpContext.Response.Headers.Add("content-disposition", "attachment; filename=Information" + DateTime.Now.Year.ToString() + ".xls");
+            this.Response.ContentType = "application/vnd.ms-excel";
+            byte[] temp = System.Text.Encoding.UTF8.GetBytes(str.ToString());
+            return File(temp, "application/vnd.ms-excel");
+
 
 
         [Route("completedservicebyBranch")]
