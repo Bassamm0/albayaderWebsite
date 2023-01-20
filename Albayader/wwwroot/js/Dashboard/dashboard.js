@@ -9,9 +9,12 @@
 
     if (role.toLowerCase() == 'administrator' || role.toLowerCase() == 'manager' || role.toLowerCase() == 'client manager' || role.toLowerCase() == 'support' || role.toLowerCase() == 'supervisor') {
         var year = new Date().getFullYear().toString();
+        $('#ddyear').val(year).trigger('change')
         initDashbaord(year)
      
     }
+   
+
     $('body').on("change", "#ddyear", function () {
         pieChart.destroy();
         lineChart.destroy();
@@ -46,10 +49,11 @@
             },
             success: function (data, textStatus, xhr) {
                 //console.log(xhr.status);
-                //console.log(data);
+                console.log(data);
         
-                PreventiveCorectivePie(data.preventiveCount, data.correctiveCount)
-                preventiveCoreectivePerMonth(data.preventMonth, data.correctiveMonth)
+               // PreventiveCorectivePie(data.preventiveCount, data.correctiveCount)
+                PreventiveCorectivePie(data.preventiveCount, data.correctiveAMCCount, data.correctiveNoneAMCCount)
+                preventiveCoreectivePerMonth(data.preventMonth, data.correctiveMonthAMC, data.correctiveMonthNoneAMC)
 
                 allServiceMonth(data.allServiceMonth)
                 
@@ -86,15 +90,15 @@
    
     var pieChart;
 
-    function PreventiveCorectivePie(Preventive, Corrective) {
+    function PreventiveCorectivePie(Preventive, CorrectiveAMC, CorrectiveNoneAMC) {
        pieChart=  new Chart(document.getElementById("areaChart"), {
             type: 'pie',
             data: {
-                labels: ["Preventive", "Corrective"],
+                labels: ["Preventive", "Corrective AMC", "Corrective None AMC"],
                 datasets: [{
                     label: "Services ",
-                    backgroundColor: ["rgba(76, 203, 133, 0.5)", "rgba(138, 19, 250, 0.5)"],
-                    data: [Preventive, Corrective]
+                    backgroundColor: ["rgba(76, 203, 133, 0.5)", "rgba(138, 19, 250, 0.5)", "rgba(110, 19, 120, 0.5)"],
+                    data: [Preventive, CorrectiveAMC, CorrectiveNoneAMC]
                 }]
             },
             options: {
@@ -116,29 +120,40 @@
     //--------------
     var lineChart;
 
-    function preventiveCoreectivePerMonth(PreveData,CorrectiveData) {
+    function preventiveCoreectivePerMonth(PreveData, CorrectiveDataAMC, CorrectiveDataNoneAMC) {
 
+
+        let CorrectiveDataAMCFull = createMonthValues(CorrectiveDataAMC) 
+        let CorrectiveDataNoneAMCFull = createMonthValues(CorrectiveDataNoneAMC) 
+        let PreveDataFull = createMonthValues(PreveData) 
+        console.log('full', PreveDataFull)
         let preMonths = []
         let preData = []
         
-        for (var i = 0; i < PreveData.length; i++) {
-            preMonths[i] = PreveData[i].monthName
-            preData[i] = PreveData[i].value
+        for (var i = 0; i < PreveDataFull.length; i++) {
+            preMonths[i] = PreveDataFull[i].monthName
+            preData[i] = PreveDataFull[i].value
 
         }
-        let corMonths = []
-        let corData = []
-        for (var i = 0; i < CorrectiveData.length; i++) {
-            corMonths[i] = CorrectiveData[i].monthName
-            corData[i] = CorrectiveData[i].value
+        let corMonthsAMC = []
+        let corDataAMC = []
+        for (var i = 0; i < CorrectiveDataAMCFull.length; i++) {
+            corMonthsAMC[i] = CorrectiveDataAMCFull[i].monthName
+            corDataAMC[i] = CorrectiveDataAMCFull[i].value
 
         }
+        let corMonthsNoneAMC = []
+        let corDataNoneAMC = []
+        for (var i = 0; i < CorrectiveDataNoneAMCFull.length; i++) {
+            corMonthsNoneAMC[i] = CorrectiveDataNoneAMCFull[i].monthName
+            corDataNoneAMC[i] = CorrectiveDataNoneAMCFull[i].value
 
+        }
 
          lineChart=  new Chart(document.getElementById("lineChart"), {
             type: 'bar',
             data: {
-                labels: preMonths.length > corMonths.length ? preMonths : corMonths,
+                labels: months,
                 datasets: [
                     {
                         label: "Preventive",
@@ -147,11 +162,17 @@
                         borderWidth: 1,
                         data: preData
                     }, {
-                        label: "Corrective",
+                        label: "Corrective AMC",
                         backgroundColor: 'rgba(138, 19, 250, 0.2)',
                         borderColor: 'rgba(138, 19, 250, 1)',
                         borderWidth: 1,
-                        data: corData
+                        data: corDataAMC
+                    }, {
+                        label: "Corrective None-AMC",
+                        backgroundColor: 'rgba(110, 19, 120, 0.2)',
+                        borderColor: 'rgba(110, 19, 120, 1)',
+                        borderWidth: 1,
+                        data: corDataNoneAMC
                     }
                 ]
             },
@@ -163,7 +184,96 @@
             }
         });
     }
-   
+
+    let months = ["Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"]
+    function createMonthValues( lst) {
+        
+
+        var arryobj=[];
+        var found = false;
+        for (var i = 0; i < months.length; i++) {
+            var obj = {}
+           
+            found = false;
+            for (var j = 0; j < lst.length; j++) {
+                obj.monthName = months[i];
+                if (months[i] == lst[j].monthName) {
+                    
+                    obj.value = lst[j].value;
+                    arryobj.push(obj)
+                        found = true;
+                    
+                }
+            }
+            if (!found) {
+               
+                obj.value = 0;
+                arryobj.push(obj)
+                found = false;
+            }
+        }
+        return arryobj 
+    }
+
+    //function preventiveCoreectivePerMonth(PreveData, CorrectiveData) {
+
+    //    let preMonths = []
+    //    let preData = []
+
+    //    for (var i = 0; i < PreveData.length; i++) {
+    //        preMonths[i] = PreveData[i].monthName
+    //        preData[i] = PreveData[i].value
+
+    //    }
+    //    let corMonths = []
+    //    let corData = []
+    //    for (var i = 0; i < CorrectiveData.length; i++) {
+    //        corMonths[i] = CorrectiveData[i].monthName
+    //        corData[i] = CorrectiveData[i].value
+
+    //    }
+
+
+    //    lineChart = new Chart(document.getElementById("lineChart"), {
+    //        type: 'bar',
+    //        data: {
+    //            labels: preMonths.length > corMonths.length ? preMonths : corMonths,
+    //            datasets: [
+    //                {
+    //                    label: "Preventive",
+    //                    backgroundColor: 'rgba(76, 203, 133, 0.2)',
+    //                    borderColor: 'rgba(76, 203, 133, 1)',
+    //                    borderWidth: 1,
+    //                    data: preData
+    //                }, {
+    //                    label: "Corrective",
+    //                    backgroundColor: 'rgba(138, 19, 250, 0.2)',
+    //                    borderColor: 'rgba(138, 19, 250, 1)',
+    //                    borderWidth: 1,
+    //                    data: corData
+    //                }
+    //            ]
+    //        },
+    //        options: {
+    //            title: {
+    //                display: true,
+    //                text: 'Services per Month by Type'
+    //            }
+    //        }
+    //    });
+    //}
+
     //-------------
     //- DONUT CHART -
     //-------------

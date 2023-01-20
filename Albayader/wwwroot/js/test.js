@@ -3,27 +3,59 @@
 
 
 $(document).ready(function () {
+    const jtoken = $('#utoken').val();
+    const APIURL = $('#APIURI').val();
 
-    touchTouch(document.getElementById('gallery1').querySelectorAll('.magnifier'));
-    toastr.options = {
-        "closeButton": false,
-        "debug": false,
-        "newestOnTop": false,
-        "progressBar": false,
-        "positionClass": "toast-top-right",
-        "preventDuplicates": false,
-        "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-    }
-    $('#toast').click(function () {
+    $('#export').click(function () {
 
-        toastr["success"]("My name is Inigo Montoya. You killed my father. Prepare to die!")
+        exportexcel()
     })
+
+    function exportexcel() {
+
+        let html = '';
+        const uri = APIURL + "service/exportexcel";
+
+        //fetch(uri, {
+        //    method: 'POST',
+        //    headers: {
+        //        'Accept': 'application/json',
+        //        'Content-Type': 'application/json; charset=utf-8',
+        //        RequestVerificationToken:
+        //            $('input:hidden[name="__RequestVerificationToken"]').val(),
+        //        Authorization: 'Bearer ' + jtoken,
+        //    },
+        //    body:{}
+        //})
+        //    .then(response => response.json())
+        //    .then((data) => {
+        //        // trigger model
+        //        console.log(data)
+
+        //    })
+        //    .catch(error => console.error('Unable to add item.', error));
+
+
+
+        $.ajax({
+            type: "POST",
+            url: uri, //call your controller and action
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
+            },
+        }).done(function (data) {
+            alert(data)
+            var response = JSON.parse(data);
+           
+            window.location = '/?fileGuid=' + response.FileGuid
+                + '&filename=' + response.FileName;
+
+        });
+
+ 
+    }
 })

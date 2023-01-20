@@ -8,6 +8,7 @@ using static DAL.DALException;
 using System.Globalization;
 using System.Security.Claims;
 using System.IO;
+using System.Text;
 
 namespace API.Controllers
 {
@@ -202,7 +203,7 @@ namespace API.Controllers
             services = await serviceLogic.getAllCompletedService(logeduser);
 
             StringBuilder str = new StringBuilder();
-            str.Append("<table border=`" + "1px" + "`b>");
+            str.Append("<table border=\"1px\" >");
             str.Append("<tr>");
             str.Append("<td><b><font face=Arial Narrow size=3>serivceId</font></b></td>");
             str.Append("<td><b><font face=Arial Narrow size=3>BranchName</font></b></td>");
@@ -221,12 +222,13 @@ namespace API.Controllers
             this.Response.ContentType = "application/vnd.ms-excel";
             byte[] temp = System.Text.Encoding.UTF8.GetBytes(str.ToString());
             return File(temp, "application/vnd.ms-excel");
+           // return System.Convert.ToBase64String(temp);
 
-
+        }
 
         [Route("completedservicebyBranch")]
         [Authorize(Roles = "Administrator,Manager,Client Manager")]
-        [HttpPost]
+            [HttpPost]
         public async Task<List<EServiceModel>> getAllCompletedServiceByBranch(JsonElement objData)
         {
 
@@ -238,6 +240,8 @@ namespace API.Controllers
 
             return services;
         }
+
+       
         [Route("completedservicedate")]
         [Authorize(Roles = "Administrator,Manager,Client Manager")]
         [HttpPost]

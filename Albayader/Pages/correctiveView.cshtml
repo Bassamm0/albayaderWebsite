@@ -249,27 +249,27 @@
                                     <div class="row" style="padding-left:20px;">
                                     
                                         <div class="col-md-12">
-                                            <span class="labelsView">Remarks:</span>@Html.Raw(@Model._service.Remark.Replace("\n", "<br>"))
+                                            <span class="labelsView">Remarks:</span><div>@Html.Raw(@Model._service.Remark.Replace("\n", "<br>"))</div>
                                         </div>
                                         <div class="dropdown-divider"></div>
                                         <div class="col-md-12">
-                                            <span class="labelsView">Service Rendered:</span>@Html.Raw(@Model._service.ServiceDetails[0].ServiceRendered.Replace("\n", "<br>"))
+                                            <span class="labelsView">Service Rendered:</span><div>@Html.Raw(@Model._service.ServiceDetails[0].ServiceRendered.Replace("\n", "<br>"))</div>
                                         </div>
                                         <div class="dropdown-divider"></div>
                                         <div class="col-md-12">
-                                            <span class="labelsView">Recommendation:</span>@Html.Raw(@Model._service.Recommendation.Replace("\n", "<br>"))
+                                            <span class="labelsView">Recommendation:</span><div>@Html.Raw(@Model._service.Recommendation.Replace("\n", "<br>"))</div>
                                         </div>
                                         <div class="dropdown-divider"></div>
                                         <div class="col-md-12">
-                                            <span class="labelsView">Root Of Cause:</span>@Html.Raw(@Model._service.rootOfCause.Replace("\n", "<br>"))
+                                            <span class="labelsView">Root Of Cause:</span><div>@Html.Raw(@Model._service.rootOfCause.Replace("\n", "<br>"))</div>
                                         </div>
                                         <div class="dropdown-divider"></div>
                                         <div class="col-md-12">
-                                            <span class="labelsView"> Status After Service:</span>@Model._service.StatusAfterName
+                                            <span class="labelsView"> Status After Service:</span> @Model._service.StatusAfterName
                                         </div>
                                         <div class="dropdown-divider"></div>
                                          <div class="col-md-12">
-                                            <span class="labelsView"> Completion Date:</span>@Convert.ToDateTime(@Model._service.CompletionDate).ToString("dd/MM/yyyy hh:mm tt")
+                                            <span class="labelsView"> Completion Date:</span> @Convert.ToDateTime(@Model._service.CompletionDate).ToString("dd/MM/yyyy hh:mm tt")
                                         </div>
                                         <div class="dropdown-divider"></div>
                                     </div>

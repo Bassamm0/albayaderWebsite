@@ -10,10 +10,14 @@ namespace Entity
     {
         public int preventiveCount { get; set; }
         public int correctiveCount { get; set; }
+        public int correctiveAMCCount { get; set; }
+        public int correctiveNoneAMCCount { get; set; }
         public int otherCount { get; set; }
         public int branchCount { get; set; }
         public List<ServicePerMonth> preventMonth { get; set; }
         public List<ServicePerMonth> correctiveMonth { get; set; }
+        public List<ServicePerMonth> correctiveMonthAMC { get; set; }
+        public List<ServicePerMonth> correctiveMonthNoneAMC { get; set; }
 
         public List<ServicePerMonth> allServiceMonth { get; set; }
 

@@ -274,44 +274,44 @@
         changeDate()
 
     });
-    function changeDate() {
-        var serviceId = $('#serviceDateId').val();
-        var newDate = moment(moment($("#newDateChange").val(), 'DD-MM-YYYY')).format('MM-DD-YYYY')
+        function changeDate() {
+            var serviceId = $('#serviceDateId').val();
+            var newDate = moment(moment($("#newDateChange").val(), 'DD-MM-YYYY')).format('MM-DD-YYYY')
 
-        if (newDate == '') {
-            alert('Plese select Date');
-            return;
-        }
-        var url = 'Reports?handler=changeDate&serviceId=' + serviceId + '&newDate=' + newDate;
-
-        $.ajax({
-            type: "POST",
-            url: url,
-            contentType: "application/json; charset=utf-8",
-            // dataType: "json",
-            data: {},
-            headers: {
-                RequestVerificationToken:
-                    $('input:hidden[name="__RequestVerificationToken"]').val()
-            },
-            success: function (data, status, xhr) {   // success callback function
-                $('#closedate').click();
-            },
-            error: function (jqXhr, textStatus, errorMessage) { // error callback 
-                if (xhr.status == 401) {
-                    window.location.href = 'Index';
-                }
-                alert('Error: something went wronge please try again later');
+            if (newDate == '') {
+                alert('Plese select Date');
+                return;
             }
+            var url = 'Reports?handler=changeDate&serviceId=' + serviceId + '&newDate=' + newDate;
 
-        }).done(function () {
+            $.ajax({
+                type: "POST",
+                url: url,
+                contentType: "application/json; charset=utf-8",
+                // dataType: "json",
+                data: {},
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+                success: function (data, status, xhr) {   // success callback function
+                    $('#closedate').click();
+                },
+                error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                    if (xhr.status == 401) {
+                        window.location.href = 'Index';
+                    }
+                    alert('Error: something went wronge please try again later');
+                }
 
-            $('#closedate').click();
-            loadDataTable(datefilterval);
-            $("#newDateChange").val('')
-            toastr["success"]("Date changed successfuly.")
-        });
-    }
+            }).done(function () {
+
+                $('#closedate').click();
+                loadDataTable(datefilterval);
+                $("#newDateChange").val('')
+                toastr["success"]("Date changed successfuly.")
+            });
+        }
 
 
     var obj;
