@@ -122,6 +122,8 @@ namespace API.Controllers
             return Ok(jsonData);
         }
 
+
+
         [Route("servicereportdatefilter")]
         [Authorize(Roles = "Administrator,Manager,Client Manager")]
         [HttpPost]
@@ -218,11 +220,13 @@ namespace API.Controllers
                 str.Append("</tr>");
             }
             str.Append("</table>");
+
             HttpContext.Response.Headers.Add("content-disposition", "attachment; filename=Information" + DateTime.Now.Year.ToString() + ".xls");
             this.Response.ContentType = "application/vnd.ms-excel";
             byte[] temp = System.Text.Encoding.UTF8.GetBytes(str.ToString());
             return File(temp, "application/vnd.ms-excel");
-           // return System.Convert.ToBase64String(temp);
+           
+            // return System.Convert.ToBase64String(temp);
 
         }
 

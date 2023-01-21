@@ -1,6 +1,7 @@
 ﻿@page
 @model AlbayaderWeb.Pages.testModel
 @{
+
 }
 
 
@@ -60,9 +61,11 @@
 
 
 
+                <form action="" method="post">
+                <button id="export" type="button">export</button>
+                </form>
 
-
-            <button id="export" type="button">export</button>
+          
 
               
 
@@ -90,7 +93,7 @@
 <script src="plugins/select2/js/select2.full.min.js"></script>
 <!-- InputMask -->
 
- <script src="~/js/test.js"></script>
+<script src="~/js/test.js?dt=@DateTime.Now.ToString("yyyyMMddhhmmss")"></script>
 
 
     <script src="~/plugins/lightBox/touchTouch.js"></script>

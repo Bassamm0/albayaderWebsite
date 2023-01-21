@@ -4,21 +4,37 @@
 
 $(document).ready(function () {
 
-
+    $('#startDate').datetimepicker({
+        format: 'DD-MM-yyyy'
+    });
+    $('#endDate').datetimepicker({
+        format: 'DD-MM-yyyy'
+    });
     $('#export').click(function () {
-     
+
+
+
         exportexcel()
     })
 
     function exportexcel() {
-      
-      
-        var sType = "All Type";
-        var visitType = "All Site Vist";
-        var branch = "All Branch";
-        var searchValue = "";
-       
-        var url = '/test?handler=Downloadfile&sType='+sType+'&visitType='+visitType+'&branch='+branch+'&searchValue=' +searchValue;
+
+
+        var sType = $('#ddServiceType').find("option:selected").text();
+        var visitType = $('#ddVistType').find("option:selected").text();
+        var branch = $('#ddBranch').find("option:selected").text();
+        var searchValue = $("input[type='search']").val();
+
+        var _startDate ='';
+        var _endDate = '';
+        if ($("#startDate").val() !== '' && $("#endDate").val() !== '') {
+             _startDate = moment(moment($("#startDate").val(), 'DD-MM-YYYY')).format('MM-DD-YYYY');
+             _endDate = moment(moment($("#endDate").val(), 'DD-MM-YYYY')).format('MM-DD-YYYY');
+        } 
+        
+
+
+        var url = 'Reports?handler=Downloadfile&sType=' + sType + '&visitType=' + visitType + '&branch=' + branch + '&searchValue=' + searchValue + '&startDate=' + _startDate + '&endDate=' + _endDate;
 
         $.ajax({
             type: "POST",
@@ -47,8 +63,8 @@ $(document).ready(function () {
                     a[0].click();
                     $("body").remove(a);
                 }
-               
-                
+
+
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback 
                 if (jqXhr.status == 401) {
@@ -63,7 +79,7 @@ $(document).ready(function () {
 
         }).done(function () {
 
-     console.log('done')
+            console.log('done')
 
         });
     }
