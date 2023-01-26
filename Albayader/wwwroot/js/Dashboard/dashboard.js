@@ -94,7 +94,7 @@
        pieChart=  new Chart(document.getElementById("areaChart"), {
             type: 'pie',
             data: {
-                labels: ["Preventive", "Corrective AMC", "Corrective None AMC"],
+                labels: ["Preventive", "Corrective AMC", "Corrective Non-AMC"],
                 datasets: [{
                     label: "Services ",
                     backgroundColor: ["rgba(76, 203, 133, 0.5)", "rgba(138, 19, 250, 0.5)", "rgba(110, 19, 120, 0.5)"],
@@ -168,7 +168,7 @@
                         borderWidth: 1,
                         data: corDataAMC
                     }, {
-                        label: "Corrective None-AMC",
+                        label: "Corrective Non-AMC",
                         backgroundColor: 'rgba(110, 19, 120, 0.2)',
                         borderColor: 'rgba(110, 19, 120, 1)',
                         borderWidth: 1,

@@ -200,7 +200,7 @@
                                 <div class="form-group">
                                     <label>Type</label>
                                     <select name="ddType" id="ddType" class="form-control select2" style="width: 100%;">
-                                        <option value="">Select the Equiepment Type</option>
+                                        <option value="">Select the Equipment Type</option>
                                         <option value="1">Kitchen and Bakery Section</option>
                                         <option value="2">Boiler</option>
                                         <option value="3">Other</option>
@@ -239,7 +239,7 @@
                                                 <select name="ddAMCType" id="ddAMCType" class="form-control select2" style="width: 100%;">
                                                     <option value="">Select the AMC Type</option>
                                                     <option value="1">AMC</option>
-                                                    <option value="2">none-AMC</option>
+                                                    <option value="2">Non-AMC</option>
                                                 </select>
 
                                             </div>
@@ -354,7 +354,7 @@
               
                                           <div class="col-md-12">
                                             <div class="form-group">
-                                              <label for="exampleInputEmail1">Root Of Cuase </label>
+                                              <label for="exampleInputEmail1">Root Of Cause </label>
                                                     <textarea class="form-control" id="rootofcuase" name="rootofcuase" rows="3" maxlength="2000">@(@Model._service.ServiceDetails.Count > 0 ? @Html.Raw(@Model._service.rootOfCause.Replace("<br>", "\n")) : "")</textarea>
                                             </div>
                                           </div>

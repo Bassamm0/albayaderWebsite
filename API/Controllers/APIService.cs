@@ -226,7 +226,7 @@ namespace API.Controllers
             byte[] temp = System.Text.Encoding.UTF8.GetBytes(str.ToString());
             return File(temp, "application/vnd.ms-excel");
            
-            // return System.Convert.ToBase64String(temp);
+        
 
         }
 

@@ -4,6 +4,7 @@
 
 $(document).ready(function () {
 
+    const APIURL = $('#APIURI').val();
 
     $('#export').click(function () {
      
@@ -12,13 +13,15 @@ $(document).ready(function () {
 
     function exportexcel() {
       
-      
+     const jtoken = $('#utoken').val();
+
         var sType = "All Type";
         var visitType = "All Site Vist";
         var branch = "All Branch";
         var searchValue = "";
        
-        var url = '/test?handler=Downloadfile&sType='+sType+'&visitType='+visitType+'&branch='+branch+'&searchValue=' +searchValue;
+        var url = APIURL+'service/exportexcel';
+       // var url = '/test?handler=Downloadfile&sType='+sType+'&visitType='+visitType+'&branch='+branch+'&searchValue=' +searchValue;
 
         $.ajax({
             type: "POST",
@@ -28,7 +31,8 @@ $(document).ready(function () {
             data: {},
             headers: {
                 RequestVerificationToken:
-                    $('input:hidden[name="__RequestVerificationToken"]').val()
+                    $('input:hidden[name="__RequestVerificationToken"]').val(),
+                Authorization: 'Bearer ' + jtoken,
             },
             success: function (data, status, xhr) {   // success callback function
                 var blob = new Blob([data], { type: "application/octetstream" });
