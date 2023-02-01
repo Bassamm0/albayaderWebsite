@@ -490,7 +490,7 @@
             Equipments1: {
                 required: true,
             },
-            AMCTypeId: {
+            ddAMCType: {
                 required: true,
             },
             Model: {

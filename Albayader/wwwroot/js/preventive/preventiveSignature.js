@@ -39,7 +39,7 @@
 
 
         var clientName = $('#ClientName').val();
-        var clientFeedback = $('#clientFeedback').val();
+        var clientFeedback = $('#clientFeedback').val().replace(/\n/g, '<br>');;
         var SupervisourMobile = $('#ClientMobile').val();
         var SupervisourDesignation = $('#ClientDesignation').val();
 
