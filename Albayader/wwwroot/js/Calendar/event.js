@@ -58,7 +58,7 @@
             $('#delClose').click();
             // datatable redraw
             obj.remove()
-            table.clear().draw();
+           
             toastr["success"]("event delete successfuly.")
 
         });
@@ -118,59 +118,6 @@
 
 
 
-    $('body').on('click', '.deleteEvent', function () {
-
-        var EventName = $(this).attr('EventName')
-        $('#EventToDeleteName').html(EventName)
-        var EventId = $(this).attr('EventId')
-        $('#deletedEventId').val(EventId);
-
-        obj = $(this).parents('ul').parents('div').parents('td').parents('tr')
-
-
-
-    })
-
-
-    $('body').on('click', '#DeleteEvent', function () {
-
-
-        var url = 'event?handler=DeleteEvent&id=' + $("#deletedEventId").val();
-
-        $.ajax({
-            type: "POST",
-            url: url,
-            contentType: "application/json; charset=utf-8",
-            // dataType: "json",
-            data: {},
-            headers: {
-                RequestVerificationToken:
-                    $('input:hidden[name="__RequestVerificationToken"]').val()
-            },
-            success: function (data, status, xhr) {   // success callback function
-
-            },
-            error: function (jqXhr, textStatus, errorMessage) { // error callback 
-                if (jqXhr.status == 401) {
-                    window.location.href = 'Index';
-                    alert(' Your login session expired, Please login again.');
-                    return;
-                } else {
-                    alert('Error: something went wronge please try again later');
-
-                }
-            }
-
-        }).done(function () {
-
-            $('#delClose').click();
-            // datatable redraw
-            obj.remove()
-            table.clear().draw();
-            toastr["success"]("event delete successfuly.")
-
-        });
-    })
 
 
     $('body').on('click', '.completeEvent', function () {
