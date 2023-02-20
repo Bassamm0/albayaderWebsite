@@ -79,12 +79,13 @@
             .then(response => response.json())
             .then((data) => {
                 // trigger model
-                var dateObject = ASPDate(data.birthday);
-    
+ 
+                var dateObject = moment(data.birthday, 'yyyy-mm-D').format('yyyy-mm-DD');
+               
 
                 html = ` <li class="list-group-item"><span class='ViewDetailsTit'><img class="logoView" src="uploads/${data.pictureFileName}" /></li>`
                     + ` <li class="list-group-item"><span class='ViewDetailsTit'>First Name:</span> ${data.firstName}</li>`
-                    + ` <li class="list-group-item"><span class='ViewDetailsTit'>Last Name:</span> ${data.lastName}</li>`
+                    + ` <li class="list-group-item"><span class='ViewDetailsTit'>Last Name:</span> ${data.lastname}</li>`
                     + ` <li class="list-group-item"><span class='ViewDetailsTit'>Email:</span> ${data.email}</li>`
                     + ` <li class="list-group-item"><span class='ViewDetailsTit'>Mobile:</span> ${data.mobile}</li>`
                     + ` <li class="list-group-item"><span class='ViewDetailsTit'>Tel:</span> ${data.telephone}</li>`

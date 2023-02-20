@@ -18,10 +18,14 @@ namespace Entity
         public DateTime creationDate { get; set; }
         public int createdBy { get; set; }
         public int severityId { get; set; }
+        [NotMapped]
+        public string severityName { get; set; }
         public int ticketCategoryId { get; set; }
 
         [NotMapped]
         public string CreatorName { get; set; }
+        [NotMapped]
+        public string onBehafName { get; set; }
         [NotMapped]
         public string BranchName { get; set; }
         [NotMapped]

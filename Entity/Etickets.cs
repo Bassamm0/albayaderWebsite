@@ -21,6 +21,8 @@ namespace Entity
         public int? createdBy { get; set; }
         public int severityId { get; set; }
         public int ticketCategoryId { get; set; }
+        public int? onBehafId { get; set; }
+
 
         [NotMapped]
         public string? CreatorName { get; set; }

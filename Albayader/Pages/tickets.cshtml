@@ -142,13 +142,22 @@
                                                 <tr>
                                                     <th>Ref.</th>
                                                     <th>Subject</th>
+                                                     @if (Model.CompanyId == "2"){
+                                                    <th>Client</th>
+                                                     }
                                                     <th>Branch</th>
-                                                    <th>Created</th>
-                                                    <th>Last Activity</th>
+                                                    <th>Severity</th>
+
+                                                    <th>Created On</th>
+                                                    <th>Created By</th>
+                                                  @*  <th>Last Activity</th>*@
                                                     <th>Assigned</th>
                                                     <th>Service</th>
                                                     <th>Status</th>
+                                                     @if (Model.CompanyId == "2")
+                                                        {
                                                     <th>Action</th>
+                                                        }
 
                                                 </tr>
                                             </thead>
@@ -164,14 +173,33 @@
                                                                 <a href="ticketdetails?ticketId=@item.ticketId">
                                                                     @item.subject
                                                                 </a></td>
-                                                                <td>@item.BranchName</td>
-                                                                <td>@item.creationDate</td>
-                                                                 <td>@item.StatusDate</td>
-                                                                 @if(   !String.IsNullOrEmpty(@item.AssignedUser.Trim())){
-                                                                      <td> @item.AssignedUser </td>
-                                                                 }else{
-                                                                      <td>Not Assigned </td>
+                                                                 @if (Model.CompanyId == "2"){
+                                                                <td>@item.CompanyName</td>
                                                                  }
+                                                                <td>@item.BranchName</td>
+                                                                <td>@item.severityName</td>
+                                                                <td>@item.creationDate</td>
+                                                                <td>
+                                                                @if(!String.IsNullOrEmpty(@item.onBehafName.Trim()))
+                                                                {
+                                                                    @item.onBehafName
+                                                                   
+                                                                    <b>On behalf: @item.CreatorName </b>
+                                                                }else{
+                                                                    @item.CreatorName
+                                                                }
+                                                                </td>
+                                                                @* <td>@item.StatusDate</td>*@
+                                                                    @if (Model.CompanyId == "2"){
+                                                                         @if(   !String.IsNullOrEmpty(@item.AssignedUser.Trim())){
+                                                                              <td> @item.AssignedUser </td>
+                                                                         }else{
+                                                                              <td>Not Assigned </td>
+                                                                         }
+
+                                                                    }
+                                                                
+
                                                                    @if(item.serviceId!=0){
                                                                   <td>@item.serviceId</td>
                                                                    }else{
@@ -179,6 +207,7 @@
 
                                                                    }
                                                                
+
                                                                 @if(@item.ticketStatusId==1){
                                                                      <td style="text-align:center ;"> <span class="badge badge-purple" >@item.StatusName</span> </td>
                                                                 }else if(@item.ticketStatusId==2){
@@ -193,6 +222,9 @@
                                                                      <td style="text-align:center ;"> <span class="badge badge-orang" >@item.StatusName</span> </td>
                                                                 }
                                                              
+
+                                                                 @if (Model.CompanyId == "2")
+                                                                        {
                                                                   <td> 
                                                                     
                                                                         <div class="dropdown">
@@ -203,8 +235,7 @@
                                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
 
-                                                                        @if (Model.CompanyId == "2")
-                                                                        {
+                                                                       
                                                                             <a ticketid="@item.ticketId" class="dropdown-item assginUser" href="#" data-toggle="modal" data-target="#modal-assign">Assgin to</a>
 
                                                                             <a ticketid="@item.ticketId" class="dropdown-item changeStatus" href="#" data-toggle="modal" data-target="#modal-status">Change Status</a>
@@ -213,14 +244,14 @@
                                                                                 <a ticketid="@item.ticketId" companyId="@item.CompanyId" class="dropdown-item createService" href="#" data-toggle="modal" data-target="#modal-creatService">Create A Service</a>
 
                                                                             }
-                                                                        }
+                                                                            <a ticketid="@item.ticketId" class="dropdown-item closeTicket" href="#">Close</a>
 
-                                                                                <a ticketid="@item.ticketId" class="dropdown-item closeTicket" href="#" >Close</a>
+                                                                       
+
                                                                             </div>
                                                                         </div>
                                                                     </td>   
-                                                             
-
+                                                              }
                                                             </tr>
                                                     }
                                                 }

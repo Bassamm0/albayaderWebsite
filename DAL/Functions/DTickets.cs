@@ -27,7 +27,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select t.*,TAS.ServiceId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
+                    sQuery.Append(" select t.*,SV,TAS.ServiceId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
                     sQuery.Append(" select * from ticketAndStatus ");
                     sQuery.Append("  where ticketAndStatusId in ( ");
                     sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
@@ -40,6 +40,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
                     sQuery.Append(" inner join Branchs B on B.branchId=UAB.BranchId ");
                     sQuery.Append(" inner join Companies C on C.CompanyID=B.compnayId ");
+                    sQuery.Append(" inner join Severity SV on SV.severityId=t.severityId ");
                     sQuery.Append(" left join");
                     sQuery.Append(" (   ");
                     sQuery.Append(" select * from ticketAndUser ");
@@ -66,6 +67,7 @@ namespace DAL.Functions
                             if (dataReader["creationDate"] != DBNull.Value) { oEticketViews.creationDate = (DateTime)dataReader["creationDate"]; }
                             if (dataReader["createdBy"] != DBNull.Value) { oEticketViews.createdBy = (int)dataReader["createdBy"]; }
                             if (dataReader["severityId"] != DBNull.Value) { oEticketViews.severityId = (int)dataReader["severityId"]; }
+                            if (dataReader["severityName"] != DBNull.Value) { oEticketViews.severityName = (string)dataReader["severityName"]; }
                             if (dataReader["ticketCategoryId"] != DBNull.Value) { oEticketViews.ticketCategoryId = (int)dataReader["ticketCategoryId"]; }
                             if (dataReader["StatusDate"] != DBNull.Value) { oEticketViews.StatusDate = (DateTime)dataReader["StatusDate"]; }
                             if (dataReader["CreatorName"] != DBNull.Value) { oEticketViews.CreatorName = (string)dataReader["CreatorName"]; }
@@ -102,7 +104,8 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select t.*,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
+                    sQuery.Append(" select t.*,SV.*,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName ");
+                    sQuery.Append(" ,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,CONCAT(BEH.FirstName,' ',BEH.Lastname) as onBehafName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
                     sQuery.Append(" select * from ticketAndStatus ");
                     sQuery.Append("  where ticketAndStatusId in ( ");
                     sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
@@ -115,6 +118,8 @@ namespace DAL.Functions
                     sQuery.Append(" inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
                     sQuery.Append(" inner join Branchs B on B.branchId=UAB.BranchId ");
                     sQuery.Append(" inner join Companies C on C.CompanyID=B.compnayId ");
+                    sQuery.Append(" inner join Severity SV on SV.severityId=t.severityId ");
+                    sQuery.Append(" left join Users BEH on BEH.UserId=t.onBehafId ");
                     sQuery.Append(" left join");
                     sQuery.Append(" (   ");
                     sQuery.Append(" select * from ticketAndUser ");
@@ -144,6 +149,7 @@ namespace DAL.Functions
                             if (dataReader["ticketCategoryId"] != DBNull.Value) { oEticketViews.ticketCategoryId = (int)dataReader["ticketCategoryId"]; }
                             if (dataReader["StatusDate"] != DBNull.Value) { oEticketViews.StatusDate = (DateTime)dataReader["StatusDate"]; }
                             if (dataReader["CreatorName"] != DBNull.Value) { oEticketViews.CreatorName = (string)dataReader["CreatorName"]; }
+                            if (dataReader["onBehafName"] != DBNull.Value) { oEticketViews.onBehafName = (string)dataReader["onBehafName"]; }
                             if (dataReader["BranchName"] != DBNull.Value) { oEticketViews.BranchName = (string)dataReader["BranchName"]; }
                             if (dataReader["CompanyName"] != DBNull.Value) { oEticketViews.CompanyName = (string)dataReader["CompanyName"]; }
                             if (dataReader["StatusName"] != DBNull.Value) { oEticketViews.StatusName = (string)dataReader["StatusName"]; }
@@ -151,6 +157,7 @@ namespace DAL.Functions
                             if (dataReader["ticketStatusId"] != DBNull.Value) { oEticketViews.ticketStatusId = (int)dataReader["ticketStatusId"]; }
                             if (dataReader["CompanyId"] != DBNull.Value) { oEticketViews.CompanyId = (int)dataReader["CompanyId"]; }
                             if (dataReader["serviceId"] != DBNull.Value) { oEticketViews.serviceId = (int)dataReader["serviceId"]; }
+                            if (dataReader["severityName"] != DBNull.Value) { oEticketViews.severityName = (string)dataReader["severityName"]; }
 
                             users.Add(oEticketViews);
                         }
@@ -178,7 +185,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select top(18) t.*,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
+                    sQuery.Append(" select top(18) t.*,SV.*,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
                     sQuery.Append(" select * from ticketAndStatus ");
                     sQuery.Append("  where ticketAndStatusId in ( ");
                     sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
@@ -191,6 +198,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
                     sQuery.Append(" inner join Branchs B on B.branchId=UAB.BranchId ");
                     sQuery.Append(" inner join Companies C on C.CompanyID=B.compnayId ");
+                    sQuery.Append(" inner join Severity SV on SV.severityId=t.severityId ");
                     sQuery.Append(" left join");
                     sQuery.Append(" (   ");
                     sQuery.Append(" select * from ticketAndUser ");
@@ -227,6 +235,7 @@ namespace DAL.Functions
                             if (dataReader["ticketStatusId"] != DBNull.Value) { oEticketViews.ticketStatusId = (int)dataReader["ticketStatusId"]; }
                             if (dataReader["CompanyId"] != DBNull.Value) { oEticketViews.CompanyId = (int)dataReader["CompanyId"]; }
                             if (dataReader["serviceId"] != DBNull.Value) { oEticketViews.serviceId = (int)dataReader["serviceId"]; }
+                            if (dataReader["severityName"] != DBNull.Value) { oEticketViews.severityName = (string)dataReader["severityName"]; }
 
                             users.Add(oEticketViews);
                         }
@@ -255,7 +264,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select t.*,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
+                    sQuery.Append(" select t.*,SV,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
                     sQuery.Append(" select * from ticketAndStatus ");
                     sQuery.Append("  where ticketAndStatusId in ( ");
                     sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
@@ -268,6 +277,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
                     sQuery.Append(" inner join Branchs B on B.branchId=UAB.BranchId ");
                     sQuery.Append(" inner join Companies C on C.CompanyID=B.compnayId ");
+                    sQuery.Append(" inner join Severity SV on SV.severityId=t.severityId ");
                     sQuery.Append(" left join");
                     sQuery.Append(" (   ");
                     sQuery.Append(" select * from ticketAndUser ");
@@ -305,6 +315,7 @@ namespace DAL.Functions
                             if (dataReader["ticketStatusId"] != DBNull.Value) { oEticketViews.ticketStatusId = (int)dataReader["ticketStatusId"]; }
                             if (dataReader["CompanyId"] != DBNull.Value) { oEticketViews.CompanyId = (int)dataReader["CompanyId"]; }
                             if (dataReader["serviceId"] != DBNull.Value) { oEticketViews.serviceId = (int)dataReader["serviceId"]; }
+                            if (dataReader["severityName"] != DBNull.Value) { oEticketViews.severityName = (string)dataReader["severityName"]; }
 
                             users.Add(oEticketViews);
                         }
@@ -332,7 +343,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select t.*,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
+                    sQuery.Append(" select t.*,SV.*,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
                     sQuery.Append(" select * from ticketAndStatus ");
                     sQuery.Append("  where ticketAndStatusId in ( ");
                     sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
@@ -345,6 +356,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
                     sQuery.Append(" inner join Branchs B on B.branchId=UAB.BranchId ");
                     sQuery.Append(" inner join Companies C on C.CompanyID=B.compnayId ");
+                    sQuery.Append(" inner join Severity SV on SV.severityId=t.severityId ");
                     sQuery.Append(" left join");
                     sQuery.Append(" (   ");
                     sQuery.Append(" select * from ticketAndUser ");
@@ -380,6 +392,7 @@ namespace DAL.Functions
                             if (dataReader["AssignedUser"] != DBNull.Value) { oEticketViews.AssignedUser = (string)dataReader["AssignedUser"]; }
                             if (dataReader["CompanyId"] != DBNull.Value) { oEticketViews.CompanyId = (int)dataReader["CompanyId"]; }
                             if (dataReader["serviceId"] != DBNull.Value) { oEticketViews.serviceId = (int)dataReader["serviceId"]; }
+                            if (dataReader["severityName"] != DBNull.Value) { oEticketViews.severityName = (string)dataReader["severityName"]; }
 
                             users.Add(oEticketViews);
                         }
@@ -410,7 +423,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select t.*,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join ( ");
+                    sQuery.Append(" select t.*,SV.*,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join ( ");
                     sQuery.Append(" select * from ticketAndStatus ");
                     sQuery.Append("  where ticketAndStatusId in ( ");
                     sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
@@ -423,6 +436,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
                     sQuery.Append(" inner join Branchs B on B.branchId=UAB.BranchId ");
                     sQuery.Append(" inner join Companies C on C.CompanyID=B.compnayId ");
+                    sQuery.Append(" inner join Severity SV on SV.severityId=t.severityId ");
                     sQuery.Append(" left join");
                     sQuery.Append(" (   ");
                     sQuery.Append(" select * from ticketAndUser ");
@@ -458,6 +472,7 @@ namespace DAL.Functions
                             if (dataReader["AssignedUser"] != DBNull.Value) { oEticketViews.AssignedUser = (string)dataReader["AssignedUser"]; }
                             if (dataReader["CompanyId"] != DBNull.Value) { oEticketViews.CompanyId = (int)dataReader["CompanyId"]; }
                             if (dataReader["serviceId"] != DBNull.Value) { oEticketViews.serviceId = (int)dataReader["serviceId"]; }
+                            if (dataReader["severityName"] != DBNull.Value) { oEticketViews.severityName = (string)dataReader["severityName"]; }
 
                             users.Add(oEticketViews);
                         }
@@ -486,8 +501,11 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select t.*,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join ( ");
+                    sQuery.Append(" select t.*,SV.*,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName ");
+                    sQuery.Append(" ,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,CONCAT(BEH.FirstName,' ',BEH.Lastname) as onBehafName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
                     sQuery.Append(" select * from ticketAndStatus ");
+
+                   
                     sQuery.Append("  where ticketAndStatusId in ( ");
                     sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
                     sQuery.Append("   ) ");
@@ -499,6 +517,9 @@ namespace DAL.Functions
                     sQuery.Append(" inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
                     sQuery.Append(" inner join Branchs B on B.branchId=UAB.BranchId ");
                     sQuery.Append(" inner join Companies C on C.CompanyID=B.compnayId ");
+                    sQuery.Append(" inner join Severity SV on SV.severityId=t.severityId ");
+                    sQuery.Append(" left join Users BEH on BEH.UserId=t.onBehafId ");
+
                     sQuery.Append(" left join");
                     sQuery.Append(" (   ");
                     sQuery.Append(" select * from ticketAndUser ");
@@ -528,6 +549,7 @@ namespace DAL.Functions
                             if (dataReader["ticketCategoryId"] != DBNull.Value) { oEticketViews.ticketCategoryId = (int)dataReader["ticketCategoryId"]; }
                             if (dataReader["StatusDate"] != DBNull.Value) { oEticketViews.StatusDate = (DateTime)dataReader["StatusDate"]; }
                             if (dataReader["CreatorName"] != DBNull.Value) { oEticketViews.CreatorName = (string)dataReader["CreatorName"]; }
+                            if (dataReader["onBehafName"] != DBNull.Value) { oEticketViews.onBehafName = (string)dataReader["onBehafName"]; }
                             if (dataReader["BranchName"] != DBNull.Value) { oEticketViews.BranchName = (string)dataReader["BranchName"]; }
                             if (dataReader["CompanyName"] != DBNull.Value) { oEticketViews.CompanyName = (string)dataReader["CompanyName"]; }
                             if (dataReader["StatusName"] != DBNull.Value) { oEticketViews.StatusName = (string)dataReader["StatusName"]; }
@@ -535,6 +557,7 @@ namespace DAL.Functions
                             if (dataReader["ticketStatusId"] != DBNull.Value) { oEticketViews.ticketStatusId = (int)dataReader["ticketStatusId"]; }
                             if (dataReader["CompanyId"] != DBNull.Value) { oEticketViews.CompanyId = (int)dataReader["CompanyId"]; }
                             if (dataReader["serviceId"] != DBNull.Value) { oEticketViews.serviceId = (int)dataReader["serviceId"]; }
+                            if (dataReader["severityName"] != DBNull.Value) { oEticketViews.severityName = (string)dataReader["severityName"]; }
 
                             users.Add(oEticketViews);
                         }
@@ -562,8 +585,12 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select t.*,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join ( ");
+                 
+
+                    sQuery.Append(" select t.*,SV.*,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName ");
+                    sQuery.Append(" ,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,CONCAT(BEH.FirstName,' ',BEH.Lastname) as onBehafName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
                     sQuery.Append(" select * from ticketAndStatus ");
+
                     sQuery.Append("  where ticketAndStatusId in ( ");
                     sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
                     sQuery.Append("   ) ");
@@ -575,6 +602,9 @@ namespace DAL.Functions
                     sQuery.Append(" inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
                     sQuery.Append(" inner join Branchs B on B.branchId=UAB.BranchId ");
                     sQuery.Append(" inner join Companies C on C.CompanyID=B.compnayId ");
+                    sQuery.Append(" inner join Severity SV on SV.severityId=t.severityId ");
+                    sQuery.Append(" left join Users BEH on BEH.UserId=t.onBehafId ");
+
                     sQuery.Append(" left join");
                     sQuery.Append(" (   ");
                     sQuery.Append(" select * from ticketAndUser ");
@@ -604,6 +634,7 @@ namespace DAL.Functions
                             if (dataReader["ticketCategoryId"] != DBNull.Value) { oEticketViews.ticketCategoryId = (int)dataReader["ticketCategoryId"]; }
                             if (dataReader["StatusDate"] != DBNull.Value) { oEticketViews.StatusDate = (DateTime)dataReader["StatusDate"]; }
                             if (dataReader["CreatorName"] != DBNull.Value) { oEticketViews.CreatorName = (string)dataReader["CreatorName"]; }
+                            if (dataReader["onBehafName"] != DBNull.Value) { oEticketViews.onBehafName = (string)dataReader["onBehafName"]; }
                             if (dataReader["BranchName"] != DBNull.Value) { oEticketViews.BranchName = (string)dataReader["BranchName"]; }
                             if (dataReader["CompanyName"] != DBNull.Value) { oEticketViews.CompanyName = (string)dataReader["CompanyName"]; }
                             if (dataReader["StatusName"] != DBNull.Value) { oEticketViews.StatusName = (string)dataReader["StatusName"]; }
@@ -611,6 +642,7 @@ namespace DAL.Functions
                             if (dataReader["ticketStatusId"] != DBNull.Value) { oEticketViews.ticketStatusId = (int)dataReader["ticketStatusId"]; }
                             if (dataReader["CompanyId"] != DBNull.Value) { oEticketViews.CompanyId = (int)dataReader["CompanyId"]; }
                             if (dataReader["serviceId"] != DBNull.Value) { oEticketViews.serviceId = (int)dataReader["serviceId"]; }
+                            if (dataReader["severityName"] != DBNull.Value) { oEticketViews.severityName = (string)dataReader["severityName"]; }
 
                             users.Add(oEticketViews);
                         }
@@ -638,7 +670,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select t.*,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join ( ");
+                    sQuery.Append(" select t.*,SV.*,TAS.ServiceId,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join ( ");
                     sQuery.Append(" select * from ticketAndStatus ");
                     sQuery.Append("  where ticketAndStatusId in ( ");
                     sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
@@ -651,6 +683,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
                     sQuery.Append(" inner join Branchs B on B.branchId=UAB.BranchId ");
                     sQuery.Append(" inner join Companies C on C.CompanyID=B.compnayId ");
+                    sQuery.Append(" inner join Severity SV on SV.severityId=t.severityId ");
                     sQuery.Append(" left join");
                     sQuery.Append(" (   ");
                     sQuery.Append(" select * from ticketAndUser ");
@@ -687,6 +720,7 @@ namespace DAL.Functions
                             if (dataReader["ticketStatusId"] != DBNull.Value) { oEticketViews.ticketStatusId = (int)dataReader["ticketStatusId"]; }
                             if (dataReader["CompanyId"] != DBNull.Value) { oEticketViews.CompanyId = (int)dataReader["CompanyId"]; }
                             if (dataReader["serviceId"] != DBNull.Value) { oEticketViews.serviceId = (int)dataReader["serviceId"]; }
+                            if (dataReader["severityName"] != DBNull.Value) { oEticketViews.severityName = (string)dataReader["severityName"]; }
 
                             users.Add(oEticketViews);
                         }
@@ -714,7 +748,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select t.*,TAS.ServiceId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join ( ");
+                    sQuery.Append(" select t.*,SV.*,TAS.ServiceId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join ( ");
                     sQuery.Append(" select * from ticketAndStatus ");
                     sQuery.Append("  where ticketAndStatusId in ( ");
                     sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
@@ -727,6 +761,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
                     sQuery.Append(" inner join Branchs B on B.branchId=UAB.BranchId ");
                     sQuery.Append(" inner join Companies C on C.CompanyID=B.compnayId ");
+                    sQuery.Append(" inner join Severity SV on SV.severityId=t.severityId ");
                     sQuery.Append(" left join");
                     sQuery.Append(" (   ");
                     sQuery.Append(" select * from ticketAndUser ");
@@ -761,6 +796,7 @@ namespace DAL.Functions
                             if (dataReader["StatusName"] != DBNull.Value) { oEticketViews.StatusName = (string)dataReader["StatusName"]; }
                             if (dataReader["AssignedUser"] != DBNull.Value) { oEticketViews.AssignedUser = (string)dataReader["AssignedUser"]; }
                             if (dataReader["serviceId"] != DBNull.Value) { oEticketViews.serviceId = (int)dataReader["serviceId"]; }
+                            if (dataReader["severityName"] != DBNull.Value) { oEticketViews.severityName = (string)dataReader["severityName"]; }
 
                             users.Add(oEticketViews);
                         }
@@ -789,7 +825,7 @@ namespace DAL.Functions
                 {
 
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select t.*,TAS.ServiceId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join ( ");
+                    sQuery.Append(" select t.*,SV.*,TAS.ServiceId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join ( ");
                     sQuery.Append(" select * from ticketAndStatus ");
                     sQuery.Append("  where ticketAndStatusId in ( ");
                     sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
@@ -836,6 +872,7 @@ namespace DAL.Functions
                             if (dataReader["StatusName"] != DBNull.Value) { oEticketViews.StatusName = (string)dataReader["StatusName"]; }
                             if (dataReader["AssignedUser"] != DBNull.Value) { oEticketViews.AssignedUser = (string)dataReader["AssignedUser"]; }
                             if (dataReader["serviceId"] != DBNull.Value) { oEticketViews.serviceId = (int)dataReader["serviceId"]; }
+                            if (dataReader["severityName"] != DBNull.Value) { oEticketViews.severityName = (string)dataReader["severityName"]; }
 
                             users.Add(oEticketViews);
                         }
@@ -863,7 +900,7 @@ namespace DAL.Functions
                 using (var command = conn.CreateCommand())
                 {
                     StringBuilder sQuery = new StringBuilder();
-                    sQuery.Append(" select t.*,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,U.PictureFileName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
+                    sQuery.Append(" select t.*,SV.*,B.compnayId,CONCAT(AU.FirstName,' ',AU.Lastname) as AssignedUser,most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName,U.FirstName,CONCAT(U.FirstName,' ',U.Lastname) as CreatorName,U.PictureFileName,B.BranchName,C.Name CompanyName,C.CompanyID from tickets t join (");
                     sQuery.Append(" select * from ticketAndStatus ");
                     sQuery.Append("  where ticketAndStatusId in ( ");
                     sQuery.Append("  select max(ticketAndStatusId) from ticketAndStatus group by ticketid ");
@@ -876,6 +913,7 @@ namespace DAL.Functions
                     sQuery.Append(" inner join UserAndBranch UAB on UAB.UserId=U.UserId ");
                     sQuery.Append(" inner join Branchs B on B.branchId=UAB.BranchId ");
                     sQuery.Append(" inner join Companies C on C.CompanyID=B.compnayId ");
+                    sQuery.Append(" inner join Severity SV on SV.severityId=t.severityId ");
                     sQuery.Append(" left join");
                     sQuery.Append(" (   ");
                     sQuery.Append(" select * from ticketAndUser ");
@@ -911,6 +949,7 @@ namespace DAL.Functions
                             if (dataReader["AssignedUser"] != DBNull.Value) { oEticketViews.AssignedUser = (string)dataReader["AssignedUser"]; }
                             if (dataReader["PictureFileName"] != DBNull.Value) { oEticketViews.PictureFileName = (string)dataReader["PictureFileName"]; }
                             if (dataReader["ticketStatusId"] != DBNull.Value) { oEticketViews.ticketStatusId = (int)dataReader["ticketStatusId"]; }
+                            if (dataReader["severityName"] != DBNull.Value) { oEticketViews.severityName = (string)dataReader["severityName"]; }
                             oEticketViews.lticketfile = getAllTicketFile(ticketId);
                             oEticketViews.lticketLog= dtlog.getticketLog(ticketId);
 
@@ -1144,7 +1183,7 @@ namespace DAL.Functions
 
                     StringBuilder sQuery = new StringBuilder();
 
-                    sQuery.Append(" select t.*,TAS.ServiceId, ");
+                    sQuery.Append(" select t.*,SV.*,TAS.ServiceId, ");
                     sQuery.Append(" most_recent_status.StatusDate,most_recent_status.ticketStatusId,ts.StatusName from tickets t join ( ");
                     sQuery.Append(" select * from ticketAndStatus ");
                     sQuery.Append("  where ticketAndStatusId in (  ");
@@ -1154,6 +1193,7 @@ namespace DAL.Functions
                     sQuery.Append("  on t.ticketid = most_recent_status.ticketid  ");
 
                     sQuery.Append(" inner join ticketStatus TS on TS.ticketStatusId=most_recent_status.ticketStatusId  ");
+                    sQuery.Append(" inner join Severity SV on SV.severityId=t.severityId ");
                     sQuery.Append(" left join ticketAndService TAS on TAS.ticketId=t.ticketId   ");
                     sQuery.Append(" where most_recent_status.ticketStatusId not in(7,5,6)  and most_recent_status.StatusDate < dateadd(hh, -72, getdate())  ");
                     sQuery.Append("  order by t.creationDate desc   ");
@@ -1175,6 +1215,7 @@ namespace DAL.Functions
                             if (dataReader["StatusDate"] != DBNull.Value) { oEticketViews.StatusDate = (DateTime)dataReader["StatusDate"]; }
                             if (dataReader["StatusName"] != DBNull.Value) { oEticketViews.StatusName = (string)dataReader["StatusName"]; }
                             if (dataReader["ticketStatusId"] != DBNull.Value) { oEticketViews.ticketStatusId = (int)dataReader["ticketStatusId"]; }
+                            if (dataReader["severityName"] != DBNull.Value) { oEticketViews.severityName = (string)dataReader["severityName"]; }
 
                             users.Add(oEticketViews);
                         }

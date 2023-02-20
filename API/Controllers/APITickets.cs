@@ -167,6 +167,7 @@ namespace API.Controllers
             var result = new Etickets();
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             EUser logeduser = claimHellper.GetCurrentUser(identity);
+            ticket.onBehafId = logeduser.UserId;
             
             try
             {
