@@ -5,17 +5,17 @@
 
     var Notifcationmessage = "";
     const connection = new signalR.HubConnectionBuilder()
-        .withUrl(APIURL+"ticketHub")
+        .withUrl(APIURL + "ticketHub")
         .build();
 
     connection.on("newTicketAdded", (ticket, creator) => {
-    
-        Notifcationmessage = '<div style="font-size:20px;"  >New ticket with Ref #' + ticket.ticketId + ' Subject ' + ticket.subject + ' has been created  by ' + creator.firstName + ' ' + creator.lastname + ' from Company ' + creator.companyName + ' Branch ' + creator.branchName +'</div>';
+
+        Notifcationmessage = '<div style="font-size:20px;"  >New ticket with Ref #' + ticket.ticketId + ' Subject ' + ticket.subject + ' has been created  by ' + creator.firstName + ' ' + creator.lastname + ' from Company ' + creator.companyName + ' Branch ' + creator.branchName + '</div>';
         toastr["success"](Notifcationmessage)
 
         getTickets();
     });
-  
+
 
     connection.on("statusChanged", (ticketAndStatus, creator) => {
 
@@ -65,12 +65,12 @@
         "hideMethod": "fadeOut"
     }
 
-    
+
 
     let dataload = "";
     let dataload1 = "";
     let dataload2 = "";
-    let pageNumber=1;
+    let pageNumber = 1;
     let pageCount = 0;
     var intervalId;
 
@@ -98,23 +98,23 @@
             success: function (data, textStatus, xhr) {
                 var arrUpdates = (typeof data) == 'string' ? eval('(' + data + ')') : data;
                 let newcss = "";
-       
+
 
 
                 console.log(arrUpdates.length)
                 for (var i = 0; i < arrUpdates.length; i++) {
                     newcss = statusCase(arrUpdates[i].ticketStatusId)
-                    
+
                     assigned = "Not Assign";
                     if (arrUpdates[i].assignedUser.trim() != '') {
                         assigned = arrUpdates[i].assignedUser;
                     }
-                   
-                    
+
+
 
                     if (i <= 5) {
                         pageCount = 1;
-                        if (arrUpdates[i].ticketStatusId == 5) {
+                        if (arrUpdates[i].severityId == 4) {
                             rowblink = '<div class="row rowblink first">';
                         } else {
                             rowblink = '<div class="row first"  >';
@@ -129,8 +129,14 @@
                         dataload += '<div class="colSubject">';
                         dataload += arrUpdates[i].subject;
                         dataload += '</div>';
+                        dataload += '<div class="colClient">';
+                        dataload += arrUpdates[i].companyName;
+                        dataload += '</div>';
                         dataload += '<div class="colBranch">';
                         dataload += arrUpdates[i].branchName;
+                        dataload += '</div>';
+                        dataload += '<div class="colBranch">';
+                        dataload += arrUpdates[i].severityName;
                         dataload += '</div>';
                         dataload += '<div class="colBranch">';
                         dataload += assigned;
@@ -143,7 +149,7 @@
 
                     } else if (i > 5 && i <= 11) {
                         pageCount = 2;
-                        if (arrUpdates[i].ticketStatusId == 5) {
+                        if (arrUpdates[i].severityId == 4) {
                             rowblink = '<div class="row rowblink second" >';
                         } else {
                             rowblink = '<div class="row second"  >';
@@ -157,8 +163,14 @@
                         dataload1 += '<div class="colSubject">';
                         dataload1 += arrUpdates[i].subject;
                         dataload1 += '</div>';
+                        dataload1 += '<div class="colClient">';
+                        dataload1 += arrUpdates[i].companyName;
+                        dataload1 += '</div>';
                         dataload1 += '<div class="colBranch">';
                         dataload1 += arrUpdates[i].branchName;
+                        dataload1 += '</div>';
+                        dataload1 += '<div class="colBranch">';
+                        dataload1 += arrUpdates[i].severityName;
                         dataload1 += '</div>';
                         dataload1 += '<div class="colBranch">';
                         dataload1 += assigned;
@@ -170,7 +182,7 @@
                         dataload1 += '<div class="dropdown-divider-light second"></div>';
                     } else {
                         pageCount = 3;
-                        if (arrUpdates[i].ticketStatusId == 5) {
+                        if (arrUpdates[i].severityId == 4) {
                             rowblink = '<div class="row rowblink third" >';
                         } else {
                             rowblink = '<div class="row third"  >';
@@ -184,8 +196,14 @@
                         dataload2 += '<div class="colSubject">';
                         dataload2 += arrUpdates[i].subject;
                         dataload2 += '</div>';
+                        dataload2 += '<div class="colClient">';
+                        dataload2 += arrUpdates[i].companyName;
+                        dataload2 += '</div>';
                         dataload2 += '<div class="colBranch">';
                         dataload2 += arrUpdates[i].branchName;
+                        dataload2 += '</div>';
+                        dataload2 += '<div class="colBranch">';
+                        dataload2 += arrUpdates[i].severityName;
                         dataload2 += '</div>';
                         dataload2 += '<div class="colBranch">';
                         dataload2 += assigned;
@@ -196,7 +214,7 @@
                         dataload2 += '</div>';
                         dataload2 += '<div class="dropdown-divider-light third"></div>';
                     }
-                   
+
                 }
 
                 intervalId
@@ -208,10 +226,10 @@
                 $('body .third').hide();
                 pageNumber = 1;
                 startInter()
-               
+
             },
             error: function (xhr, textStatus, errorThrown) {
-              
+
                 console.log('Error in Operation');
             }
         });
@@ -219,72 +237,72 @@
     }
 
     function startInter() {
-         intervalId = window.setInterval(function () {
+        intervalId = window.setInterval(function () {
 
-             if (pageCount == 3) {
-                 if (pageNumber == 1) {
-                     pageNumber = 2;
+            if (pageCount == 3) {
+                if (pageNumber == 1) {
+                    pageNumber = 2;
 
-                     $('body .first').fadeOut(function () {
-                         $('body .second').fadeIn(function () {
-                             $('body .third').fadeOut(function () {
-                                 //do your stuff
-                             });
-                         });
-                     });
+                    $('body .first').fadeOut(function () {
+                        $('body .second').fadeIn(function () {
+                            $('body .third').fadeOut(function () {
+                                //do your stuff
+                            });
+                        });
+                    });
 
-                 } else if (pageNumber == 2) {
-                     pageNumber = 3;
-                     $('body .second').fadeOut(function () {
-                         $('body .third').fadeIn(function () {
-                             $('body .first').fadeOut(function () {
-                                 //do your stuff
-                             });
-                         });
-                     });
+                } else if (pageNumber == 2) {
+                    pageNumber = 3;
+                    $('body .second').fadeOut(function () {
+                        $('body .third').fadeIn(function () {
+                            $('body .first').fadeOut(function () {
+                                //do your stuff
+                            });
+                        });
+                    });
 
-                 } else {
-                     pageNumber = 1;
-                     $('body .third').fadeOut(function () {
-                         $('body .first').fadeIn(function () {
-                             $('body .second').fadeOut(function () {
-                                 //do your stuff
-                             });
-                         });
-                     });
-                 }
+                } else {
+                    pageNumber = 1;
+                    $('body .third').fadeOut(function () {
+                        $('body .first').fadeIn(function () {
+                            $('body .second').fadeOut(function () {
+                                //do your stuff
+                            });
+                        });
+                    });
+                }
 
 
-             } else if (pageCount == 2) {
-                 if (pageNumber == 1) {
-                     pageNumber = 2;
+            } else if (pageCount == 2) {
+                if (pageNumber == 1) {
+                    pageNumber = 2;
 
-                     $('body .first').fadeOut(function () {
-                         $('body .second').fadeIn(function () {
+                    $('body .first').fadeOut(function () {
+                        $('body .second').fadeIn(function () {
 
-                         });
-                     });
+                        });
+                    });
 
-                 } else {
-                     pageNumber = 1;
-                     $('body .second').fadeOut(function () {
-                         $('body .first').fadeIn(function () {
+                } else {
+                    pageNumber = 1;
+                    $('body .second').fadeOut(function () {
+                        $('body .first').fadeIn(function () {
 
-                         });
-                     });
-                 }
-             }
-           
+                        });
+                    });
+                }
+            }
+
 
         }, 5000);
 
     }
-    
-   
+
+
 
 
     function statusCase(id) {
-        
+
         var css;
         switch (id) {
             case 1:
@@ -303,11 +321,14 @@
 
                 break;
             case 5:
-                css = "badge badge-danger rowblink"
+               // css = "badge badge-danger rowblink"
+                css = "badge badge-danger"
 
                 break;
             case 6:
                 css = "badge badge-orang"
+            case 8:
+                css = "badge badge-blue"
 
 
                 break;
@@ -315,7 +336,7 @@
             default:
             // code block
         }
-       
+
         return css;
     }
 

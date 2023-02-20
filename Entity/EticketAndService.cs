@@ -15,6 +15,7 @@ namespace Entity
         public int ServiceId { get; set; }
         public int ticketId { get; set; }
         public DateTime CreationDate { get; set; }
+        public DateTime VisitPlanedTime { get; set; }
         public int userId { get; set; }
         [NotMapped]
         public int branchId { get; set; }

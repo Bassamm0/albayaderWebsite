@@ -12,7 +12,10 @@
         format: 'DD-MM-yyyy HH:mm',
         icon: { time: 'far fa-clock' }
     });
-
+    $('#VisitDate').datetimepicker({
+        format: 'DD-MM-yyyy HH:mm',
+        icon: { time: 'far fa-clock' }
+    });
    
     const APIURL = $('#APIURI').val();
 
@@ -256,6 +259,9 @@
             ddVistType: {
                 required: true,
             },
+            VisitDate: {
+                required: true,
+            }
         },
 
         errorElement: 'span',
@@ -295,6 +301,8 @@
                 break;
             case '6':
                 css = "badge badge-orang"
+            case '8':
+                css = "badge badge-blue"
 
 
                 break;
@@ -364,10 +372,13 @@
         if (!$("#creatServiceForm").valid()) {
             return false;
         }
+        //20-02-2023 15:30
+        VisitPlanedTime = moment($('#VisitDate').val(), 'DD-MM-yyyy HH:mm').format('yyyy-MM-D  HH:mm');
+        // VisitPlanedTime= $('#VisitDate').val()
         branchId = $("#ddBranch").val();
         technicainId = $("#ddtechnicain").val()
         SiteVistTypeId = $("#ddVistType").val()
-        var url = 'tickets?handler=CreateService&id=' + $("#createServiceId").val() + '&branchId=' + branchId + '&technicainId=' + technicainId + '&SiteVistTypeId=' + SiteVistTypeId;
+        var url = 'tickets?handler=CreateService&id=' + $("#createServiceId").val() + '&branchId=' + branchId + '&technicainId=' + technicainId + '&SiteVistTypeId=' + SiteVistTypeId + '&VisitPlanedTime=' + VisitPlanedTime ;
         $.ajax({
             type: "POST",
             url: url,

@@ -32,7 +32,7 @@ namespace DAL.Functions
                     sQuery.Append("   inner join eventType ET on ET.eventTypeId=C.eventTypeId ");
                     sQuery.Append("  left join users U on C.TechnicanId=U.UserId ");
                     sQuery.Append("  left join Branchs B on B.branchId=C.branchId  ");
-                    sQuery.Append(" where C.EndDate is null order by C.eventStartDate");
+                    sQuery.Append(" where C.EndDate is null order by C.EventId");
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -91,7 +91,7 @@ namespace DAL.Functions
                     sQuery.Append("   inner join eventType ET on ET.eventTypeId=C.eventTypeId ");
                     sQuery.Append("  left join users U on C.TechnicanId=U.UserId ");
                     sQuery.Append("  left join Branchs B on B.branchId=C.branchId  ");
-                    sQuery.AppendFormat(" where B.compnayId={0}  or C.eventTypeId=3   and C.EndDate is null order by C.eventStartDate", compnayId);
+                    sQuery.AppendFormat(" where B.compnayId={0}  or C.eventTypeId=3   and C.EndDate is null order by C.EventId", compnayId);
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();
@@ -150,7 +150,7 @@ namespace DAL.Functions
                     sQuery.Append("  left join users U on C.TechnicanId=U.UserId ");
                     sQuery.Append("  left join Branchs B on B.branchId=C.branchId  ");
                     
-                    sQuery.AppendFormat(" where U.UserId={0}  or C.eventTypeId=3 or C.eventTypeId=4  and C.EndDate is null order by C.eventStartDate", UserId);
+                    sQuery.AppendFormat(" where U.UserId={0}  or C.eventTypeId=3 or C.eventTypeId=4  and C.EndDate is null order by C.EventId", UserId);
 
                     command.CommandText = sQuery.ToString();
                     DbDataReader dataReader = command.ExecuteReader();

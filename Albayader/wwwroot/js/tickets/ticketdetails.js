@@ -22,7 +22,7 @@
 
     $(".fileImage").fileinput({
         initialPreviewAsData: true,
-        allowedFileExtensions: ['jpg', 'png', 'gif', 'jpeg', 'pdf'],
+        allowedFileExtensions: ['jpg', 'png', 'gif', 'jpeg', 'pdf','mov','mp4'],
         showUpload: false,
         showCaption: false,
         maxFileSize: 4000,

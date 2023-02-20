@@ -12,7 +12,7 @@
 
 <!-- DataTables -->
 <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="css/adminlte.css" />
+<link rel="stylesheet" href="css/adminlte.css?dt=@DateTime.Now.ToString("yyyyMMddhhmmss")" />
 
 <div class="content-wrapper">
     <section class="content-header">
@@ -201,7 +201,9 @@
                                                                 
 
                                                                    @if(item.serviceId!=0){
-                                                                  <td>@item.serviceId</td>
+                                                                  <td>@item.serviceId
+                                                                    Visit Planned On:@item.VisitPlanedTime
+                                                                  </td>
                                                                    }else{
                                                                   <td>No Service</td>
 
@@ -220,7 +222,12 @@
                                                             <td style="text-align:center ;"> <span class="badge badge-danger">@item.StatusName</span> </td>
                                                                 }else if(@item.ticketStatusId==6){
                                                                      <td style="text-align:center ;"> <span class="badge badge-orang" >@item.StatusName</span> </td>
-                                                                }
+                                                            }
+                                                            else if (@item.ticketStatusId == 8)
+                                                            {
+                                                                <td style="text-align:center ;"> <span class="badge badge-blue">@item.StatusName</span> </td>
+                                                            }
+
                                                              
 
                                                                  @if (Model.CompanyId == "2")
@@ -328,6 +335,7 @@
                                 <option value="2">Inprocess</option>
                                 <option value="3">Tch. Waiting</option>
                                 <option value="4">Waiting for Client Res.</option>
+                                <option value="8">Waiting For Offer.</option>
                                 <option value="5">Breach </option>
                                 <option value="6">Onhold</option>
                           
@@ -450,6 +458,17 @@
 
                                 </select>
                             </div>
+                                <div class="form-group">
+                                    <label>Select Visit Time </label>
+                                    <div class="input-group date" id="startDateHolder" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input"
+                                               data-target="#VisitDate" id="VisitDate" name="VisitDate" placeholder="Select Visit Time" />
+                                        <div class="input-group-append" data-target="#VisitDate" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+
+                                </div>
                                 </form>
                             </div>
                         </div>

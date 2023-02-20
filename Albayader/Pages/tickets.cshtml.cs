@@ -334,7 +334,7 @@ namespace AlbayaderWeb.Pages
         }
 
 
-        public async Task<IActionResult> OnPostCreateService(int id, int branchId, int technicainId,int SiteVistTypeId)
+        public async Task<IActionResult> OnPostCreateService(int id, int branchId, int technicainId,int SiteVistTypeId,string VisitPlanedTime)
         {
 
             CompanyId = HttpContext.Session.GetString("CompanyId");
@@ -351,7 +351,7 @@ namespace AlbayaderWeb.Pages
             ticketAndService.branchId = branchId;
             ticketAndService.TechnicianId = technicainId;
             ticketAndService.SiteVistTypeId = SiteVistTypeId;
-
+            ticketAndService.VisitPlanedTime = Convert.ToDateTime(VisitPlanedTime);
             string statusCode = await CreateAService(ticketAndService);
 
 

@@ -5373,6 +5373,17 @@ a.badge-Lightblue:hover, a.badge-orang:focus {
     color: #fff;
     background-color: #3c8dbc;
 }
+
+
+.badge-blue {
+    color: #fff;
+    background-color: #17a2b8;
+}
+
+a.badge-blue:hover, a.badge-blue:focus {
+    color: #fff;
+    background-color: #17a2b8;
+}
 /*  */
 
 .jumbotron {
@@ -53069,18 +53080,29 @@ a.text-muted:hover {
         padding: 10px;
     }
 
+
 .colRef {
     width: 5%
 }
 
 .colSubject {
-    width: 50%;
+    width: 30%;
     font-size: large;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width:30%;
 }
 
 .colBranch {
-    width: 15%
+    width: 12%
 }
+.colClient {
+    width: 10%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+   
+}
+
 
 .colAssigned {
     width: 15%

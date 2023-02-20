@@ -98,6 +98,10 @@
                                                 {
                                                     <td style="text-align:center ;"> <span class="badge badge-success">@Model.ticketViewsDetails.StatusName</span> </td>
                                                 }
+                                                 else if (@Model.ticketViewsDetails.ticketStatusId == 8)
+                                                {
+                                                    <td style="text-align:center ;"> <span class="badge badge-blue">@Model.ticketViewsDetails.StatusName</span> </td>
+                                                }
                                             </div>
 
 
@@ -296,6 +300,7 @@
                                                             <option value="2">Inprocess</option>
                                                             <option value="3">Tch. Waiting</option>
                                                             <option value="4">Waiting for Client Res.</option>
+                                                            <option value="8">Waiting For Offer.</option>
                                                             <option value="5">Breach </option>
                                                             <option value="6">Onhold</option>
                                                             <option value="7">Close</option>

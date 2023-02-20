@@ -319,7 +319,7 @@ namespace LOGIC
             eService.CreatedBy = ticketAndService.userId;
             eService.StatusId = 1;
 
-            eService.CreatedDate = DateTime.Now;
+            eService.CreatedDate = DateTime.UtcNow;
             eService.SiteVistTypeId = ticketAndService.SiteVistTypeId;
             eService.ServiceTypeId = 2;
 

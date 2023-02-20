@@ -16,6 +16,9 @@ namespace Entity
         public string subject { get; set; }
         public string ticketDetails { get; set; }
         public DateTime creationDate { get; set; }
+        [NotMapped]
+        public DateTime VisitPlanedTime { get; set; }
+        
         public int createdBy { get; set; }
         public int severityId { get; set; }
         [NotMapped]
