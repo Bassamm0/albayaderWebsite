@@ -97,7 +97,7 @@
                 labels: ["Preventive", "Corrective AMC", "Corrective Non-AMC"],
                 datasets: [{
                     label: "Services ",
-                    backgroundColor: ["rgba(76, 203, 133, 0.5)", "rgba(138, 19, 250, 0.5)", "rgba(110, 19, 120, 0.5)"],
+                    backgroundColor: ["rgba(76, 203, 133, 0.5)", "rgba(138, 19, 250, 0.5)", "rgba(255, 127, 0, 0.5)"],
                     data: [Preventive, CorrectiveAMC, CorrectiveNoneAMC]
                 }]
             },
@@ -169,8 +169,8 @@
                         data: corDataAMC
                     }, {
                         label: "Corrective Non-AMC",
-                        backgroundColor: 'rgba(110, 19, 120, 0.2)',
-                        borderColor: 'rgba(110, 19, 120, 1)',
+                        backgroundColor: 'rgba(255, 127, 0, 0.5)',
+                        borderColor: 'rgba(255, 127, 0, 1)',
                         borderWidth: 1,
                         data: corDataNoneAMC
                     }
