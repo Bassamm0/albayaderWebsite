@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entity", "Entity\Entity.csproj", "{815FB4DC-0C60-4547-B506-37B699BB4FE5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlbayaderWeb", "AlbayaderWeb\AlbayaderWeb.csproj", "{8277DD05-2EAF-497D-99A5-1C6EF5431D54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Albayaderweb", "AlbayaderWeb\Albayaderweb.csproj", "{8277DD05-2EAF-497D-99A5-1C6EF5431D54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
